@@ -3,3 +3,7 @@
 </script>
 
 <MainHeader />
+
+<main class="p-5">
+	<p class="text-4xl">This is the <strong>Home</strong> Page.</p>
+</main>
