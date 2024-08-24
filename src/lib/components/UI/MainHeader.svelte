@@ -5,10 +5,11 @@
 
 	import FullScreenToggler from './FullScreenToggler.svelte';
 	import ThemeToggler from './ThemeToggler.svelte';
+	import ProfileIcon from './ProfileIcon.svelte';
 
 	// Gives the buttons indication of which URL we are in.
-	let aHomeStyle: string = $page.url.pathname === '/' ? 'text-tertiary-800' : '';
-	let aCoursesStyle: string = $page.url.pathname === '/courses' ? 'text-tertiary-800' : '';
+	let aHomeStyle: string = $page.url.pathname === '/' ? 'text-tertiary-400' : '';
+	let aCoursesStyle: string = $page.url.pathname === '/courses' ? 'text-tertiary-400' : '';
 </script>
 
 <header class="w-screen h-36 variant-glass-surface sticky top-0 flex flex-col">
@@ -20,6 +21,9 @@
 			</li>
 			<li>
 				<FullScreenToggler />
+			</li>
+			<li>
+				<ProfileIcon />
 			</li>
 		</nav>
 	</section>

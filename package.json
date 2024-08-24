@@ -39,6 +39,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@floating-ui/dom": "1.6.10"
+    "@floating-ui/dom": "1.6.10",
+    "firebase": "^10.13.0"
   }
 }

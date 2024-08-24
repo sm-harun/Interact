@@ -32,7 +32,7 @@
 </button>
 
 <!-- This is the popup to select the Theme. -->
-<div class="card w-80 p-5 bg-primary-500 z-50" data-popup="theme-list">
+<div class="card w-80 p-5 variant-glass-primary z-50" data-popup="theme-list">
 	<div class="flex justify-between">
 		<p><strong>Dark Mode</strong></p>
 		<LightSwitch />
@@ -53,8 +53,7 @@
 		>
 	</ListBox>
 	<hr class="mt-4 mb-4" />
-	<p class="text-sm text-primary-100/40">
+	<p class="text-sm text-primary-800/50">
 		These themes are powered by <strong>Skeleton UI</strong>
 	</p>
-	<div class="arrow bg-surface-100-800-token" />
 </div>
