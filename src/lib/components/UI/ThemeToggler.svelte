@@ -43,7 +43,7 @@
 
 <!-- This is the popup to select the Theme. -->
 <div
-	class="card w-60 lg:w-80 text-lg lg:text-xl p-5 variant-filled-primary z-50"
+	class="card w-60 lg:w-80 text-lg lg:text-xl p-5 variant-surface-700 z-50 border-1"
 	data-popup="theme-list"
 >
 	<div class="flex justify-between">
