@@ -13,9 +13,11 @@
 </script>
 
 <header class="w-screen h-36 variant-glass-surface sticky top-0 flex flex-col">
-	<section class="flex-[2_1_0] p-3 flex items-center justify-between px-6">
-		<h1 class="text-4xl text-secondary-500">{$webTitle}</h1>
-		<nav class="h-full list-none text-2xl flex justify-evenly items-center gap-6">
+	<section class="flex-[2_1_0] p-3 flex items-center justify-between lg:px-6">
+		<div class="flex justify-between items-center gap-4 pl-4">
+			<h1 class="text-3xl lg:text-4xl text-secondary-500 font-bold">{$webTitle}</h1>
+		</div>
+		<nav class="h-full list-none text-2xl flex justify-end lg:justify-evenly items-center lg:gap-6">
 			<li>
 				<ThemeToggler />
 			</li>
@@ -31,11 +33,11 @@
 	<section class="flex-[1_1_1rem] px-4 flex items-center">
 		<ol class="breadcrumb">
 			<li class="crumb">
-				<a href="/" class={aHomeStyle + ' text-xl hover:text-secondary-500 transition'}>Home</a>
+				<a href="/" class={aHomeStyle + ' text-lg hover:text-secondary-500 transition'}>Home</a>
 			</li>
 			<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
 			<li class="crumb">
-				<a href="/courses" class={aCoursesStyle + ' text-xl hover:text-secondary-500 transition'}
+				<a href="/courses" class={aCoursesStyle + ' text-lg hover:text-secondary-500 transition'}
 					>Courses</a
 				>
 			</li>
