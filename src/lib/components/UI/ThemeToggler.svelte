@@ -4,6 +4,7 @@
 
 	import { theme } from './../../stores/themes';
 	import type { Theme } from './../../stores/themes';
+	import FullScreenToggler from './FullScreenToggler.svelte';
 
 	// Settings for a theme selector popup.
 	const themesPopup: PopupSettings = {
@@ -21,7 +22,7 @@
 </script>
 
 <button
-	class="text-xl btn rounded-full hover:bg-secondary-500/30 justify-center lg:justify-between"
+	class="text-xl btn rounded-container-token hover:bg-primary-500/30 justify-center lg:justify-between"
 	use:popup={themesPopup}
 >
 	<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -39,9 +40,12 @@
 	class="card w-60 lg:w-80 text-lg lg:text-xl p-5 variant-surface-700 z-50 border-1"
 	data-popup="theme-list"
 >
-	<div class="flex justify-between">
-		<p><strong>Dark Mode</strong></p>
-		<LightSwitch />
+	<div class="flex justify-between items-center">
+		<p><strong><span class="hidden lg:inline">Dark</span> Mode</strong></p>
+		<div class="flex justify-between items-center gap-2">
+			<LightSwitch />
+			<FullScreenToggler />
+		</div>
 	</div>
 	<hr class="mt-4 mb-4" />
 	<ListBox>
@@ -59,7 +63,7 @@
 		>
 	</ListBox>
 	<hr class="mt-4 mb-4" />
-	<p class="text-sm text-secondary-700-200-token">
+	<p class="text-xs text-secondary-700-200-token grid place-items-center">
 		These themes are powered by <strong>Skeleton UI</strong>
 	</p>
 </div>

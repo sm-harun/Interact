@@ -8,7 +8,7 @@
 
 	<main class="flex-grow overflow-auto flex">
 		<nav
-			class="w-24 bg-surface-300-600-token"
+			class="w-24 bg-surface-200-700-token z-50"
 			in:fly={{ x: -50, duration: 500, delay: 500 }}
 			out:fly={{ x: -50, duration: 500 }}
 		>

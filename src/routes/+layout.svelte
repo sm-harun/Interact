@@ -11,7 +11,7 @@
 	initializeStores();
 </script>
 
-<Modal />
+<Modal padding="p-7" />
 <Toast />
 
 <slot />
