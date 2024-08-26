@@ -24,14 +24,7 @@
 	class="text-xl btn rounded-full hover:bg-secondary-500/30 justify-center lg:justify-between"
 	use:popup={themesPopup}
 >
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		fill="none"
-		viewBox="0 0 24 24"
-		stroke-width="1.5"
-		stroke="currentColor"
-		class="size-6"
-	>
+	<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 		<path
 			stroke-linecap="round"
 			stroke-linejoin="round"
@@ -66,7 +59,7 @@
 		>
 	</ListBox>
 	<hr class="mt-4 mb-4" />
-	<p class="text-sm text-primary-800/50">
+	<p class="text-sm text-secondary-700-200-token">
 		These themes are powered by <strong>Skeleton UI</strong>
 	</p>
 </div>

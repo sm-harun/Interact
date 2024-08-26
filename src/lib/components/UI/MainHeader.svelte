@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
+	import { fly } from 'svelte/transition';
+
 	import { webTitle } from './../../stores/themes';
 
 	import FullScreenToggler from './FullScreenToggler.svelte';
 	import ThemeToggler from './ThemeToggler.svelte';
 	import ProfileIcon from './ProfileIcon.svelte';
-
-	// Gives the buttons indication of which URL we are in.
-	let aHomeStyle: string = $page.url.pathname === '/' ? 'text-tertiary-400' : '';
-	let aCoursesStyle: string = $page.url.pathname === '/courses' ? 'text-tertiary-400' : '';
 </script>
 
 <header class="w-screen h-36 variant-glass-surface sticky top-0 flex flex-col">
@@ -35,13 +33,32 @@
 	<section class="flex-[2_1_0] px-4 flex items-center">
 		<ol class="breadcrumb">
 			<li class="crumb">
-				<a href="/" class={aHomeStyle + ' text-lg hover:text-secondary-500 transition'}>Home</a>
+				<a
+					href="/"
+					class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+				>
+					<span>Home</span>
+					{#if $page.url.pathname === '/'}
+						<div
+							class="w-full h-[1px] bg-primary-500 rounded-full absolute bottom-0 -z-10"
+							in:fly={{ x: 100, duration: 500 }}
+						></div>
+					{/if}
+				</a>
 			</li>
 			<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
 			<li class="crumb">
-				<a href="/courses" class={aCoursesStyle + ' text-lg hover:text-secondary-500 transition'}
-					>Courses</a
-				>
+				<a
+					href="/courses"
+					class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+					><span>Courses</span>
+					{#if $page.url.pathname === '/courses'}
+						<div
+							class="w-full h-[1px] bg-primary-500 rounded-full absolute bottom-0 -z-10"
+							in:fly={{ x: -100, duration: 500 }}
+						></div>
+					{/if}
+				</a>
 			</li>
 		</ol>
 	</section>
