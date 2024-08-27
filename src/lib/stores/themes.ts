@@ -1,5 +1,4 @@
-import { readable } from 'svelte/store';
-import { localStorageStore } from '@skeletonlabs/skeleton';
+import { readable, writable } from 'svelte/store';
 
 export type Theme =
 	| 'skeleton'
@@ -16,4 +15,7 @@ export type Theme =
 // Since the name of the website has not been decided it can easily be changed later.
 export const webTitle = readable<string>('Interact');
 
-export const theme = localStorageStore<Theme>('interact-theme', 'crimson');
+export let theme = writable<Theme>('crimson');
+export function updateTheme(newTheme: Theme) {
+	theme.set(newTheme);
+}

@@ -1,26 +1,21 @@
 <script lang="ts">
-	let toggleState = false;
+	import { fullScreenMode, toggleFullScreen } from '$lib/stores/components';
 
 	// We refrence it to toggle between fullscreen.
 	const fullscreenElement = document.documentElement;
 
 	function toggleFullscreen() {
-		if (!document.fullscreenElement) {
-			if (fullscreenElement.requestFullscreen) {
-				fullscreenElement.requestFullscreen();
-				toggleState = true;
-			}
+		if (!$fullScreenMode) {
+			if (fullscreenElement.requestFullscreen) fullscreenElement.requestFullscreen();
 		} else {
-			if (document.exitFullscreen) {
-				document.exitFullscreen();
-				toggleState = false;
-			}
+			if (document.exitFullscreen) document.exitFullscreen();
 		}
+		toggleFullScreen();
 	}
 </script>
 
 <button
-	class="{toggleState
+	class="{$fullScreenMode
 		? 'bg-primary-100-800-token stroke-black'
 		: ''} p-3 rounded-full justify-center"
 	on:click={toggleFullscreen}

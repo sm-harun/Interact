@@ -5,9 +5,8 @@
 
 	import { webTitle } from './../../stores/themes';
 
-	import FullScreenToggler from './FullScreenToggler.svelte';
-	import ThemeToggler from './ThemeToggler.svelte';
-	import ProfileIcon from './ProfileIcon.svelte';
+	import ThemeToggler from './ThemesButton.svelte';
+	import LoginButton from './LoginButton.svelte';
 </script>
 
 <header class="flex-shrink-0 w-screen h-36 variant-glass-surface sticky top-0 flex flex-col">
@@ -24,7 +23,7 @@
 				<ThemeToggler />
 			</li>
 			<li>
-				<ProfileIcon />
+				<LoginButton />
 			</li>
 		</nav>
 	</section>
