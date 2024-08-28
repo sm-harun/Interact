@@ -3,10 +3,10 @@
 
 	import { fly } from 'svelte/transition';
 
-	import { webTitle } from './../../stores/themes';
+	import { webTitle } from '$lib/stores/themes';
 
 	import ThemeToggler from './ThemesButton.svelte';
-	import LoginButton from './LoginButton.svelte';
+	import TopIcon from './TopIcon.svelte';
 </script>
 
 <header class="flex-shrink-0 w-screen h-36 variant-glass-surface sticky top-0 flex flex-col">
@@ -23,7 +23,7 @@
 				<ThemeToggler />
 			</li>
 			<li>
-				<LoginButton />
+				<TopIcon />
 			</li>
 		</nav>
 	</section>

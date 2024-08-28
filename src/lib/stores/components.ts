@@ -30,6 +30,19 @@ export function hideProfilePopup() {
 	profilePopupState.set(false);
 }
 
+// Login button Popup Store.
+export const loginPopupState = writable<boolean>(false);
+export const loginPopupPosition = writable<{ x: number; y: number }>({ x: 0, y: 0 });
+
+export function showLoginPopup(e: MouseEvent) {
+	loginPopupPosition.set({ x: window.innerWidth - e.clientX, y: e.clientY });
+	loginPopupState.set(true);
+}
+
+export function hideLoginPopup() {
+	loginPopupState.set(false);
+}
+
 // Fullscreen Store
 export const fullScreenMode = writable<boolean>(false);
 
