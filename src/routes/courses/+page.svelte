@@ -4,7 +4,15 @@
 	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
 	import { fly } from 'svelte/transition';
 
+	import { subject } from '$lib/stores/components';
+
 	export let data: any;
+
+	let filteredCourses;
+
+	$: filteredCourses = data.courses.filter(
+		(course: any) => course.subjects.includes($subject) || $subject == 'all'
+	);
 </script>
 
 <div class="h-screen flex flex-col">
@@ -22,7 +30,7 @@
 			<section
 				class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-rows-5 gap-8 2xl:gap-1 place-items-center"
 			>
-				{#each data.courses as course}
+				{#each filteredCourses as course}
 					<CourseCard
 						title={course.title}
 						lessons={course.lessons}

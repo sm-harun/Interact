@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
+
 	export let title: string;
 	export let lessons: string[];
 	export let subjects: string;
@@ -8,6 +10,8 @@
 <div
 	class="group card size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token bg-cover bg-center hover:scale-110 duration-500"
 	style="background-image: url({image});"
+	in:fly={{ x: 100, duration: 300 }}
+	out:fly={{ x: 100, duration: 300 }}
 >
 	<div
 		class="w-full h-full rounded-container-token bg-gradient-to-t from-surface-900/90 from-20% to-transparent to-100% flex flex-col justify-end p-3 relative"

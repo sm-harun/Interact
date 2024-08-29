@@ -12,7 +12,9 @@
 <header class="flex-shrink-0 w-screen h-36 variant-glass-surface sticky top-0 flex flex-col">
 	<section class="flex-[2_1_0] p-3 flex items-center justify-between">
 		<div class="flex justify-between items-center gap-4 pl-4">
-			<h1 class="text-3xl lg:text-4xl text-primary-500-400-token text-border">
+			<h1
+				class="text-3xl lg:text-5xl text-primary-500-400-token font-sans font-bold flex items-center"
+			>
 				{$webTitle}
 			</h1>
 		</div>

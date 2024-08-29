@@ -49,3 +49,25 @@ export const fullScreenMode = writable<boolean>(false);
 export function toggleFullScreen() {
 	fullScreenMode.update((mode) => !mode);
 }
+
+type subject =
+	| 'all'
+	| 'math'
+	| 'computer science'
+	| 'physics'
+	| 'chemistry'
+	| 'biology'
+	| 'english'
+	| 'history'
+	| 'geography'
+	| 'politics'
+	| 'art'
+	| 'music'
+	| 'sport'
+	| 'other';
+
+export const subject = writable<subject>('all');
+
+export function setSubject(s: subject) {
+	subject.set(s);
+}

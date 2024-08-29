@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
 	import { fly } from 'svelte/transition';
+	import { subject, setSubject } from '$lib/stores/components';
 </script>
 
 <nav
@@ -7,8 +8,11 @@
 	in:fly={{ x: -50, duration: 500, delay: 500 }}
 	out:fly={{ x: -50, duration: 500 }}
 >
-	<div
-		class="w-100 aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+	<button
+		class="{$subject === 'all'
+			? 'bg-primary-500/70'
+			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+		on:click={() => setSubject('all')}
 	>
 		<svg viewBox="0 0 64 64" class="size-14">
 			<g>
@@ -38,9 +42,12 @@
 			</g></svg
 		>
 		<span>All</span>
-	</div>
-	<div
-		class="w-100 aspect-square flex flex-col gap-1 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+	</button>
+	<button
+		class="{$subject === 'math'
+			? 'bg-primary-500/70'
+			: ''} w-full aspect-square flex flex-col gap-1 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+		on:click={() => setSubject('math')}
 	>
 		<svg viewBox="0 0 512.001 512.001" class="size-12 rotate-[200deg]">
 			<g>
@@ -67,9 +74,12 @@
 			</g></svg
 		>
 		<span>Math</span>
-	</div>
-	<div
-		class="w-100 aspect-square flex flex-col justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+	</button>
+	<button
+		class="{$subject === 'chemistry'
+			? 'bg-primary-500/70'
+			: ''} w-full aspect-square flex flex-col justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+		on:click={() => setSubject('chemistry')}
 	>
 		<svg viewBox="0 0 479.6 479.6" class="size-12">
 			<g>
@@ -147,9 +157,12 @@
 			</g></svg
 		>
 		<span>Chemistry</span>
-	</div>
-	<div
-		class="w-100 aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+	</button>
+	<button
+		class="{$subject === 'physics'
+			? 'bg-primary-500/70'
+			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
+		on:click={() => setSubject('physics')}
 	>
 		<svg viewBox="0 0 512 512" class="size-10">
 			<g stroke="currentColor">
@@ -184,5 +197,5 @@
 			</g></svg
 		>
 		<span>Physics</span>
-	</div>
+	</button>
 </nav>
