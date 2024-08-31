@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 	import { app } from '$lib/firebase';
+
+	import { doc, getDoc, setDoc } from 'firebase/firestore';
+	import { DataBase } from '$lib/firebase';
+
 	import { setUser } from '$lib/stores/credentials';
 	import { goto } from '$app/navigation';
 
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import { theme, setTheme } from '$lib/stores/themes';
 
 	let auth = getAuth(app);
 	let googlProvider = new GoogleAuthProvider();
@@ -13,8 +18,24 @@
 
 	function signUpWithGoogle() {
 		signInWithPopup(auth, googlProvider)
-			.then((result) => {
+			.then(async (result) => {
 				setUser(result.user);
+
+				const docRef = doc(DataBase, 'users', result.user.uid);
+				const userData = await getDoc(docRef);
+
+				if (userData.exists()) {
+					// User exists.
+					setTheme(userData.data().theme);
+				} else {
+					// Defining new user data.
+					const docRef = doc(DataBase, 'users', result.user.uid);
+					const userData = {
+						theme: $theme
+					};
+					await setDoc(docRef, userData);
+				}
+
 				goto('/');
 
 				const signInToast: ToastSettings = {

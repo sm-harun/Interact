@@ -11,6 +11,9 @@
 	import { app } from '$lib/firebase';
 	import { setUser } from '$lib/stores/credentials';
 
+	import { doc, getDoc } from 'firebase/firestore';
+	import { DataBase } from '$lib/firebase';
+
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
@@ -19,13 +22,23 @@
 	import { initializeStores, Modal, Toast } from '@skeletonlabs/skeleton';
 
 	import { onDestroy } from 'svelte';
+	import { setTheme } from '$lib/stores/themes';
 
 	initializeStores();
-
 	let auth = getAuth(app);
+
+	async function fetchThemesData() {
+		let docSnap = await getDoc(doc(DataBase, 'users', auth.currentUser?.uid));
+		let userData = docSnap.data();
+		return userData?.theme;
+	}
+
 	let unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 		if (currentUser) {
 			setUser(currentUser);
+			fetchThemesData().then((theme) => {
+				if (theme) setTheme(theme);
+			});
 		} else {
 			setUser(null);
 		}

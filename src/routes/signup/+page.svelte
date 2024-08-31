@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
+	import { theme } from '$lib/stores/themes';
+
 	import ThemesButton from '$lib/components/UI/header/ThemesButton.svelte';
 	import Google from '$lib/components/authentication/Google.svelte';
 
 	import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-	import { app } from '$lib/firebase';
+	import { app, DataBase } from '$lib/firebase';
 	import { goto } from '$app/navigation';
 
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import { collection, doc, setDoc } from 'firebase/firestore';
 
 	let auth = getAuth(app);
 
@@ -24,6 +27,13 @@
 				await updateProfile(userCredentials.user, {
 					displayName: username
 				});
+
+				const docRef = doc(DataBase, 'users', userCredentials.user.uid);
+				const userData = {
+					theme: $theme
+				};
+				await setDoc(docRef, userData);
+
 				goto('/');
 
 				const signInToast: ToastSettings = {

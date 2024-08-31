@@ -1,4 +1,7 @@
 import { readable, writable } from 'svelte/store';
+import { getAuth } from 'firebase/auth';
+import { doc, DocumentReference, getDoc, updateDoc } from 'firebase/firestore';
+import { DataBase } from '$lib/firebase';
 
 export type Theme =
 	| 'skeleton'
@@ -16,6 +19,26 @@ export type Theme =
 export const webTitle = readable<string>('Interact');
 
 export let theme = writable<Theme>('crimson');
-export function updateTheme(newTheme: Theme) {
+
+// This one is used when the user first signs in, it doesn't require for the Data base to be updated.
+export function setTheme(newTheme: Theme) {
 	theme.set(newTheme);
+	document.body.setAttribute('data-theme', newTheme);
+}
+
+export async function updateTheme(newTheme: Theme) {
+	theme.set(newTheme);
+	document.body.setAttribute('data-theme', newTheme);
+
+	const docRef: DocumentReference = doc(DataBase, 'users', getAuth().currentUser?.uid);
+	await updateDoc(docRef, {
+		theme: newTheme
+	});
+}
+
+// Fullscreen Store
+export const fullScreenMode = writable<boolean>(false);
+
+export function toggleFullScreen() {
+	fullScreenMode.update((mode) => !mode);
 }

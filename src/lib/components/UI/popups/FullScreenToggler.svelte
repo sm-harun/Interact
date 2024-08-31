@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fullScreenMode, toggleFullScreen } from '$lib/stores/components';
+	import { fullScreenMode, toggleFullScreen } from '$lib/stores/themes';
 
 	// We refrence it to toggle between fullscreen.
 	const fullscreenElement = document.documentElement;

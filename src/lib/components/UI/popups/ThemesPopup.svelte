@@ -4,20 +4,23 @@
 	import { fly } from 'svelte/transition';
 
 	import type { Theme } from '$lib/stores/themes';
-	import { theme, updateTheme } from '$lib/stores/themes';
+	import { setTheme, theme, updateTheme } from '$lib/stores/themes';
 	import { hideThemesPopup, popupPosition } from '$lib/stores/components';
 
 	import FullScreenToggler from './FullScreenToggler.svelte';
 	import { onDestroy, onMount } from 'svelte';
+	import { getAuth } from 'firebase/auth';
 
 	let currentTheme: Theme = $theme;
 	let popupElement: HTMLDivElement;
 
+	// Updates the theme store.
 	$: {
-		document.body.setAttribute('data-theme', currentTheme);
-
-		// Updates the theme store.
-		updateTheme(currentTheme);
+		if (getAuth().currentUser) {
+			updateTheme(currentTheme);
+		} else {
+			setTheme(currentTheme);
+		}
 	}
 
 	function listentopointer(e: PointerEvent) {

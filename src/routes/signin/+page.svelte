@@ -4,22 +4,34 @@
 	import Google from '$lib/components/authentication/Google.svelte';
 	import ThemesButton from '$lib/components/UI/header/ThemesButton.svelte';
 	import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-	import { app } from '$lib/firebase';
+
+	import { DataBase } from '$lib/firebase';
+	import { doc, getDoc } from 'firebase/firestore';
 
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
+
+	import { setTheme } from '$lib/stores/themes';
 
 	const toastStore = getToastStore();
 
 	let email: string;
 	let password: string;
 
-	let auth = getAuth(app);
+	let auth = getAuth();
 
 	function signInWithEmail() {
 		signInWithEmailAndPassword(auth, email, password)
-			.then((result) => {
+			.then(async (result) => {
+				const docRef = doc(DataBase, 'users', result.user.uid);
+				const userData = await getDoc(docRef);
+
+				if (userData.exists()) {
+					setTheme(userData.data().theme);
+				}
+
 				goto('/');
+
 				const signInToast: ToastSettings = {
 					message: `Successfully Signed in as: ${result.user.displayName}`,
 					background: `variant-filled-success`,
