@@ -15,6 +15,8 @@
 	} from '@skeletonlabs/skeleton';
 	import Contacts from './Contacts.svelte';
 
+	import { user } from '$lib/stores/credentials';
+
 	let auth = getAuth(app);
 
 	const modalStore = getModalStore();
@@ -30,7 +32,7 @@
 					signOut(auth);
 
 					const signOutToast: ToastSettings = {
-						message: 'Successfully Logged Out.',
+						message: 'Successfully Logged Out',
 						hideDismiss: true,
 						timeout: 3000
 					};
@@ -66,7 +68,7 @@
 	out:fly={{ y: 10, duration: 300, delay: 200 }}
 >
 	<h1 class="text-xl font-bold px-3 mb-3 w-full grid place-items-center">
-		{$profilePopupPosition.user?.displayName}
+		{$user.displayName}
 	</h1>
 	<hr class="mt-2 mb-2" />
 	<a

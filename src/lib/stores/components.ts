@@ -16,13 +16,13 @@ export function hideThemesPopup() {
 
 // Profile Icon Popup Store
 export const profilePopupState = writable<boolean>(false);
-export const profilePopupPosition = writable<{ x: number; y: number; user?: User | null }>({
+export const profilePopupPosition = writable<{ x: number; y: number }>({
 	x: 0,
 	y: 0
 });
 
-export function showProfilePopup(e: MouseEvent, user: User) {
-	profilePopupPosition.set({ x: window.innerWidth - e.clientX, y: e.clientY, user: user });
+export function showProfilePopup(e: MouseEvent) {
+	profilePopupPosition.set({ x: window.innerWidth - e.clientX, y: e.clientY });
 	profilePopupState.set(true);
 }
 

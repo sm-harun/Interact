@@ -1,12 +1,39 @@
 <script lang="ts">
 	import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 	import { app } from '$lib/firebase';
+	import { setUser } from '$lib/stores/credentials';
+	import { goto } from '$app/navigation';
+
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
 	let auth = getAuth(app);
 	let googlProvider = new GoogleAuthProvider();
 
+	let toastStore = getToastStore();
+
 	function signUpWithGoogle() {
-		signInWithPopup(auth, googlProvider);
+		signInWithPopup(auth, googlProvider)
+			.then((result) => {
+				setUser(result.user);
+				goto('/');
+
+				const signInToast: ToastSettings = {
+					message: `Successfully Signed in as: ${result.user.displayName}`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+				toastStore.trigger(signInToast);
+			})
+			.catch((error) => {
+				const signInErrorToast: ToastSettings = {
+					message: `Sign in error: ${error.message}`,
+					background: `variant-filled-error`,
+					hideDismiss: true,
+					timeout: 6000
+				};
+				toastStore.trigger(signInErrorToast);
+			});
 	}
 </script>
 

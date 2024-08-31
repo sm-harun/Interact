@@ -4,8 +4,11 @@
 	import ThemesButton from '$lib/components/UI/header/ThemesButton.svelte';
 	import Google from '$lib/components/authentication/Google.svelte';
 
-	import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+	import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 	import { app } from '$lib/firebase';
+	import { goto } from '$app/navigation';
+
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
 	let auth = getAuth(app);
 
@@ -13,13 +16,32 @@
 	let password: string;
 	let username: string;
 
-	function signUpWithEmail() {
-		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredentials) => {
-				console.log('Successfully Signed in', userCredentials);
+	const toastStore = getToastStore();
+
+	async function signUpWithEmail() {
+		await createUserWithEmailAndPassword(auth, email, password)
+			.then(async (userCredentials) => {
+				await updateProfile(userCredentials.user, {
+					displayName: username
+				});
+				goto('/');
+
+				const signInToast: ToastSettings = {
+					message: `Successfully Signed in as: ${username}`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+				toastStore.trigger(signInToast);
 			})
 			.catch((error) => {
-				console.log('Error ', error.code, ' ', error.message);
+				const signInErrorToast: ToastSettings = {
+					message: `Sign Up error: ${error.message}`,
+					background: `variant-filled-error`,
+					hideDismiss: true,
+					timeout: 6000
+				};
+				toastStore.trigger(signInErrorToast);
 			});
 	}
 </script>

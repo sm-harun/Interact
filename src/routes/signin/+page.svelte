@@ -6,6 +6,11 @@
 	import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 	import { app } from '$lib/firebase';
 
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import { goto } from '$app/navigation';
+
+	const toastStore = getToastStore();
+
 	let email: string;
 	let password: string;
 
@@ -14,10 +19,23 @@
 	function signInWithEmail() {
 		signInWithEmailAndPassword(auth, email, password)
 			.then((result) => {
-				console.log('Successfully signed in as', result);
+				goto('/');
+				const signInToast: ToastSettings = {
+					message: `Successfully Signed in as: ${result.user.displayName}`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+				toastStore.trigger(signInToast);
 			})
 			.catch((error) => {
-				console.log('Error ', error);
+				const signInErrorToast: ToastSettings = {
+					message: `Sign Up error: ${error.message}`,
+					background: `variant-filled-error`,
+					hideDismiss: true,
+					timeout: 6000
+				};
+				toastStore.trigger(signInErrorToast);
 			});
 	}
 </script>
