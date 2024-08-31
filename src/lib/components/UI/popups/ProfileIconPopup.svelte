@@ -17,7 +17,7 @@
 
 	import { user } from '$lib/stores/credentials';
 
-	let auth = getAuth(app);
+	let auth = getAuth();
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
@@ -29,14 +29,24 @@
 			body: 'Are you sure you want to log out?',
 			response: (r: boolean) => {
 				if (r === true) {
-					signOut(auth);
-
-					const signOutToast: ToastSettings = {
-						message: 'Successfully Logged Out',
-						hideDismiss: true,
-						timeout: 3000
-					};
-					toastStore.trigger(signOutToast);
+					signOut(auth)
+						.then(() => {
+							const signOutToast: ToastSettings = {
+								message: 'Successfully Logged Out',
+								hideDismiss: true,
+								timeout: 3000
+							};
+							toastStore.trigger(signOutToast);
+						})
+						.catch((error) => {
+							const signOutErrorToast: ToastSettings = {
+								message: `Sign Out error: ${error.message}`,
+								background: `variant-filled-error`,
+								hideDismiss: true,
+								timeout: 6000
+							};
+							toastStore.trigger(signOutErrorToast);
+						});
 				}
 			}
 		};
@@ -67,10 +77,13 @@
 	in:fly={{ y: 10, duration: 300 }}
 	out:fly={{ y: 10, duration: 300, delay: 200 }}
 >
-	<h1 class="text-xl font-bold px-3 mb-3 w-full grid place-items-center">
-		{$user.displayName}
-	</h1>
-	<hr class="mt-2 mb-2" />
+	<!-- Even if this component won't render, it will still be there, thats why ths if statement is needed. -->
+	{#if $user}
+		<h1 class="text-xl font-bold px-3 mb-3 w-full grid place-items-center">
+			{$user.displayName}
+		</h1>
+		<hr class="mt-2 mb-2" />
+	{/if}
 	<a
 		href="/settings"
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30 close"
@@ -99,7 +112,7 @@
 		on:click={confirmLogout}
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30 close"
 	>
-		<span>Log out</span>
+		<span>Sign out</span>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path
 				stroke-linecap="round"

@@ -23,5 +23,5 @@
 		/>
 	</svg>
 
-	<span class="hidden sm:inline">Log In</span>
+	<span class="hidden sm:inline">Sign In</span>
 </button>

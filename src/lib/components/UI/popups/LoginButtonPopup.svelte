@@ -34,7 +34,7 @@
 		on:click={hideLoginPopup}
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30 close"
 	>
-		<span>Log In</span>
+		<span>Sign In</span>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path
 				stroke-linecap="round"
