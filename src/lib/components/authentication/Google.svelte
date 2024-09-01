@@ -36,7 +36,7 @@
 					await setDoc(docRef, userData);
 				}
 
-				goto('/');
+				goto('/home');
 
 				const signInToast: ToastSettings = {
 					message: `Successfully Signed in as: ${result.user.displayName}`,

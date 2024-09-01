@@ -11,7 +11,7 @@
 	import { goto } from '$app/navigation';
 
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
-	import { collection, doc, setDoc } from 'firebase/firestore';
+	import { doc, setDoc } from 'firebase/firestore';
 
 	let auth = getAuth(app);
 
@@ -34,7 +34,7 @@
 				};
 				await setDoc(docRef, userData);
 
-				goto('/');
+				goto('/home');
 
 				const signInToast: ToastSettings = {
 					message: `Successfully Signed in as: ${username}`,
@@ -62,7 +62,7 @@
 >
 	<div class="absolute top-5 right-5 flex items-center">
 		<a
-			href="/"
+			href="/home"
 			class="text-xl btn rounded-container-token hover:text-primary-500 justify-center lg:justify-between relative"
 			>Home</a
 		>

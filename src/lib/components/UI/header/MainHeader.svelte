@@ -32,11 +32,11 @@
 		<ol class="breadcrumb">
 			<li class="crumb">
 				<a
-					href="/"
+					href="/home"
 					class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
 				>
 					<span>Home</span>
-					{#if $page.url.pathname === '/'}
+					{#if $page.url.pathname === '/home'}
 						<div
 							class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
 							in:fly={{ x: 100, duration: 500 }}

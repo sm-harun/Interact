@@ -30,7 +30,7 @@
 					setTheme(userData.data().theme);
 				}
 
-				goto('/');
+				goto('/home');
 
 				const signInToast: ToastSettings = {
 					message: `Successfully Signed in as: ${result.user.displayName}`,
@@ -58,7 +58,7 @@
 >
 	<div class="absolute top-5 right-5 flex items-center">
 		<a
-			href="/"
+			href="/home"
 			class="text-xl btn rounded-container-token hover:text-primary-500 justify-center lg:justify-between relative"
 			>Home</a
 		>
