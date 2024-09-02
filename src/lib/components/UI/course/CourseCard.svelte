@@ -2,8 +2,8 @@
 	import { fly } from 'svelte/transition';
 
 	export let title: string;
-	export let lessons: string[];
-	export let subjects: string;
+	export let lessons: Lesson[];
+	export let subjects: string[];
 	export let image: string;
 </script>
 
@@ -18,7 +18,7 @@
 	>
 		<h1
 			class="text-5xl font-bold decoration-500-400-token text-primary-500-400-token absolute bottom-5 left-5
-      group-hover:text-6xl xl:group-hover:text-8xl group-hover:bottom-1/2 group-hover:left-1/2
+      group-hover:text-6xl group-hover:bottom-1/2 group-hover:left-1/2
       group-hover:-translate-x-1/2 group-hover:translate-y-1/2 duration-500"
 		>
 			{title}
