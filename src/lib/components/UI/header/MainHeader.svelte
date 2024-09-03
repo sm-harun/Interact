@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	import { fly, slide } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	import { webTitle } from '$lib/stores/themes';
 
 	import ThemeToggler from './ThemesButton.svelte';
 	import TopIcon from './TopIcon.svelte';
+	import HomeButton from './HomeButton.svelte';
 
 	export let title = $webTitle;
 	export let showMainRoutes = true;
 	export let showBackButton = false;
+	export let showHomeButton = false;
 
 	function goBack() {
 		window.history.back();
@@ -46,8 +48,13 @@
 			</h1>
 		</div>
 		<nav
-			class="h-full list-none text-2xl flex justify-end lg:justify-evenly items-center lg:pr-4 gap-1 lg:gap-3"
+			class="h-full list-none text-2xl flex justify-end lg:justify-evenly items-center lg:pr-4 gap-1 lg:gap-2"
 		>
+			{#if showHomeButton}
+				<li>
+					<HomeButton />
+				</li>
+			{/if}
 			<li>
 				<ThemeToggler />
 			</li>

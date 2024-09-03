@@ -4,7 +4,8 @@
 
 	import { getModalStore, ProgressBar, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { getDocs, setDoc } from 'firebase/firestore';
-	import { getCourseColl, getCourseDoc, getLessonsColl } from '$lib/docRefs';
+	import { getCourseColl, getCourseDoc } from '$lib/docRefs';
+	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
 
 	const modalStore = getModalStore();
 
@@ -43,22 +44,25 @@
 	}
 </script>
 
-<main class="flex-grow p-6 overflow-auto flex gap-14 relative flex-wrap">
-	{#await getCourses()}
-		<ProgressBar />
-	{:then docs}
-		{#each docs as doc}
-			<a href="/create/{doc.title}">
-				<CourseCard title={doc.title} image={doc.background} lessons={['']} subjects={['math']} />
-			</a>
-		{/each}
-		<button
-			class="size-60 sm:size-72 btn rounded-container-token bg-primary-500/50"
-			on:click={addNewCourse}
-		>
-			<span class="text-9xl">+</span>
-		</button>
-	{:catch error}
-		<p>Error {console.log(error)}</p>
-	{/await}
-</main>
+<div class="h-screen flex flex-col">
+	<MainHeader title={'Create'} showMainRoutes={false} showBackButton={true} showHomeButton={true} />
+	<main class="flex-grow p-6 overflow-auto flex gap-14 relative flex-wrap">
+		{#await getCourses()}
+			<ProgressBar />
+		{:then docs}
+			{#each docs as doc}
+				<a href="/create/{doc.title}">
+					<CourseCard title={doc.title} image={doc.background} lessons={0} subjects={['math']} />
+				</a>
+			{/each}
+			<button
+				class="size-60 sm:size-72 btn rounded-container-token bg-primary-500/50"
+				on:click={addNewCourse}
+			>
+				<span class="text-9xl">+</span>
+			</button>
+		{:catch error}
+			<p>Error {console.log(error)}</p>
+		{/await}
+	</main>
+</div>

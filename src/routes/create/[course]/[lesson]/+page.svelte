@@ -1,4 +1,5 @@
 <script lang="ts">
+	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
 	import ChoiceComponent from '$lib/components/create/textsections/ChoiceComponent.svelte';
 	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
 
@@ -47,6 +48,7 @@
 					title: 'Provide a Title for this new Section',
 					valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
 					response: (r: string) => {
+						if (!r) return;
 						createSection(selected, r);
 					}
 				};
@@ -72,39 +74,52 @@
 				answer: 0,
 				explanation: ''
 			};
-			sections.push(newSection);
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
 		}
 		updater++;
 	}
 </script>
 
-<hr />
-<header
-	class="variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 flex items-center justify-between z-40"
->
-	<h1 class="h2 font-bold text-primary-500-400-token ml-4">{data.params.lesson}</h1>
-	<ul class="flex items-center justify-between gap-4">
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" bind:this={button}>
-			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-			</svg>
-			<span class="hidden lg:flex">Add Section</span></button
-		>
-	</ul>
-</header>
-<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5">
-	{#key updater}
-		{#if sections}
-			{#each sections as section}
-				{#if section.type == 'Explanation'}
-					<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
-				{:else if section.type == 'Choice'}
-					<ChoiceComponent {section} course={data.params.course} lesson={data.params.lesson} />
-				{/if}
-			{/each}
-		{:else}
-			<ProgressRadial />
-		{/if}
-	{/key}
+<div class="h-screen flex flex-col">
+	<MainHeader
+		title={`Create / ${data.params.course}`}
+		showMainRoutes={false}
+		showBackButton={true}
+	/>
+	<hr />
+	<header
+		class="variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 flex items-center justify-between z-40"
+	>
+		<h1 class="h2 font-bold text-primary-500-400-token ml-4">{data.params.lesson}</h1>
+		<ul class="flex items-center justify-between gap-4">
+			<button class="btn variant-ringed-primary hover:variant-filled-primary" bind:this={button}>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
+				<span class="hidden lg:flex">Add Section</span></button
+			>
+		</ul>
+	</header>
+	<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5">
+		{#key updater}
+			{#if sections}
+				{#each sections as section}
+					{#if section.type == 'Explanation'}
+						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'Choice'}
+						<ChoiceComponent {section} course={data.params.course} lesson={data.params.lesson} />
+					{/if}
+				{/each}
+			{:else}
+				<ProgressRadial />
+			{/if}
+		{/key}
+	</div>
 </div>

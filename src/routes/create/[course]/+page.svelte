@@ -7,9 +7,11 @@
 	import { goto } from '$app/navigation';
 
 	import LessonCard from '$lib/components/UI/course/lessonCard.svelte';
+	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
 	import { getLessonsColl, getLessonsDoc, getSectionsDoc } from '$lib/docRefs.js';
 
 	export let data;
+
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
 
@@ -64,25 +66,39 @@
 	}
 </script>
 
-<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap">
-	{#await getLessons()}
-		<ProgressBar />
-	{:then lessons}
-		{#each lessons as lesson}
-			<a href="/create/{data.params.course}/{lesson.title}">
-				<LessonCard title={lesson.title} image={lesson.background} sections={lesson.sections} />
-			</a>
-		{/each}
-		<button
-			class="btn justify-between absolute top-5 right-5 variant-filled-primary"
-			on:click={addNewLesson}
-		>
-			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-			</svg>
-			<span>Add Lesson</span>
-		</button>
-	{:catch}
-		<p>Error</p>
-	{/await}
-</main>
+<div class="h-screen flex flex-col">
+	<MainHeader
+		title={`Create / ${data.params.course}`}
+		showMainRoutes={false}
+		showBackButton={true}
+		showHomeButton={true}
+	/>
+	<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap">
+		{#await getLessons()}
+			<ProgressBar />
+		{:then lessons}
+			{#each lessons as lesson}
+				<a href="/create/{data.params.course}/{lesson.title}">
+					<LessonCard title={lesson.title} image={lesson.background} sections={lesson.sections} />
+				</a>
+			{/each}
+			<button
+				class="btn justify-between absolute top-5 right-5 variant-filled-primary"
+				on:click={addNewLesson}
+			>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
+				<span>Add Lesson</span>
+			</button>
+		{:catch}
+			<p>Error</p>
+		{/await}
+	</main>
+</div>

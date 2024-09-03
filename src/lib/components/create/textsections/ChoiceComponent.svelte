@@ -3,13 +3,19 @@
 	import { getSectionsDoc } from '$lib/docRefs';
 	import { onMount } from 'svelte';
 
-	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import {
+		getToastStore,
+		type ToastSettings,
+		getModalStore,
+		type ModalSettings
+	} from '@skeletonlabs/skeleton';
 
 	export let section: ChoiceSection;
 	export let course: string;
 	export let lesson: string;
 
 	let toastStore = getToastStore();
+	let modalStore = getModalStore();
 
 	let sectionChoices = section.choices;
 	let sectionTitle = section.title;
@@ -48,7 +54,6 @@
 		newChoices: string[],
 		oChoices: string[]
 	) {
-		console.log(newExplanation, oExplanation);
 		if (
 			newTitle !== oTitle ||
 			compareArrays(newChoices, oChoices) ||
@@ -89,6 +94,24 @@
 			};
 			toastStore.trigger(toastSettings);
 		});
+	}
+
+	// This reverts back to the last synced state.
+	function resetChanges() {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: 'Are you sure you want to RESET the changes?',
+			body: 'This will reset to the last synced state.',
+			valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
+			response: async (r: string) => {
+				if (!r) return;
+
+				sectionChoices = [...oldChoices];
+				sectionTitle = oldTitle;
+				sectionExplanation = oldExplanation;
+			}
+		};
+		modalStore.trigger(modalSettings);
 	}
 </script>
 
@@ -141,6 +164,20 @@
 		/>
 	</label>
 	<div class="w-full flex items-center justify-between mt-5">
+		<button
+			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+			on:click={resetChanges}
+		>
+			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
+				/>
+			</svg>
+
+			<span class="hidden lg:flex">Reset</span>
+		</button>
 		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addChoice}>
 			<span>Add Choice</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">

@@ -12,6 +12,7 @@
 	import { goto } from '$app/navigation';
 
 	import { setTheme } from '$lib/stores/themes';
+	import HomeButton from '$lib/components/UI/header/HomeButton.svelte';
 
 	const toastStore = getToastStore();
 
@@ -57,11 +58,7 @@
 	in:fly={{ x: -100, duration: 1000 }}
 >
 	<div class="absolute top-5 right-5 flex items-center">
-		<a
-			href="/home"
-			class="text-xl btn rounded-container-token hover:text-primary-500 justify-center lg:justify-between relative"
-			>Home</a
-		>
+		<HomeButton />
 		<ThemesButton />
 	</div>
 	<h1 class="text-8xl w-full h-72 grid place-items-center text-primary-500 font-bold">Interact</h1>
