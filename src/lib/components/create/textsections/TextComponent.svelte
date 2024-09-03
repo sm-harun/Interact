@@ -3,9 +3,13 @@
 	import { updateDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+
 	export let section: ExplainSection;
 	export let course: string;
 	export let lesson: string;
+
+	let toastStore = getToastStore();
 
 	let sectionText: string = section.text;
 	let sectionTitle: string = section.title;
@@ -30,7 +34,17 @@
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
 			text: sectionText,
 			title: sectionTitle
-		}).then(() => (oldText = sectionText));
+		}).then(() => {
+			oldText = sectionText;
+			// Success Toast
+			const toastSettings: ToastSettings = {
+				message: `Syncing successful`,
+				background: `variant-filled-success`,
+				hideDismiss: true,
+				timeout: 3000
+			};
+			toastStore.trigger(toastSettings);
+		});
 	}
 </script>
 

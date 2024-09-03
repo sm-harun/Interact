@@ -2,7 +2,13 @@
 	import ChoiceComponent from '$lib/components/create/textsections/ChoiceComponent.svelte';
 	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
 
-	import { ProgressRadial, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import {
+		ProgressRadial,
+		getToastStore,
+		getModalStore,
+		type ModalSettings,
+		type ToastSettings
+	} from '@skeletonlabs/skeleton';
 
 	import { getDocs, setDoc } from 'firebase/firestore';
 	import { getSectionsColl, getSectionsDoc } from '$lib/docRefs';
@@ -15,6 +21,7 @@
 	let updater = 0;
 	let button: HTMLButtonElement;
 	let toastStore = getToastStore();
+	let modalStore = getModalStore();
 	let sections: any[] = [];
 
 	onMount(async () => {
@@ -34,31 +41,42 @@
 		toastStore.trigger(toastSettings);
 
 		button.onclick = (e) => {
-			// This just creates a new Section on the client
 			showSectionPopup(e, (selected) => {
-				if (selected == 'Text') {
-					let newSection: ExplainSection = {
-						type: 'Explanation',
-						title: '',
-						text: ''
-					};
-					sections.push(newSection);
-					setDoc(getSectionsDoc(data.params.course, data.params.lesson, 'New Section'), newSection);
-				} else if (selected == 'Choice') {
-					let newSection: ChoiceSection = {
-						type: 'Choice',
-						title: '',
-						choices: [''],
-						answer: 0,
-						explanation: "It doesn't need one"
-					};
-					sections.push(newSection);
-					setDoc(getSectionsDoc(data.params.course, data.params.lesson, 'New Section'), newSection);
-				}
-				updater++;
+				const modalSettings: ModalSettings = {
+					type: 'prompt',
+					title: 'Provide a Title for this new Section',
+					valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
+					response: (r: string) => {
+						createSection(selected, r);
+					}
+				};
+				modalStore.trigger(modalSettings);
 			});
 		};
 	});
+
+	function createSection(selected: string, title: string) {
+		if (selected == 'Text') {
+			let newSection: ExplainSection = {
+				type: 'Explanation',
+				title: title,
+				text: ''
+			};
+			sections.push(newSection);
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+		} else if (selected == 'Choice') {
+			let newSection: ChoiceSection = {
+				type: 'Choice',
+				title: title,
+				choices: ['Choice 1'],
+				answer: 0,
+				explanation: ''
+			};
+			sections.push(newSection);
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+		}
+		updater++;
+	}
 </script>
 
 <hr />

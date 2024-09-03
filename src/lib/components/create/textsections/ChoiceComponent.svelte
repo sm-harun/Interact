@@ -1,26 +1,40 @@
 <script lang="ts">
 	import { updateDoc } from 'firebase/firestore';
 	import { getSectionsDoc } from '$lib/docRefs';
-	import { afterUpdate, onMount } from 'svelte';
+	import { onMount } from 'svelte';
+
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
 	export let section: ChoiceSection;
 	export let course: string;
 	export let lesson: string;
 
+	let toastStore = getToastStore();
+
 	let sectionChoices = section.choices;
 	let sectionTitle = section.title;
+	let sectionExplanation = section.explanation;
 
 	let buttonSynced = true;
 	let updater = 0;
 
 	let oldChoices: string[];
 	let oldTitle: string;
+	let oldExplanation: string;
 	onMount(() => {
 		oldChoices = [...sectionChoices];
 		oldTitle = sectionTitle;
+		oldExplanation = sectionExplanation;
 	});
 
-	$: checkIfChanged(sectionTitle, oldTitle, sectionChoices, oldChoices);
+	$: checkIfChanged(
+		sectionTitle,
+		oldTitle,
+		sectionExplanation,
+		oldExplanation,
+		sectionChoices,
+		oldChoices
+	);
 
 	const compareArrays = (a: string[], b: string[]) => {
 		return JSON.stringify(a) !== JSON.stringify(b);
@@ -29,10 +43,17 @@
 	function checkIfChanged(
 		newTitle: string,
 		oTitle: string,
+		newExplanation: string,
+		oExplanation: string,
 		newChoices: string[],
 		oChoices: string[]
 	) {
-		if (newTitle !== oTitle || compareArrays(newChoices, oChoices)) {
+		console.log(newExplanation, oExplanation);
+		if (
+			newTitle !== oTitle ||
+			compareArrays(newChoices, oChoices) ||
+			newExplanation !== oExplanation
+		) {
 			buttonSynced = false;
 		} else {
 			buttonSynced = true;
@@ -52,10 +73,21 @@
 	function syncSection() {
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
 			choices: sectionChoices,
-			title: sectionTitle
+			title: sectionTitle,
+			explanation: sectionExplanation
 		}).then(() => {
 			oldChoices = [...sectionChoices];
 			oldTitle = sectionTitle;
+			oldExplanation = sectionExplanation;
+
+			// Success Toast
+			const toastSettings: ToastSettings = {
+				message: `Syncing successful`,
+				background: `variant-filled-success`,
+				hideDismiss: true,
+				timeout: 3000
+			};
+			toastStore.trigger(toastSettings);
 		});
 	}
 </script>
@@ -70,11 +102,11 @@
 			bind:value={sectionTitle}
 		/>
 
-		<div class="ml-7">
+		<div class="flex flex-col gap-3 ml-7">
 			{#key updater}
 				{#each sectionChoices as choice, i}
 					<strong>Choice {i + 1}: </strong>
-					<div class="flex items-center gap-4 px-5">
+					<div class="flex items-center gap-4 lg:px-5">
 						<input
 							class="input variant-filled-surface"
 							type="text"
@@ -100,6 +132,13 @@
 				{/each}
 			{/key}
 		</div>
+		<strong>Explanation: </strong>
+		<input
+			class="input variant-filled-surface mt-5"
+			type="text"
+			placeholder="Explanation..."
+			bind:value={sectionExplanation}
+		/>
 	</label>
 	<div class="w-full flex items-center justify-between mt-5">
 		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addChoice}>
