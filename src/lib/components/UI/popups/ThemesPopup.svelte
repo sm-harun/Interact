@@ -40,7 +40,7 @@
 
 <div
 	id="themes-popup"
-	class="card w-60 lg:w-80 text-lg lg:text-xl p-5 variant-surface-700 z-50 border-1 absolute"
+	class="card w-60 lg:w-80 text-lg lg:text-xl p-5 variant-surface-700 z-50 border-1 fixed"
 	style="top: {$popupPosition.y}px; right: {$popupPosition.x}px;"
 	bind:this={popupElement}
 	in:fly={{ y: 10, duration: 300 }}

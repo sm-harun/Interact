@@ -5,7 +5,12 @@
 	import ProfileIconPopup from '$lib/components/UI/popups/ProfileIconPopup.svelte';
 	import LoginButtonPopup from '$lib/components/UI/popups/LoginButtonPopup.svelte';
 
-	import { themesPopupState, profilePopupState, loginPopupState } from '$lib/stores/components';
+	import {
+		themesPopupState,
+		profilePopupState,
+		loginPopupState,
+		sectionPopupState
+	} from '$lib/stores/components';
 
 	import { getAuth, onAuthStateChanged } from 'firebase/auth';
 	import { app } from '$lib/firebase';
@@ -23,6 +28,7 @@
 
 	import { onDestroy } from 'svelte';
 	import { setTheme } from '$lib/stores/themes';
+	import AddSectionPrompt from '$lib/components/create/popups/AddSectionPrompt.svelte';
 
 	initializeStores();
 	let auth = getAuth(app);
@@ -62,6 +68,10 @@
 
 {#if $loginPopupState}
 	<LoginButtonPopup />
+{/if}
+
+{#if $sectionPopupState}
+	<AddSectionPrompt />
 {/if}
 
 <slot />

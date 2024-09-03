@@ -23,7 +23,7 @@
 </script>
 
 <div
-	class="w-72 card p-3 rounded-container-token variant-surface-700 z-50 absolute"
+	class="w-72 card p-3 rounded-container-token variant-surface-700 z-50 fixed"
 	style="top: {$loginPopupPosition.y}px; right: {$loginPopupPosition.x}px;"
 	bind:this={popupElement}
 	in:fly={{ y: 10, duration: 300 }}

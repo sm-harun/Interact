@@ -4,7 +4,5 @@
 
 <div class="h-screen flex flex-col">
 	<MainHeader title={'Create'} showMainRoutes={false} showBackButton={true} />
-	<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap">
-		<slot />
-	</main>
+	<slot />
 </div>

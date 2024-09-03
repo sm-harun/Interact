@@ -6,16 +6,22 @@ type Course = {
 
 type Lesson = {
 	title: string;
-	sections: (Section | choiceSection)[];
+	sections: Section[];
 };
 
-type Section = {
-	type: string;
+type BasicSection = {
+	type: 'Explanation' | 'Choice' | 'Visualization';
+	title: string;
+};
+
+type ExplainSection = BasicSection & {
 	text: string;
 };
 
-type choiceSection = Section & {
+type ChoiceSection = BasicSection & {
 	choices: string[];
 	answer: number;
 	explanation: string;
 };
+
+type Section = ExplainSection | ChoiceSection;

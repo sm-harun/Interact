@@ -33,7 +33,7 @@
 				{#each filteredCourses as course}
 					<CourseCard
 						title={course.title}
-						lessons={course.lessons}
+						lessons={course.lessons.length}
 						subjects={course.subjects}
 						image={course.image}
 					/>

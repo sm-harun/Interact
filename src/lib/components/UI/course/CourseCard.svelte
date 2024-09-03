@@ -2,7 +2,7 @@
 	import { fly } from 'svelte/transition';
 
 	export let title: string;
-	export let lessons: Lesson[];
+	export let lessons: number;
 	export let subjects: string[];
 	export let image: string;
 </script>
@@ -25,7 +25,7 @@
 		</h1>
 		<p class="opacity-0 group-hover:opacity-100 duration-1000 delay-200 group-hover:text-2xl">
 			<span class="text-secondary-500-400-token"
-				>Lessons:<span class="text-primary-500 ml-2">{lessons.length}</span>
+				>Lessons:<span class="text-primary-500 ml-2">{lessons}</span>
 			</span>
 		</p>
 		<p
