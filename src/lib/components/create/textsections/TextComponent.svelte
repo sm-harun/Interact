@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getSectionsDoc } from '$lib/docRefs';
-	import { updateDoc } from 'firebase/firestore';
+	import { deleteDoc, updateDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
 	import {
@@ -44,25 +44,35 @@
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
 			text: sectionText,
 			title: sectionTitle
-		}).then(() => {
-			oldText = sectionText;
-			oldTitle = sectionTitle;
-			// Success Toast
-			const toastSettings: ToastSettings = {
-				message: `Syncing successful`,
-				background: `variant-filled-success`,
-				hideDismiss: true,
-				timeout: 3000
-			};
-			toastStore.trigger(toastSettings);
-		});
+		})
+			.then(() => {
+				oldText = sectionText;
+				oldTitle = sectionTitle;
+				// Success Toast
+				const toastSettings: ToastSettings = {
+					message: `Syncing successful`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+				toastStore.trigger(toastSettings);
+			})
+			.catch((error) => {
+				const syncError: ToastSettings = {
+					message: `Sync Failed: ${error.message}`,
+					background: `variant-filled-error`,
+					hideDismiss: true,
+					timeout: 6000
+				};
+				toastStore.trigger(syncError);
+			});
 	}
 
 	// This reverts back to the last synced state.
 	function resetChanges() {
 		const modalSettings: ModalSettings = {
 			type: 'confirm',
-			title: 'Are you sure you want to RESET the changes?',
+			title: 'Are you sure you want to Reset the changes?',
 			body: 'This will reset to the last synced state.',
 			valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
 			response: async (r: string) => {

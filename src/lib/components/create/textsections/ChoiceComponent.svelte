@@ -80,20 +80,30 @@
 			choices: sectionChoices,
 			title: sectionTitle,
 			explanation: sectionExplanation
-		}).then(() => {
-			oldChoices = [...sectionChoices];
-			oldTitle = sectionTitle;
-			oldExplanation = sectionExplanation;
+		})
+			.then(() => {
+				oldChoices = [...sectionChoices];
+				oldTitle = sectionTitle;
+				oldExplanation = sectionExplanation;
 
-			// Success Toast
-			const toastSettings: ToastSettings = {
-				message: `Syncing successful`,
-				background: `variant-filled-success`,
-				hideDismiss: true,
-				timeout: 3000
-			};
-			toastStore.trigger(toastSettings);
-		});
+				// Success Toast
+				const toastSettings: ToastSettings = {
+					message: `Syncing successful`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+				toastStore.trigger(toastSettings);
+			})
+			.catch((error) => {
+				const syncError: ToastSettings = {
+					message: `Sync Failed: ${error.message}`,
+					background: `variant-filled-error`,
+					hideDismiss: true,
+					timeout: 6000
+				};
+				toastStore.trigger(syncError);
+			});
 	}
 
 	// This reverts back to the last synced state.

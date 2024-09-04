@@ -27,7 +27,6 @@
 	in:fly={{ y: 10, duration: 300 }}
 	out:fly={{ y: 10, duration: 300, delay: 200 }}
 >
-	<hr />
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
@@ -35,15 +34,13 @@
 			hideSectionPopup();
 		}}>Text</button
 	>
-	<hr />
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
 			$sectionPopupPosition.callback('Choice');
 			hideSectionPopup();
-		}}>Choice</button
+		}}>Question</button
 	>
-	<hr />
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
@@ -51,5 +48,4 @@
 			hideSectionPopup();
 		}}>Visual</button
 	>
-	<hr />
 </div>

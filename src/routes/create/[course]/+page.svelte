@@ -75,7 +75,11 @@
 	/>
 	<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap">
 		{#await getLessons()}
-			<ProgressBar />
+			<ProgressBar
+				meter={'bg-primary-500 h-1'}
+				track={'bg-surface-500 absolute top-0 left-0 w-full h-1'}
+				rounded={'rounded-none'}
+			/>
 		{:then lessons}
 			{#each lessons as lesson}
 				<a href="/create/{data.params.course}/{lesson.title}">

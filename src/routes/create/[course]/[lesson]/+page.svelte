@@ -4,7 +4,7 @@
 	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
 
 	import {
-		ProgressRadial,
+		ProgressBar,
 		getToastStore,
 		getModalStore,
 		type ModalSettings,
@@ -24,6 +24,7 @@
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 	let sections: any[] = [];
+	let emptyArray: any[] = [];
 
 	onMount(async () => {
 		let fetchedSections = await getDocs(getSectionsColl(data.params.course, data.params.lesson));
@@ -107,9 +108,9 @@
 			>
 		</ul>
 	</header>
-	<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5">
+	<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5 relative">
 		{#key updater}
-			{#if sections}
+			{#if JSON.stringify(sections) !== JSON.stringify(emptyArray)}
 				{#each sections as section}
 					{#if section.type == 'Explanation'}
 						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
@@ -118,7 +119,11 @@
 					{/if}
 				{/each}
 			{:else}
-				<ProgressRadial />
+				<ProgressBar
+					meter={'bg-primary-500 h-1'}
+					track={'bg-surface-500 absolute top-0 left-0 w-full h-1'}
+					rounded={'rounded-none'}
+				/>
 			{/if}
 		{/key}
 	</div>

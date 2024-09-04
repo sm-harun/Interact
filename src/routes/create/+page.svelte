@@ -48,7 +48,11 @@
 	<MainHeader title={'Create'} showMainRoutes={false} showBackButton={true} showHomeButton={true} />
 	<main class="flex-grow p-6 overflow-auto flex gap-14 relative flex-wrap">
 		{#await getCourses()}
-			<ProgressBar />
+			<ProgressBar
+				meter={'bg-primary-500 h-1'}
+				track={'bg-surface-500 absolute top-0 left-0 w-full h-1'}
+				rounded={'rounded-none'}
+			/>
 		{:then docs}
 			{#each docs as doc}
 				<a href="/create/{doc.title}">

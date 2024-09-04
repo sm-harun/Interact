@@ -84,7 +84,7 @@
 				<span>Username: </span>
 				<input class="input" type="text" placeholder="username" bind:value={username} />
 			</label>
-			<a class="btn variant-filled" on:click={signUpWithEmail} href="/">Sign up</a>
+			<button class="btn variant-filled" on:click={signUpWithEmail}>Sign up</button>
 			<a href="/signin" class="anchor text-sm">I have an account?</a>
 		</div>
 	</section>
