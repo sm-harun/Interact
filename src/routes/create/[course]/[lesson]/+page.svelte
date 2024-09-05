@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
-	import ChoiceComponent from '$lib/components/create/textsections/ChoiceComponent.svelte';
 	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
+	import QuestionComponent from '$lib/components/create/textsections/QuestionComponent.svelte';
 
 	import {
 		ProgressBar,
@@ -11,7 +11,7 @@
 		type ToastSettings
 	} from '@skeletonlabs/skeleton';
 
-	import { getDocs, setDoc } from 'firebase/firestore';
+	import { getDocs, setDoc, query, orderBy } from 'firebase/firestore';
 	import { getSectionsColl, getSectionsDoc } from '$lib/docRefs';
 
 	import { onMount } from 'svelte';
@@ -26,12 +26,19 @@
 	let sections: any[] = [];
 	let emptyArray: any[] = [];
 
+	// This is needed to check if we need a loading bar.
+	let fetched = false;
+
 	onMount(async () => {
-		let fetchedSections = await getDocs(getSectionsColl(data.params.course, data.params.lesson));
+		let fetchedSections = await getDocs(
+			query(getSectionsColl(data.params.course, data.params.lesson), orderBy('index', 'asc'))
+		);
 		fetchedSections.forEach((section) => {
 			sections.push(section.data());
 			updater++;
 		});
+
+		fetched = true;
 
 		// Success Toast
 		const toastSettings: ToastSettings = {
@@ -63,16 +70,18 @@
 			let newSection: ExplainSection = {
 				type: 'Explanation',
 				title: title,
+				index: sections.length,
 				text: ''
 			};
 			sections.push(newSection);
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-		} else if (selected == 'Choice') {
-			let newSection: ChoiceSection = {
-				type: 'Choice',
+		} else if (selected == 'Question') {
+			let newSection: QuestionSection = {
+				type: 'Question',
 				title: title,
+				index: sections.length,
 				choices: ['Choice 1'],
-				answer: 0,
+				answer: 1,
 				explanation: ''
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
@@ -114,10 +123,16 @@
 				{#each sections as section}
 					{#if section.type == 'Explanation'}
 						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'Choice'}
-						<ChoiceComponent {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'Question'}
+						<QuestionComponent {section} course={data.params.course} lesson={data.params.lesson} />
 					{/if}
 				{/each}
+			{:else if fetched}
+				<p
+					class="h4 bg-surface-300-600-token text-surface-500-400-token p-5 grid place-items-center rounded-container-token"
+				>
+					This lesson is empty, Add new sections
+				</p>
 			{:else}
 				<ProgressBar
 					meter={'bg-primary-500 h-1'}

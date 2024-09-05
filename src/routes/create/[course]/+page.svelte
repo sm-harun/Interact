@@ -6,7 +6,7 @@
 
 	import { goto } from '$app/navigation';
 
-	import LessonCard from '$lib/components/UI/course/lessonCard.svelte';
+	import LessonCard from '$lib/components/create/cards/LessonCard.svelte';
 	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
 	import { getLessonsColl, getLessonsDoc, getSectionsDoc } from '$lib/docRefs.js';
 
@@ -83,7 +83,7 @@
 		{:then lessons}
 			{#each lessons as lesson}
 				<a href="/create/{data.params.course}/{lesson.title}">
-					<LessonCard title={lesson.title} image={lesson.background} sections={lesson.sections} />
+					<LessonCard title={lesson.title} image={lesson.background} />
 				</a>
 			{/each}
 			<button

@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let title: string;
-	export let sections: Section[] = [];
 	export let image: string;
 </script>
 
@@ -9,6 +8,5 @@
   hover:scale-110 duration-500 flex flex-col justify-end p-5"
 	style="background-image: url({image});"
 >
-	<h1 class="text-4xl text-primary-500">{title}</h1>
-	<p class="mt-3">Sections: <strong class="text-primary-500">{sections.length}</strong></p>
+	<h1 class="h3 text-primary-500">{title}</h1>
 </div>

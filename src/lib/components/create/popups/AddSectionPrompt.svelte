@@ -37,7 +37,7 @@
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
-			$sectionPopupPosition.callback('Choice');
+			$sectionPopupPosition.callback('Question');
 			hideSectionPopup();
 		}}>Question</button
 	>

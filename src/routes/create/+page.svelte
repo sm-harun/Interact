@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import CourseCard from '$lib/components/UI/course/CourseCard.svelte';
+	import CourseCard from '$lib/components/create/cards/CourseCard.svelte';
 
 	import { getModalStore, ProgressBar, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { getDocs, setDoc } from 'firebase/firestore';
@@ -56,14 +56,23 @@
 		{:then docs}
 			{#each docs as doc}
 				<a href="/create/{doc.title}">
-					<CourseCard title={doc.title} image={doc.background} lessons={0} subjects={['math']} />
+					<CourseCard {doc} />
 				</a>
 			{/each}
 			<button
-				class="size-60 sm:size-72 btn rounded-container-token bg-primary-500/50"
+				class="btn justify-between absolute top-5 right-5 variant-filled-primary"
 				on:click={addNewCourse}
 			>
-				<span class="text-9xl">+</span>
+				<span>Add Course</span>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
 			</button>
 		{:catch error}
 			<p>Error {console.log(error)}</p>

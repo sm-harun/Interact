@@ -10,18 +10,19 @@ type Lesson = {
 };
 
 type BasicSection = {
-	type: 'Explanation' | 'Choice' | 'Visualization';
+	type: 'Explanation' | 'Question' | 'Visualization';
 	title: string;
+	index: number;
 };
 
 type ExplainSection = BasicSection & {
 	text: string;
 };
 
-type ChoiceSection = BasicSection & {
+type QuestionSection = BasicSection & {
 	choices: string[];
 	answer: number;
 	explanation: string;
 };
 
-type Section = ExplainSection | ChoiceSection;
+type Section = ExplainSection | QuestionSection;

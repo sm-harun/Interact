@@ -10,7 +10,7 @@
 		type ModalSettings
 	} from '@skeletonlabs/skeleton';
 
-	export let section: ChoiceSection;
+	export let section: QuestionSection;
 	export let course: string;
 	export let lesson: string;
 
@@ -20,6 +20,7 @@
 	let sectionChoices = section.choices;
 	let sectionTitle = section.title;
 	let sectionExplanation = section.explanation;
+	let sectionAnswer = section.answer;
 
 	let buttonSynced = true;
 	let updater = 0;
@@ -27,10 +28,12 @@
 	let oldChoices: string[];
 	let oldTitle: string;
 	let oldExplanation: string;
+	let oldAnswer: number;
 	onMount(() => {
 		oldChoices = [...sectionChoices];
 		oldTitle = sectionTitle;
 		oldExplanation = sectionExplanation;
+		oldAnswer = sectionAnswer;
 	});
 
 	$: checkIfChanged(
@@ -39,7 +42,9 @@
 		sectionExplanation,
 		oldExplanation,
 		sectionChoices,
-		oldChoices
+		oldChoices,
+		sectionAnswer,
+		oldAnswer
 	);
 
 	const compareArrays = (a: string[], b: string[]) => {
@@ -52,12 +57,15 @@
 		newExplanation: string,
 		oExplanation: string,
 		newChoices: string[],
-		oChoices: string[]
+		oChoices: string[],
+		newAnswer: number,
+		oAnswer: number
 	) {
 		if (
 			newTitle !== oTitle ||
 			compareArrays(newChoices, oChoices) ||
-			newExplanation !== oExplanation
+			newExplanation !== oExplanation ||
+			newAnswer !== oAnswer
 		) {
 			buttonSynced = false;
 		} else {
@@ -71,12 +79,24 @@
 	}
 
 	function deleteChoice(index: number) {
+		if (sectionAnswer === index + 1) {
+			sectionAnswer = 0;
+		}
 		sectionChoices.splice(index, 1);
 		updater++;
 	}
 
+	function changeAnswer(index: number) {
+		if (sectionAnswer == index) {
+			sectionAnswer = 0;
+		} else {
+			sectionAnswer = index;
+		}
+	}
+
 	function syncSection() {
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
+			answer: sectionAnswer,
 			choices: sectionChoices,
 			title: sectionTitle,
 			explanation: sectionExplanation
@@ -85,6 +105,7 @@
 				oldChoices = [...sectionChoices];
 				oldTitle = sectionTitle;
 				oldExplanation = sectionExplanation;
+				oldAnswer = sectionAnswer;
 
 				// Success Toast
 				const toastSettings: ToastSettings = {
@@ -119,6 +140,7 @@
 				sectionChoices = [...oldChoices];
 				sectionTitle = oldTitle;
 				sectionExplanation = oldExplanation;
+				sectionAnswer = oldAnswer;
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -138,7 +160,19 @@
 		<div class="flex flex-col gap-3 ml-7">
 			{#key updater}
 				{#each sectionChoices as choice, i}
-					<strong>Choice {i + 1}: </strong>
+					<div class="flex items-center gap-4">
+						<strong>Choice {i + 1}: </strong>
+						<button
+							class="size-5 rounded-container-token {sectionAnswer == i + 1
+								? 'variant-filled-primary'
+								: ''} grid place-items-center"
+							on:click={() => changeAnswer(i + 1)}
+						>
+							<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4">
+								<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+							</svg>
+						</button>
+					</div>
 					<div class="flex items-center gap-4 lg:px-5">
 						<input
 							class="input variant-filled-surface"
