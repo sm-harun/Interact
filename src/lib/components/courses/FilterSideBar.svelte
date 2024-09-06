@@ -9,10 +9,10 @@
 	out:fly={{ x: -50, duration: 500 }}
 >
 	<button
-		class="{$subject === 'all'
+		class="{$subject === 'All'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
-		on:click={() => setSubject('all')}
+		on:click={() => setSubject('All')}
 	>
 		<svg viewBox="0 0 64 64" class="size-14">
 			<g>
@@ -44,10 +44,10 @@
 		<span>All</span>
 	</button>
 	<button
-		class="{$subject === 'math'
+		class="{$subject === 'Math'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col gap-1 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
-		on:click={() => setSubject('math')}
+		on:click={() => setSubject('Math')}
 	>
 		<svg viewBox="0 0 512.001 512.001" class="size-12 rotate-[200deg]">
 			<g>
@@ -76,10 +76,10 @@
 		<span>Math</span>
 	</button>
 	<button
-		class="{$subject === 'chemistry'
+		class="{$subject === 'Chemistry'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
-		on:click={() => setSubject('chemistry')}
+		on:click={() => setSubject('Chemistry')}
 	>
 		<svg viewBox="0 0 479.6 479.6" class="size-12">
 			<g>
@@ -159,10 +159,10 @@
 		<span>Chemistry</span>
 	</button>
 	<button
-		class="{$subject === 'physics'
+		class="{$subject === 'Physics'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 py-6"
-		on:click={() => setSubject('physics')}
+		on:click={() => setSubject('Physics')}
 	>
 		<svg viewBox="0 0 512 512" class="size-10">
 			<g stroke="currentColor">

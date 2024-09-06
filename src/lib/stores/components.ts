@@ -69,24 +69,10 @@ export function hideSectionPopup() {
 	sectionPopupState.set(false);
 }
 
-type subject =
-	| 'all'
-	| 'math'
-	| 'computer science'
-	| 'physics'
-	| 'chemistry'
-	| 'biology'
-	| 'english'
-	| 'history'
-	| 'geography'
-	| 'politics'
-	| 'art'
-	| 'music'
-	| 'sport'
-	| 'other';
+type Subject = 'All' | 'Math' | 'Physics' | 'Chemistry' | 'Biology';
 
-export const subject = writable<subject>('all');
+export const subject = writable<Subject>('All');
 
-export function setSubject(s: subject) {
+export function setSubject(s: Subject) {
 	subject.set(s);
 }
