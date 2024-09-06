@@ -2,7 +2,7 @@
 	import { fly } from 'svelte/transition';
 
 	import Google from '$lib/components/authentication/Google.svelte';
-	import ThemesButton from '$lib/components/UI/header/ThemesButton.svelte';
+	import ThemesButton from '$lib/components/general/header/ThemesButton.svelte';
 	import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 	import { DataBase } from '$lib/firebase';
@@ -12,7 +12,7 @@
 	import { goto } from '$app/navigation';
 
 	import { setTheme } from '$lib/stores/themes';
-	import HomeButton from '$lib/components/UI/header/HomeButton.svelte';
+	import HomeButton from '$lib/components/general/header/HomeButton.svelte';
 
 	const toastStore = getToastStore();
 

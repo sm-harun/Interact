@@ -1,9 +1,9 @@
 <script lang="ts">
 	import '../app.postcss';
 
-	import ThemesPopup from '$lib/components/UI/popups/ThemesPopup.svelte';
-	import ProfileIconPopup from '$lib/components/UI/popups/ProfileIconPopup.svelte';
-	import LoginButtonPopup from '$lib/components/UI/popups/LoginButtonPopup.svelte';
+	import ThemesPopup from '$lib/components/general/popups/ThemesPopup.svelte';
+	import ProfileIconPopup from '$lib/components/general/popups/ProfileIconPopup.svelte';
+	import LoginButtonPopup from '$lib/components/general/popups/LoginButtonPopup.svelte';
 
 	import {
 		themesPopupState,

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { updateDoc } from 'firebase/firestore';
-	import { getSectionsDoc } from '$lib/docRefs';
+	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import { onMount } from 'svelte';
 
 	import {
@@ -17,18 +17,24 @@
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
+	// These will be binded to input values
 	let sectionChoices = section.choices;
 	let sectionTitle = section.title;
 	let sectionExplanation = section.explanation;
 	let sectionAnswer = section.answer;
 
+	// Holds the sync state
 	let buttonSynced = true;
+	// lets us update the UI easily by changing it's value
 	let updater = 0;
 
+	// These varables are used to detect whether we are synced or not
 	let oldChoices: string[];
 	let oldTitle: string;
 	let oldExplanation: string;
 	let oldAnswer: number;
+
+	// At initialization they should be in sync
 	onMount(() => {
 		oldChoices = [...sectionChoices];
 		oldTitle = sectionTitle;
@@ -36,6 +42,7 @@
 		oldAnswer = sectionAnswer;
 	});
 
+	// Check if we are in sync when an input value changes
 	$: checkIfChanged(
 		sectionTitle,
 		oldTitle,
@@ -47,6 +54,7 @@
 		oldAnswer
 	);
 
+	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
 		return JSON.stringify(a) !== JSON.stringify(b);
 	};
@@ -87,6 +95,7 @@
 	}
 
 	function changeAnswer(index: number) {
+		// If the deleted choice is the selected answer the answer will reset to 0
 		if (sectionAnswer == index) {
 			sectionAnswer = 0;
 		} else {
@@ -102,6 +111,12 @@
 			explanation: sectionExplanation
 		})
 			.then(() => {
+				// Changes the name of the actual document
+				if (oldTitle !== sectionTitle) {
+					renameDocument(getSectionsDoc(course, lesson, oldTitle), sectionTitle);
+				}
+
+				// The information is synced so we also sync the variables
 				oldChoices = [...sectionChoices];
 				oldTitle = sectionTitle;
 				oldExplanation = sectionExplanation;

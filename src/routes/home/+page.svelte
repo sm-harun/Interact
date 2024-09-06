@@ -1,5 +1,5 @@
 <script>
-	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
+	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import { fly } from 'svelte/transition';
 </script>
 

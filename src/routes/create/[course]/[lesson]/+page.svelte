@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
+	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
 	import QuestionComponent from '$lib/components/create/textsections/QuestionComponent.svelte';
 
@@ -54,7 +54,7 @@
 				const modalSettings: ModalSettings = {
 					type: 'prompt',
 					title: 'Provide a Title for this new Section',
-					valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
+					valueAttr: { type: 'text', minlength: 3, required: true },
 					response: (r: string) => {
 						if (!r) return;
 						createSection(selected, r);

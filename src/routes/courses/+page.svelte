@@ -1,7 +1,8 @@
 <script lang="ts">
-	import CourseCard from '$lib/components/UI/course/CourseCard.svelte';
-	import SideBar from '$lib/components/UI/course/SideBar.svelte';
-	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
+	import CourseCard from '$lib/components/courses/CourseCard.svelte';
+	import SideBar from '$lib/components/courses/SideBar.svelte';
+	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
+
 	import { fly } from 'svelte/transition';
 
 	import { subject } from '$lib/stores/components';

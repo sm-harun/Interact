@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getSectionsDoc } from '$lib/docRefs';
+	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import { deleteDoc, updateDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
@@ -17,19 +17,23 @@
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
+	// These will be binded to input values
 	let sectionText: string = section.text;
 	let sectionTitle: string = section.title;
 
-	// This will check if we made any changes to update button UI
+	// Holds the sync state
+	let buttonSynced = true;
+
+	// These varables are used to detect whether we are synced or not
 	let oldText: string;
 	let oldTitle: string;
+	// At initialization they should be in sync
 	onMount(() => {
 		oldText = sectionText;
 		oldTitle = sectionTitle;
 	});
 
-	let buttonSynced = true;
-
+	// Check if we are in sync when an input value changes
 	$: checkIfChanged(sectionTitle, oldTitle, sectionText, oldText);
 
 	function checkIfChanged(nTitle: string, oTitle: string, nText: string, oText: string) {
@@ -46,8 +50,14 @@
 			title: sectionTitle
 		})
 			.then(() => {
+				// Changes the name of the actual document
+				if (oldTitle !== sectionTitle) {
+					renameDocument(getSectionsDoc(course, lesson, oldTitle), sectionTitle);
+				}
+
 				oldText = sectionText;
 				oldTitle = sectionTitle;
+
 				// Success Toast
 				const toastSettings: ToastSettings = {
 					message: `Syncing successful`,

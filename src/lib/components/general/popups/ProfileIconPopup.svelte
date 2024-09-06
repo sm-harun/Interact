@@ -3,7 +3,6 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	import { signOut, getAuth } from 'firebase/auth';
-	import { app } from '$lib/firebase';
 
 	import { fly } from 'svelte/transition';
 

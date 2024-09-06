@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 
 	import LessonCard from '$lib/components/create/cards/LessonCard.svelte';
-	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
+	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import { getLessonsColl, getLessonsDoc, getSectionsDoc } from '$lib/docRefs.js';
 
 	export let data;
@@ -41,7 +41,7 @@
 		const modalSettings: ModalSettings = {
 			type: 'prompt',
 			title: 'Provide a name for the lesson',
-			valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
+			valueAttr: { type: 'text', minlength: 3, maxlength: 50, required: true },
 			response: async (r: string) => {
 				// Stops excustion if user canceled
 				if (!r) return;
@@ -50,15 +50,8 @@
 					title: r
 				};
 
-				let newSection: any = {
-					title: 'Introduction to the Unit',
-					type: 'Explanation',
-					text: 'Hello world'
-				};
-
-				// Sets a new document in the lessons and sections collection then redirect to that lessons sections.
+				// Sets a new document in the lessons collection then redirect to it
 				setDoc(getLessonsDoc(data.params.course, r), newLesson);
-				setDoc(getSectionsDoc(data.params.course, r, 'Introduction to the Unit'), newSection);
 				goto(`/create/${data.params.course}/${r}`);
 			}
 		};

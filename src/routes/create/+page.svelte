@@ -5,7 +5,7 @@
 	import { getModalStore, ProgressBar, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { getDocs, setDoc } from 'firebase/firestore';
 	import { getCourseColl, getCourseDoc } from '$lib/docRefs';
-	import MainHeader from '$lib/components/UI/header/MainHeader.svelte';
+	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 
 	const modalStore = getModalStore();
 

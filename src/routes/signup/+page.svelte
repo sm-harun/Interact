@@ -3,7 +3,7 @@
 
 	import { theme } from '$lib/stores/themes';
 
-	import ThemesButton from '$lib/components/UI/header/ThemesButton.svelte';
+	import ThemesButton from '$lib/components/general/header/ThemesButton.svelte';
 	import Google from '$lib/components/authentication/Google.svelte';
 
 	import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -12,7 +12,7 @@
 
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { doc, setDoc } from 'firebase/firestore';
-	import HomeButton from '$lib/components/UI/header/HomeButton.svelte';
+	import HomeButton from '$lib/components/general/header/HomeButton.svelte';
 
 	let auth = getAuth(app);
 
