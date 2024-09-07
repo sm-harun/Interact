@@ -79,7 +79,7 @@
 					<br />
 					<section class="flex flex-wrap gap-10">
 						{#each filteredCourses as course}
-							<a href="/courses/{course.title}">
+							<a href="/courses/{course.title}/">
 								<CourseCard
 									title={course.title}
 									subjects={course.subjects}
