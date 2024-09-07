@@ -3,21 +3,28 @@
 	import { getDocs, orderBy, query } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 	import { ProgressBar } from '@skeletonlabs/skeleton';
+	import TextSection from '$lib/components/courses/Sections/TextSection.svelte';
+	import QuestionSection from '$lib/components/courses/Sections/QuestionSection.svelte';
 
 	export let data;
 
 	let sections: any[] = [];
-	let emptyArray: any[] = [];
-	let updater = 0;
+	let visibleSectionsCount = 1;
+
+	function showNextSection() {
+		visibleSectionsCount++;
+	}
+
+	// To know if we have fetched the data yet.
+	let fetched = false;
 
 	onMount(async () => {
 		await fetchSections().then((fetchedSections) => {
 			fetchedSections.forEach((section) => {
-				console.log(section);
 				sections.push(section.data());
-				updater++;
 			});
 		});
+		setTimeout(() => (fetched = true), 500);
 	});
 
 	async function fetchSections() {
@@ -29,20 +36,32 @@
 </script>
 
 <main class="flex h-full">
-	<section class="flex-[3_1_0] h-full border-r-[0.05rem] border-r-surface-400 relative">
-		{#key updater}
-			{#if JSON.stringify(sections) === JSON.stringify(emptyArray)}
-				<ProgressBar
-					meter={'bg-primary-500 h-1'}
-					track={'bg-surface-500 absolute top-0 left-0 w-full h-[0.2rem]'}
-				/>
-			{:else}
-				{#each sections as section}
-					<p class="text-xl p-5">This is {section.title}</p>
-					<p class="text-sm p-5">This is {section.text}</p>
-				{/each}
-			{/if}
-		{/key}
+	<section
+		class="flex-[3_1_0] h-full border-r-[0.05rem] border-r-surface-400 relative p-6 flex flex-col items-center"
+	>
+		{#if !fetched}
+			<ProgressBar
+				meter={'bg-primary-500 h-1'}
+				track={'bg-surface-500 absolute top-0 left-0 w-full h-[0.2rem]'}
+				rounded={'rounded-none'}
+			/>
+		{:else}
+			{#each sections.slice(0, visibleSectionsCount) as section, i (section.index)}
+				{#if section.type == 'Explanation'}
+					<TextSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{:else if section.type == 'Question'}
+					<QuestionSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{/if}
+			{/each}
+		{/if}
 	</section>
 	<section class="flex-[2_1_0] h-full flex-shrink-0"></section>
 </main>

@@ -8,7 +8,7 @@
 
 	import LessonCard from '$lib/components/create/cards/LessonCard.svelte';
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
-	import { getLessonsColl, getLessonsDoc, getSectionsDoc } from '$lib/docRefs.js';
+	import { getLessonsColl, getLessonsDoc } from '$lib/docRefs.js';
 
 	export let data;
 
@@ -46,8 +46,12 @@
 				// Stops excustion if user canceled
 				if (!r) return;
 
+				let lessonsLength = 0;
+				await getLessons().then((lessons) => (lessonsLength = lessons.length));
+
 				let newLesson: any = {
-					title: r
+					title: r,
+					index: lessonsLength
 				};
 
 				// Sets a new document in the lessons collection then redirect to it
@@ -70,7 +74,7 @@
 		{#await getLessons()}
 			<ProgressBar
 				meter={'bg-primary-500 h-1'}
-				track={'bg-surface-500 absolute top-0 left-0 w-full h-1'}
+				track={'bg-surface-500 absolute top-0 left-0 w-full h-[0.2rem]'}
 				rounded={'rounded-none'}
 			/>
 		{:then lessons}

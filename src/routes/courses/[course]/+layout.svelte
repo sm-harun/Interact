@@ -2,7 +2,7 @@
 	import { ProgressBar } from '@skeletonlabs/skeleton';
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import { getLessonsColl } from '$lib/docRefs';
-	import { getDocs } from 'firebase/firestore';
+	import { getDocs, query, orderBy } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 
@@ -15,7 +15,10 @@
 	let lessonUpdater = 0;
 
 	function updateLessons() {
-		lessonUpdater++;
+		// We need this to run after the user navigated not immediately
+		setTimeout(() => {
+			lessonUpdater++;
+		}, 50);
 	}
 
 	onMount(async () => {
@@ -39,13 +42,15 @@
 	});
 
 	async function getLessons() {
-		let fetchedLessons = await getDocs(getLessonsColl(data.params.course));
+		let fetchedLessons = await getDocs(
+			query(getLessonsColl(data.params.course), orderBy('index', 'asc'))
+		);
 		return fetchedLessons;
 	}
 </script>
 
 <main class="flex flex-col w-screen h-screen">
-	<MainHeader title={data.params.course} showMainRoutes={false} />
+	<MainHeader title={data.params.course} showMainRoutes={false} showHomeButton={true} />
 	<hr />
 	<header
 		class="flex-shrink-0 variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 flex items-center justify-between z-40"

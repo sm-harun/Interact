@@ -136,7 +136,7 @@
 			{:else}
 				<ProgressBar
 					meter={'bg-primary-500 h-1'}
-					track={'bg-surface-500 absolute top-0 left-0 w-full h-1'}
+					track={'bg-surface-500 absolute top-0 left-0 w-full h-[0.2rem]'}
 					rounded={'rounded-none'}
 				/>
 			{/if}
