@@ -9,6 +9,7 @@
 	import LessonCard from '$lib/components/create/cards/LessonCard.svelte';
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import { getLessonsColl, getLessonsDoc } from '$lib/docRefs.js';
+	import DictionaryComponent from '$lib/components/create/textsections/DictionaryComponent.svelte';
 
 	export let data;
 
@@ -51,7 +52,8 @@
 
 				let newLesson: any = {
 					title: r,
-					index: lessonsLength
+					index: lessonsLength,
+					dictionary: []
 				};
 
 				// Sets a new document in the lessons collection then redirect to it

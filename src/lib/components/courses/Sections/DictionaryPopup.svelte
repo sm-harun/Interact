@@ -35,8 +35,7 @@
 				<span class="text-primary-500 text-lg font-bold">{$dictPopupPosition.info} </span>
 				<span>/{meaning.partOfSpeech}</span>
 			</h1>
-			<h1>Definitions:</h1>
-			{#each meaning.definitions as definition, i}
+			{#each meaning.definitions.slice(0, 2) as definition, i}
 				<p class="mt-2"><span class="font-bold">{i + 1}. </span>{definition.definition}</p>
 			{/each}
 		{/each}

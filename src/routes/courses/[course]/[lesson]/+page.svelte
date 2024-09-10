@@ -52,6 +52,8 @@
 						{section}
 						{showNextSection}
 						showNextButton={visibleSectionsCount != sections.length}
+						course={data.params.course}
+						lesson={data.params.lesson}
 					/>
 				{:else if section.type == 'Question'}
 					<QuestionSection
@@ -60,8 +62,8 @@
 						showNextButton={visibleSectionsCount != sections.length}
 					/>
 				{/if}
-        <!-- Adds space between sections -->
-        <div class="my-10"></div>
+				<!-- Adds space between sections -->
+				<div class="my-10"></div>
 			{/each}
 		{/if}
 	</section>

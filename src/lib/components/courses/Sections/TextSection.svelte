@@ -4,10 +4,14 @@
 	import { onMount } from 'svelte';
 
 	import { showDictPopup, hideDictPopup } from '$lib/stores/components.ts';
+	import { getDoc } from 'firebase/firestore';
+	import { getLessonsDoc } from '$lib/docRefs';
 
 	export let section;
 	export let showNextSection;
 	export let showNextButton: boolean;
+	export let course: string;
+	export let lesson: string;
 
 	// The in animation won't display unless manually showwen on mount.
 	let show = false;
@@ -15,11 +19,17 @@
 	let showButton: boolean;
 
 	// This is dummy data for now.
-	let dictionaryapi = ['chemistry', 'reaction', 'fast', 'about', 'Why'];
+	let dictionaryapi: string[] = [];
 
 	onMount(async () => {
 		show = true;
 		showButton = showNextButton;
+
+		await getDoc(getLessonsDoc(course, lesson)).then((doc) => {
+			if (doc.exists()) {
+				dictionaryapi = doc.data().dictionary;
+			}
+		});
 	});
 
 	function hideButton() {
@@ -40,9 +50,9 @@
 				{#if dictionaryapi.includes(word)}
 					<span
 						aria-haspopup="true"
-						class="text-primary-500 font-bold"
+						class="text-primary-500 font-bold hover:underline hover:brightness-150"
 						on:mouseleave={() => hideDictPopup()}
-						on:mouseenter={(e) => showDictPopup(e, word)}
+						on:mouseenter={(e) => setTimeout(() => showDictPopup(e, word), 500)}
 						>{word}
 					</span>
 					<span> </span>

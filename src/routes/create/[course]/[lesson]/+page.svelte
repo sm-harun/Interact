@@ -2,6 +2,7 @@
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
 	import QuestionComponent from '$lib/components/create/textsections/QuestionComponent.svelte';
+	import DictionaryComponent from '$lib/components/create/textsections/DictionaryComponent.svelte';
 
 	import {
 		ProgressBar,
@@ -12,17 +13,23 @@
 	} from '@skeletonlabs/skeleton';
 
 	import { getDocs, setDoc, query, orderBy } from 'firebase/firestore';
-	import { getSectionsColl, getSectionsDoc } from '$lib/docRefs';
+	import { getLessonsDoc, getSectionsColl, getSectionsDoc } from '$lib/docRefs';
 
 	import { onMount } from 'svelte';
 	import { showSectionPopup } from '$lib/stores/components.js';
+	import { arrayUnion, getDoc, updateDoc } from 'firebase/firestore';
 
 	export let data;
-	// This is used to rerender the choices UI.
+
+	// These are used to update UI easily
 	let updater = 0;
+	let dictUpdater = 0;
+
 	let button: HTMLButtonElement;
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
+
+	let words: any[] = [];
 	let sections: any[] = [];
 	let emptyArray: any[] = [];
 
@@ -37,6 +44,9 @@
 			sections.push(section.data());
 			updater++;
 		});
+
+		let fetchedWords = await getDoc(getLessonsDoc(data.params.course, data.params.lesson));
+		words = fetchedWords?.data().dictionary;
 
 		fetched = true;
 
@@ -65,6 +75,10 @@
 		};
 	});
 
+	function updateDictionary() {
+		dictUpdater++;
+	}
+
 	function createSection(selected: string, title: string) {
 		if (selected == 'Text') {
 			let newSection: ExplainSection = {
@@ -89,6 +103,34 @@
 		}
 		updater++;
 	}
+
+	function addDictionary() {
+		const modalSettings: ModalSettings = {
+			type: 'prompt',
+			title: 'Provide the word',
+			valueAttr: { type: 'text', required: true },
+			response: async (r: string) => {
+				if (!r) return;
+				words.push(r.toLowerCase());
+				updateDictionary();
+
+				// Adds the word the lessons dictionary on the DataBase
+				await updateDoc(getLessonsDoc(data.params.course, data.params.lesson), {
+					dictionary: arrayUnion(r.toLowerCase())
+				});
+
+				// Success Toast
+				const toastSettings: ToastSettings = {
+					message: `Added ${r} to the dictionary`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+				toastStore.trigger(toastSettings);
+			}
+		};
+		modalStore.trigger(modalSettings);
+	}
 </script>
 
 <div class="h-screen flex flex-col">
@@ -103,6 +145,21 @@
 	>
 		<h1 class="h2 font-bold text-primary-500-400-token ml-4">{data.params.lesson}</h1>
 		<ul class="flex items-center justify-between gap-4">
+			<button
+				class="btn variant-ringed-primary hover:variant-filled-primary"
+				on:click={addDictionary}
+			>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
+				<span class="hidden lg:flex">Add Dictionary</span></button
+			>
 			<button class="btn variant-ringed-primary hover:variant-filled-primary" bind:this={button}>
 				<svg
 					fill="none"
@@ -120,6 +177,14 @@
 	<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5 relative">
 		{#key updater}
 			{#if JSON.stringify(sections) !== JSON.stringify(emptyArray)}
+				{#key dictUpdater}
+					<DictionaryComponent
+						{words}
+						course={data.params.course}
+						lesson={data.params.lesson}
+						bind:dictUpdater
+					/>
+				{/key}
 				{#each sections as section}
 					{#if section.type == 'Explanation'}
 						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
@@ -128,6 +193,12 @@
 					{/if}
 				{/each}
 			{:else if fetched}
+				<DictionaryComponent
+					{words}
+					course={data.params.course}
+					lesson={data.params.lesson}
+					bind:dictUpdater
+				/>
 				<p
 					class="h4 bg-surface-300-600-token text-surface-500-400-token p-5 grid place-items-center rounded-container-token"
 				>
