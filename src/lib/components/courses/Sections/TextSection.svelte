@@ -3,6 +3,8 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 
+	import { showDictPopup, hideDictPopup } from '$lib/stores/components.ts';
+
 	export let section;
 	export let showNextSection;
 	export let showNextButton: boolean;
@@ -12,7 +14,10 @@
 
 	let showButton: boolean;
 
-	onMount(() => {
+	// This is dummy data for now.
+	let dictionaryapi = ['chemistry', 'reaction', 'fast', 'about', 'Why'];
+
+	onMount(async () => {
 		show = true;
 		showButton = showNextButton;
 	});
@@ -29,7 +34,25 @@
 	>
 		<h1 class="w-full pl-5 h4">{section.title}</h1>
 		<hr class="mt-3 mb-3" />
-		<p class="text-lg">{section.text}</p>
+		<p class="text-lg">
+			<!-- Checks if the words need to display their meaning or not -->
+			{#each section.text.split(' ') as word}
+				{#if dictionaryapi.includes(word)}
+					<span
+						aria-haspopup="true"
+						class="text-primary-500 font-bold"
+						on:mouseleave={() => hideDictPopup()}
+						on:mouseenter={(e) => showDictPopup(e, word)}
+						>{word}
+					</span>
+					<span> </span>
+				{:else}
+					<span>{word} </span>
+					<span> </span>
+				{/if}
+			{/each}
+			<span>.</span>
+		</p>
 	</main>
 	{#if showButton}
 		<div class="w-full pb-2 flex justify-end items-center">

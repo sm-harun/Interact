@@ -60,6 +60,8 @@
 						showNextButton={visibleSectionsCount != sections.length}
 					/>
 				{/if}
+        <!-- Adds space between sections -->
+        <div class="my-10"></div>
 			{/each}
 		{/if}
 	</section>

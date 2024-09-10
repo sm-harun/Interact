@@ -21,6 +21,7 @@
 		show = true;
 	});
 
+  // To convert the numbers for choices to letters
 	function letter(number: number) {
 		if (number == 1) return 'A';
 		if (number == 2) return 'B';

@@ -69,6 +69,19 @@ export function hideSectionPopup() {
 	sectionPopupState.set(false);
 }
 
+// Login button Popup Store.
+export const dictPopupState = writable<boolean>(false);
+export const dictPopupPosition = writable<{ x: number; y: number, info: any }>({ x: 0, y: 0, info: "hello" });
+
+export function showDictPopup(e: MouseEvent, info: any) {
+	dictPopupPosition.set({ x: window.innerWidth - e.clientX, y: e.clientY, info: info });
+	dictPopupState.set(true);
+}
+
+export function hideDictPopup() {
+	dictPopupState.set(false);
+}
+
 type Subject = 'All' | 'Math' | 'Physics' | 'Chemistry' | 'Biology';
 
 export const subject = writable<Subject>('All');

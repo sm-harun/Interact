@@ -9,7 +9,8 @@
 		themesPopupState,
 		profilePopupState,
 		loginPopupState,
-		sectionPopupState
+		sectionPopupState,
+		dictPopupState
 	} from '$lib/stores/components';
 
 	import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -29,6 +30,7 @@
 	import { onDestroy } from 'svelte';
 	import { setTheme } from '$lib/stores/themes';
 	import AddSectionPrompt from '$lib/components/create/popups/AddSectionPrompt.svelte';
+	import DictionaryPopup from '$lib/components/courses/Sections/DictionaryPopup.svelte';
 
 	initializeStores();
 	let auth = getAuth(app);
@@ -74,4 +76,7 @@
 	<AddSectionPrompt />
 {/if}
 
+{#if $dictPopupState}
+	<DictionaryPopup />
+{/if}
 <slot />
