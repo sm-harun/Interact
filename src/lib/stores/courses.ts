@@ -1,28 +1,32 @@
-type Course = {
+export type Course = {
 	title: string;
 	background: string;
 	lessons: Lesson[];
 };
 
-type Lesson = {
+export type Lesson = {
 	title: string;
 	sections: Section[];
 };
 
-type BasicSection = {
-	type: 'Explanation' | 'Question' | 'Visualization';
+export type BasicSection = {
+	type: 'Explanation' | 'Question' | 'Visual';
 	title: string;
 	index: number;
 };
 
-type ExplainSection = BasicSection & {
+export type ExplainSection = BasicSection & {
 	text: string;
 };
 
-type QuestionSection = BasicSection & {
+export type QuestionSection = BasicSection & {
 	choices: string[];
 	answer: number;
 	explanation: string;
 };
 
-type Section = ExplainSection | QuestionSection;
+export type VisualSection = BasicSection & {
+  course: string;
+}
+
+export type Section = ExplainSection | QuestionSection;

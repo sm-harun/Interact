@@ -3,14 +3,14 @@
 	import { getLessonsDoc } from '$lib/docRefs';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
-	export let words;
-	export let course;
-	export let lesson;
-	export let dictUpdater;
+	export let words: string;
+	export let course: string;
+	export let lesson: string;
+	export let dictUpdater: number;
 
 	let toastStore = getToastStore();
 
-	function deleteDictionary(word) {
+	function deleteDictionary(word: string) {
 		updateDoc(getLessonsDoc(course, lesson), {
 			dictionary: arrayRemove(word)
 		}).then(() => {
@@ -31,9 +31,9 @@
 <div class="w-full bg-secondary-400-500-token rounded-container-token p-4">
 	<h1 class="text-3xl font-bold">Lesson Dictionary:</h1>
 
-	<ul class="grid grid-cols-3 mt-3">
+	<ul class="grid grid-cols-5 mt-3">
 		{#each words as word}
-			<li class="group font-bold flex gap-6 items-center">
+			<li class="group font-bold flex gap-9 items-center">
 				<span class="text-2xl">‣ {word}</span>
 				<button on:click={() => deleteDictionary(word)}>
 					<svg

@@ -1,21 +1,27 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { cubicInOut } from 'svelte/easing';
-	import { fly, slide } from 'svelte/transition';
+	import { fly, slide, fade } from 'svelte/transition';
 
 	export let section: any;
 	export let showNextSection: any;
 	export let showNextButton: boolean;
 
-	// This will be used to control the explanation.
+	// This will be used to control the explanation
 	let explained = false;
 	let wrongSelections = 0;
 	let choiceUpdater = 0;
 
-	// The in animation won't display unless manually showwen on mount.
+	// This will be used for the wrong answer icon
+	let showIcon = false;
+
+	// The in animation won't display unless manually shown on mount
 	let show = false;
 
+	// This is for the continue button, it will be displayed when answered
 	let showButton: boolean;
+	// This is for making sure the continue button doesn't appear
+	let shown = false;
 
 	onMount(() => {
 		show = true;
@@ -35,21 +41,29 @@
 	function answered(answer: number) {
 		if (answer === section.answer) {
 			explained = true;
-			showButton = showNextButton;
 			choiceUpdater++;
-		} else {
+
+			// It will only show for one time only
+			if (!shown) showButton = showNextButton;
+
+			// The wrong choice will only be highlighted before the question has been answered
+		} else if (answer != section.answer && !explained) {
 			wrongSelections = answer;
+			showIcon = true;
 			choiceUpdater++;
 		}
 	}
 
+	// Hide continue button
 	function hideButton() {
 		showButton = false;
+		// This makes sure clicking the answer doesn't retrigger the continue button
+		shown = true;
 	}
 </script>
 
 {#if show}
-	<div>
+	<div class="relative">
 		<main
 			class="w-auto bg-surface-200-700-token rounded-container-token p-4 transition border-token transition-height {explained
 				? 'border-success-500'
@@ -69,7 +83,9 @@
 								? 'border-[0.05rem] border-error-500'
 								: ''} {explained && i + 1 == section.answer
 								? 'bg-success-500/50'
-								: 'hover:bg-primary-500/30'} w-full mt-2 p-3 rounded-container-token active:scale-[98%] transition flex items-center justify-start"
+								: 'hover:bg-primary-500/30'} {!explained && wrongSelections == i + 1
+								? 'bg-primary-500/30'
+								: ''} w-full mt-2 p-3 rounded-container-token active:scale-[98%] transition flex items-center justify-start"
 							on:click={() => answered(i + 1)}
 						>
 							<span class="font-bold">{letter(i + 1)}. </span>
@@ -80,6 +96,26 @@
 			</div>
 		</main>
 
+		{#if showIcon && !explained}
+			<svg
+				viewBox="0 0 50 50"
+				xml:space="preserve"
+				fill="#000000"
+				class="size-6 absolute right-full top-0"
+				transition:fade
+			>
+				<circle style="fill:#D75A4A;" cx="25" cy="25" r="25"></circle>
+				<polyline
+					style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
+					points="16,34 25,25 34,16 "
+				></polyline>
+				<polyline
+					style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
+					points="16,16 25,25 34,34 "
+				></polyline>
+			</svg>
+		{/if}
+
 		{#if explained}
 			<div
 				class="w-full bg-surface-200-700-token rounded-container-token p-4 mb-5 transition -z-10"
@@ -89,6 +125,16 @@
 				<p>{section.explanation}</p>
 			</div>
 		{/if}
+
+		<!-- This is a place-holder, it keeps the size of the container the same shape when the explanation is revealed -->
+		{#if !explained}
+			<div class="w-full p-4 mb-5 transition -z-10 opacity-0">
+				<h3 class="h5 font-bold">Explanation:</h3>
+				<p>{section.explanation}</p>
+			</div>
+		{/if}
+		<!-- This is a place-holder, it keeps the size of the container the same shape when the explanation is revealed -->
+
 		{#if showButton}
 			<div class="w-full pb-2 flex justify-end items-center">
 				<button

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
-	import TextComponent from '$lib/components/create/textsections/TextComponent.svelte';
-	import QuestionComponent from '$lib/components/create/textsections/QuestionComponent.svelte';
-	import DictionaryComponent from '$lib/components/create/textsections/DictionaryComponent.svelte';
+	import TextComponent from '$lib/components/create/sections/TextComponent.svelte';
+	import QuestionComponent from '$lib/components/create/sections/QuestionComponent.svelte';
+	import DictionaryComponent from '$lib/components/create/sections/DictionaryComponent.svelte';
+	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 
 	import {
 		ProgressBar,
@@ -59,6 +60,7 @@
 		};
 		toastStore.trigger(toastSettings);
 
+		// This is the add seciton button
 		button.onclick = (e) => {
 			showSectionPopup(e, (selected) => {
 				const modalSettings: ModalSettings = {
@@ -97,6 +99,15 @@
 				choices: ['Choice 1'],
 				answer: 1,
 				explanation: ''
+			};
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
+		} else if (selected == 'Visual') {
+			let newSection: any = {
+				type: 'Visual',
+				title: title,
+				index: sections.length,
+				course: data.params.course
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -190,6 +201,8 @@
 						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Question'}
 						<QuestionComponent {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'Visual'}
+						<VisualsLibrary {section} />
 					{/if}
 				{/each}
 			{:else if fetched}
