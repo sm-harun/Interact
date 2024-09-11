@@ -148,7 +148,6 @@
 			type: 'confirm',
 			title: 'Are you sure you want to RESET the changes?',
 			body: 'This will reset to the last synced state.',
-			valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
 			response: async (r: string) => {
 				if (!r) return;
 

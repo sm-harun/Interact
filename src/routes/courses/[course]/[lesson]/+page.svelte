@@ -5,6 +5,9 @@
 	import { ProgressBar } from '@skeletonlabs/skeleton';
 	import TextSection from '$lib/components/courses/Sections/TextSection.svelte';
 	import QuestionSection from '$lib/components/courses/Sections/QuestionSection.svelte';
+	import PickSection from '$lib/components/courses/Sections/PickSection.svelte';
+	import ListSection from '$lib/components/courses/Sections/ListSection.svelte';
+	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 
 	export let data;
 
@@ -57,6 +60,24 @@
 					/>
 				{:else if section.type == 'Question'}
 					<QuestionSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{:else if section.type == 'Pick'}
+					<PickSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{:else if section.type == 'List'}
+					<ListSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{:else if section.type == 'Visual'}
+					<VisualsLibrary
 						{section}
 						{showNextSection}
 						showNextButton={visibleSectionsCount != sections.length}

@@ -10,7 +10,7 @@ export type Lesson = {
 };
 
 export type BasicSection = {
-	type: 'Explanation' | 'Question' | 'Visual';
+	type: 'Explanation' | 'Question' | 'Pick' | 'Visual';
 	title: string;
 	index: number;
 };
@@ -24,6 +24,15 @@ export type QuestionSection = BasicSection & {
 	answer: number;
 	explanation: string;
 };
+
+export type PickSection = BasicSection & {
+  choices: string[];
+  answers: string[];
+}
+
+export type ListSection = BasicSection & {
+  list: string[],
+}
 
 export type VisualSection = BasicSection & {
   course: string;

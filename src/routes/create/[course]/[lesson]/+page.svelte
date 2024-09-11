@@ -3,6 +3,8 @@
 	import TextComponent from '$lib/components/create/sections/TextComponent.svelte';
 	import QuestionComponent from '$lib/components/create/sections/QuestionComponent.svelte';
 	import DictionaryComponent from '$lib/components/create/sections/DictionaryComponent.svelte';
+	import PickSection from '$lib/components/create/sections/PickSection.svelte';
+	import ListSection from '$lib/components/create/sections/ListSection.svelte';
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 
 	import {
@@ -111,6 +113,25 @@
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
+		} else if (selected == 'Pick') {
+			let newSection: any = {
+				type: 'Pick',
+				title: title,
+				index: sections.length,
+				choices: [],
+				answers: []
+			};
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
+		} else if (selected == 'List') {
+			let newSection: any = {
+				type: 'List',
+				title: title,
+				index: sections.length,
+				list: []
+			};
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
 		}
 		updater++;
 	}
@@ -201,6 +222,10 @@
 						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Question'}
 						<QuestionComponent {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'Pick'}
+						<PickSection {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'List'}
+						<ListSection {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Visual'}
 						<VisualsLibrary {section} />
 					{/if}
