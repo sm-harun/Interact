@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { ProgressBar } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
+	import { getDrawerStore } from '@skeletonlabs/skeleton';
 
 	export let course;
 	export let lessons;
 	export let updateLessons;
+
+	let drawerStore = getDrawerStore();
 
 	let emptyArray: any[] = [];
 </script>
@@ -24,7 +27,10 @@
 				class="{$page.params.lesson === lesson.title
 					? 'border-b-2 border-primary-500'
 					: ''} w-full h-14 flex items-center pl-4 hover:backdrop-brightness-150"
-				on:click={updateLessons}>{i + 1}. {lesson.title}</a
+				on:click={() => {
+					updateLessons();
+					drawerStore.close();
+				}}>{i + 1}. {lesson.title}</a
 			>
 			<hr />
 		{/each}
