@@ -88,5 +88,5 @@
 			{/each}
 		{/if}
 	</section>
-	<section class="flex-[2_1_0] h-full flex-shrink-0"></section>
+	<section class="flex-[2_1_0] h-full flex-shrink-0 hidden 2xl:block"></section>
 </main>

@@ -150,9 +150,11 @@
 
 	function drawCircle(ctx: CanvasRenderingContext2D, xCord: number, yCord: number, r: number) {
 		ctx.beginPath();
-		ctx.strokeStyle = 'white';
-		ctx.lineWidth = 2;
+		ctx.fillStyle = '#a13856';
+		ctx.strokeStyle = 'black';
+		ctx.lineWidth = 3;
 		ctx.arc(xCord, yCord, r, 0, Math.PI * 2, false);
+		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
 	}
@@ -190,7 +192,9 @@
 			<button class="btn variant-filled-primary mt-5" on:click={launchSecondBall}>Launch</button>
 		</div>
 
-		<blockquote class="blockquote">The force applied to both balls is the same.</blockquote>
+		<blockquote class="blockquote mt-4 lg:mt-0">
+			The force applied to both balls is the same.
+		</blockquote>
 	</section>
 </div>
 {#if showButton}

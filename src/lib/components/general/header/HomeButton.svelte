@@ -1,15 +1,28 @@
-<a
-	href="/home"
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+
+	let modalStore = getModalStore();
+
+	function goHome() {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: 'Are you sure you want to go Home',
+			response: (r: string) => {
+				if (!r) return;
+
+				goto('/home');
+			}
+		};
+		modalStore.trigger(modalSettings);
+	}
+</script>
+
+<button
 	class="text-xl btn rounded-container-token hover:bg-primary-500/30 justify-center lg:justify-between relative"
+	on:click={goHome}
 >
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		fill="none"
-		viewBox="0 0 24 24"
-		stroke-width="1.5"
-		stroke="currentColor"
-		class="size-6"
-	>
+	<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 		<path
 			stroke-linecap="round"
 			stroke-linejoin="round"
@@ -17,4 +30,4 @@
 		/>
 	</svg>
 	<span class="hidden lg:block">Home</span>
-</a>
+</button>
