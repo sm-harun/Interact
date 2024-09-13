@@ -8,6 +8,7 @@
 	import PickSection from '$lib/components/courses/Sections/PickSection.svelte';
 	import ListSection from '$lib/components/courses/Sections/ListSection.svelte';
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
+	import AttentionSection from '$lib/components/courses/Sections/AttentionSection.svelte';
 
 	export let data;
 
@@ -72,6 +73,12 @@
 					/>
 				{:else if section.type == 'List'}
 					<ListSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{:else if section.type == 'Attention'}
+					<AttentionSection
 						{section}
 						{showNextSection}
 						showNextButton={visibleSectionsCount != sections.length}

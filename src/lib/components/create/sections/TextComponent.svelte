@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
-	import { deleteDoc, updateDoc } from 'firebase/firestore';
+	import { updateDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
 	import {

@@ -10,7 +10,7 @@ export type Lesson = {
 };
 
 export type BasicSection = {
-	type: 'Explanation' | 'Question' | 'Pick' | 'Visual';
+	type: 'Explanation' | 'Question' | 'Pick' | 'Visual' | 'List' | 'Attention';
 	title: string;
 	index: number;
 };

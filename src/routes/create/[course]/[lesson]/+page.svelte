@@ -5,6 +5,7 @@
 	import DictionaryComponent from '$lib/components/create/sections/DictionaryComponent.svelte';
 	import PickSection from '$lib/components/create/sections/PickSection.svelte';
 	import ListSection from '$lib/components/create/sections/ListSection.svelte';
+	import AttentionSection from '$lib/components/create/sections/AttentionSection.svelte';
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 
 	import {
@@ -21,6 +22,7 @@
 	import { onMount } from 'svelte';
 	import { showSectionPopup } from '$lib/stores/components.js';
 	import { arrayUnion, getDoc, updateDoc } from 'firebase/firestore';
+	import type { BasicSection } from '$lib/stores/courses.js';
 
 	export let data;
 
@@ -132,6 +134,14 @@
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
+		} else if (selected == 'Attention') {
+			let newSection: BasicSection = {
+				type: 'Attention',
+				title: title,
+				index: sections.length
+			};
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
 		}
 		updater++;
 	}
@@ -232,6 +242,8 @@
 						<PickSection {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'List'}
 						<ListSection {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'Attention'}
+						<AttentionSection {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Visual'}
 						<VisualsLibrary {section} />
 					{/if}
