@@ -6,9 +6,10 @@
 	import { showDictPopup, hideDictPopup } from '$lib/stores/components.ts';
 	import { getDoc } from 'firebase/firestore';
 	import { getLessonsDoc } from '$lib/docRefs';
+	import type { ExplainSection } from '$lib/stores/courses';
 
-	export let section;
-	export let showNextSection;
+	export let section: ExplainSection;
+	export let showNextSection: () => void;
 	export let showNextButton: boolean;
 	export let course: string;
 	export let lesson: string;
@@ -48,11 +49,12 @@
 			<!-- Checks if the words need to display their meaning or not -->
 			{#each section.text.split(' ') as word}
 				{#if dictionaryapi.includes(word)}
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
 					<span
 						aria-haspopup="true"
 						class="text-primary-500 font-bold hover:underline hover:brightness-150"
 						on:mouseleave={() => hideDictPopup()}
-						on:mouseenter={(e) => setTimeout(() => showDictPopup(e, word), 500)}
+						on:mouseenter={(e) => showDictPopup(e, word)}
 						>{word}
 					</span>
 					<span> </span>

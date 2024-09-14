@@ -3,7 +3,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 
-	import { drawCircle, rotatePoint, drawLine, Ball } from './functions';
+	import { drawCircle, rotatePoint, drawLine, Ball } from '../functions';
 
 	export let section;
 	export let showNextSection;
@@ -71,18 +71,18 @@
 </script>
 
 <section class="w-full flex flex-col">
-	<div class="w-full h-[40rem] border-2 border-primary-500">
+	<div class="h-[40rem] border-2 border-primary-500">
 		<canvas bind:this={canvas}></canvas>
 	</div>
 	<section class="h-full p-10 bg-surface-700 flex flex-col">
 		<div>
 			<h3 class="h3">Magnitude</h3>
-			<div class="w-96 flex-col">
+			<div class="w-60 flex-col">
 				<span class="w-full flex justify-end">{magnitude}</span>
 				<input type="range" bind:value={magnitude} min="0" max="100" step={1} />
 			</div>
 			<h3 class="h3 mt-5">Direction (in degrees)</h3>
-			<div class="w-96 flex-col">
+			<div class="w-60 flex-col">
 				<span class="w-full flex justify-end">{direction}</span>
 				<input type="range" bind:value={direction} min="0" max="360" step={1} />
 			</div>

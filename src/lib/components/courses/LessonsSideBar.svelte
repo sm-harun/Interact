@@ -9,7 +9,7 @@
 
 	let drawerStore = getDrawerStore();
 
-	let emptyArray: any[] = [];
+	let emptyArray: null[] = [];
 </script>
 
 <nav class="w-80 bg-surface-200-700-token h-full flex-shrink-0 relative">

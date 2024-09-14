@@ -1,10 +1,11 @@
 <script lang="ts">
+	import type { QuestionSection } from '$lib/stores/courses';
 	import { onMount } from 'svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { fly, slide, fade } from 'svelte/transition';
 
-	export let section: any;
-	export let showNextSection: any;
+	export let section: QuestionSection;
+	export let showNextSection: () => void;
 	export let showNextButton: boolean;
 
 	// This will be used to control the explanation

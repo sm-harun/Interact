@@ -1,8 +1,9 @@
 <script lang="ts">
-	import VectorScales from './VectorScales.svelte';
-	import ScalarQuantities from './ScalarQuantities.svelte';
-	import VectorQuantities from './VectorQuantities.svelte';
-	import PlotVectorQuestion from './PlotVectorQuestion.svelte';
+	import VectorScales from './multiplyingvectorsbyscalars/VectorScales.svelte';
+	import ScalarQuantities from './vectorsandscalars/ScalarQuantities.svelte';
+	import VectorQuantities from './vectorsandscalars/VectorQuantities.svelte';
+
+	import PlotVectorQuestion from './representationofvectors/PlotVectorQuestion.svelte';
 
 	import type { VisualSection } from '$lib/stores/courses';
 
@@ -20,7 +21,7 @@
 {:else if section.title == 'plot-vector-question'}
 	<PlotVectorQuestion {section} {showNextSection} />
 {:else}
-	<p class="text-xl w-full flex justify-center items-center mt-10 mb-10">
+	<p class="text-xl w-full flex justify-center items-center mt-10 mb-10 {showNextSection()}">
 		The visual for <strong class="mx-3">{section.title}</strong> has not been found in the vectors visuals.
 	</p>
 {/if}
