@@ -63,9 +63,9 @@
 </script>
 
 {#if show}
-	<div class="relative">
+	<div class="relative w-auto self-center">
 		<main
-			class="w-auto bg-surface-200-700-token rounded-container-token p-4 transition border-token transition-height {explained
+			class="w-full bg-surface-200-700-token rounded-container-token p-4 transition border-token {explained
 				? 'border-success-500'
 				: 'border-primary-500'}"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}

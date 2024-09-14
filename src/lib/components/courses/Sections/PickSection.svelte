@@ -47,9 +47,9 @@
 </script>
 
 <div
-	class="w-full variant-filled-surface rounded-container-token p-4 relative {allAnswered
-		? 'border-2 border-success-500'
-		: ''}"
+	class="w-full variant-filled-surface rounded-container-token p-4 relative transition border-2 {allAnswered
+		? 'border-success-500'
+		: 'border-transparent'}"
 >
 	<h1 class="h4 w-full flex items-center gap-3">
 		<span class="font-black italic">Q. </span>

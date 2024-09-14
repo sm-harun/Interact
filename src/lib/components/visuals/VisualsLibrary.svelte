@@ -15,7 +15,7 @@
 {#if show}
 	<div class="w-auto h-auto" in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}>
 		{#if section.course == 'Vectors'}
-			<VectorsCourseLibrary {section} {showNextSection} />
+			<VectorsCourseLibrary {section} {showNextSection} {showNextButton} />
 		{/if}
 	</div>
 {/if}

@@ -40,9 +40,7 @@
 </script>
 
 <main class="flex h-full">
-	<section
-		class="flex-[3_1_0] h-full border-r-[0.05rem] border-r-surface-400 relative p-6 flex flex-col items-center"
-	>
+	<section class="flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 relative p-6 flex flex-col">
 		{#if !fetched}
 			<ProgressBar
 				meter={'bg-primary-500 h-1'}
@@ -50,7 +48,7 @@
 				rounded={'rounded-none'}
 			/>
 		{:else}
-			{#each sections.slice(0, visibleSectionsCount) as section, i (section.index)}
+			{#each sections.slice(0, visibleSectionsCount) as section}
 				{#if section.type == 'Explanation'}
 					<TextSection
 						{section}

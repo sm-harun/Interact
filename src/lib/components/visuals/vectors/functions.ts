@@ -43,9 +43,9 @@
     ctx.stroke();
   }
 
-	export function drawCircle(ctx: CanvasRenderingContext2D, xCord: number, yCord: number, r: number, filled: boolean) {
+	export function drawCircle(ctx: CanvasRenderingContext2D, xCord: number, yCord: number, r: number, filled: boolean, color = '#a13856') {
 		ctx.beginPath();
-		ctx.fillStyle = '#a13856';
+		ctx.fillStyle = color;
 		ctx.strokeStyle = 'white';
 		ctx.lineWidth = 3;
 		ctx.arc(xCord, yCord, r, 0, Math.PI * 2, false);
