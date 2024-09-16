@@ -26,6 +26,7 @@
 
 	onMount(() => {
 		show = true;
+		if (section.skip) showNextSection();
 	});
 
 	// To convert the numbers for choices to letters
@@ -136,7 +137,7 @@
 		{/if}
 		<!-- This is a place-holder, it keeps the size of the container the same shape when the explanation is revealed -->
 
-		{#if showButton}
+		{#if showButton && !section.skip}
 			<div class="w-full pb-2 flex justify-end items-center">
 				<button
 					class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"

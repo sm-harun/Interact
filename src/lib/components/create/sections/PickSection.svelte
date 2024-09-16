@@ -26,18 +26,30 @@
 	let sectionTitle = section.title;
 	let sectionChoices = section.choices;
 	let sectionAnswers = section.answers;
+	let sectionSkip = section.skip;
 
 	let oldTitle: string;
 	let oldChoices: string[];
 	let oldAnswers: string[];
+	let oldSkip: boolean;
 
 	onMount(() => {
 		oldTitle = sectionTitle;
+		oldSkip = sectionSkip;
 		oldChoices = [...sectionChoices];
 		oldAnswers = [...sectionAnswers];
 	});
 
-	$: checkIfChanged(sectionTitle, oldTitle, sectionChoices, oldChoices, sectionAnswers, oldAnswers);
+	$: checkIfChanged(
+		sectionTitle,
+		oldTitle,
+		sectionChoices,
+		oldChoices,
+		sectionAnswers,
+		oldAnswers,
+		sectionSkip,
+		oldSkip
+	);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
@@ -50,10 +62,13 @@
 		newChoices: string[],
 		oChoices: string[],
 		newAnswers: string[],
-		oAnswers: string[]
+		oAnswers: string[],
+		newSkip: boolean,
+		oSkip: boolean
 	) {
 		if (
 			newTitle !== oTitle ||
+			newSkip !== oSkip ||
 			compareArrays(newChoices, oChoices) ||
 			compareArrays(newAnswers, oAnswers)
 		) {
@@ -61,6 +76,10 @@
 		} else {
 			buttonSynced = true;
 		}
+	}
+
+	function changeSkip() {
+		sectionSkip = !sectionSkip;
 	}
 
 	function updateChoices() {
@@ -102,7 +121,8 @@
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
 			choices: sectionChoices,
 			answers: sectionAnswers,
-			title: sectionTitle
+			title: sectionTitle,
+			skip: sectionSkip
 		})
 			.then(() => {
 				// Changes the name of the actual document
@@ -112,6 +132,7 @@
 
 				// The information is synced so we also sync the variables
 				oldTitle = sectionTitle;
+				oldSkip = sectionSkip;
 				oldChoices = [...sectionChoices];
 				oldAnswers = [...sectionAnswers];
 
@@ -135,7 +156,22 @@
 			});
 	}
 
-	function resetChanges() {}
+	function resetChanges() {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: 'Are you sure you want to RESET the changes?',
+			body: 'This will reset to the last synced state.',
+			response: async (r: string) => {
+				if (!r) return;
+
+				sectionTitle = oldTitle;
+				sectionSkip = oldSkip;
+				sectionChoices = [...oldChoices];
+				sectionAnswers = [...oldAnswers];
+			}
+		};
+		modalStore.trigger(modalSettings);
+	}
 </script>
 
 <div class="w-full variant-filled-surface rounded-container-token p-4 relative">
@@ -211,4 +247,19 @@
 			<span class="hidden lg:flex">Sync</span>
 		</button>
 	</div>
+</div>
+<div class="w-full flex justify-end">
+	<button
+		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+		on:click={changeSkip}
+	>
+		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
+			/>
+		</svg>
+		<span>Skip</span>
+	</button>
 </div>

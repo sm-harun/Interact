@@ -25,6 +25,7 @@
 
 	onMount(() => {
 		slicedAnswers = section.answers;
+		if (section.skip) showNextSection();
 	});
 
 	function evaluateAnswer(choice: string) {
@@ -71,7 +72,7 @@
 		{/key}
 	</div>
 </div>
-{#if showButton && allAnswered}
+{#if showButton && allAnswered && !section.skip}
 	<div class="w-full pb-2 flex justify-end items-center mt-6">
 		<button
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"

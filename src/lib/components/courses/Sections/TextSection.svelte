@@ -9,7 +9,7 @@
 	import type { ExplainSection } from '$lib/stores/courses';
 
 	export let section: ExplainSection;
-	export let showNextSection: () => void;
+	export let showNextSection;
 	export let showNextButton: boolean;
 	export let course: string;
 	export let lesson: string;
@@ -31,6 +31,8 @@
 				dictionaryapi = doc.data().dictionary;
 			}
 		});
+
+		if (section.skip) showNextSection();
 	});
 
 	function hideButton() {
@@ -66,7 +68,7 @@
 			<span>.</span>
 		</p>
 	</main>
-	{#if showButton}
+	{#if showButton && !section.skip}
 		<div class="w-full pb-2 flex justify-end items-center">
 			<button
 				class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"

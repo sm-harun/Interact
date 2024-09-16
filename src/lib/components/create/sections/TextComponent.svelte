@@ -9,6 +9,7 @@
 		getModalStore,
 		type ModalSettings
 	} from '@skeletonlabs/skeleton';
+	import ListSection from './ListSection.svelte';
 
 	export let section: ExplainSection;
 	export let course: string;
@@ -18,8 +19,9 @@
 	let modalStore = getModalStore();
 
 	// These will be binded to input values
-	let sectionText: string = section.text;
-	let sectionTitle: string = section.title;
+	let sectionText = section.text;
+	let sectionTitle = section.title;
+	let sectionSkip = section.skip;
 
 	// Holds the sync state
 	let buttonSynced = true;
@@ -27,27 +29,42 @@
 	// These varables are used to detect whether we are synced or not
 	let oldText: string;
 	let oldTitle: string;
+	let oldSkip: boolean;
+
 	// At initialization they should be in sync
 	onMount(() => {
 		oldText = sectionText;
 		oldTitle = sectionTitle;
+		oldSkip = sectionSkip;
 	});
 
 	// Check if we are in sync when an input value changes
-	$: checkIfChanged(sectionTitle, oldTitle, sectionText, oldText);
+	$: checkIfChanged(sectionTitle, oldTitle, sectionText, oldText, sectionSkip, oldSkip);
 
-	function checkIfChanged(nTitle: string, oTitle: string, nText: string, oText: string) {
-		if (nTitle !== oTitle || nText !== oText) {
+	function checkIfChanged(
+		nTitle: string,
+		oTitle: string,
+		nText: string,
+		oText: string,
+		oSkip: boolean,
+		nSkip: boolean
+	) {
+		if (nTitle !== oTitle || nText !== oText || oSkip !== nSkip) {
 			buttonSynced = false;
 		} else {
 			buttonSynced = true;
 		}
 	}
 
+	function changeSkip() {
+		sectionSkip = !sectionSkip;
+	}
+
 	function syncSection() {
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
 			text: sectionText,
-			title: sectionTitle
+			title: sectionTitle,
+			skip: sectionSkip
 		})
 			.then(() => {
 				// Changes the name of the actual document
@@ -57,6 +74,7 @@
 
 				oldText = sectionText;
 				oldTitle = sectionTitle;
+				oldSkip = sectionSkip;
 
 				// Success Toast
 				const toastSettings: ToastSettings = {
@@ -90,6 +108,7 @@
 
 				sectionText = oldText;
 				sectionTitle = oldTitle;
+				sectionSkip = oldSkip;
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -143,4 +162,19 @@
 			<span class="hidden lg:flex">Sync</span>
 		</button>
 	</div>
+</div>
+<div class="w-full flex justify-end">
+	<button
+		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+		on:click={changeSkip}
+	>
+		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
+			/>
+		</svg>
+		<span>Skip</span>
+	</button>
 </div>

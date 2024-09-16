@@ -22,6 +22,7 @@
 	let sectionTitle = section.title;
 	let sectionExplanation = section.explanation;
 	let sectionAnswer = section.answer;
+	let sectionSkip = section.skip;
 
 	// Holds the sync state
 	let buttonSynced = true;
@@ -33,6 +34,7 @@
 	let oldTitle: string;
 	let oldExplanation: string;
 	let oldAnswer: number;
+	let oldSkip: boolean;
 
 	// At initialization they should be in sync
 	onMount(() => {
@@ -40,6 +42,7 @@
 		oldTitle = sectionTitle;
 		oldExplanation = sectionExplanation;
 		oldAnswer = sectionAnswer;
+		oldSkip = sectionSkip;
 	});
 
 	// Check if we are in sync when an input value changes
@@ -51,7 +54,9 @@
 		sectionChoices,
 		oldChoices,
 		sectionAnswer,
-		oldAnswer
+		oldAnswer,
+		sectionSkip,
+		oldSkip
 	);
 
 	// This is used to campare arrays cause normal '==' won't work
@@ -67,18 +72,25 @@
 		newChoices: string[],
 		oChoices: string[],
 		newAnswer: number,
-		oAnswer: number
+		oAnswer: number,
+		newSkip: boolean,
+		oSkip: boolean
 	) {
 		if (
 			newTitle !== oTitle ||
 			compareArrays(newChoices, oChoices) ||
 			newExplanation !== oExplanation ||
-			newAnswer !== oAnswer
+			newAnswer !== oAnswer ||
+			newSkip !== oSkip
 		) {
 			buttonSynced = false;
 		} else {
 			buttonSynced = true;
 		}
+	}
+
+	function changeSkip() {
+		sectionSkip = !sectionSkip;
 	}
 
 	function addChoice() {
@@ -108,7 +120,8 @@
 			answer: sectionAnswer,
 			choices: sectionChoices,
 			title: sectionTitle,
-			explanation: sectionExplanation
+			explanation: sectionExplanation,
+			skip: sectionSkip
 		})
 			.then(() => {
 				// Changes the name of the actual document
@@ -121,6 +134,7 @@
 				oldTitle = sectionTitle;
 				oldExplanation = sectionExplanation;
 				oldAnswer = sectionAnswer;
+				oldSkip = sectionSkip;
 
 				// Success Toast
 				const toastSettings: ToastSettings = {
@@ -155,6 +169,7 @@
 				sectionTitle = oldTitle;
 				sectionExplanation = oldExplanation;
 				sectionAnswer = oldAnswer;
+				sectionSkip = oldSkip;
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -256,4 +271,19 @@
 			<span class="hidden lg:flex">Sync</span>
 		</button>
 	</div>
+</div>
+<div class="w-full flex justify-end">
+	<button
+		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+		on:click={changeSkip}
+	>
+		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
+			/>
+		</svg>
+		<span>Skip</span>
+	</button>
 </div>

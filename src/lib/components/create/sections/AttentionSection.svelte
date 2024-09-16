@@ -17,6 +17,7 @@
 	export let lesson: string;
 
 	let sectionTitle = section.title;
+	let sectionSkip = section.skip;
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
@@ -24,23 +25,32 @@
 	let buttonSynced = true;
 
 	let oldTitle: string;
+	let oldSkip: boolean;
 
-	onMount(() => (oldTitle = sectionTitle));
+	onMount(() => {
+		oldTitle = sectionTitle;
+		oldSkip = sectionSkip;
+	});
 
 	// Check if we are in sync when an input value changes
-	$: checkIfChanged(sectionTitle, oldTitle);
+	$: checkIfChanged(sectionTitle, oldTitle, sectionSkip, oldSkip);
 
-	function checkIfChanged(nTitle: string, oTitle: string) {
-		if (nTitle !== oTitle) {
+	function checkIfChanged(nTitle: string, oTitle: string, nSkip: boolean, oSkip: boolean) {
+		if (nTitle !== oTitle || nSkip !== oSkip) {
 			buttonSynced = false;
 		} else {
 			buttonSynced = true;
 		}
 	}
 
+	function changeSkip() {
+		sectionSkip = !sectionSkip;
+	}
+
 	function syncSection() {
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
-			title: sectionTitle
+			title: sectionTitle,
+			skip: sectionSkip
 		})
 			.then(() => {
 				// Changes the name of the actual document
@@ -49,6 +59,7 @@
 				}
 
 				oldTitle = sectionTitle;
+				oldSkip = sectionSkip;
 
 				// Success Toast
 				const toastSettings: ToastSettings = {
@@ -80,6 +91,7 @@
 				if (!r) return;
 
 				sectionTitle = oldTitle;
+				sectionSkip = oldSkip;
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -96,34 +108,48 @@
 			bind:value={sectionTitle}
 		/>
 	</blockquote>
+	<div class="w-full flex justify-between mt-5">
+		<button
+			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+			on:click={resetChanges}
+		>
+			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
+				/>
+			</svg>
+
+			<span class="hidden lg:flex">Reset</span>
+		</button>
+		<button
+			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+			on:click={syncSection}
+		>
+			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
+				/>
+			</svg>
+			<span class="hidden lg:flex">Sync</span>
+		</button>
+	</div>
 </div>
-
-<div class="w-full flex justify-between mt-2">
+<div class="w-full flex justify-end">
 	<button
-		class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={resetChanges}
+		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+		on:click={changeSkip}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path
 				stroke-linecap="round"
 				stroke-linejoin="round"
-				d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
+				d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
 			/>
 		</svg>
-
-		<span class="hidden lg:flex">Reset</span>
-	</button>
-	<button
-		class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={syncSection}
-	>
-		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-			<path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
-			/>
-		</svg>
-		<span class="hidden lg:flex">Sync</span>
+		<span>Skip</span>
 	</button>
 </div>

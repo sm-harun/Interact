@@ -65,6 +65,13 @@
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
+			$sectionPopupPosition.callback('Equation');
+			hideSectionPopup();
+		}}>Equation</button
+	>
+	<button
+		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
+		on:click={() => {
 			$sectionPopupPosition.callback('Visual');
 			hideSectionPopup();
 		}}>Visual</button

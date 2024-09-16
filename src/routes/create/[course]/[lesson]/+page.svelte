@@ -6,6 +6,7 @@
 	import PickSection from '$lib/components/create/sections/PickSection.svelte';
 	import ListSection from '$lib/components/create/sections/ListSection.svelte';
 	import AttentionSection from '$lib/components/create/sections/AttentionSection.svelte';
+	import EquationSection from '$lib/components/create/sections/EquationSection.svelte';
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 
 	import {
@@ -22,7 +23,7 @@
 	import { onMount } from 'svelte';
 	import { showSectionPopup } from '$lib/stores/components.js';
 	import { arrayUnion, getDoc, updateDoc } from 'firebase/firestore';
-	import type { BasicSection } from '$lib/stores/courses.js';
+	import type { BasicSection, QuestionSection, ExplainSection } from '$lib/stores/courses.js';
 
 	export let data;
 
@@ -91,7 +92,8 @@
 				type: 'Explanation',
 				title: title,
 				index: sections.length,
-				text: ''
+				text: '',
+				skip: false
 			};
 			sections.push(newSection);
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
@@ -102,7 +104,8 @@
 				index: sections.length,
 				choices: ['Choice 1'],
 				answer: 1,
-				explanation: ''
+				explanation: '',
+				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -111,7 +114,8 @@
 				type: 'Visual',
 				title: title,
 				index: sections.length,
-				course: data.params.course
+				course: data.params.course,
+				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -121,7 +125,8 @@
 				title: title,
 				index: sections.length,
 				choices: [],
-				answers: []
+				answers: [],
+				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -130,7 +135,8 @@
 				type: 'List',
 				title: title,
 				index: sections.length,
-				list: []
+				list: [],
+				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -138,7 +144,17 @@
 			let newSection: BasicSection = {
 				type: 'Attention',
 				title: title,
-				index: sections.length
+				index: sections.length,
+				skip: false
+			};
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
+		} else if (selected == 'Equation') {
+			let newSection: BasicSection = {
+				type: 'Equation',
+				title: title,
+				index: sections.length,
+				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -244,6 +260,8 @@
 						<ListSection {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Attention'}
 						<AttentionSection {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'Equation'}
+						<EquationSection {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Visual'}
 						<VisualsLibrary {section} />
 					{/if}

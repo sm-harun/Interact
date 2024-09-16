@@ -10,8 +10,9 @@ export type Lesson = {
 };
 
 export type BasicSection = {
-	type: 'Explanation' | 'Question' | 'Pick' | 'Visual' | 'List' | 'Attention';
+	type: 'Explanation' | 'Question' | 'Pick' | 'Visual' | 'List' | 'Attention' | 'Equation';
 	title: string;
+  skip: boolean;
 	index: number;
 };
 

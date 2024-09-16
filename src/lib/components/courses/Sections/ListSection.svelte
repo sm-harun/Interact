@@ -12,6 +12,7 @@
 
 	onMount(() => {
 		show = true;
+		if (section.skip) showNextSection();
 	});
 
 	function hideButton() {
@@ -32,7 +33,7 @@
 		</ul>
 	</main>
 {/if}
-{#if showNextSection && showButton}
+{#if showNextSection && showButton && !section.skip}
 	<div class="w-full pb-2 flex justify-end items-center mt-6">
 		<button
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"

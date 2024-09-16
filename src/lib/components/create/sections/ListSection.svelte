@@ -15,6 +15,7 @@
 
 	let sectionTitle = section.title;
 	let sectionList = section.list;
+	let sectionSkip = section.skip;
 
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
@@ -28,21 +29,30 @@
 
 	let oldTitle: string;
 	let oldList: string[];
+	let oldSkip: boolean;
 
 	onMount(() => {
 		oldTitle = sectionTitle;
 		oldList = [...sectionList];
+		oldSkip = sectionSkip;
 	});
 
-	$: checkIfChanged(sectionTitle, oldTitle, sectionList, oldList);
+	$: checkIfChanged(sectionTitle, oldTitle, sectionList, oldList, oldSkip, sectionSkip);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
 		return JSON.stringify(a) !== JSON.stringify(b);
 	};
 
-	function checkIfChanged(newTitle: string, oTitle: string, newList: string[], oList: string[]) {
-		if (newTitle !== oTitle || compareArrays(newList, oList)) {
+	function checkIfChanged(
+		newTitle: string,
+		oTitle: string,
+		newList: string[],
+		oList: string[],
+		newSkip: boolean,
+		oSkip: boolean
+	) {
+		if (newTitle !== oTitle || compareArrays(newList, oList) || newSkip !== oSkip) {
 			buttonSynced = false;
 		} else {
 			buttonSynced = true;
@@ -59,10 +69,15 @@
 		updateList();
 	}
 
+	function changeSkip() {
+		sectionSkip = !sectionSkip;
+	}
+
 	function syncChanges() {
 		updateDoc(getSectionsDoc(course, lesson, section.title), {
 			title: sectionTitle,
-			list: sectionList
+			list: sectionList,
+			skip: sectionSkip
 		})
 			.then(() => {
 				// Changes the name of the actual document
@@ -72,6 +87,7 @@
 
 				// The information is synced so we also sync the variables
 				oldTitle = sectionTitle;
+				oldSkip = sectionSkip;
 				oldList = [...sectionList];
 
 				// Success Toast
@@ -104,6 +120,7 @@
 
 				sectionTitle = oldTitle;
 				sectionList = oldList;
+				sectionSkip = oldSkip;
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -181,4 +198,19 @@
 			<span class="hidden lg:flex">Sync</span>
 		</button>
 	</div>
+</div>
+<div class="w-full flex justify-end">
+	<button
+		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
+		on:click={changeSkip}
+	>
+		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
+			/>
+		</svg>
+		<span>Skip</span>
+	</button>
 </div>
