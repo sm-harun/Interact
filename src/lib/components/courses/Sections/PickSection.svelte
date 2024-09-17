@@ -2,7 +2,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
-	import { parseText } from '$lib/stores/themes';
+	import { renderText } from '$lib/stores/themes';
 
 	export let section: PickSection;
 	export let showNextButton: boolean;
@@ -54,7 +54,7 @@
 >
 	<h1 class="h4 w-full flex items-center gap-3">
 		<span class="font-black italic">Q. </span>
-		{@html parseText(section.title)}
+		{@html renderText(section.title)}
 	</h1>
 
 	<div class="w-full flex flex-wrap gap-3 mt-5 justify-center">

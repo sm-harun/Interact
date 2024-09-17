@@ -4,7 +4,6 @@
 	import type { EquationSectionType } from '$lib/stores/courses';
 
 	import katex from 'katex';
-	import 'katex/dist/katex.min.css';
 
 	export let section: EquationSectionType;
 	export let showNextSection: () => void;

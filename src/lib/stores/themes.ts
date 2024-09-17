@@ -2,6 +2,7 @@ import { readable, writable } from 'svelte/store';
 import { getAuth } from 'firebase/auth';
 import { doc, DocumentReference, getDoc, updateDoc } from 'firebase/firestore';
 import { DataBase } from '$lib/firebase';
+import katex from 'katex';
 import { marked } from 'marked';
 
 export type Theme =
@@ -47,3 +48,26 @@ export function toggleFullScreen() {
 export function parseText(text: string): string {
 	return marked(text);
 }
+
+export function renderText(text: string): string {
+		// This extracts text inside $
+		const regex = /\$(.*?)\$/g;
+		const matches = text.match(regex);
+		const expressions = matches ? matches.map((m) => m.replace(/\$/g, '').trim()) : [];
+
+		const equations: string[] = [];
+
+		// This converts extracted text to equations and appends them to the equations array
+		expressions.forEach((expression: string) => {
+			equations.push(katex.renderToString(expression, { throwOnError: false }));
+		});
+
+		let newText = text;
+
+		// Replaces the equations with their respective place
+		matches?.forEach((match: string, index: number) => {
+			newText = newText.replace(match, equations[index]);
+		});
+
+		return parseText(newText);
+	}

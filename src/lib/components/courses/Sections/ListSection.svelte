@@ -2,7 +2,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
-	import { parseText } from '$lib/stores/themes';
+	import { renderText } from '$lib/stores/themes';
 
 	export let section: ListSection;
 	export let showNextSection: () => void;
@@ -26,10 +26,10 @@
 		class="w-full variant-filled-surface rounded-container-token p-4 mb-5"
 		in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 	>
-		<h3 class="h3 ml-5">{@html parseText(section.title)}</h3>
+		<h3 class="h3 ml-5">{@html renderText(section.title)}</h3>
 		<ul class="list-disc px-5 mt-3">
 			{#each section.list as list}
-				<li class="text-lg">{@html parseText(list)}</li>
+				<li class="text-lg">{@html renderText(list)}</li>
 			{/each}
 		</ul>
 	</main>

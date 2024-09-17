@@ -32,6 +32,8 @@
 	import AddSectionPrompt from '$lib/components/create/popups/AddSectionPrompt.svelte';
 	import DictionaryPopup from '$lib/components/courses/Sections/DictionaryPopup.svelte';
 
+	import 'katex/dist/katex.min.css';
+
 	initializeStores();
 	let auth = getAuth(app);
 

@@ -9,7 +9,7 @@
       this.y = canvas.height / 2;
 
       // Converts degree to radian
-      let radian = (direction * Math.PI) / 180;
+      const radian = (direction * Math.PI) / 180;
 
       // Decomposes the magnitude to x and y
       this.vx = magnitude * Math.sin(radian);
@@ -20,7 +20,6 @@
 
     draw() {
       this.drawer(this.ctx, this.x, this.y, 50, true);
-      console.log(this.x, this.y)
     }
 
     update() {

@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { fly, slide, fade } from 'svelte/transition';
-	import { parseText } from '$lib/stores/themes';
+	import { renderText } from '$lib/stores/themes';
 
 	export let section: QuestionSection;
 	export let showNextSection: () => void;
@@ -75,7 +75,7 @@
 		>
 			<h1 class="h4 w-full flex items-center gap-3">
 				<span class="font-black italic">Q. </span>
-				{@html parseText(section.title)}
+				{@html renderText(section.title)}
 			</h1>
 			<hr class="mt-3 mb-3" />
 			<div class="px-5 flex flex-col">
@@ -92,7 +92,7 @@
 							on:click={() => answered(i + 1)}
 						>
 							<span class="font-bold">{letter(i + 1)}. </span>
-							<span class="text-lg ml-2">{choice}</span>
+							<span class="text-lg ml-2">{@html renderText(choice)}</span>
 						</button>
 					{/each}
 				{/key}
@@ -125,7 +125,7 @@
 				transition:fly={{ y: -20 }}
 			>
 				<h3 class="h5 font-bold">Explanation:</h3>
-				<p>{section.explanation}</p>
+				<p>{@html renderText(section.explanation)}</p>
 			</div>
 		{/if}
 
@@ -133,7 +133,7 @@
 		{#if !explained}
 			<div class="w-full p-4 mb-5 transition -z-10 opacity-0">
 				<h3 class="h5 font-bold">Explanation:</h3>
-				<p>{section.explanation}</p>
+				<p>{@html renderText(section.explanation)}</p>
 			</div>
 		{/if}
 		<!-- This is a place-holder, it keeps the size of the container the same shape when the explanation is revealed -->
