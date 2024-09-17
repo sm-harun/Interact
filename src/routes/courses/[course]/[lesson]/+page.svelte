@@ -2,7 +2,12 @@
 	import { getSectionsColl } from '$lib/docRefs.js';
 	import { getDocs, orderBy, query } from 'firebase/firestore';
 	import { onMount } from 'svelte';
+
+	import { sectionsPosition } from '$lib/stores/themes.js';
+
 	import { ProgressBar } from '@skeletonlabs/skeleton';
+	import AIChat from '$lib/components/courses/AIChat.svelte';
+	import Notes from '$lib/components/courses/Notes.svelte';
 	import TextSection from '$lib/components/courses/Sections/TextSection.svelte';
 	import QuestionSection from '$lib/components/courses/Sections/QuestionSection.svelte';
 	import PickSection from '$lib/components/courses/Sections/PickSection.svelte';
@@ -100,5 +105,12 @@
 			{/each}
 		{/if}
 	</section>
-	<section class="flex-[2_1_0] h-full flex-shrink-0 hidden 2xl:block"></section>
+	<section class="flex-[2_1_0] h-full flex-shrink-0 hidden 2xl:block overflow-hidden relative">
+		<div class="size-full absolute" style="right: {$sectionsPosition}%">
+			<AIChat />
+		</div>
+		<div class="size-full absolute" style="left: {100 - $sectionsPosition}%">
+			<Notes />
+		</div>
+	</section>
 </main>

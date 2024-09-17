@@ -1,4 +1,6 @@
 import { readable, writable } from 'svelte/store';
+import { tweened } from 'svelte/motion';
+import { cubicInOut } from 'svelte/easing'
 import { getAuth } from 'firebase/auth';
 import { doc, DocumentReference, getDoc, updateDoc } from 'firebase/firestore';
 import { DataBase } from '$lib/firebase';
@@ -71,3 +73,13 @@ export function renderText(text: string): string {
 
 		return parseText(newText);
 	}
+
+// This will be used for the AI and Notes section in the courses page
+export const sectionsPosition = tweened<number>(0, {
+  duration: 1000,
+  easing: cubicInOut
+});
+
+export function setSectionsPosition(value: number) {
+  sectionsPosition.set(value);
+}
