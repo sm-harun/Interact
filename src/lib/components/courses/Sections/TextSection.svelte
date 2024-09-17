@@ -2,6 +2,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
+	import { parseText } from '$lib/stores/themes';
 
 	import { showDictPopup, hideDictPopup } from '$lib/stores/components.ts';
 	import { getDoc } from 'firebase/firestore';
@@ -45,7 +46,7 @@
 		class="w-full variant-filled-surface rounded-container-token p-4 mb-5"
 		in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 	>
-		<h1 class="w-full pl-5 h4">{section.title}</h1>
+		<h1 class="w-full pl-5 h4">{@html parseText(section.title)}</h1>
 		<hr class="mt-3 mb-3" />
 		<p class="text-lg">
 			<!-- Checks if the words need to display their meaning or not -->

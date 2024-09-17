@@ -61,7 +61,7 @@
 	}
 
 	function syncSection() {
-		updateDoc(getSectionsDoc(course, lesson, section.title), {
+		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			text: sectionText,
 			title: sectionTitle,
 			skip: sectionSkip

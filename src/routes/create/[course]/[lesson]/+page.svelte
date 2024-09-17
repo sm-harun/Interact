@@ -23,7 +23,12 @@
 	import { onMount } from 'svelte';
 	import { showSectionPopup } from '$lib/stores/components.js';
 	import { arrayUnion, getDoc, updateDoc } from 'firebase/firestore';
-	import type { BasicSection, QuestionSection, ExplainSection } from '$lib/stores/courses.js';
+	import type {
+		BasicSection,
+		QuestionSection,
+		ExplainSection,
+		EquationSectionType
+	} from '$lib/stores/courses.js';
 
 	export let data;
 
@@ -150,9 +155,10 @@
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
 		} else if (selected == 'Equation') {
-			let newSection: BasicSection = {
+			let newSection: EquationSectionType = {
 				type: 'Equation',
 				title: title,
+				equations: [],
 				index: sections.length,
 				skip: false
 			};

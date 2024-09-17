@@ -16,6 +16,10 @@ export type BasicSection = {
 	index: number;
 };
 
+export type EquationSectionType = BasicSection & {
+  equations: string[];
+}
+
 export type ExplainSection = BasicSection & {
 	text: string;
 };

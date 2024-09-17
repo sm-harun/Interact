@@ -3,6 +3,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { type BasicSection } from '$lib/stores/courses';
 	import { onMount } from 'svelte';
+	import { parseText } from '$lib/stores/themes';
 
 	export let section: BasicSection;
 	export let showNextSection: () => void;
@@ -26,7 +27,8 @@
 {#if show}
 	<div class="w-full flex justify-start" in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}>
 		<blockquote class="blockquote text-lg">
-			{section.title}
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html parseText(section.title)}
 		</blockquote>
 	</div>
 {/if}

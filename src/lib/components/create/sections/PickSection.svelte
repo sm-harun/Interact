@@ -118,7 +118,7 @@
 	}
 
 	function syncChanges() {
-		updateDoc(getSectionsDoc(course, lesson, section.title), {
+		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			choices: sectionChoices,
 			answers: sectionAnswers,
 			title: sectionTitle,

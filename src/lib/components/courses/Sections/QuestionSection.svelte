@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { fly, slide, fade } from 'svelte/transition';
+	import { parseText } from '$lib/stores/themes';
 
 	export let section: QuestionSection;
 	export let showNextSection: () => void;
@@ -74,7 +75,7 @@
 		>
 			<h1 class="h4 w-full flex items-center gap-3">
 				<span class="font-black italic">Q. </span>
-				{section.title}
+				{@html parseText(section.title)}
 			</h1>
 			<hr class="mt-3 mb-3" />
 			<div class="px-5 flex flex-col">
