@@ -3,7 +3,7 @@
 	import { getDocs, orderBy, query } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
-	import { sectionsPosition } from '$lib/stores/themes.js';
+	import { sectionsPosition, mobSectionsPosition } from '$lib/stores/themes.js';
 
 	import { ProgressBar } from '@skeletonlabs/skeleton';
 	import AIChat from '$lib/components/courses/AIChat.svelte';
@@ -45,8 +45,11 @@
 	}
 </script>
 
-<main class="flex h-full">
-	<section class="flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 relative p-6 flex flex-col">
+<main class="flex h-full relative">
+	<section
+		class="absolute left-0 2xl:relative size-full 2xl:size-auto 2xl:flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 pt-10 2xl:pt-0 p-6 flex flex-col"
+		style="left: {-$mobSectionsPosition}%;"
+	>
 		{#if !fetched}
 			<ProgressBar
 				meter={'bg-primary-500 h-1'}
@@ -105,7 +108,10 @@
 			{/each}
 		{/if}
 	</section>
-	<section class="flex-[2_1_0] h-full flex-shrink-0 hidden 2xl:block overflow-hidden relative">
+	<section
+		class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky"
+		style="left: {100 - $mobSectionsPosition}%;"
+	>
 		<div class="size-full absolute" style="right: {$sectionsPosition}%">
 			<AIChat />
 		</div>

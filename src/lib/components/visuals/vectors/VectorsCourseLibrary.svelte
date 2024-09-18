@@ -4,6 +4,7 @@
 	import VectorQuantities from './vectorsandscalars/VectorQuantities.svelte';
 
 	import PlotVectorQuestion from './representationofvectors/PlotVectorQuestion.svelte';
+	import CalculateVectorQuestion from './representationofvectors/CalculateVectorQuestion.svelte';
 
 	import type { VisualSection } from '$lib/stores/courses';
 
@@ -20,6 +21,8 @@
 	<VectorQuantities {section} {showNextSection} />
 {:else if section.title == 'plot-vector-question'}
 	<PlotVectorQuestion {section} {showNextSection} />
+{:else if section.title == 'calculate-vector-question'}
+	<CalculateVectorQuestion {section} {showNextSection} />
 {:else}
 	<p class="text-xl w-full flex justify-center items-center mt-10 mb-10 {showNextSection()}">
 		The visual for <strong class="mx-3">{section.title}</strong> has not been found in the vectors visuals.

@@ -17,11 +17,13 @@
 		{message}
 	</div>
 	{#if side}
-		<Avatar
-			src={$user.photoURL}
-			width="w-8 lg:w-12"
-			rounded="rounded-full"
-			border="border-2 bg-surface-800-100-token"
-		/>
+		<div>
+			<Avatar
+				src={$user.photoURL}
+				width="w-8 lg:w-12"
+				rounded="rounded-full"
+				border="border-2 bg-surface-800-100-token"
+			/>
+		</div>
 	{/if}
 </div>

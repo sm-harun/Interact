@@ -83,3 +83,13 @@ export const sectionsPosition = tweened<number>(0, {
 export function setSectionsPosition(value: number) {
   sectionsPosition.set(value);
 }
+
+// This will be for phone users to switch sections between lessons, AI, and Notes
+export const mobSectionsPosition = tweened<number>(0, {
+  duration: 1000,
+  easing: cubicInOut
+})
+
+export function setMobSectionsPosition(value: number) {
+  mobSectionsPosition.set(value);
+}

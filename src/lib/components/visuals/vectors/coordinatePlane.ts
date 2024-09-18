@@ -3,7 +3,7 @@ export class Plane {
     this.canvas = canvas;
     this.context = ctx;
 
-    this.divisions = canvas.width / tiles;
+    this.divisions = canvas.width / tiles - 1;
     this.tiles = tiles;
 
     this.maxWidth = maxWidth;
@@ -139,6 +139,31 @@ export class Plane {
       this.context.fillStyle = "green";
       this.context.font = 'bold 1.3rem sans-serif';
       this.context.fillText(`( ${this.mainVector.x}, ${this.mainVector.y} )`, this.xOrigin + x*this.divisions + 10, this.yOrigin - y*this.divisions - 20);
+    }
+  }
+
+  drawFloatingVector(x1, y1, x2, y2, showText) {
+    // Draw the vector
+    this.context.beginPath();
+    this.context.strokeStyle = "green";
+    this.context.lineWidth = 3;
+
+    this.context.moveTo(this.xOrigin + x1*this.divisions, this.yOrigin - y1*this.divisions);
+    this.context.lineTo(this.xOrigin + x2*this.divisions, this.yOrigin - y2*this.divisions);
+    
+    this.context.stroke();
+    this.context.closePath();
+
+    // Draw the tips for the vector
+    this.drawCircle(this.xOrigin + x1*this.divisions, this.yOrigin - y1*this.divisions, 8, true, 'green');
+    this.drawCircle(this.xOrigin + x2*this.divisions, this.yOrigin - y2*this.divisions, 8, true, 'green');
+
+    // Draw the coordinates at the tip of the vector
+    if (showText) {
+      this.context.fillStyle = "green";
+      this.context.font = 'bold 1.3rem sans-serif';
+      this.context.fillText(`( ${x1}, ${y1} )`, this.xOrigin + x1*this.divisions, this.yOrigin - y1*this.divisions + 30);
+      this.context.fillText(`( ${x2}, ${y2} )`, this.xOrigin + x2*this.divisions - 50, this.yOrigin - y2*this.divisions - 20);
     }
   }
 
