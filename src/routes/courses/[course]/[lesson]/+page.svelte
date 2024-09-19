@@ -47,7 +47,7 @@
 
 <main class="flex h-full relative">
 	<section
-		class="absolute left-0 2xl:relative size-full 2xl:size-auto 2xl:flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 pt-10 2xl:pt-0 p-6 flex flex-col"
+		class="absolute left-0 2xl:relative size-full 2xl:size-auto 2xl:flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 pt-5 2xl:pt-0 p-6 flex flex-col"
 		style="left: {-$mobSectionsPosition}%;"
 	>
 		{#if !fetched}

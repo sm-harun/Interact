@@ -119,7 +119,7 @@
 	<label class="label">
 		<strong>Title: </strong>
 		<input
-			class="input variant-filled-surface font-bold"
+			class="input variant-filled-surface font-bold text-xl"
 			type="text"
 			placeholder="Title"
 			bind:value={sectionTitle}
@@ -127,7 +127,7 @@
 
 		<strong>Info: </strong>
 		<textarea
-			class="textarea variant-filled-surface font-semibold"
+			class="textarea variant-filled-surface font-semibold text-lg"
 			rows="3"
 			placeholder="Explanation to the topic..."
 			bind:value={sectionText}

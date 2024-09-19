@@ -26,7 +26,7 @@
 				href="/courses/{course}/{lesson.title}"
 				class="{$page.params.lesson === lesson.title
 					? 'border-b-2 border-primary-500'
-					: ''} w-full h-14 flex items-center pl-4 hover:backdrop-brightness-150"
+					: ''} w-full h-14 flex items-center pl-4 hover:backdrop-brightness-150 px-2"
 				on:click={() => {
 					updateLessons();
 					drawerStore.close();

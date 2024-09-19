@@ -29,7 +29,7 @@
 		const modalSettings: ModalSettings = {
 			type: 'prompt',
 			title: 'Provide the Name for your Course',
-			valueAttr: { type: 'text', minlength: 3, maxlength: 15, required: true },
+			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
 			response: (r: string) => {
 				if (r) {
 					setDoc(getCourseDoc(r), {

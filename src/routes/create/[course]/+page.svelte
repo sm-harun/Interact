@@ -2,13 +2,14 @@
 	import { getModalStore, type ModalSettings, ProgressBar } from '@skeletonlabs/skeleton';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
-	import { setDoc, getDocs } from 'firebase/firestore';
+	import { setDoc, getDocs, query, orderBy } from 'firebase/firestore';
 
 	import { goto } from '$app/navigation';
 
 	import LessonCard from '$lib/components/create/cards/LessonCard.svelte';
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 	import { getLessonsColl, getLessonsDoc } from '$lib/docRefs.js';
+	import type { Lesson } from '$lib/stores/courses.js';
 
 	export let data;
 
@@ -17,10 +18,12 @@
 
 	// Fetches all lessons
 	async function getLessons() {
-		let lessons: any[] = [];
+		let lessons: Lesson[] = [];
 
 		// Fetches the lessons collection
-		let fetchedLessons = await getDocs(getLessonsColl(data.params.course));
+		let fetchedLessons = await getDocs(
+			query(getLessonsColl(data.params.course), orderBy('index', 'asc'))
+		);
 		fetchedLessons.forEach((lesson) => {
 			lessons.push(lesson.data());
 		});
@@ -71,7 +74,7 @@
 		showBackButton={true}
 		showHomeButton={true}
 	/>
-	<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap">
+	<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap content-start">
 		{#await getLessons()}
 			<ProgressBar
 				meter={'bg-primary-500 h-1'}
@@ -79,9 +82,9 @@
 				rounded={'rounded-none'}
 			/>
 		{:then lessons}
-			{#each lessons as lesson}
+			{#each lessons as lesson, i}
 				<a href="/create/{data.params.course}/{lesson.title}">
-					<LessonCard title={lesson.title} image={lesson.background} />
+					<LessonCard title={lesson.title} image={lesson.background} index={i} />
 				</a>
 			{/each}
 			<button

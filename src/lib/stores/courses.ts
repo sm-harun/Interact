@@ -6,6 +6,8 @@ export type Course = {
 
 export type Lesson = {
 	title: string;
+  index:  number,
+  dictionary: string[],
 	sections: Section[];
 };
 
