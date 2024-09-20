@@ -37,9 +37,30 @@
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
+			$sectionPopupPosition.callback('List');
+			hideSectionPopup();
+		}}>List</button
+	>
+	<button
+		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
+		on:click={() => {
+			$sectionPopupPosition.callback('Equation');
+			hideSectionPopup();
+		}}>Equation</button
+	>
+	<button
+		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
+		on:click={() => {
 			$sectionPopupPosition.callback('Question');
 			hideSectionPopup();
 		}}>Question</button
+	>
+	<button
+		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
+		on:click={() => {
+			$sectionPopupPosition.callback('TrueOrFalse');
+			hideSectionPopup();
+		}}>True | False</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
@@ -51,23 +72,9 @@
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
 		on:click={() => {
-			$sectionPopupPosition.callback('List');
-			hideSectionPopup();
-		}}>List</button
-	>
-	<button
-		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
 			$sectionPopupPosition.callback('Attention');
 			hideSectionPopup();
 		}}>Attention</button
-	>
-	<button
-		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
-			$sectionPopupPosition.callback('Equation');
-			hideSectionPopup();
-		}}>Equation</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"

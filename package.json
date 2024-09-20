@@ -43,6 +43,7 @@
     "@sveltejs/adapter-static": "^3.0.4",
     "firebase": "^10.13.0",
     "katex": "^0.16.11",
-    "marked": "^14.1.2"
+    "marked": "^14.1.2",
+    "three": "^0.168.0"
   }
 }

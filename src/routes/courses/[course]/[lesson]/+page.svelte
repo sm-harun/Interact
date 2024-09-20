@@ -12,6 +12,7 @@
 	import QuestionSection from '$lib/components/courses/Sections/QuestionSection.svelte';
 	import PickSection from '$lib/components/courses/Sections/PickSection.svelte';
 	import ListSection from '$lib/components/courses/Sections/ListSection.svelte';
+	import TrueOrFalse from '$lib/components/courses/Sections/TrueOrFalse.svelte';
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 	import AttentionSection from '$lib/components/courses/Sections/AttentionSection.svelte';
 	import EquationSection from '$lib/components/courses/Sections/EquationSection.svelte';
@@ -74,6 +75,12 @@
 					/>
 				{:else if section.type == 'Pick'}
 					<PickSection
+						{section}
+						{showNextSection}
+						showNextButton={visibleSectionsCount != sections.length}
+					/>
+				{:else if section.type == 'TrueOrFalse'}
+					<TrueOrFalse
 						{section}
 						{showNextSection}
 						showNextButton={visibleSectionsCount != sections.length}

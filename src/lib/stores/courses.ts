@@ -26,6 +26,11 @@ export type ExplainSection = BasicSection & {
 	text: string;
 };
 
+export type TrueOrFalse = BasicSection & {
+  questions: string[];
+  answers: number[];
+}
+
 export type QuestionSection = BasicSection & {
 	choices: string[];
 	answer: number;

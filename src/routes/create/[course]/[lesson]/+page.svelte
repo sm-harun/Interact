@@ -6,6 +6,7 @@
 	import PickSection from '$lib/components/create/sections/PickSection.svelte';
 	import ListSection from '$lib/components/create/sections/ListSection.svelte';
 	import AttentionSection from '$lib/components/create/sections/AttentionSection.svelte';
+	import TrueOrFalse from '$lib/components/create/sections/TrueOrFalse.svelte';
 	import EquationSection from '$lib/components/create/sections/EquationSection.svelte';
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 
@@ -27,7 +28,8 @@
 		BasicSection,
 		QuestionSection,
 		ExplainSection,
-		EquationSectionType
+		EquationSectionType,
+		TrueOrFalseType
 	} from '$lib/stores/courses.js';
 
 	export let data;
@@ -111,6 +113,17 @@
 				answer: 1,
 				explanation: '',
 				skip: false
+			};
+			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
+			sections.push(newSection);
+		} else if (selected == 'TrueOrFalse') {
+			let newSection: TrueOrFalseType = {
+				type: 'TrueOrFalse',
+				title: title,
+				index: sections.length,
+				skip: false,
+				questions: [],
+				answers: []
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.push(newSection);
@@ -262,6 +275,8 @@
 						<QuestionComponent {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Pick'}
 						<PickSection {section} course={data.params.course} lesson={data.params.lesson} />
+					{:else if section.type == 'TrueOrFalse'}
+						<TrueOrFalse {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'List'}
 						<ListSection {section} course={data.params.course} lesson={data.params.lesson} />
 					{:else if section.type == 'Attention'}

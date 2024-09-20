@@ -9,7 +9,6 @@
 		getModalStore,
 		type ModalSettings
 	} from '@skeletonlabs/skeleton';
-	import ListSection from './ListSection.svelte';
 
 	export let section: ExplainSection;
 	export let course: string;
