@@ -184,5 +184,9 @@ export class Plane {
     if (filled) this.context.fill();
 		this.context.closePath();
 	}
+
+  clear() {
+    this.context.clearRect( 0, 0, this.maxWidth, this.maxHeight);
+  }
 }
 

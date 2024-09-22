@@ -56,7 +56,7 @@
 	});
 
 	function loop() {
-		ctx.clearRect(0, 0, canvas.width, canvas.clientHeight);
+		plane.clear();
 		plane.drawFirstQuadrant(true);
 		plane.updateMainVector(xCord, yCord, true);
 

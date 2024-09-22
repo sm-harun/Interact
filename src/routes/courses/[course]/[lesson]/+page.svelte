@@ -22,8 +22,18 @@
 	let sections: any[] = [];
 	let visibleSectionsCount = 1;
 
+	let sectionElement: HTMLSelectElement;
+
 	function showNextSection() {
 		visibleSectionsCount++;
+
+		// This will wait just a bit for the lesson to fetched and created first
+		setTimeout(() => {
+			sectionElement.scrollTo({
+				top: sectionElement.scrollHeight,
+				behavior: 'smooth'
+			});
+		}, 300);
 	}
 
 	// To know if we have fetched the data yet.
@@ -46,10 +56,11 @@
 	}
 </script>
 
-<main class="flex h-full relative">
+<main class="flex h-full relative overflow-hidden">
 	<section
-		class="absolute left-0 2xl:relative size-full 2xl:size-auto 2xl:flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 pt-5 2xl:pt-0 p-6 flex flex-col"
+		class="absolute left-0 2xl:relative w-full max-h-full 2xl:w-auto 2xl:flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 pt-10 p-6 flex flex-col overflow-y-scroll"
 		style="left: {-$mobSectionsPosition}%;"
+		bind:this={sectionElement}
 	>
 		{#if !fetched}
 			<ProgressBar
@@ -119,7 +130,7 @@
 		class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky"
 		style="left: {100 - $mobSectionsPosition}%;"
 	>
-		<div class="size-full absolute" style="right: {$sectionsPosition}%">
+		<div class="size-full absolute overflow-hidden" style="right: {$sectionsPosition}%">
 			<AIChat />
 		</div>
 		<div class="size-full absolute" style="left: {100 - $sectionsPosition}%">

@@ -194,14 +194,14 @@
 		</div>
 	</header>
 
-	<main class="flex-grow flex">
+	<main class="flex-grow flex overflow-hidden">
 		{#key updater}
 			<div class=" hidden lg:block">
 				<LessonsSideBar {lessons} {updateLessons} course={data.params.course} />
 			</div>
 		{/key}
 
-		<div class="flex-grow h-full">
+		<div class="flex-grow h-full overflow-hidden">
 			{#key lessonUpdater}
 				<slot />
 			{/key}

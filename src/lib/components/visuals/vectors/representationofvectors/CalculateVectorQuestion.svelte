@@ -21,8 +21,15 @@
 			});
 		}
 		let plane = new Plane(canvas, ctx, parent.clientWidth, parent.clientHeight, 15);
-		plane.drawFirstQuadrant(true);
-		plane.drawFloatingVector(2, 4, 12, 8, true);
+
+		function loop() {
+			plane.clear();
+			plane.drawFirstQuadrant(true);
+			plane.drawFloatingVector(2, 4, 12, 8, true);
+
+			requestAnimationFrame(loop);
+		}
+		loop();
 
 		showNextSection();
 	});

@@ -6,14 +6,23 @@
 
 	let messages = writable<string[]>([]);
 
+	let messagesContainer: HTMLSelectElement;
+
 	function addMessage() {
 		messages.update((currentMessages: string[]) => [...currentMessages, messageValue]);
 		messageValue = '';
+
+		setTimeout(() => {
+			messagesContainer.scrollTo({
+				top: messagesContainer.scrollHeight,
+				behavior: 'smooth'
+			});
+		}, 200);
 	}
 </script>
 
-<main class="size-full relative flex flex-col">
-	<section class="flex-grow flex flex-col p-3">
+<main class="size-full relative flex flex-col overflow-hidden">
+	<section class="flex-grow flex flex-col p-3 overflow-y-auto" bind:this={messagesContainer}>
 		{#each $messages as message, i}
 			<Messages {message} side={i % 2 == 0} />
 		{/each}
