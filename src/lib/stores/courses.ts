@@ -50,4 +50,4 @@ export type VisualSection = BasicSection & {
   course: string;
 }
 
-export type Section = ExplainSection | QuestionSection;
+export type Section = ExplainSection | QuestionSection | VisualSection | ListSection | PickSection | QuestionSection | TrueOrFalse | EquationSectionType;

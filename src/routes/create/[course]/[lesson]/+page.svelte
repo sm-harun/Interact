@@ -29,8 +29,10 @@
 		QuestionSection,
 		ExplainSection,
 		EquationSectionType,
-		TrueOrFalseType
+		TrueOrFalseType,
+		Section
 	} from '$lib/stores/courses.js';
+	import { writable } from 'svelte/store';
 
 	export let data;
 
@@ -43,8 +45,9 @@
 	let modalStore = getModalStore();
 
 	let words: any[] = [];
-	let sections: any[] = [];
 	let emptyArray: any[] = [];
+
+	let sections = writable<Section[]>([]);
 
 	// This is needed to check if we need a loading bar.
 	let fetched = false;
@@ -54,7 +57,7 @@
 			query(getSectionsColl(data.params.course, data.params.lesson), orderBy('index', 'asc'))
 		);
 		fetchedSections.forEach((section) => {
-			sections.push(section.data());
+			sections.update((sections) => [...sections, section.data()]);
 			updater++;
 		});
 
@@ -98,85 +101,85 @@
 			let newSection: ExplainSection = {
 				type: 'Explanation',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				text: '',
 				skip: false
 			};
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 		} else if (selected == 'Question') {
 			let newSection: QuestionSection = {
 				type: 'Question',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				choices: ['Choice 1'],
 				answer: 1,
 				explanation: '',
 				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		} else if (selected == 'TrueOrFalse') {
 			let newSection: TrueOrFalseType = {
 				type: 'TrueOrFalse',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				skip: false,
 				questions: [],
 				answers: []
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		} else if (selected == 'Visual') {
 			let newSection: any = {
 				type: 'Visual',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				course: data.params.course,
 				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		} else if (selected == 'Pick') {
 			let newSection: any = {
 				type: 'Pick',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				choices: [],
 				answers: [],
 				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		} else if (selected == 'List') {
-			let newSection: any = {
+			let newSection: ListSection = {
 				type: 'List',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				list: [],
 				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		} else if (selected == 'Attention') {
 			let newSection: BasicSection = {
 				type: 'Attention',
 				title: title,
-				index: sections.length,
+				index: $sections.length,
 				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		} else if (selected == 'Equation') {
 			let newSection: EquationSectionType = {
 				type: 'Equation',
 				title: title,
 				equations: [],
-				index: sections.length,
+				index: $sections.length,
 				skip: false
 			};
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
-			sections.push(newSection);
+			sections.update((sections) => [...sections, newSection]);
 		}
 		updater++;
 	}
@@ -258,54 +261,52 @@
 		</ul>
 	</header>
 	<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5 relative">
-		{#key updater}
-			{#if JSON.stringify(sections) !== JSON.stringify(emptyArray)}
-				{#key dictUpdater}
-					<DictionaryComponent
-						{words}
-						course={data.params.course}
-						lesson={data.params.lesson}
-						bind:dictUpdater
-					/>
-				{/key}
-				{#each sections as section}
-					{#if section.type == 'Explanation'}
-						<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'Question'}
-						<QuestionComponent {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'Pick'}
-						<PickSection {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'TrueOrFalse'}
-						<TrueOrFalse {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'List'}
-						<ListSection {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'Attention'}
-						<AttentionSection {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'Equation'}
-						<EquationSection {section} course={data.params.course} lesson={data.params.lesson} />
-					{:else if section.type == 'Visual'}
-						<VisualsLibrary {section} />
-					{/if}
-				{/each}
-			{:else if fetched}
+		{#if JSON.stringify($sections) !== JSON.stringify(emptyArray)}
+			{#key dictUpdater}
 				<DictionaryComponent
 					{words}
 					course={data.params.course}
 					lesson={data.params.lesson}
 					bind:dictUpdater
 				/>
-				<p
-					class="h4 bg-surface-300-600-token text-surface-500-400-token p-5 grid place-items-center rounded-container-token"
-				>
-					This lesson is empty, Add new sections
-				</p>
-			{:else}
-				<ProgressBar
-					meter={'bg-primary-500 h-1'}
-					track={'bg-surface-500 absolute top-0 left-0 w-full h-[0.2rem]'}
-					rounded={'rounded-none'}
-				/>
-			{/if}
-		{/key}
+			{/key}
+			{#each $sections as section}
+				{#if section.type == 'Explanation'}
+					<TextComponent {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'Question'}
+					<QuestionComponent {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'Pick'}
+					<PickSection {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'TrueOrFalse'}
+					<TrueOrFalse {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'List'}
+					<ListSection {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'Attention'}
+					<AttentionSection {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'Equation'}
+					<EquationSection {section} course={data.params.course} lesson={data.params.lesson} />
+				{:else if section.type == 'Visual'}
+					<VisualsLibrary {section} />
+				{/if}
+			{/each}
+		{:else if fetched}
+			<DictionaryComponent
+				{words}
+				course={data.params.course}
+				lesson={data.params.lesson}
+				bind:dictUpdater
+			/>
+			<p
+				class="h4 bg-surface-300-600-token text-surface-500-400-token p-5 grid place-items-center rounded-container-token"
+			>
+				This lesson is empty, Add new sections
+			</p>
+		{:else}
+			<ProgressBar
+				meter={'bg-primary-500 h-1'}
+				track={'bg-surface-500 absolute top-0 left-0 w-full h-[0.2rem]'}
+				rounded={'rounded-none'}
+			/>
+		{/if}
 	</div>
 </div>

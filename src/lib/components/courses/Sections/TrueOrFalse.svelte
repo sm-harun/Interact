@@ -65,7 +65,7 @@
 					</p>
 					<div class="flex gap-10 justify-between">
 						{#if explained}
-							<p class="text-success-500 font-bold text-xl ml-5" in:fly>
+							<p class="text-secondary-500 font-bold text-xl ml-5" in:fly>
 								{section.answers[i] == 1 ? 'True' : 'False'}!
 							</p>
 						{/if}

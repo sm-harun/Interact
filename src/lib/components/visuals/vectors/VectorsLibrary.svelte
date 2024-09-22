@@ -24,7 +24,5 @@
 {:else if section.title == 'calculate-vector-question'}
 	<CalculateVectorQuestion {section} {showNextSection} />
 {:else}
-	<p class="text-xl w-full flex justify-center items-center mt-10 mb-10 {showNextSection()}">
-		The visual for <strong class="mx-3">{section.title}</strong> has not been found in the vectors visuals.
-	</p>
+	<p>The Vectors library didn't find the <strong class="mx-2">{section.title}</strong> visual</p>
 {/if}
