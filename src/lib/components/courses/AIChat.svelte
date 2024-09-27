@@ -1,16 +1,46 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
 	import Messages from './Messages.svelte';
+	import { GoogleGenerativeAI } from '@google/generative-ai';
+	import { onMount } from 'svelte';
+
+	let GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY;
 
 	let messageValue: string;
 
-	let messages = writable<string[]>([]);
+	let messages = writable<{ role: 'user' | 'model'; parts: { text: string }[] }[]>([]);
 
 	let messagesContainer: HTMLSelectElement;
 
+	let genAI;
+	let model;
+	let chat;
+
+	// These are alternative prompts to set the tone for Gemini.
+	let firstPrompt1 =
+		'Act as a teacher who focuses only on school subjects. Explain concepts clearly but do not give the answer right away. Instead, guide your strudent through understanding the topic by asking leading questions and providing hints that encourage him to think critically.';
+	let firstPrompt2 = `You are now a teacher who explain concepts in easy to digest ways to a single student, act a bit mature but not too much, also don't ever discuss subjects that doesn't concern school ever, And don't give away answers easily when helping to answer questions, make them understand`;
+
+	onMount(async () => {
+		genAI = new GoogleGenerativeAI(GEMINI_KEY);
+		model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+		chat = model.startChat({
+			history: $messages
+		});
+		await chat.sendMessage(firstPrompt2);
+	});
+
+	async function getResponse(prompt: string) {
+		const result = await chat.sendMessage(prompt);
+		return result.response.text();
+	}
+
 	function addMessage() {
-		messages.update((currentMessages: string[]) => [...currentMessages, messageValue]);
-		messageValue = '';
+		let newMessage = {
+			role: 'user',
+			parts: [{ text: messageValue }]
+		};
+		messages.update((currentMessages: any[]) => [...currentMessages, newMessage]);
 
 		setTimeout(() => {
 			messagesContainer.scrollTo({
@@ -18,13 +48,39 @@
 				behavior: 'smooth'
 			});
 		}, 200);
+
+		// Gets the response from Gemini
+		getResponse(messageValue).then((response: string) => {
+			// try {
+			// 	console.log(JSON.parse(response).question, JSON.parse(response).answer);
+			// } catch (SyntaxError: any) {
+			// 	console.error(SyntaxError);
+			// }
+
+			let modelAnswer = {
+				role: 'model',
+				parts: [{ text: response }]
+			};
+			messages.update((currentMessages: any[]) => [...currentMessages, modelAnswer]);
+
+			setTimeout(() => {
+				messagesContainer.scrollTo({
+					top: messagesContainer.scrollHeight,
+					behavior: 'smooth'
+				});
+			}, 200);
+		});
+		messageValue = '';
 	}
 </script>
 
 <main class="size-full relative flex flex-col overflow-hidden">
-	<section class="flex-grow flex flex-col p-3 overflow-y-auto" bind:this={messagesContainer}>
-		{#each $messages as message, i}
-			<Messages {message} side={i % 2 == 0} />
+	<section
+		class="flex-grow flex flex-col pt-16 2xl:pt-0 p-3 overflow-y-auto"
+		bind:this={messagesContainer}
+	>
+		{#each $messages.slice(2) as message}
+			<Messages message={message.parts[0].text} side={message.role == 'user'} />
 		{/each}
 	</section>
 
