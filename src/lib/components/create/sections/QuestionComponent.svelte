@@ -116,6 +116,8 @@
 	}
 
 	function syncSection() {
+		if (sectionChoices.length === 0) sectionAnswer = -1;
+
 		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			answer: sectionAnswer,
 			choices: sectionChoices,

@@ -28,7 +28,7 @@
 	{#if section.title !== ''}
 		<h4 class="h2 w-full grid place-items-center">{section.title}</h4>
 	{/if}
-	<div class="mt-6 p-5 flex justify-around">
+	<div class="mt-6 p-5 flex gap-10 justify-around flex-wrap">
 		{#each section.equations as equation}
 			<div class="text-xl">
 				{@html renderEquation(equation)}

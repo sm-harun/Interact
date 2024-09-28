@@ -76,7 +76,7 @@
 
 <main class="size-full relative flex flex-col overflow-hidden">
 	<section
-		class="flex-grow flex flex-col pt-16 2xl:pt-0 p-3 overflow-y-auto"
+		class="flex-grow flex flex-col pt-16 2xl:pt-3 p-3 overflow-y-auto"
 		bind:this={messagesContainer}
 	>
 		{#each $messages.slice(2) as message}

@@ -68,7 +68,7 @@
 {#if show}
 	<div class="relative w-auto self-center">
 		<main
-			class="w-full bg-surface-200-700-token rounded-container-token p-4 transition border-token {explained
+			class="w-full bg-surface-200-700-token rounded-container-token p-4 transition border-token relative {explained
 				? 'border-success-500'
 				: 'border-primary-500'}"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
@@ -77,7 +77,12 @@
 				<span class="font-black italic">Q. </span>
 				{@html renderText(section.title)}
 			</h1>
-			<hr class="mt-3 mb-3" />
+
+			<!-- Checking if there is atleast one choice -->
+			{#if section.choices.length != 0}
+				<hr class="mt-3 mb-3" />
+			{/if}
+
 			<div class="px-5 flex flex-col">
 				{#key choiceUpdater}
 					{#each section.choices as choice, i}
@@ -97,28 +102,45 @@
 					{/each}
 				{/key}
 			</div>
+
+			<!-- This indicates an error when a user chooses wrong choice -->
+			{#if showIcon && !explained}
+				<p
+					class="text-error-500 absolute top-full right-0 mt-5 text-2xl font-bold flex gap-2 items-center"
+					transition:fade
+				>
+					<span>Error</span>
+					<svg
+						viewBox="0 0 50 50"
+						xml:space="preserve"
+						fill="#000000"
+						class="size-5"
+						transition:fade
+					>
+						<circle style="fill:#D75A4A;" cx="25" cy="25" r="25"></circle>
+						<polyline
+							style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
+							points="16,34 25,25 34,16 "
+						></polyline>
+						<polyline
+							style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
+							points="16,16 25,25 34,34 "
+						></polyline>
+					</svg>
+				</p>
+			{/if}
+
+			<!-- This only appears if there are no choices in the question -->
+			{#if section.choices.length == 0 && !explained}
+				<button
+					class="btn variant-filled-primary z-10 absolute top-full right-0 mt-5"
+					on:click={() => answered(-1)}
+					transition:slide>Show Answer!</button
+				>
+			{/if}
 		</main>
 
-		{#if showIcon && !explained}
-			<svg
-				viewBox="0 0 50 50"
-				xml:space="preserve"
-				fill="#000000"
-				class="size-6 absolute right-full top-0"
-				transition:fade
-			>
-				<circle style="fill:#D75A4A;" cx="25" cy="25" r="25"></circle>
-				<polyline
-					style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
-					points="16,34 25,25 34,16 "
-				></polyline>
-				<polyline
-					style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;"
-					points="16,16 25,25 34,34 "
-				></polyline>
-			</svg>
-		{/if}
-
+		<!-- This is the explanation -->
 		{#if explained}
 			<div
 				class="w-full bg-surface-200-700-token rounded-container-token p-4 mb-5 transition -z-10"

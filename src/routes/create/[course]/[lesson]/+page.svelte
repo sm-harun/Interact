@@ -37,8 +37,9 @@
 	export let data;
 
 	// These are used to update UI easily
-	let updater = 0;
 	let dictUpdater = 0;
+
+	let container: HTMLDivElement;
 
 	let button: HTMLButtonElement;
 	let toastStore = getToastStore();
@@ -58,7 +59,6 @@
 		);
 		fetchedSections.forEach((section) => {
 			sections.update((sections) => [...sections, section.data()]);
-			updater++;
 		});
 
 		let fetchedWords = await getDoc(getLessonsDoc(data.params.course, data.params.lesson));
@@ -112,8 +112,8 @@
 				type: 'Question',
 				title: title,
 				index: $sections.length,
-				choices: ['Choice 1'],
-				answer: 1,
+				choices: [],
+				answer: -1,
 				explanation: '',
 				skip: false
 			};
@@ -181,7 +181,14 @@
 			setDoc(getSectionsDoc(data.params.course, data.params.lesson, title), newSection);
 			sections.update((sections) => [...sections, newSection]);
 		}
-		updater++;
+
+		// Scrolls to bottom
+		setTimeout(() => {
+			container.scrollTo({
+				top: container.scrollHeight,
+				behavior: 'smooth'
+			});
+		}, 200);
 	}
 
 	function addDictionary() {
@@ -213,7 +220,7 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="h-screen flex flex-col overflow-hidden">
 	<MainHeader
 		title={`Create / ${data.params.course}`}
 		showMainRoutes={false}
@@ -260,7 +267,10 @@
 			>
 		</ul>
 	</header>
-	<div class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5 relative">
+	<div
+		class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5 relative overflow-y-auto"
+		bind:this={container}
+	>
 		{#if JSON.stringify($sections) !== JSON.stringify(emptyArray)}
 			{#key dictUpdater}
 				<DictionaryComponent
