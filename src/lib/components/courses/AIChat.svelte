@@ -10,15 +10,12 @@
 
 	let messages = writable<{ role: 'user' | 'model'; parts: { text: string }[] }[]>([]);
 
-	let messagesContainer: HTMLSelectElement;
+	let messagesContainer: HTMLElement;
 
 	let genAI;
 	let model;
-	let chat;
+	let chat: any;
 
-	// These are alternative prompts to set the tone for Gemini.
-	let firstPrompt1 =
-		'Act as a teacher who focuses only on school subjects. Explain concepts clearly but do not give the answer right away. Instead, guide your strudent through understanding the topic by asking leading questions and providing hints that encourage him to think critically.';
 	let firstPrompt2 = `You are now a teacher who explain concepts in easy to digest ways to a single student, act a bit mature but not too much, also don't ever discuss subjects that doesn't concern school ever, And don't give away answers easily when helping to answer questions, make them understand`;
 
 	onMount(async () => {
@@ -79,6 +76,8 @@
 		class="flex-grow flex flex-col pt-16 2xl:pt-3 p-3 overflow-y-auto"
 		bind:this={messagesContainer}
 	>
+		<!-- Initial message from the bot -->
+		<Messages message={'Ask me anything, I will guide you.'} side={false} />
 		{#each $messages.slice(2) as message}
 			<Messages message={message.parts[0].text} side={message.role == 'user'} />
 		{/each}

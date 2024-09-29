@@ -53,10 +53,10 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="h-screen flex flex-col overflow-hidden">
 	<MainHeader />
 
-	<main class="flex-grow overflow-auto flex">
+	<main class="flex-grow overflow-hidden flex">
 		<FilterSideBar />
 		<section
 			class="h-full p-5 lg:p-10 overflow-y-scroll flex-grow relative"

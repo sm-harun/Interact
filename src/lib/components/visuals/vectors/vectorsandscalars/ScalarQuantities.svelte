@@ -127,6 +127,9 @@
 		if (ball1.y + getBallOneRadius() > canvas.height) {
 			ball1.vyi *= ball1.friction;
 			ball1.time = 0;
+
+			// Automatically stops the ball if it is to low to have visual effects
+			if (Math.abs(ball1.vyi) < 1) ball1.vyi = 0;
 		}
 
 		drawCircle(ctx, ball1.xi, ball1.y, getBallOneRadius());
@@ -141,6 +144,9 @@
 		if (ball2.y + getBallTwoRadius() > canvas.height) {
 			ball2.time = 0;
 			ball2.vyi *= ball2.friction;
+
+			// Automatically stops the ball if it is to low to have visual effects
+			if (Math.abs(ball2.vyi) < 1) ball2.vyi = 0;
 		}
 
 		drawCircle(ctx, ball2.xi, ball2.y, getBallTwoRadius());
