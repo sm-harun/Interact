@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
-	import { type PickSection } from '$lib/stores/courses';
+	import { type PickSectionType } from '$lib/stores/courses';
 	import {
 		getModalStore,
 		type ModalSettings,
@@ -8,25 +8,25 @@
 		type ToastSettings
 	} from '@skeletonlabs/skeleton';
 	import { updateDoc } from 'firebase/firestore';
-	import { onMount } from 'svelte';
 
-	export let section: PickSection;
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
+
+	export let section: PickSectionType;
 	export let course: string;
 	export let lesson: string;
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
 
-	// Updates all the selections
-	let choicesUpdater = 0;
-
 	// This tells us if the info is in sync with the Data Base
 	let buttonSynced = true;
 
 	let sectionTitle = section.title;
-	let sectionChoices = section.choices;
-	let sectionAnswers = section.answers;
 	let sectionSkip = section.skip;
+	let sectionChoices = writable(section.choices);
+	let sectionAnswers = writable(section.answers);
 
 	let oldTitle: string;
 	let oldChoices: string[];
@@ -36,16 +36,16 @@
 	onMount(() => {
 		oldTitle = sectionTitle;
 		oldSkip = sectionSkip;
-		oldChoices = [...sectionChoices];
-		oldAnswers = [...sectionAnswers];
+		oldChoices = [...$sectionChoices];
+		oldAnswers = [...$sectionAnswers];
 	});
 
-	$: checkIfChanged(
+	$: buttonSynced = checkIfChanged(
 		sectionTitle,
 		oldTitle,
-		sectionChoices,
+		$sectionChoices,
 		oldChoices,
-		sectionAnswers,
+		$sectionAnswers,
 		oldAnswers,
 		sectionSkip,
 		oldSkip
@@ -72,18 +72,14 @@
 			compareArrays(newChoices, oChoices) ||
 			compareArrays(newAnswers, oAnswers)
 		) {
-			buttonSynced = false;
+			return false;
 		} else {
-			buttonSynced = true;
+			return true;
 		}
 	}
 
 	function changeSkip() {
 		sectionSkip = !sectionSkip;
-	}
-
-	function updateChoices() {
-		choicesUpdater++;
 	}
 
 	function addChoice() {
@@ -94,8 +90,7 @@
 			response: async (r: string) => {
 				if (!r) return;
 
-				sectionChoices.push(r);
-				updateChoices();
+				sectionChoices.update((currentChoice) => [...currentChoice, r]);
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -103,24 +98,29 @@
 
 	function pushToAnswers(choice: string) {
 		// Removes the element if it already exists
-		if (sectionAnswers.includes(choice)) {
-			sectionAnswers.splice(sectionAnswers.indexOf(choice), 1);
-			updateChoices();
+		if ($sectionAnswers.includes(choice)) {
+			sectionAnswers.update((currentList: string[]) => {
+				let newList = currentList;
+				newList.splice(currentList.indexOf(choice), 1);
+				return newList;
+			});
 			return;
 		}
-		sectionAnswers.push(choice);
-		updateChoices();
+		sectionAnswers.update((currentChoice) => [...currentChoice, choice]);
 	}
 
 	function deleteChoice(index: number) {
-		sectionChoices.splice(index, 1);
-		updateChoices();
+		sectionChoices.update((currentList: string[]) => {
+			let newList = currentList;
+			newList.splice(index, 1);
+			return newList;
+		});
 	}
 
 	function syncChanges() {
 		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
-			choices: sectionChoices,
-			answers: sectionAnswers,
+			choices: $sectionChoices,
+			answers: $sectionAnswers,
 			title: sectionTitle,
 			skip: sectionSkip
 		})
@@ -133,8 +133,8 @@
 				// The information is synced so we also sync the variables
 				oldTitle = sectionTitle;
 				oldSkip = sectionSkip;
-				oldChoices = [...sectionChoices];
-				oldAnswers = [...sectionAnswers];
+				oldChoices = [...$sectionChoices];
+				oldAnswers = [...$sectionAnswers];
 
 				// Success Toast
 				const toastSettings: ToastSettings = {
@@ -166,8 +166,8 @@
 
 				sectionTitle = oldTitle;
 				sectionSkip = oldSkip;
-				sectionChoices = [...oldChoices];
-				sectionAnswers = [...oldAnswers];
+				sectionChoices.set([...oldChoices]);
+				sectionAnswers.set([...oldAnswers]);
 			}
 		};
 		modalStore.trigger(modalSettings);
@@ -182,35 +182,34 @@
 		bind:value={sectionTitle}
 	/>
 	<div class="w-full flex flex-wrap gap-3 mt-5 justify-center">
-		{#key choicesUpdater}
-			{#each sectionChoices as choice, i}
-				<button
-					class="w-auto p-2 px-5 btn justify-between gap-3 text-xl rounded-container-token {sectionAnswers.includes(
-						choice
-					)
-						? 'variant-ghost-success'
-						: 'variant-ghost-primary'}"
-					on:click={() => pushToAnswers(choice)}
-				>
-					<span>{choice}</span>
-					<button on:click={() => deleteChoice(i)}>
-						<svg
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="size-5 active:scale-110 transition"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-							/>
-						</svg>
-					</button>
+		{#each $sectionChoices as choice, i}
+			<button
+				class="w-auto p-2 px-5 btn justify-between gap-3 text-xl rounded-container-token {$sectionAnswers.includes(
+					choice
+				)
+					? 'variant-ghost-success'
+					: 'variant-ghost-primary'}"
+				on:click={() => pushToAnswers(choice)}
+				transition:slide
+			>
+				<span>{choice}</span>
+				<button on:click={() => deleteChoice(i)}>
+					<svg
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-5 active:scale-110 transition"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+						/>
+					</svg>
 				</button>
-			{/each}
-		{/key}
+			</button>
+		{/each}
 	</div>
 	<div class="w-full flex items-center justify-between mt-5">
 		<button

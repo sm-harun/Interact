@@ -10,6 +10,8 @@
 
 	import { updateDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
+	import { slide } from 'svelte/transition';
 
 	export let section: TrueOrFalseType;
 	export let course: string;
@@ -20,8 +22,8 @@
 
 	let sectionTitle = section.title;
 	let sectionSkip = section.skip;
-	let sectionQuestions: string[] = section.questions;
-	let sectionAnswers: number[] = section.answers;
+	let sectionQuestions = writable(section.questions);
+	let sectionAnswers = writable(section.answers);
 
 	let oldTitle: string;
 	let oldSkip: boolean;
@@ -29,21 +31,20 @@
 	let oldAnswers: number[];
 
 	let buttonSynced = true;
-	let questionsUpdater = 0;
 
 	onMount(() => {
 		oldTitle = sectionTitle;
 		oldSkip = sectionSkip;
-		oldQuestions = [...sectionQuestions];
-		oldAnswers = [...sectionAnswers];
+		oldQuestions = [...$sectionQuestions];
+		oldAnswers = [...$sectionAnswers];
 	});
 
-	$: checkIfChanged(
+	$: buttonSynced = checkIfChanged(
 		sectionTitle,
 		oldTitle,
-		sectionQuestions,
+		$sectionQuestions,
 		oldQuestions,
-		sectionAnswers,
+		$sectionAnswers,
 		oldAnswers,
 		sectionSkip,
 		oldSkip
@@ -70,30 +71,36 @@
 			compareArrays(nAnswers, oldAnswers) ||
 			oSkip !== nSkip
 		) {
-			buttonSynced = false;
+			return false;
 		} else {
-			buttonSynced = true;
+			return true;
 		}
 	}
 
 	function addQuestion() {
-		sectionQuestions.push('');
-		sectionAnswers.push(0);
-		questionsUpdater++;
+		sectionQuestions.update((currentChoices) => [...currentChoices, '']);
+		sectionAnswers.update((currentChoices) => [...currentChoices, '']);
 	}
 
-	function deleteQuestion(index) {
-		sectionQuestions.splice(index, 1);
-		sectionAnswers.splice(index, 1);
-		questionsUpdater++;
+	function deleteQuestion(index: number) {
+		sectionQuestions.update((currentChoices: string[]) => {
+			let newChoices = currentChoices;
+			newChoices.splice(index, 1);
+			return newChoices;
+		});
+		sectionAnswers.update((currentChoices: string[]) => {
+			let newChoices = currentChoices;
+			newChoices.splice(index, 1);
+			return newChoices;
+		});
 	}
 
 	function syncSection() {
 		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			title: sectionTitle,
 			skip: sectionSkip,
-			questions: sectionQuestions,
-			answers: sectionAnswers
+			questions: $sectionQuestions,
+			answers: $sectionAnswers
 		})
 			.then(() => {
 				// Changes the name of the actual document
@@ -104,8 +111,8 @@
 				// The information is synced so we also sync the variables
 				oldTitle = sectionTitle;
 				oldSkip = sectionSkip;
-				oldQuestions = [...sectionQuestions];
-				oldAnswers = [...sectionAnswers];
+				oldQuestions = [...$sectionQuestions];
+				oldAnswers = [...$sectionAnswers];
 
 				// Success Toast
 				const toastSettings: ToastSettings = {
@@ -137,16 +144,18 @@
 
 				sectionTitle = oldTitle;
 				sectionSkip = oldSkip;
-				sectionQuestions = [...oldQuestions];
-				sectionAnswers = [...oldAnswers];
+				sectionQuestions.set([...oldQuestions]);
+				sectionAnswers.set([...oldAnswers]);
 			}
 		};
 		modalStore.trigger(modalSettings);
 	}
 
 	function changeAnswer(answer: number, i: number) {
-		sectionAnswers[i] = answer;
-		questionsUpdater++;
+		sectionAnswers.update((currentChoices) => {
+			currentChoices[i] = answer;
+			return currentChoices;
+		});
 	}
 
 	function changeSkip() {
@@ -156,63 +165,61 @@
 
 <div class="w-full variant-filled-surface rounded-container-token p-4 relative">
 	<h1 class="h3 mb-5">True or False</h1>
-	{#key questionsUpdater}
-		{#each sectionQuestions as question, i}
-			<div class="flex items-center gap-4 lg:px-5 mb-3">
-				<input
-					class="input variant-filled-surface"
-					type="text"
-					placeholder="question {i + 1}"
-					bind:value={question}
-				/>
-				<button
-					class="btn-icon border-2 border-success-500 {sectionAnswers[i] == 1
-						? 'bg-success-500'
-						: ''}"
-					on:click={() => changeAnswer(1, i)}
+	{#each $sectionQuestions as question, i}
+		<div class="flex items-center gap-4 lg:px-5 mb-3" transition:slide>
+			<input
+				class="input variant-filled-surface"
+				type="text"
+				placeholder="question {i + 1}"
+				bind:value={question}
+			/>
+			<button
+				class="btn-icon border-2 border-success-500 {$sectionAnswers[i] == 1
+					? 'bg-success-500'
+					: ''}"
+				on:click={() => changeAnswer(1, i)}
+			>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
 				>
-					<svg
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="size-6"
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-					</svg>
-				</button>
-				<button
-					class="btn-icon border-2 border-error-500 {sectionAnswers[i] == 0 ? 'bg-error-500' : ''}"
-					on:click={() => changeAnswer(0, i)}
+					<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+				</svg>
+			</button>
+			<button
+				class="btn-icon border-2 border-error-500 {$sectionAnswers[i] == 0 ? 'bg-error-500' : ''}"
+				on:click={() => changeAnswer(0, i)}
+			>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
 				>
-					<svg
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="size-6"
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-					</svg>
-				</button>
-				<button class="ml-5" on:click={() => deleteQuestion(i)}>
-					<svg
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="size-8 active:scale-110 transition"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-						/>
-					</svg>
-				</button>
-			</div>
-		{/each}
-	{/key}
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+				</svg>
+			</button>
+			<button class="ml-5" on:click={() => deleteQuestion(i)}>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-8 active:scale-110 transition"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+					/>
+				</svg>
+			</button>
+		</div>
+	{/each}
 	<div class="w-full flex items-center justify-between mt-5">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"

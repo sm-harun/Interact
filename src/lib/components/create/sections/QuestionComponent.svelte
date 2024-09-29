@@ -3,6 +3,8 @@
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import { onMount } from 'svelte';
 
+	import { slide } from 'svelte/transition';
+
 	import {
 		getToastStore,
 		type ToastSettings,
@@ -10,7 +12,10 @@
 		type ModalSettings
 	} from '@skeletonlabs/skeleton';
 
-	export let section: QuestionSection;
+	import { writable } from 'svelte/store';
+	import { type QuestionSectionType } from '$lib/stores/courses';
+
+	export let section: QuestionSectionType;
 	export let course: string;
 	export let lesson: string;
 
@@ -18,7 +23,7 @@
 	let modalStore = getModalStore();
 
 	// These will be binded to input values
-	let sectionChoices = section.choices;
+	let sectionChoices = writable(section.choices);
 	let sectionTitle = section.title;
 	let sectionExplanation = section.explanation;
 	let sectionAnswer = section.answer;
@@ -26,8 +31,6 @@
 
 	// Holds the sync state
 	let buttonSynced = true;
-	// lets us update the UI easily by changing it's value
-	let updater = 0;
 
 	// These varables are used to detect whether we are synced or not
 	let oldChoices: string[];
@@ -38,7 +41,7 @@
 
 	// At initialization they should be in sync
 	onMount(() => {
-		oldChoices = [...sectionChoices];
+		oldChoices = [...$sectionChoices];
 		oldTitle = sectionTitle;
 		oldExplanation = sectionExplanation;
 		oldAnswer = sectionAnswer;
@@ -46,12 +49,12 @@
 	});
 
 	// Check if we are in sync when an input value changes
-	$: checkIfChanged(
+	$: buttonSynced = checkIfChanged(
 		sectionTitle,
 		oldTitle,
 		sectionExplanation,
 		oldExplanation,
-		sectionChoices,
+		$sectionChoices,
 		oldChoices,
 		sectionAnswer,
 		oldAnswer,
@@ -83,9 +86,9 @@
 			newAnswer !== oAnswer ||
 			newSkip !== oSkip
 		) {
-			buttonSynced = false;
+			return false;
 		} else {
-			buttonSynced = true;
+			return true;
 		}
 	}
 
@@ -94,16 +97,19 @@
 	}
 
 	function addChoice() {
-		sectionChoices.push('');
-		updater++;
+		sectionChoices.update((currentChoices) => [...currentChoices, '']);
 	}
 
 	function deleteChoice(index: number) {
+		// This is for updating the answer for the choices
 		if (sectionAnswer === index + 1) {
 			sectionAnswer = 0;
 		}
-		sectionChoices.splice(index, 1);
-		updater++;
+		sectionChoices.update((currentChoices: string[]) => {
+			let newChoices = currentChoices;
+			newChoices.splice(index, 1);
+			return newChoices;
+		});
 	}
 
 	function changeAnswer(index: number) {
@@ -116,11 +122,11 @@
 	}
 
 	function syncSection() {
-		if (sectionChoices.length === 0) sectionAnswer = -1;
+		if ($sectionChoices.length === 0) sectionAnswer = -1;
 
 		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			answer: sectionAnswer,
-			choices: sectionChoices,
+			choices: $sectionChoices,
 			title: sectionTitle,
 			explanation: sectionExplanation,
 			skip: sectionSkip
@@ -132,7 +138,7 @@
 				}
 
 				// The information is synced so we also sync the variables
-				oldChoices = [...sectionChoices];
+				oldChoices = [...$sectionChoices];
 				oldTitle = sectionTitle;
 				oldExplanation = sectionExplanation;
 				oldAnswer = sectionAnswer;
@@ -167,7 +173,7 @@
 			response: async (r: string) => {
 				if (!r) return;
 
-				sectionChoices = [...oldChoices];
+				sectionChoices.set([...oldChoices]);
 				sectionTitle = oldTitle;
 				sectionExplanation = oldExplanation;
 				sectionAnswer = oldAnswer;
@@ -189,46 +195,44 @@
 		/>
 
 		<div class="flex flex-col gap-3 ml-7">
-			{#key updater}
-				{#each sectionChoices as choice, i}
-					<div class="flex items-center gap-4">
-						<strong>Choice {i + 1}: </strong>
-						<button
-							class="size-5 rounded-container-token {sectionAnswer == i + 1
-								? 'variant-filled-primary'
-								: ''} grid place-items-center"
-							on:click={() => changeAnswer(i + 1)}
+			{#each $sectionChoices as choice, i}
+				<div class="flex items-center gap-4" transition:slide>
+					<strong>Choice {i + 1}: </strong>
+					<button
+						class="size-5 rounded-container-token {sectionAnswer == i + 1
+							? 'variant-filled-primary'
+							: ''} grid place-items-center"
+						on:click={() => changeAnswer(i + 1)}
+					>
+						<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4">
+							<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+						</svg>
+					</button>
+				</div>
+				<div class="flex items-center gap-4 lg:px-5" transition:slide>
+					<input
+						class="input variant-filled-surface"
+						type="text"
+						placeholder="Choice {i + 1}"
+						bind:value={choice}
+					/>
+					<button on:click={() => deleteChoice(i)}>
+						<svg
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="size-8 active:scale-110 transition"
 						>
-							<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4">
-								<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-							</svg>
-						</button>
-					</div>
-					<div class="flex items-center gap-4 lg:px-5">
-						<input
-							class="input variant-filled-surface"
-							type="text"
-							placeholder="Choice {i + 1}"
-							bind:value={choice}
-						/>
-						<button on:click={() => deleteChoice(i)}>
-							<svg
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="size-8 active:scale-110 transition"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-								/>
-							</svg>
-						</button>
-					</div>
-				{/each}
-			{/key}
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+							/>
+						</svg>
+					</button>
+				</div>
+			{/each}
 		</div>
 		<strong>Explanation: </strong>
 		<input

@@ -31,18 +31,18 @@ export type TrueOrFalse = BasicSection & {
   answers: number[];
 }
 
-export type QuestionSection = BasicSection & {
+export type QuestionSectionType = BasicSection & {
 	choices: string[];
 	answer: number;
 	explanation: string;
 };
 
-export type PickSection = BasicSection & {
+export type PickSectionType = BasicSection & {
   choices: string[];
   answers: string[];
 }
 
-export type ListSection = BasicSection & {
+export type ListSectionType = BasicSection & {
   list: string[],
 }
 
@@ -50,4 +50,4 @@ export type VisualSection = BasicSection & {
   course: string;
 }
 
-export type Section = ExplainSection | QuestionSection | VisualSection | ListSection | PickSection | QuestionSection | TrueOrFalse | EquationSectionType;
+export type Section = ExplainSection | QuestionSectionType | VisualSection | ListSectionType | PickSectionType | QuestionSection | TrueOrFalse | EquationSectionType;
