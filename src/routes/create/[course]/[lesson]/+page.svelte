@@ -113,7 +113,7 @@
 				title: title,
 				index: $sections.length,
 				choices: [],
-				answer: -1,
+				answer: 0,
 				explanation: '',
 				skip: false
 			};

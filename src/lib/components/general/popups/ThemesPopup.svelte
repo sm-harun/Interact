@@ -56,17 +56,17 @@
 	<hr class="mt-4 mb-4" />
 	<ListBox>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="crimson">Crimson</ListBoxItem>
-		<ListBoxItem bind:group={currentTheme} name="medium" value="vintage">Vintage</ListBoxItem>
-		<ListBoxItem bind:group={currentTheme} name="medium" value="hamlindigo">hamlindigo</ListBoxItem>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="modern">Modern</ListBoxItem>
-		<ListBoxItem bind:group={currentTheme} name="medium" value="wintry">Wintry</ListBoxItem>
-		<ListBoxItem bind:group={currentTheme} name="medium" value="seafoam">Seafoam</ListBoxItem>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="skeleton">Skeleton</ListBoxItem>
-		<ListBoxItem bind:group={currentTheme} name="medium" value="rocket">Rocket</ListBoxItem>
-		<ListBoxItem bind:group={currentTheme} name="medium" value="sahara">Sahara</ListBoxItem>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="gold-nouveau"
 			>Gold Nouveau</ListBoxItem
 		>
+		<ListBoxItem bind:group={currentTheme} name="medium" value="vintage">Vintage</ListBoxItem>
+		<ListBoxItem bind:group={currentTheme} name="medium" value="hamlindigo">hamlindigo</ListBoxItem>
+		<ListBoxItem bind:group={currentTheme} name="medium" value="sahara">Sahara</ListBoxItem>
+		<ListBoxItem bind:group={currentTheme} name="medium" value="wintry">Wintry</ListBoxItem>
+		<ListBoxItem bind:group={currentTheme} name="medium" value="rocket">Rocket</ListBoxItem>
+		<ListBoxItem bind:group={currentTheme} name="medium" value="seafoam">Seafoam</ListBoxItem>
 	</ListBox>
 	<hr class="mt-4 mb-4" />
 	<p class="text-xs text-secondary-700-200-token grid place-items-center">

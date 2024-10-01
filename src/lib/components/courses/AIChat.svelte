@@ -16,7 +16,7 @@
 	let model;
 	let chat: any;
 
-	let firstPrompt2 = `You are now a teacher who explain concepts in easy to digest ways to a single student, act a bit mature but not too much, also don't ever discuss subjects that doesn't concern school ever, And don't give away answers easily when helping to answer questions, make them understand`;
+	let firstPrompt2 = `You are now a teacher who explain concepts in easy to digest ways to a single student, act a bit mature but not too much, also don't ever discuss subjects that doesn't concern school ever, And don't give away answers easily when helping to answer questions, make them understand. Attention! when writing math notations use katex notation between dollar signs. Make sure you follow this last rule carefully`;
 
 	onMount(async () => {
 		genAI = new GoogleGenerativeAI(GEMINI_KEY);
@@ -53,6 +53,7 @@
 			// } catch (SyntaxError: any) {
 			// 	console.error(SyntaxError);
 			// }
+			console.log(response);
 
 			let modelAnswer = {
 				role: 'model',
@@ -73,7 +74,7 @@
 
 <main class="size-full relative flex flex-col overflow-hidden">
 	<section
-		class="flex-grow flex flex-col pt-16 2xl:pt-3 p-3 overflow-y-auto"
+		class="flex-grow flex flex-col pt-16 2xl:pt-3 p-3 max-w-full overflow-y-auto"
 		bind:this={messagesContainer}
 	>
 		<!-- Initial message from the bot -->

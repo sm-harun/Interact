@@ -8,6 +8,7 @@
 	import { ProgressBar } from '@skeletonlabs/skeleton';
 	import AIChat from '$lib/components/courses/AIChat.svelte';
 	import Notes from '$lib/components/courses/Notes.svelte';
+	import Calculator from '$lib/components/courses/Calculator.svelte';
 	import TextSection from '$lib/components/courses/Sections/TextSection.svelte';
 	import QuestionSection from '$lib/components/courses/Sections/QuestionSection.svelte';
 	import PickSection from '$lib/components/courses/Sections/PickSection.svelte';
@@ -16,13 +17,14 @@
 	import VisualsLibrary from '$lib/components/visuals/VisualsLibrary.svelte';
 	import AttentionSection from '$lib/components/courses/Sections/AttentionSection.svelte';
 	import EquationSection from '$lib/components/courses/Sections/EquationSection.svelte';
+	import type { Section } from '$lib/stores/courses.js';
 
 	export let data;
 
-	let sections: any[] = [];
+	let sections: Section[] = [];
 	let visibleSectionsCount = 1;
 
-	let sectionElement: HTMLSelectElement;
+	let sectionElement: HTMLElement;
 
 	function showNextSection() {
 		visibleSectionsCount++;
@@ -58,7 +60,7 @@
 
 <main class="flex h-full relative overflow-hidden">
 	<section
-		class="absolute left-0 2xl:relative w-full max-h-full 2xl:w-auto 2xl:flex-[3_1_0] border-r-[0.05rem] border-r-surface-400 pt-10 p-6 flex flex-col overflow-y-scroll"
+		class="absolute left-0 2xl:relative w-full max-h-full 2xl:w-auto 2xl:flex-[3_1_0] pt-10 p-6 flex flex-col overflow-y-scroll"
 		style="left: {-$mobSectionsPosition}%;"
 		bind:this={sectionElement}
 	>
@@ -127,13 +129,16 @@
 		{/if}
 	</section>
 	<section
-		class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky"
+		class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky border-l-[0.05rem] border-l-surface-400"
 		style="left: {100 - $mobSectionsPosition}%;"
 	>
 		<div class="size-full absolute overflow-hidden" style="right: {$sectionsPosition}%">
 			<AIChat />
 		</div>
-		<div class="size-full absolute" style="left: {100 - $sectionsPosition}%">
+		<div class="size-full absolute overflow-hidden" style="left: {100 - $sectionsPosition}%">
+			<Calculator />
+		</div>
+		<div class="size-full absolute" style="left: {200 - $sectionsPosition}%">
 			<Notes />
 		</div>
 	</section>

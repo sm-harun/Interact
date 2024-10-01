@@ -79,7 +79,7 @@
 		</button>
 		{#if data.params.lesson !== undefined}
 			<h1 class="text-3xl font-bold text-primary-500-400-token px-5">{data.params.lesson}</h1>
-			<div class="absolute top-full right-5 grid grid-cols-3 gap-1 2xl:hidden">
+			<div class="absolute top-full right-5 grid grid-cols-4 gap-1 2xl:hidden">
 				<button
 					class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-bl-container-token"
 					on:click={() => {
@@ -123,9 +123,30 @@
 					</svg>
 				</button>
 				<button
-					class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-br-container-token"
+					class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
 					on:click={() => {
 						setSectionsPosition(100);
+						setMobSectionsPosition(100);
+					}}
+				>
+					<svg
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-6"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z"
+						/>
+					</svg>
+				</button>
+				<button
+					class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-br-container-token"
+					on:click={() => {
+						setSectionsPosition(200);
 						setMobSectionsPosition(100);
 					}}
 				>
@@ -147,11 +168,11 @@
 		{:else}
 			<h1 class="text-3xl font-bold text-primary-500-400-token px-5">Welcome</h1>
 		{/if}
-		<div class="ml-auto logo-cloud grid-cols-2 gap-1 hidden 2xl:grid">
+		<div class="ml-auto logo-cloud grid-cols-3 gap-1 hidden 2xl:grid">
 			<button
 				class="flex-1 {$sectionsPosition == 0
 					? 'variant-filled-primary'
-					: 'variant-ghost-primary'} transition rounded-tl-container-token rounded-bl-container-token text-xl p-3 px-6 active:scale-95 flex gap-3 items-center justify-center"
+					: 'variant-ghost-primary'} transition rounded-tl-container-token rounded-bl-container-token text-xl p-3 px-3 active:scale-95 flex gap-3 items-center justify-center"
 				on:click={() => setSectionsPosition(0)}
 			>
 				<svg
@@ -172,8 +193,29 @@
 			<button
 				class="flex-1 {$sectionsPosition == 100
 					? 'variant-filled-primary'
-					: 'variant-ghost-primary'} transition rounded-tr-container-token rounded-br-container-token text-xl p-3 px-6 active:scale-95 flex gap-3 items-center justify-center"
+					: 'variant-ghost-primary'} transition text-xl p-3 px-3 active:scale-95 flex gap-3 items-center justify-center"
 				on:click={() => setSectionsPosition(100)}
+			>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z"
+					/>
+				</svg>
+				<span>Calc</span></button
+			>
+			<button
+				class="flex-1 {$sectionsPosition == 200
+					? 'variant-filled-primary'
+					: 'variant-ghost-primary'} transition rounded-tr-container-token rounded-br-container-token text-xl p-3 px-5 active:scale-95 flex gap-3 items-center justify-center"
+				on:click={() => setSectionsPosition(200)}
 			>
 				<svg
 					fill="none"

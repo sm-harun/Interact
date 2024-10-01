@@ -7,6 +7,11 @@
 
 	export let message: string;
 	export let side: boolean;
+
+	function takeFirstTwoLetters(name: string | null | undefined) {
+		if (!name) return;
+		return name[0] + name[1];
+	}
 </script>
 
 <div class="w-full flex gap-3 mb-5" in:fly={{ y: 50, duration: 600, easing: cubicInOut }}>
@@ -30,12 +35,20 @@
 	</div>
 	{#if side}
 		<div>
-			<Avatar
-				src={$user.photoURL}
-				width="w-8 lg:w-12"
-				rounded="rounded-full"
-				border="border-2 bg-surface-800-100-token"
-			/>
+			{#if $user?.photoURL}
+				<Avatar
+					src={$user.photoURL}
+					width="w-8 lg:w-12"
+					rounded="rounded-full"
+					border="border-2 bg-surface-800-100-token"
+				/>
+			{:else}
+				<Avatar
+					initials={takeFirstTwoLetters($user?.displayName)}
+					width="w-8 lg:w-12"
+					rounded="rounded-full"
+				/>
+			{/if}
 		</div>
 	{/if}
 </div>

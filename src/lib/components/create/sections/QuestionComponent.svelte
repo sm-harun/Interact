@@ -116,13 +116,13 @@
 		// If the deleted choice is the selected answer the answer will reset to 0
 		if (sectionAnswer == index) {
 			sectionAnswer = 0;
-		} else {
-			sectionAnswer = index;
+			return;
 		}
+		sectionAnswer = index;
 	}
 
 	function syncSection() {
-		if ($sectionChoices.length === 0) sectionAnswer = -1;
+		if ($sectionChoices.length === 0) sectionAnswer = 0;
 
 		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			answer: sectionAnswer,
@@ -194,9 +194,9 @@
 			bind:value={sectionTitle}
 		/>
 
-		<div class="flex flex-col gap-3 ml-7">
+		<div class="flex flex-col ml-7">
 			{#each $sectionChoices as choice, i}
-				<div class="flex items-center gap-4" transition:slide>
+				<div class="flex items-center mt-3 gap-4" transition:slide>
 					<strong>Choice {i + 1}: </strong>
 					<button
 						class="size-5 rounded-container-token {sectionAnswer == i + 1

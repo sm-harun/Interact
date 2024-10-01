@@ -130,11 +130,11 @@
 				</p>
 			{/if}
 
-			<!-- This only appears if there are no choices in the question -->
-			{#if section.choices.length == 0 && !explained}
+			<!-- This only appears if there is no answer in the choices, or there are not choices -->
+			{#if section.answer === 0 && !explained}
 				<button
 					class="btn variant-filled-primary z-10 absolute top-full right-0 mt-5"
-					on:click={() => answered(-1)}
+					on:click={() => answered(0)}
 					transition:slide>Show Answer!</button
 				>
 			{/if}

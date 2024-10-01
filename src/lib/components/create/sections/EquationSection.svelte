@@ -10,20 +10,21 @@
 		type ModalSettings,
 		type ToastSettings
 	} from '@skeletonlabs/skeleton';
+	import { slide } from 'svelte/transition';
+	import { writable } from 'svelte/store';
 
 	export let section: EquationSectionType;
 	export let course: string;
 	export let lesson: string;
 
 	let sectionTitle = section.title;
-	let sectionEquations = section.equations;
+	let sectionEquations = writable(section.equations);
 	let sectionSkip = section.skip;
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
 
 	let buttonSynced = true;
-	let updater = 0;
 
 	let oldTitle: string;
 	let oldEquations: string[];
@@ -31,12 +32,19 @@
 
 	onMount(() => {
 		oldTitle = sectionTitle;
-		oldEquations = [...sectionEquations];
+		oldEquations = [...$sectionEquations];
 		oldSkip = sectionSkip;
 	});
 
 	// Check if we are in sync when an input value changes
-	$: checkIfChanged(sectionTitle, oldTitle, sectionEquations, oldEquations, sectionSkip, oldSkip);
+	$: buttonSynced = checkIfChanged(
+		sectionTitle,
+		oldTitle,
+		$sectionEquations,
+		oldEquations,
+		sectionSkip,
+		oldSkip
+	);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
@@ -50,22 +58,24 @@
 		oEquations: string[],
 		oSkip: boolean,
 		nSkip: boolean
-	) {
+	): boolean {
 		if (nTitle !== oTitle || compareArrays(nEquations, oEquations) || oSkip !== nSkip) {
-			buttonSynced = false;
+			return false;
 		} else {
-			buttonSynced = true;
+			return true;
 		}
 	}
 
 	function addChoice(): void {
-		sectionEquations.push('');
-		updater++;
+		sectionEquations.update((currentEquations) => [...currentEquations, '']);
 	}
 
 	function deleteChoice(index: number): void {
-		sectionEquations.splice(index, 1);
-		updater++;
+		sectionEquations.update((currentEquations: string[]) => {
+			let newList = currentEquations;
+			newList.splice(index, 1);
+			return newList;
+		});
 	}
 
 	function changeSkip() {
@@ -75,18 +85,17 @@
 	function syncSection() {
 		updateDoc(getSectionsDoc(course, lesson, oldTitle), {
 			title: sectionTitle,
-			equations: sectionEquations,
+			equations: $sectionEquations,
 			skip: sectionSkip
 		})
 			.then(async () => {
-				console.log(oldTitle);
 				// Changes the name of the actual document
 				if (oldTitle !== sectionTitle) {
 					await renameDocument(getSectionsDoc(course, lesson, oldTitle), sectionTitle);
 				}
 
 				oldTitle = sectionTitle;
-				oldEquations = [...sectionEquations];
+				oldEquations = [...$sectionEquations];
 				oldSkip = sectionSkip;
 
 				// Success Toast
@@ -119,7 +128,7 @@
 				if (!r) return;
 
 				sectionTitle = oldTitle;
-				sectionEquations = [...oldEquations];
+				sectionEquations.set([...oldEquations]);
 				sectionSkip = oldSkip;
 			}
 		};
@@ -135,33 +144,31 @@
 		bind:value={sectionTitle}
 	/>
 
-	{#key updater}
-		{#each sectionEquations as equation, i}
-			<div class="flex gap-3">
-				<input
-					class="input variant-filled-surface font-bold my-3"
-					type="text"
-					placeholder="Equation {i + 1}"
-					bind:value={equation}
-				/>
-				<button on:click={() => deleteChoice(i)}>
-					<svg
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="size-6 active:scale-110 transition"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-						/>
-					</svg>
-				</button>
-			</div>
-		{/each}
-	{/key}
+	{#each $sectionEquations as equation, i}
+		<div class="flex gap-3" transition:slide>
+			<input
+				class="input variant-filled-surface font-bold my-3"
+				type="text"
+				placeholder="Equation {i + 1}"
+				bind:value={equation}
+			/>
+			<button on:click={() => deleteChoice(i)}>
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6 active:scale-110 transition"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+					/>
+				</svg>
+			</button>
+		</div>
+	{/each}
 	<div class="w-full flex justify-between mt-2">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"

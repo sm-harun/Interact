@@ -68,7 +68,7 @@
 		if (
 			nTitle !== oTitle ||
 			compareArrays(nQuesitons, oQuestions) ||
-			compareArrays(nAnswers, oldAnswers) ||
+			compareArrays(filterNull(nAnswers), filterNull(oldAnswers)) ||
 			oSkip !== nSkip
 		) {
 			return false;
@@ -77,9 +77,19 @@
 		}
 	}
 
+	function filterNull(arr: any[]): any[] {
+		return arr.filter((element) => element !== null || element !== undefined);
+	}
+
 	function addQuestion() {
-		sectionQuestions.update((currentChoices) => [...currentChoices, '']);
-		sectionAnswers.update((currentChoices) => [...currentChoices, '']);
+		sectionQuestions.update((currentChoices) => {
+			let newChoices = [...currentChoices, ''];
+			return newChoices;
+		});
+		sectionAnswers.update((currentChoices) => {
+			let newChoices = [...currentChoices, ''];
+			return newChoices;
+		});
 	}
 
 	function deleteQuestion(index: number) {

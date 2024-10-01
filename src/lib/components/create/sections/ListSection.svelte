@@ -143,9 +143,9 @@
 		placeholder="Question"
 		bind:value={sectionTitle}
 	/>
-	<ul class="flex flex-col gap-3 mt-3 p-3">
+	<ul class="flex flex-col mt-3 p-3">
 		{#each $sectionList as list, i}
-			<li class="text-xl flex gap-2 items-center" transition:slide>
+			<li class="text-xlm mt-3 flex gap-2 items-center" transition:slide>
 				<span>{i + 1}. </span>
 				<input
 					class="input variant-filled-surface font-bold text-xl px-4"

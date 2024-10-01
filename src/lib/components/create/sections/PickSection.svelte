@@ -25,8 +25,8 @@
 
 	let sectionTitle = section.title;
 	let sectionSkip = section.skip;
-	let sectionChoices = writable(section.choices);
-	let sectionAnswers = writable(section.answers);
+	let sectionChoices = writable(section.choices.sort());
+	let sectionAnswers = writable(section.answers.sort());
 
 	let oldTitle: string;
 	let oldChoices: string[];
@@ -102,11 +102,14 @@
 			sectionAnswers.update((currentList: string[]) => {
 				let newList = currentList;
 				newList.splice(currentList.indexOf(choice), 1);
-				return newList;
+				return newList.sort();
 			});
-			return;
+		} else {
+			sectionAnswers.update((currentChoice) => {
+				let newChoices = [...currentChoice, choice];
+				return newChoices.sort();
+			});
 		}
-		sectionAnswers.update((currentChoice) => [...currentChoice, choice]);
 	}
 
 	function deleteChoice(index: number) {
@@ -190,7 +193,7 @@
 					? 'variant-ghost-success'
 					: 'variant-ghost-primary'}"
 				on:click={() => pushToAnswers(choice)}
-				transition:slide
+				transition:slide={{ axis: 'x' }}
 			>
 				<span>{choice}</span>
 				<button on:click={() => deleteChoice(i)}>
