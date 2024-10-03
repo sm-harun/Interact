@@ -3,6 +3,8 @@
 	import { getDocs, orderBy, query } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 
+	import { lessonsUpdater } from '$lib/stores/themes.js';
+
 	import { sectionsPosition, mobSectionsPosition } from '$lib/stores/themes.js';
 
 	import { ProgressBar } from '@skeletonlabs/skeleton';

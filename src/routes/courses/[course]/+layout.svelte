@@ -4,6 +4,7 @@
 	import { getDocs, query, orderBy } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 	import LessonsSideBar from '$lib/components/courses/LessonsSideBar.svelte';
+	import { lessonsUpdater, updateLessons } from '$lib/stores/themes.js';
 
 	import {
 		sectionsPosition,
@@ -19,15 +20,6 @@
 
 	let lessons: any[] = [];
 	let updater = 0;
-	// Used to update the lessos section
-	let lessonUpdater = 0;
-
-	function updateLessons() {
-		// We need this to run after the user navigated not immediately
-		setTimeout(() => {
-			lessonUpdater++;
-		}, 50);
-	}
 
 	onMount(async () => {
 		await getLessons().then((fetchedLessons) => {
@@ -78,7 +70,7 @@
 			</svg>
 		</button>
 		{#if data.params.lesson !== undefined}
-			<h1 class="text-3xl font-bold text-primary-500-400-token px-5">{data.params.lesson}</h1>
+			<h1 class="text-3xl font-bold text-primary-800-100-token px-5">{data.params.lesson}</h1>
 			<div class="absolute top-full right-5 grid grid-cols-4 gap-1 2xl:hidden">
 				<button
 					class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-bl-container-token"
@@ -244,7 +236,8 @@
 		{/key}
 
 		<div class="flex-grow h-full overflow-hidden">
-			{#key lessonUpdater}
+			<!-- TODO move this key block deper onto the code -->
+			{#key $lessonsUpdater}
 				<slot />
 			{/key}
 		</div>

@@ -16,7 +16,7 @@
 	let model;
 	let chat: any;
 
-	let firstPrompt2 = `You are now a teacher who explain concepts in easy to digest ways to a single student, act a bit mature but not too much, also don't ever discuss subjects that doesn't concern school ever, And don't give away answers easily when helping to answer questions, make them understand. Attention! when writing math notations use katex notation between dollar signs. Make sure you follow this last rule carefully`;
+	let firstPrompt2 = `You are now a teacher who explain concepts in easy to digest ways to a single student, act a bit mature but not too much, also don't ever discuss subjects that doesn't concern school ever, And don't give away answers easily when helping to answer questions, make them understand. Attention! when writing math notations use katex notation between 2 dollar signs, not 4. Make sure you follow this last rule carefully`;
 
 	onMount(async () => {
 		genAI = new GoogleGenerativeAI(GEMINI_KEY);
@@ -86,12 +86,7 @@
 
 	<form class="flex-shrink-0 h-14 w-full" on:submit|preventDefault={addMessage}>
 		<div class="h-full w-full input-group input-group-divider grid-cols-[1fr_auto] rounded-none">
-			<input
-				class="p-3 text-white"
-				type="text"
-				placeholder="Enter message..."
-				bind:value={messageValue}
-			/>
+			<input class="p-3" type="text" placeholder="Enter message..." bind:value={messageValue} />
 			<button class="variant-filled-secondary hover:varient-filled-primary">
 				<svg
 					fill="none"

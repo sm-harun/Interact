@@ -43,7 +43,7 @@
 					</svg>
 				</button>
 			{/if}
-			<h1 class="text-3xl lg:text-5xl text-primary-500-400-token font-bold flex items-center">
+			<h1 class="text-3xl lg:text-5xl text-primary-800-100-token font-bold flex items-center">
 				{title}
 			</h1>
 		</div>

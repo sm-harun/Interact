@@ -43,7 +43,7 @@
 
 {#if show}
 	<main
-		class="w-full variant-filled-surface rounded-container-token p-4 mb-5"
+		class="w-full bg-surface-200-700-token rounded-container-token p-4 mb-5"
 		in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 	>
 		<h1 class="w-full pl-5 h4">{@html renderText(section.title)}</h1>
