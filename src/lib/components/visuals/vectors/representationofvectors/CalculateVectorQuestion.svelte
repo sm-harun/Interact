@@ -25,7 +25,7 @@
 		function loop() {
 			plane.clear();
 			plane.drawFirstQuadrant(true);
-			plane.drawFloatingVector(2, 4, 12, 8, true);
+			plane.drawFloatingVector(2, 4, 12, 8, true, { head: true, tail: false }, 'green');
 
 			requestAnimationFrame(loop);
 		}
@@ -35,8 +35,8 @@
 	});
 </script>
 
-<main class="w-full grid place-items-center">
-	<div class="w-1/2 aspect-square">
+<main class="w-full aspect-video grid place-items-center">
+	<div class="h-full aspect-square">
 		<canvas bind:this={canvas}></canvas>
 	</div>
 </main>

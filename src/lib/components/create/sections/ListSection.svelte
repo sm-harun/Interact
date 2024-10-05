@@ -136,9 +136,9 @@
 	}
 </script>
 
-<div class="w-full variant-filled-surface rounded-container-token p-4 relative">
+<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
 	<input
-		class="input variant-filled-surface font-bold text-2xl"
+		class="input font-bold text-2xl"
 		type="text"
 		placeholder="Question"
 		bind:value={sectionTitle}
@@ -147,11 +147,7 @@
 		{#each $sectionList as list, i}
 			<li class="text-xlm mt-3 flex gap-2 items-center" transition:slide>
 				<span>{i + 1}. </span>
-				<input
-					class="input variant-filled-surface font-bold text-xl px-4"
-					type="text"
-					bind:value={list}
-				/>
+				<input class="input font-bold text-xl px-4" type="text" bind:value={list} />
 				<button on:click={() => deleteList(i)}>
 					<svg
 						fill="none"

@@ -157,7 +157,7 @@
 	function drawCircle(ctx: CanvasRenderingContext2D, xCord: number, yCord: number, r: number) {
 		ctx.beginPath();
 		ctx.fillStyle = '#a13856';
-		ctx.strokeStyle = 'black';
+		ctx.strokeStyle = 'none';
 		ctx.lineWidth = 3;
 		ctx.arc(xCord, yCord, r, 0, Math.PI * 2, false);
 		ctx.fill();
@@ -171,7 +171,9 @@
 		<canvas id="main-canvas"></canvas>
 	</div>
 
-	<section class="flex-1 h-full p-10 bg-surface-700 flex lg:flex-col flex-wrap gap-4 lg:gap-0">
+	<section
+		class="flex-1 h-full p-10 bg-surface-300-600-token flex lg:flex-col flex-wrap gap-4 lg:gap-0"
+	>
 		<div class="w-full flex-1">
 			<h3 class="h3 ml-3 mb-3">Ball 1</h3>
 			<div class="w-48">

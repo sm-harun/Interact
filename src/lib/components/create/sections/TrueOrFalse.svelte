@@ -173,19 +173,14 @@
 	}
 </script>
 
-<div class="w-full variant-filled-surface rounded-container-token p-4 relative">
+<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
 	<h1 class="h3 mb-5">True or False</h1>
 	{#each $sectionQuestions as question, i}
 		<div class="flex items-center gap-4 lg:px-5 mb-3" transition:slide>
-			<input
-				class="input variant-filled-surface"
-				type="text"
-				placeholder="question {i + 1}"
-				bind:value={question}
-			/>
+			<input class="input" type="text" placeholder="Question {i + 1}" bind:value={question} />
 			<button
-				class="btn-icon border-2 border-success-500 {$sectionAnswers[i] == 1
-					? 'bg-success-500'
+				class="btn-icon border-2 border-success-400-500-token {$sectionAnswers[i] == 1
+					? 'bg-success-400-500-token'
 					: ''}"
 				on:click={() => changeAnswer(1, i)}
 			>
@@ -200,7 +195,9 @@
 				</svg>
 			</button>
 			<button
-				class="btn-icon border-2 border-error-500 {$sectionAnswers[i] == 0 ? 'bg-error-500' : ''}"
+				class="btn-icon border-2 border-error-400-500-token {$sectionAnswers[i] == 0
+					? 'bg-error-400-500-token'
+					: ''}"
 				on:click={() => changeAnswer(0, i)}
 			>
 				<svg

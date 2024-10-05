@@ -50,7 +50,7 @@
 		}
 
 		plane = new Plane(canvas, ctx, parent.clientWidth, parent.clientHeight, 15);
-		plane.drawMainVector(true);
+		plane.drawGreenVector(true);
 
 		requestAnimationFrame(loop);
 	});
@@ -58,7 +58,7 @@
 	function loop() {
 		plane.clear();
 		plane.drawFirstQuadrant(true);
-		plane.updateMainVector(xCord, yCord, true);
+		plane.updateGreenVector(xCord, yCord, true);
 
 		requestAnimationFrame(loop);
 	}
@@ -77,7 +77,7 @@
 	<section class="h-[30rem] xl:h-auto xl:flex-[2_1_0]">
 		<canvas bind:this={canvas}> </canvas>
 	</section>
-	<section class="xl:flex-[1_1_0] bg-surface-700 p-10 flex flex-col md:flex-row">
+	<section class="xl:flex-[1_1_0] bg-surface-300-600-token p-10 flex flex-col md:flex-row">
 		<div class="flex-1 flex flex-col justify-center gap-10">
 			<h4 class="h4">Draw the vector <strong>v( 7 , 5 )</strong></h4>
 			<div class="flex flex-col gap-10">

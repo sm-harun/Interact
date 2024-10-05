@@ -136,9 +136,9 @@
 	}
 </script>
 
-<div class="w-full variant-filled-surface rounded-container-token p-4 relative">
+<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
 	<input
-		class="input variant-filled-surface font-bold text-2xl"
+		class="input font-bold text-2xl mb-8"
 		type="text"
 		placeholder="Title"
 		bind:value={sectionTitle}
@@ -147,7 +147,7 @@
 	{#each $sectionEquations as equation, i}
 		<div class="flex gap-3" transition:slide>
 			<input
-				class="input variant-filled-surface font-bold my-3"
+				class="input font-bold my-3"
 				type="text"
 				placeholder="Equation {i + 1}"
 				bind:value={equation}

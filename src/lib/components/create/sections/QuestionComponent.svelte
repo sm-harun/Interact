@@ -184,15 +184,10 @@
 	}
 </script>
 
-<div class="w-full variant-filled-surface rounded-container-token p-4 relative">
+<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
 	<label class="label">
 		<strong>Question: </strong>
-		<input
-			class="input variant-filled-surface font-bold"
-			type="text"
-			placeholder="Question"
-			bind:value={sectionTitle}
-		/>
+		<input class="input font-bold" type="text" placeholder="Question" bind:value={sectionTitle} />
 
 		<div class="flex flex-col ml-7">
 			{#each $sectionChoices as choice, i}
@@ -200,7 +195,7 @@
 					<strong>Choice {i + 1}: </strong>
 					<button
 						class="size-5 rounded-container-token {sectionAnswer == i + 1
-							? 'variant-filled-primary'
+							? 'bg-primary-600-300-token'
 							: ''} grid place-items-center"
 						on:click={() => changeAnswer(i + 1)}
 					>
@@ -210,12 +205,7 @@
 					</button>
 				</div>
 				<div class="flex items-center gap-4 lg:px-5" transition:slide>
-					<input
-						class="input variant-filled-surface"
-						type="text"
-						placeholder="Choice {i + 1}"
-						bind:value={choice}
-					/>
+					<input class="input" type="text" placeholder="Choice {i + 1}" bind:value={choice} />
 					<button on:click={() => deleteChoice(i)}>
 						<svg
 							fill="none"
@@ -236,7 +226,7 @@
 		</div>
 		<strong>Explanation: </strong>
 		<input
-			class="input variant-filled-surface mt-5"
+			class="input mt-5"
 			type="text"
 			placeholder="Explanation..."
 			bind:value={sectionExplanation}

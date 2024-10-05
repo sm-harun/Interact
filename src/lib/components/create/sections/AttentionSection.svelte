@@ -98,15 +98,10 @@
 	}
 </script>
 
-<div class="w-full variant-filled-surface rounded-container-token p-4">
+<div class="w-full bg-surface-300-600-token rounded-container-token p-4">
 	<h1 class="h3">Attention</h1>
 	<blockquote class="blockquote mt-5">
-		<input
-			class="input variant-filled-surface font-bold"
-			type="text"
-			placeholder="Title"
-			bind:value={sectionTitle}
-		/>
+		<input class="input font-bold" type="text" placeholder="Title" bind:value={sectionTitle} />
 	</blockquote>
 	<div class="w-full flex justify-between mt-5">
 		<button

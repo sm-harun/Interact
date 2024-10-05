@@ -74,7 +74,7 @@
 	<div class="h-[40rem] border-2 border-primary-500">
 		<canvas bind:this={canvas}></canvas>
 	</div>
-	<section class="h-full p-10 bg-surface-700 flex flex-col">
+	<section class="h-full p-10 bg-surface-300-600-token flex flex-col">
 		<div>
 			<h3 class="h3">Magnitude</h3>
 			<div class="w-60 flex-col">

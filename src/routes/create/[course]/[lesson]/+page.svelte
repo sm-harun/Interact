@@ -230,7 +230,7 @@
 	<header
 		class="variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 flex items-center justify-between z-40"
 	>
-		<h1 class="h2 font-bold text-primary-500-400-token ml-4">{data.params.lesson}</h1>
+		<h1 class="h2 font-bold text-primary-800-100-token ml-4">{data.params.lesson}</h1>
 		<ul class="flex items-center justify-between gap-4">
 			<button
 				class="btn variant-ringed-primary hover:variant-filled-primary"

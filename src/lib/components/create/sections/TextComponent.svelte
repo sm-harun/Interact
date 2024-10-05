@@ -114,11 +114,11 @@
 	}
 </script>
 
-<div class="w-full variant-filled-surface rounded-container-token p-4">
+<div class="w-full bg-surface-300-600-token rounded-container-token p-4">
 	<label class="label">
 		<strong>Title: </strong>
 		<input
-			class="input variant-filled-surface font-bold text-xl"
+			class="input font-bold text-xl"
 			type="text"
 			placeholder="Title"
 			bind:value={sectionTitle}
@@ -126,7 +126,7 @@
 
 		<strong>Info: </strong>
 		<textarea
-			class="textarea variant-filled-surface font-semibold text-lg"
+			class="textarea font-semibold text-lg"
 			rows="3"
 			placeholder="Explanation to the topic..."
 			bind:value={sectionText}
