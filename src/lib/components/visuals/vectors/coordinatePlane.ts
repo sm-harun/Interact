@@ -207,9 +207,27 @@ export class Plane {
 
     if (showShadow) {
 
+      // Create a temporary element to convert color to RGB
+      const tempElement = document.createElement("span");
+      tempElement.style.color = v1Color;
+      document.body.appendChild(tempElement);
+
+      // Get the computed color, which will be in RGB format
+      let computedColor = getComputedStyle(tempElement).color;
+      const v1ColorFinal = computedColor.replace("rgb(", "rgba(").replace(")", ", 0.3)");
+
+      tempElement.style.color = v2Color;
+
+      computedColor = getComputedStyle(tempElement).color;
+      const v2ColorFinal = computedColor.replace("rgb(", "rgba(").replace(")", ", 0.3)");
+
+      document.body.removeChild(tempElement);
+
+      // Convert the RGB color to RGBA with 0.3 opacity
+
       this.context.beginPath();
-      this.context.strokeStyle = v2Color;
-      this.context.lineWidth = 1;
+      this.context.strokeStyle = v1ColorFinal;
+      this.context.lineWidth = 3;
 
       this.context.moveTo(this.xOrigin + x1 * this.divisions, this.yOrigin - y1 * this.divisions);
       this.context.lineTo(this.xOrigin + (x1 + x2) * this.divisions, this.yOrigin - (y1 + y2) * this.divisions);
@@ -218,8 +236,8 @@ export class Plane {
       this.context.closePath();
 
       this.context.beginPath();
-      this.context.strokeStyle = v1Color;
-      this.context.lineWidth = 1;
+      this.context.strokeStyle = v2ColorFinal;
+      this.context.lineWidth = 3;
 
       this.context.moveTo(this.xOrigin + x2 * this.divisions, this.yOrigin - y2 * this.divisions);
       this.context.lineTo(this.xOrigin + (x1 + x2) * this.divisions, this.yOrigin - (y1 + y2) * this.divisions);

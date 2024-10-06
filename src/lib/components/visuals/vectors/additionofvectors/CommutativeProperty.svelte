@@ -28,7 +28,7 @@
 			});
 		}
 
-		plane = new Plane(canvas, ctx, parent.clientWidth, parent.clientHeight, 20);
+		plane = new Plane(canvas, ctx, parent.clientWidth, parent.clientHeight, 8);
 
 		requestAnimationFrame(loop);
 	});
@@ -38,31 +38,31 @@
 		plane.drawFirstQuadrant(false);
 
 		// Red 2
-		plane.drawFloatingVector(8, 12, 16, 12, false, { head: false, tail: true }, 'red');
-		plane.writeText(12, 13, 'U', 'red', 2);
+		plane.drawFloatingVector(3, 6, 7, 6, false, { head: false, tail: true }, 'red');
+		plane.writeText(5, 6.5, 'U', 'red', 1.2);
 
 		// Green 2
-		plane.drawFloatingVector(1, 6, 8, 12, false, { head: false, tail: true }, 'green');
-		plane.writeText(4.5, 10, 'V', 'green', 2);
+		plane.drawFloatingVector(1, 2, 3, 6, false, { head: false, tail: true }, 'green');
+		plane.writeText(1.3, 4, 'V', 'green', 1.2);
 
 		// Green 1
-		plane.drawFloatingVector(10, 6, 16, 12, false, { head: false, tail: true }, 'green');
-		plane.writeText(13.5, 8, 'V', 'green', 2);
+		plane.drawFloatingVector(5, 2, 7, 6, false, { head: false, tail: true }, 'green');
+		plane.writeText(6.7, 4, 'V', 'green', 1.2);
 
 		// Red 1
-		plane.drawFloatingVector(1, 6, 10, 6, false, { head: false, tail: true }, 'red');
-		plane.writeText(6, 5, 'U', 'red', 2);
+		plane.drawFloatingVector(1, 2, 5, 2, false, { head: false, tail: true }, 'red');
+		plane.writeText(3, 1.5, 'U', 'red', 1.2);
 
 		// Resultant
-		plane.drawFloatingVector(1, 6, 16, 12, false, { head: false, tail: true }, 'purple');
-		plane.writeText(10, 10.5, 'U + V', 'purple', 1.5);
-		plane.writeText(7, 7.5, 'V + U', 'purple', 1.5);
+		plane.drawFloatingVector(1, 2, 7, 6, false, { head: false, tail: true }, 'purple');
+		plane.writeText(4, 3, 'U + V', 'purple', 1.2);
+		plane.writeText(4, 5, 'V + U', 'purple', 1.2);
 
 		requestAnimationFrame(loop);
 	}
 </script>
 
-<main class="w-full aspect-video grid place-items-center mx-auto">
+<main class="w-2/3 aspect-video grid place-items-center mx-auto">
 	<div class="h-full aspect-square">
 		<canvas bind:this={canvas}></canvas>
 	</div>

@@ -8,6 +8,7 @@
 
 	import TriangleLawOfAddition from './additionofvectors/TriangulerLawOfAddition.svelte';
 	import AddingTwoVectors from './additionofvectors/AddingTwoVectors.svelte';
+	import AddWithOnlyOneAxis from './additionofvectors/AddWithOnlyOneAxis.svelte';
 	import CommutativeProperty from './additionofvectors/CommutativeProperty.svelte';
 	import AssociativeProperty from './additionofvectors/AssociativeProperty.svelte';
 
@@ -42,6 +43,8 @@
 	<CommutativeProperty {section} {showNextSection} />
 {:else if section.title == 'associative-property-of-vector-addition-figure'}
 	<AssociativeProperty {section} {showNextSection} />
+{:else if section.title == 'add-with-only-one-axis'}
+	<AddWithOnlyOneAxis {section} {showNextSection} />
 {:else}
 	<p>
 		The Vectors library didn't find the <strong class="mx-2 {showNextSection()}"

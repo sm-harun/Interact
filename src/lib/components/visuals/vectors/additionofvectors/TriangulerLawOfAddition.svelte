@@ -38,16 +38,16 @@
 		plane.drawFirstQuadrant(false);
 
 		// Resultant
-		plane.drawFloatingVector(1, 1, 5, 4, false, { head: false, tail: false }, 'purple');
-		plane.writeText(2.5, 3, 'U + V', 'white', 3);
+		plane.drawFloatingVector(0, 1, 4, 4, false, { head: false, tail: false }, 'purple');
+		plane.writeText(1.5, 3, 'U + V', 'purple', 1.5);
 
 		// Green
-		plane.drawFloatingVector(5, 1, 5, 4, false, { head: false, tail: true }, 'green');
-		plane.writeText(5.3, 2, 'V', 'green', 3);
+		plane.drawFloatingVector(4, 1, 4, 4, false, { head: false, tail: true }, 'green');
+		plane.writeText(4.5, 2.5, 'V', 'green', 1.5);
 
 		// Red
-		plane.drawFloatingVector(1, 1, 5, 1, false, { head: false, tail: true }, 'red');
-		plane.writeText(3.5, 0.6, 'U', 'red', 3);
+		plane.drawFloatingVector(0, 1, 4, 1, false, { head: false, tail: true }, 'red');
+		plane.writeText(2.3, 0.5, 'U', 'red', 1.5);
 
 		requestAnimationFrame(loop);
 	}
