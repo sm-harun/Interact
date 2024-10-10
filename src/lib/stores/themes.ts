@@ -99,5 +99,5 @@ export const lessonsUpdater = writable(0);
 export function updateLessons() {
   setTimeout(() => {
     lessonsUpdater.update((count: number) => count = count + 1);
-  }, 50);
+  }, 100);
 }

@@ -32,20 +32,26 @@ export class Plane {
 
     // This draws the main two axis.
     this.context.beginPath();
-    this.context.strokeStyle = "white";
+    this.context.strokeStyle = "grey";
     this.context.lineWidth = 2;
 
     this.context.moveTo(0, this.yOrigin);
     this.context.lineTo(this.maxWidth, this.yOrigin);
+
     this.context.moveTo(this.xOrigin, 0);
     this.context.lineTo(this.xOrigin, this.maxHeight);
 
     this.context.stroke();
     this.context.closePath();
 
+    this.drawCircle(0, this.yOrigin, 4, true, 'grey');
+    this.drawCircle(this.maxWidth, this.yOrigin, 4, true, 'grey');
+    this.drawCircle(this.xOrigin, 0, 4, true, 'grey');
+    this.drawCircle(this.xOrigin, this.maxHeight, 4, true, 'grey');
+
     // This draws the grid.
     this.context.beginPath();
-    this.context.strokeStyle = "white";
+    this.context.strokeStyle = "grey";
     this.context.lineWidth = 0.2;
 
     for (let i = 0; i < this.tiles * 3; i++) {
@@ -226,7 +232,7 @@ export class Plane {
       // Convert the RGB color to RGBA with 0.3 opacity
 
       this.context.beginPath();
-      this.context.strokeStyle = v1ColorFinal;
+      this.context.strokeStyle = v2ColorFinal;
       this.context.lineWidth = 3;
 
       this.context.moveTo(this.xOrigin + x1 * this.divisions, this.yOrigin - y1 * this.divisions);
@@ -236,7 +242,7 @@ export class Plane {
       this.context.closePath();
 
       this.context.beginPath();
-      this.context.strokeStyle = v2ColorFinal;
+      this.context.strokeStyle = v1ColorFinal;
       this.context.lineWidth = 3;
 
       this.context.moveTo(this.xOrigin + x2 * this.divisions, this.yOrigin - y2 * this.divisions);

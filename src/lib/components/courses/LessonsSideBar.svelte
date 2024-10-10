@@ -12,7 +12,9 @@
 	let emptyArray: null[] = [];
 </script>
 
-<nav class="w-80 bg-surface-200-700-token h-full flex-shrink-0 relative z-50 overflow-y-auto">
+<nav
+	class="w-80 bg-surface-200-700-token h-full flex-shrink-0 relative z-50 overflow-y-auto hidden lg:block"
+>
 	{#if JSON.stringify(lessons) === JSON.stringify(emptyArray)}
 		<ProgressBar
 			meter={'bg-primary-500 h-1'}

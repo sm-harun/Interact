@@ -53,8 +53,6 @@
 			// } catch (SyntaxError: any) {
 			// 	console.error(SyntaxError);
 			// }
-			console.log(response);
-
 			let modelAnswer = {
 				role: 'model',
 				parts: [{ text: response }]

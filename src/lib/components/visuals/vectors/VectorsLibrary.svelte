@@ -12,6 +12,10 @@
 	import CommutativeProperty from './additionofvectors/CommutativeProperty.svelte';
 	import AssociativeProperty from './additionofvectors/AssociativeProperty.svelte';
 
+	import InverseOfVectors from './subtractionofvectors/InverseOfVectors.svelte';
+	import ParallelogramVectorSubtraction from './subtractionofvectors/ParallelogramVectorSubtraction.svelte';
+	import TriangularLawOfSubtraction from './subtractionofvectors/TriangularLawOfSubtraction.svelte';
+
 	import type { VisualSection } from '$lib/stores/courses';
 
 	export let section: VisualSection;
@@ -45,6 +49,14 @@
 	<AssociativeProperty {section} {showNextSection} />
 {:else if section.title == 'add-with-only-one-axis'}
 	<AddWithOnlyOneAxis {section} {showNextSection} />
+
+	<!-- Subtraction of Vectors -->
+{:else if section.title == 'inverse-vector-playground'}
+	<InverseOfVectors {section} {showNextSection} />
+{:else if section.title == 'parallelogram-vector-subtraction'}
+	<ParallelogramVectorSubtraction {section} {showNextSection} />
+{:else if section.title == 'triangular-law-subtraction-of-vectors-figure'}
+	<TriangularLawOfSubtraction {section} {showNextSection} />
 {:else}
 	<p>
 		The Vectors library didn't find the <strong class="mx-2 {showNextSection()}"

@@ -48,7 +48,7 @@
 </script>
 
 <div
-	class="w-full variant-filled-surface rounded-container-token p-4 relative transition border-2 {allAnswered
+	class="w-full bg-surface-200-700-token rounded-container-token p-4 relative transition border-2 {allAnswered
 		? 'border-success-500'
 		: 'border-transparent'}"
 >
