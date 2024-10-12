@@ -70,13 +70,12 @@
 				<li class="crumb">
 					<a
 						href="/home"
-						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						class="text-lg hover:text-secondary-500 transition grid place-items-center relative overflow-visible"
 					>
 						<span>Home</span>
 						{#if $page.url.pathname === '/home'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
-								in:fly={{ x: 100, duration: 500 }}
 							></div>
 						{/if}
 					</a>
@@ -90,7 +89,32 @@
 						{#if $page.url.pathname === '/courses'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
-								in:fly={{ x: -100, duration: 500 }}
+							></div>
+						{/if}
+					</a>
+				</li>
+				<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+				<li class="crumb">
+					<a
+						href="/notes"
+						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						><span>Notes</span>
+						{#if $page.url.pathname === '/notes'}
+							<div
+								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+							></div>
+						{/if}
+					</a>
+				</li>
+				<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+				<li class="crumb">
+					<a
+						href="/tests"
+						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						><span>Tests</span>
+						{#if $page.url.pathname === '/tests'}
+							<div
+								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
 							></div>
 						{/if}
 					</a>
