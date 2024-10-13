@@ -66,7 +66,7 @@
 
 	{#if showMainRoutes}
 		<section class="flex-[2_1_0] px-4 flex items-center">
-			<ol class="breadcrumb">
+			<ol class="flex gap-4">
 				<li class="crumb">
 					<a
 						href="/home"
