@@ -13,7 +13,7 @@
 	transition:fly={{ x: 100, duration: 300 }}
 >
 	<div
-		class="w-full h-full rounded-container-token bg-gradient-to-t from-surface-900/90 from-20% to-transparent to-100% flex flex-col justify-end gap-3 p-3 px-4 relative"
+		class="w-full h-full rounded-container-token bg-gradient-to-t from-10% from-surface-900/90 dark:from-surface-500 to-transparent to-100% flex flex-col justify-end gap-3 p-3 px-4 relative"
 	>
 		<h1
 			class="text-2xl w-4/5 font-bold decoration-500-400-token text-primary-500-400-token absolute bottom-5 left-5

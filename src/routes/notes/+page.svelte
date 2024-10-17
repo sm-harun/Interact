@@ -1,22 +1,131 @@
 <script lang="ts">
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
+
 	import NoteCourse from '$lib/components/notes/NoteCourse.svelte';
-	import NotesCard from '$lib/components/notes/NoteCard.svelte';
+	import NoteCoursePlaceHolder from '$lib/components/notes/NoteCoursePlaceHolder.svelte';
+
 	import PersonalNotes from '$lib/components/notes/PersonalNotes.svelte';
+	import PersonalNotesPlaceHolder from '$lib/components/notes/PersonalNotesPlaceHolder.svelte';
+
+	import NotesCard from '$lib/components/notes/NoteCard.svelte';
+	import NotesCardPlaceHolder from '$lib/components/notes/NoteCardPlaceHolder.svelte';
+
+	import { getNotesDoc, getNotesColl, getCollNotesColl, getCollNotesNote } from '$lib/docRefs';
+	import { user } from '$lib/stores/credentials';
 
 	import { tweened } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
-
 	import { fly } from 'svelte/transition';
 
+	import { setDoc, getDocs } from 'firebase/firestore';
+
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+
+	let modalStore = getModalStore();
+
+	// This is used to move the sections
 	let right = tweened(0, {
 		duration: 1000,
 		easing: cubicInOut
 	});
 
+	function addNewCollection() {
+		const modalSettings: ModalSettings = {
+			type: 'prompt',
+			title: 'Provide the Name for your Collection',
+			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
+			response: (r: string) => {
+				if (r) {
+					console.log($user?.uid);
+					setDoc(getNotesDoc($user?.uid, r), { title: r, type: 'personal' });
+				}
+			}
+		};
+		modalStore.trigger(modalSettings);
+	}
+
+	type PersonalNotes = {
+		type: 'personal';
+		title: string;
+	};
+
+	type CourseNotes = {
+		type: 'course';
+		title: string;
+	};
+
+	async function getCollections() {
+		const fetchedCourses = await getDocs(getNotesColl($user?.uid));
+
+		let personalNotes: PersonalNotes[] = [];
+		let courseNotes: CourseNotes[] = [];
+
+		fetchedCourses.forEach(async (note: any) => {
+			let newCollection = {
+				type: note.data().type,
+				title: note.data().title
+			};
+
+			if (newCollection.type == 'personal') personalNotes.push(newCollection);
+			if (newCollection.type == 'course') courseNotes.push(newCollection);
+		});
+
+		return { personalNotes: personalNotes, courseNotes: courseNotes };
+	}
+
 	function transitionPlane() {
 		if ($right == 0) right.set(100);
 		if ($right == 100) right.set(0);
+	}
+
+	// This keeps track of which collection we are currently viewing
+	let currentCollection: string | null = null;
+
+	let notesUpdater = 0;
+
+	function updateNotes(collection: string) {
+		currentCollection = collection;
+		transitionPlane();
+		updateNotesUI();
+	}
+
+	function updateNotesUI() {
+		notesUpdater++;
+	}
+
+	async function getNotesCollection() {
+		const fetchedNotes = await getDocs(getCollNotesColl($user?.uid, currentCollection));
+
+		let pushedNotes: PersonalNotes[] = [];
+
+		fetchedNotes.forEach(async (note: any) => {
+			let newNote = {
+				type: note.data().type,
+				title: note.data().title
+			};
+
+			pushedNotes.push(newNote);
+		});
+
+		return pushedNotes;
+	}
+
+	function addNewNote() {
+		const modalSettings: ModalSettings = {
+			type: 'prompt',
+			title: 'Provide the title for your Note',
+			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
+			response: (r: string) => {
+				if (r) {
+					console.log($user?.uid);
+					setDoc(getCollNotesNote($user?.uid, currentCollection, r), {
+						title: r,
+						text: ''
+					});
+				}
+			}
+		};
+		modalStore.trigger(modalSettings);
 	}
 </script>
 
@@ -30,44 +139,72 @@
 		<div class="flex-1 h-full overflow-hidden relative">
 			<!-- This is the section that displays all the notes collection -->
 			<div class="size-full p-6 pt-10 absolute overflow-y-auto" style="right: {$right}%;">
-				<section class="w-full h-auto">
-					<h2 class="h2 pb-5">Notes from Coures</h2>
-					<div class="flex flex-wrap gap-4">
-						<NoteCourse title={'Vectors'} notes={34} todo={transitionPlane} />
-						<NoteCourse title={'Enzymes'} notes={40} todo={transitionPlane} />
-						<NoteCourse title={'Motion'} notes={10} todo={transitionPlane} />
-						<div
-							class="w-96 h-24 flex justify-around items-center variant-glass-secondary rounded-container-token"
-						>
-							<div class="gap-2 flex flex-col">
-								<div class="w-20 h-3 bg-surface-400 animate-pulse rounded-full"></div>
-								<div class="w-20 h-3 bg-surface-400 animate-pulse rounded-full"></div>
-							</div>
-							<div class="w-20 h-2 bg-surface-400 animate-pulse rounded-full"></div>
+				{#await getCollections()}
+					<!-- Course Section Place Holder -->
+					<section class="w-full h-auto">
+						<h2 class="h2 pb-5">Course Notes</h2>
+						<div class="flex flex-wrap gap-4">
+							<NoteCoursePlaceHolder />
+							<NoteCoursePlaceHolder />
+							<NoteCoursePlaceHolder />
+							<NoteCoursePlaceHolder />
 						</div>
-					</div>
-				</section>
-				<section class="w-full h-auto pt-10">
-					<h2 class="h2 pb-5">Personal Notes</h2>
-					<div class="flex flex-wrap gap-4">
-						<PersonalNotes title={'Vectors'} notes={34} todo={transitionPlane} />
-						<PersonalNotes title={'Enzyme'} notes={40} todo={transitionPlane} />
-						<PersonalNotes title={'Motion'} notes={10} todo={transitionPlane} />
-						<PersonalNotes title={'Enzyme'} notes={40} todo={transitionPlane} />
-						<PersonalNotes title={'Motion'} notes={10} todo={transitionPlane} />
-						<PersonalNotes title={'Vectors'} notes={34} todo={transitionPlane} />
-						<PersonalNotes title={'Enzyme'} notes={40} todo={transitionPlane} />
-						<PersonalNotes title={'Motion'} notes={10} todo={transitionPlane} />
-					</div>
-				</section>
-				<section class="w-full h-auto pt-10">
-					<h2 class="h2 pb-5">Recent Notes</h2>
-					<div class="flex gap-4">
-						<PersonalNotes title={'Vectors'} notes={34} todo={transitionPlane} />
-						<PersonalNotes title={'Motion'} notes={34} todo={transitionPlane} />
-						<PersonalNotes title={'Vectors'} notes={34} todo={transitionPlane} />
-					</div>
-				</section>
+					</section>
+
+					<!-- Personal Notes Place Holder -->
+					<section class="w-full h-auto pt-10">
+						<h2 class="h2 pb-5">Personal Notes</h2>
+						<div class="grid grid-cols-3 gap-4">
+							<PersonalNotesPlaceHolder />
+							<PersonalNotesPlaceHolder />
+							<PersonalNotesPlaceHolder />
+							<PersonalNotesPlaceHolder />
+						</div>
+					</section>
+				{:then { personalNotes, courseNotes }}
+					<!-- Course Notes Section -->
+					<section class="w-full h-auto">
+						<h2 class="h2 pb-5">Course Notes</h2>
+						<div class="flex flex-wrap gap-4">
+							{#each courseNotes as collection}
+								<NoteCourse
+									title={collection.title}
+									notes={34}
+									todo={() => updateNotes(collection.title)}
+								/>
+							{/each}
+						</div>
+					</section>
+
+					<!-- Personal Notes Section -->
+					<section class="w-full h-auto pt-10">
+						<h2 class="h2 pb-5">Personal Notes</h2>
+						<div class="grid grid-cols-3 gap-4">
+							{#each personalNotes as collection}
+								<PersonalNotes
+									title={collection.title}
+									notes={34}
+									todo={() => updateNotes(collection.title)}
+								/>
+							{/each}
+							<button
+								class="card card-hover size-full border-2 border-primary-500 flex gap-5 justify-center items-center text-xl"
+								on:click={addNewCollection}
+							>
+								<span>Add Collection</span>
+								<svg
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-8"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+								</svg>
+							</button>
+						</div>
+					</section>
+				{/await}
 			</div>
 
 			<!-- This is the section that slides in displays notes on the selected collection -->
@@ -89,87 +226,37 @@
 						</svg>
 					</button>
 				</header>
+
+				<!-- These are the notes found inside a collection -->
 				<div class="w-full flex-grow flex flex-wrap content-start gap-6 p-5">
-					<NotesCard
-						title={'Introduction'}
-						text={'lorem sda jdlk jakdj lkjaiojf a;lksd ;fkasdj ;lkasdjoi jad;iosf jalk;dsj iofkasd;kl jf;akldsj piofj'}
-					/>
-					<NotesCard
-						title={'Addition'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Subtraction'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Multiplication'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Division'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Introduction'}
-						text={'lorem sda jdlk jakdj lkjaiojf a;lksd ;fkasdj ;lkasdjoi jad;iosf jalk;dsj iofkasd;kl jf;akldsj piofj'}
-					/>
-					<NotesCard
-						title={'Addition'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Subtraction'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Multiplication'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Division'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Introduction'}
-						text={'lorem sda jdlk jakdj lkjaiojf a;lksd ;fkasdj ;lkasdjoi jad;iosf jalk;dsj iofkasd;kl jf;akldsj piofj'}
-					/>
-					<NotesCard
-						title={'Addition'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Subtraction'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Multiplication'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Division'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Introduction'}
-						text={'lorem sda jdlk jakdj lkjaiojf a;lksd ;fkasdj ;lkasdjoi jad;iosf jalk;dsj iofkasd;kl jf;akldsj piofj'}
-					/>
-					<NotesCard
-						title={'Addition'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Subtraction'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Multiplication'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
-					<NotesCard
-						title={'Division'}
-						text={'aa k;djf;klasjd iofjasd;li fj;sklad jfa k;djf;klasjd  iofjasd;li fj;sklad jfa k;djf;klasjd iiofjasdiofjasdiofjasdofjasd;li fj iofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fjiofjasd;li fj;sklad jfa k;djf;klasjd iofjasd;li fj;sklad jf k;djf;klasjd iofjasd;li fj;sklad jf'}
-					/>
+					{#key notesUpdater}
+						{#await getNotesCollection()}
+							<NotesCardPlaceHolder />
+							<NotesCardPlaceHolder />
+							<NotesCardPlaceHolder />
+						{:then notes}
+							{#each notes as note}
+								<NotesCard
+									title={note.title}
+									text={'lorem sda jdlk jakdj lkjaiojf a;lksd ;fkasdj ;lkasdjoi jad;iosf jalk;dsj iofkasd;kl jf;akldsj piofj'}
+								/>
+							{/each}
+							<button
+								class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
+								on:click={addNewNote}
+							>
+								<svg
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-[60%]"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+								</svg>
+							</button>
+						{/await}
+					{/key}
 				</div>
 			</div>
 		</div>

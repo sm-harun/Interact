@@ -87,9 +87,9 @@
 				{#key choiceUpdater}
 					{#each section.choices as choice, i}
 						<button
-							class="{wrongSelections == i + 1
-								? 'border-[0.05rem] border-error-500'
-								: ''} {explained && i + 1 == section.answer
+							class="border-[0.05rem] {wrongSelections == i + 1
+								? 'border-error-500'
+								: 'border-transparent'} {explained && i + 1 == section.answer
 								? 'bg-success-500/50'
 								: 'hover:bg-primary-500/30'} {!explained && wrongSelections == i + 1
 								? 'bg-primary-500/30'

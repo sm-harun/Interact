@@ -78,11 +78,12 @@
 		</button>
 		{#if data.params.lesson !== undefined}
 			<h1 class="text-3xl font-bold text-primary-800-100-token px-5">{data.params.lesson}</h1>
+
 			<SmallScreenSectionButtons />
+			<LargeScreenSectionButtons />
 		{:else}
 			<h1 class="text-3xl font-bold text-primary-500-400-token px-5">Welcome</h1>
 		{/if}
-		<LargeScreenSectionButtons />
 	</header>
 
 	<main class="flex-grow flex overflow-hidden">
@@ -95,25 +96,51 @@
 		<div class="flex-grow h-full overflow-hidden">
 			<main class="flex h-full relative overflow-hidden">
 				<!-- Main lesson -->
-				{#key $lessonsUpdater}
-					<LessonsArea course={data.params.course} lesson={data.params.lesson} />
-				{/key}
+				{#if data.params.lesson !== undefined}
+					{#key $lessonsUpdater}
+						<LessonsArea course={data.params.course} lesson={data.params.lesson} />
+					{/key}
+				{:else}
+					<!-- This will show up as a welcome screen to every course -->
+					<main class="size-[80%] self-center mx-auto flex flex-col h1 overflow-hidden">
+						<h1 class="flex-1 flex justify-center items-center flex-shrink-0">
+							Welcome to the <span class="mx-3 font-bold text-primary-500"
+								>{data.params.course}</span
+							> Course
+						</h1>
+						<h3 class="h2 py-5 flex-shrink-0">Lessons in this course:</h3>
+						<ul
+							class="flex-1 p-8 list-disc list-inside grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-5 overflow-y-auto"
+						>
+							{#key updater}
+								{#each lessons as lesson}
+									<li class="text-lg">{lesson.title}</li>
+								{/each}
+							{/key}
+						</ul>
+					</main>
+				{/if}
 
 				<!-- These are the three sections -->
-				<section
-					class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky border-l-[0.05rem] border-l-surface-400"
-					style="left: {100 - $mobSectionsPosition}%;"
-				>
-					<div class="size-full absolute overflow-hidden" style="right: {$sectionsPosition}%">
-						<AIChat />
-					</div>
-					<div class="size-full absolute overflow-hidden" style="left: {100 - $sectionsPosition}%">
-						<Calculator />
-					</div>
-					<div class="size-full absolute" style="left: {200 - $sectionsPosition}%">
-						<Notes />
-					</div>
-				</section>
+				{#if data.params.lesson !== undefined}
+					<section
+						class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky border-l-[0.05rem] border-l-surface-400"
+						style="left: {100 - $mobSectionsPosition}%;"
+					>
+						<div class="size-full absolute overflow-hidden" style="right: {$sectionsPosition}%">
+							<AIChat />
+						</div>
+						<div
+							class="size-full absolute overflow-hidden"
+							style="left: {100 - $sectionsPosition}%"
+						>
+							<Calculator />
+						</div>
+						<div class="size-full absolute" style="left: {200 - $sectionsPosition}%">
+							<Notes />
+						</div>
+					</section>
+				{/if}
 			</main>
 		</div>
 	</main>

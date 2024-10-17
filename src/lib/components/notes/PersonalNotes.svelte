@@ -4,7 +4,7 @@
 	export let todo: () => void;
 </script>
 
-<button class="card card-hover w-60 h-auto p-5 py-5 flex flex-col justify-center" on:click={todo}>
+<button class="card card-hover size-full p-5 py-5 flex flex-col justify-center" on:click={todo}>
 	<h2 class="h3">{title}</h2>
 	<p>{notes} notes</p>
 </button>
