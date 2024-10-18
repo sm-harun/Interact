@@ -1,14 +1,14 @@
 <script lang="ts">
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 
-	import NoteCourse from '$lib/components/notes/NoteCourse.svelte';
-	import NoteCoursePlaceHolder from '$lib/components/notes/NoteCoursePlaceHolder.svelte';
+	import NotesCard from '$lib/components/notes/cards/NoteCard.svelte';
+	import NotesCardPlaceHolder from '$lib/components/notes/placeHolders/NoteCardPlaceHolder.svelte';
 
-	import PersonalNotes from '$lib/components/notes/PersonalNotes.svelte';
-	import PersonalNotesPlaceHolder from '$lib/components/notes/PersonalNotesPlaceHolder.svelte';
+	import PlaceHoldersCollection from '$lib/components/notes/placeHolders/PlaceHoldersCollection.svelte';
 
-	import NotesCard from '$lib/components/notes/NoteCard.svelte';
-	import NotesCardPlaceHolder from '$lib/components/notes/NoteCardPlaceHolder.svelte';
+	import CourseNotesSection from '$lib/components/notes/sections/CourseNotesSection.svelte';
+	import PersonalNotesSection from '$lib/components/notes/sections/PersonalNotesSection.svelte';
+	import NoteInputSection from '$lib/components/notes/sections/NoteInputSection.svelte';
 
 	import { getNotesDoc, getNotesColl, getCollNotesColl, getCollNotesNote } from '$lib/docRefs';
 	import { user } from '$lib/stores/credentials';
@@ -16,17 +16,47 @@
 	import { tweened } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
+	import { writable } from 'svelte/store';
+	import { onMount } from 'svelte';
 
-	import { setDoc, getDocs } from 'firebase/firestore';
+	import { setDoc, getDocs, updateDoc } from 'firebase/firestore';
 
-	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import {
+		getModalStore,
+		type ModalSettings,
+		getToastStore,
+		type ToastSettings
+	} from '@skeletonlabs/skeleton';
 
 	let modalStore = getModalStore();
+	let toastStore = getToastStore();
+
+	let courseNotesCollection = writable([]);
+	let personalNotesCollection = writable([]);
+
+	let displayedNotes = writable([]);
+
+	let inputTitle: string;
+	let textArea: string;
+
+	let oldTextArea: string;
+
+	let fetchedCollections = false;
+	let fetchedNotes = false;
 
 	// This is used to move the sections
 	let right = tweened(0, {
 		duration: 1000,
 		easing: cubicInOut
+	});
+
+	onMount(() => {
+		getCollections().then(({ personalNotes, courseNotes }) => {
+			personalNotesCollection.set([...personalNotes]);
+			courseNotesCollection.set([...courseNotes]);
+
+			fetchedCollections = true;
+		});
 	});
 
 	function addNewCollection() {
@@ -36,8 +66,13 @@
 			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
 			response: (r: string) => {
 				if (r) {
-					console.log($user?.uid);
-					setDoc(getNotesDoc($user?.uid, r), { title: r, type: 'personal' });
+					let newCollection = {
+						title: r,
+						type: 'personal'
+					};
+					setDoc(getNotesDoc($user?.uid, r), newCollection);
+
+					personalNotesCollection.update((currentValue) => [...currentValue, newCollection]);
 				}
 			}
 		};
@@ -87,6 +122,11 @@
 		currentCollection = collection;
 		transitionPlane();
 		updateNotesUI();
+
+		getNotesCollection().then((notes) => {
+			displayedNotes.set([...notes]);
+			fetchedNotes = true;
+		});
 	}
 
 	function updateNotesUI() {
@@ -100,8 +140,8 @@
 
 		fetchedNotes.forEach(async (note: any) => {
 			let newNote = {
-				type: note.data().type,
-				title: note.data().title
+				title: note.data().title,
+				text: note.data().text
 			};
 
 			pushedNotes.push(newNote);
@@ -117,14 +157,65 @@
 			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
 			response: (r: string) => {
 				if (r) {
-					console.log($user?.uid);
-					setDoc(getCollNotesNote($user?.uid, currentCollection, r), {
+					let newNote = {
 						title: r,
 						text: ''
-					});
+					};
+					setDoc(getCollNotesNote($user?.uid, currentCollection, r), newNote);
+
+					displayedNotes.update((currentValue) => [...currentValue, newNote]);
 				}
 			}
 		};
+		modalStore.trigger(modalSettings);
+	}
+
+	function loadNote(title: string) {
+		$displayedNotes.forEach((note) => {
+			if (note.title == title) {
+				inputTitle = note.title;
+				textArea = note.text;
+
+				oldTextArea = textArea;
+			}
+		});
+	}
+
+	function saveNote() {
+		updateDoc(getCollNotesNote($user?.uid, currentCollection, inputTitle), {
+			text: textArea
+		}).then(() => {
+			displayedNotes.update((currentValue) => {
+				currentValue.forEach((note) => {
+					if (note.title == inputTitle) note.text = textArea;
+				});
+
+				return currentValue;
+			});
+
+			oldTextArea = textArea;
+
+			const toastSettings: ToastSettings = {
+				message: `Saved the ${inputTitle} Note`,
+				background: `variant-filled-success`,
+				hideDismiss: true,
+				timeout: 3000
+			};
+
+			toastStore.trigger(toastSettings);
+		});
+	}
+	function resetNote() {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: 'Are you sure you want to reset?',
+			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
+			response: (r: string) => {
+				if (!r) return;
+				textArea = oldTextArea;
+			}
+		};
+
 		modalStore.trigger(modalSettings);
 	}
 </script>
@@ -139,77 +230,19 @@
 		<div class="flex-1 h-full overflow-hidden relative">
 			<!-- This is the section that displays all the notes collection -->
 			<div class="size-full p-6 pt-10 absolute overflow-y-auto" style="right: {$right}%;">
-				{#await getCollections()}
+				{#if !fetchedCollections}
 					<!-- Course Section Place Holder -->
-					<section class="w-full h-auto">
-						<h2 class="h2 pb-5">Course Notes</h2>
-						<div class="flex flex-wrap gap-4">
-							<NoteCoursePlaceHolder />
-							<NoteCoursePlaceHolder />
-							<NoteCoursePlaceHolder />
-							<NoteCoursePlaceHolder />
-						</div>
-					</section>
-
-					<!-- Personal Notes Place Holder -->
-					<section class="w-full h-auto pt-10">
-						<h2 class="h2 pb-5">Personal Notes</h2>
-						<div class="grid grid-cols-3 gap-4">
-							<PersonalNotesPlaceHolder />
-							<PersonalNotesPlaceHolder />
-							<PersonalNotesPlaceHolder />
-							<PersonalNotesPlaceHolder />
-						</div>
-					</section>
-				{:then { personalNotes, courseNotes }}
-					<!-- Course Notes Section -->
-					<section class="w-full h-auto">
-						<h2 class="h2 pb-5">Course Notes</h2>
-						<div class="flex flex-wrap gap-4">
-							{#each courseNotes as collection}
-								<NoteCourse
-									title={collection.title}
-									notes={34}
-									todo={() => updateNotes(collection.title)}
-								/>
-							{/each}
-						</div>
-					</section>
-
-					<!-- Personal Notes Section -->
-					<section class="w-full h-auto pt-10">
-						<h2 class="h2 pb-5">Personal Notes</h2>
-						<div class="grid grid-cols-3 gap-4">
-							{#each personalNotes as collection}
-								<PersonalNotes
-									title={collection.title}
-									notes={34}
-									todo={() => updateNotes(collection.title)}
-								/>
-							{/each}
-							<button
-								class="card card-hover size-full border-2 border-primary-500 flex gap-5 justify-center items-center text-xl"
-								on:click={addNewCollection}
-							>
-								<span>Add Collection</span>
-								<svg
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="size-8"
-								>
-									<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-								</svg>
-							</button>
-						</div>
-					</section>
-				{/await}
+					<PlaceHoldersCollection />
+				{:else}
+					<CourseNotesSection {courseNotesCollection} {updateNotes} />
+					<PersonalNotesSection {personalNotesCollection} {updateNotes} {addNewCollection} />
+				{/if}
 			</div>
 
 			<!-- This is the section that slides in displays notes on the selected collection -->
 			<div class="size-full flex flex-col overflow-y-auto absolute" style="left: {100 - $right}%">
-				<header class="p-5 px-5 flex-shrink-0 w-full">
+				<!-- This is the header -->
+				<header class="p-5 px-5 flex-shrink-0 w-full flex items-center gap-6">
 					<button class="active:scale-90 transition" on:click={transitionPlane}>
 						<svg
 							fill="none"
@@ -225,45 +258,45 @@
 							/>
 						</svg>
 					</button>
+					<h1 class="h1">{currentCollection}</h1>
 				</header>
+				<hr class="mx-5" />
 
 				<!-- These are the notes found inside a collection -->
 				<div class="w-full flex-grow flex flex-wrap content-start gap-6 p-5">
-					{#key notesUpdater}
-						{#await getNotesCollection()}
-							<NotesCardPlaceHolder />
-							<NotesCardPlaceHolder />
-							<NotesCardPlaceHolder />
-						{:then notes}
-							{#each notes as note}
-								<NotesCard
-									title={note.title}
-									text={'lorem sda jdlk jakdj lkjaiojf a;lksd ;fkasdj ;lkasdjoi jad;iosf jalk;dsj iofkasd;kl jf;akldsj piofj'}
-								/>
-							{/each}
-							<button
-								class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
-								on:click={addNewNote}
+					{#if !fetchedNotes}
+						<NotesCardPlaceHolder />
+						<NotesCardPlaceHolder />
+						<NotesCardPlaceHolder />
+					{:else}
+						{#each $displayedNotes as note}
+							<NotesCard title={note.title} text={note.text} {loadNote} />
+						{/each}
+						<button
+							class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
+							on:click={addNewNote}
+						>
+							<svg
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="size-[60%]"
 							>
-								<svg
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="size-[60%]"
-								>
-									<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-								</svg>
-							</button>
-						{/await}
-					{/key}
+								<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+							</svg>
+						</button>
+					{/if}
 				</div>
 			</div>
 		</div>
-		<div class="flex-1 h-full border-l-2 border-primary-500 flex flex-col">
-			<input class="input rounded-none border-none !bg-transparent px-10 h-40 h1 flex-shrink-0" />
-			<hr class="mx-4 mb-8" />
-			<textarea class="textarea border-none p-5 px-5 !bg-transparent flex-grow text-xl" />
-		</div>
+		<NoteInputSection
+			bind:inputTitle
+			bind:textArea
+			bind:oldTextArea
+			bind:currentCollection
+			{resetNote}
+			{saveNote}
+		/>
 	</main>
 </div>

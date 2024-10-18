@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
+
 	export let title: string;
 	export let notes: number;
 	export let todo: () => void;
