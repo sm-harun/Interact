@@ -3,11 +3,12 @@
 
 	export let title: string;
 	export let text: string;
+	export let index: number;
 	export let loadNote: (title: string) => void;
 </script>
 
 <button
-	class="card card-hover size-60 flex flex-col items-center gap-5 p-4"
+	class="card card-hover size-60 flex flex-col items-center gap-5 p-4 relative"
 	on:click={() => loadNote(title)}
 	transition:slide={{ axis: 'x' }}
 >
@@ -19,4 +20,5 @@
 	>
 		{text}
 	</p>
+	<p class="absolute bottom-5 right-5 text-surface-800-100-token">{index + 1}</p>
 </button>

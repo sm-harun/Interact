@@ -137,7 +137,7 @@
 							<Calculator />
 						</div>
 						<div class="size-full absolute" style="left: {200 - $sectionsPosition}%">
-							<Notes />
+							<Notes course={data.params.course} />
 						</div>
 					</section>
 				{/if}

@@ -9,8 +9,18 @@
 <section class="w-full h-auto">
 	<h2 class="h2 pb-5">Course Notes</h2>
 	<div class="flex flex-wrap gap-4">
-		{#each $courseNotesCollection as collection}
-			<NoteCourse title={collection.title} notes={34} todo={() => updateNotes(collection.title)} />
-		{/each}
+		{#if $courseNotesCollection.length !== 0}
+			{#each $courseNotesCollection as collection}
+				<NoteCourse
+					title={collection.title}
+					notes={34}
+					todo={() => updateNotes(collection.title)}
+				/>
+			{/each}
+		{:else}
+			<div class="text-xl text-surface-600-300-token bg-surface-500/20 p-8 rounded-container-token">
+				To see course notes add some when taking courses
+			</div>
+		{/if}
 	</div>
 </section>

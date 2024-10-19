@@ -37,7 +37,9 @@
 			>
 		</div>
 	{:else}
-		<h2 class="h2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-surface-500/40">
+		<h2
+			class="h2 w-4/5 grid place-items-center absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 text-surface-500/40"
+		>
 			No Note has been selected!
 		</h2>
 	{/if}

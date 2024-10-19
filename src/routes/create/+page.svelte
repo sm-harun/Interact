@@ -34,7 +34,8 @@
 				if (r) {
 					setDoc(getCourseDoc(r), {
 						title: r,
-						background: ''
+						background: '',
+						subjects: []
 					});
 					goto('/create/' + r);
 				}

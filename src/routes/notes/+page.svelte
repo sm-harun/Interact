@@ -19,7 +19,7 @@
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 
-	import { setDoc, getDocs, updateDoc } from 'firebase/firestore';
+	import { setDoc, getDocs, updateDoc, query, orderBy } from 'firebase/firestore';
 
 	import {
 		getModalStore,
@@ -50,8 +50,8 @@
 		easing: cubicInOut
 	});
 
-	onMount(() => {
-		getCollections().then(({ personalNotes, courseNotes }) => {
+	onMount(async () => {
+		await getCollections().then(({ personalNotes, courseNotes }) => {
 			personalNotesCollection.set([...personalNotes]);
 			courseNotesCollection.set([...courseNotes]);
 
@@ -118,12 +118,12 @@
 
 	let notesUpdater = 0;
 
-	function updateNotes(collection: string) {
+	async function updateNotes(collection: string) {
 		currentCollection = collection;
 		transitionPlane();
 		updateNotesUI();
 
-		getNotesCollection().then((notes) => {
+		await getNotesCollection().then((notes) => {
 			displayedNotes.set([...notes]);
 			fetchedNotes = true;
 		});
@@ -134,14 +134,17 @@
 	}
 
 	async function getNotesCollection() {
-		const fetchedNotes = await getDocs(getCollNotesColl($user?.uid, currentCollection));
+		const fetchedNotes = await getDocs(
+			query(getCollNotesColl($user?.uid, currentCollection), orderBy('index', 'asc'))
+		);
 
 		let pushedNotes: PersonalNotes[] = [];
 
 		fetchedNotes.forEach(async (note: any) => {
 			let newNote = {
 				title: note.data().title,
-				text: note.data().text
+				text: note.data().text,
+				index: note.data().index
 			};
 
 			pushedNotes.push(newNote);
@@ -159,7 +162,8 @@
 				if (r) {
 					let newNote = {
 						title: r,
-						text: ''
+						text: '',
+						index: $displayedNotes.length
 					};
 					setDoc(getCollNotesNote($user?.uid, currentCollection, r), newNote);
 
@@ -184,26 +188,36 @@
 	function saveNote() {
 		updateDoc(getCollNotesNote($user?.uid, currentCollection, inputTitle), {
 			text: textArea
-		}).then(() => {
-			displayedNotes.update((currentValue) => {
-				currentValue.forEach((note) => {
-					if (note.title == inputTitle) note.text = textArea;
+		})
+			.then(() => {
+				displayedNotes.update((currentValue) => {
+					currentValue.forEach((note) => {
+						if (note.title == inputTitle) note.text = textArea;
+					});
+
+					return currentValue;
 				});
 
-				return currentValue;
+				oldTextArea = textArea;
+
+				const toastSettings: ToastSettings = {
+					message: `Saved the ${inputTitle} Note`,
+					background: `variant-filled-success`,
+					hideDismiss: true,
+					timeout: 3000
+				};
+
+				toastStore.trigger(toastSettings);
+			})
+			.catch((error) => {
+				const updateFail: ToastSettings = {
+					message: `Update failed: ${error.message}`,
+					background: `variant-filled-error`,
+					hideDismiss: true,
+					timeout: 6000
+				};
+				toastStore.trigger(updateFail);
 			});
-
-			oldTextArea = textArea;
-
-			const toastSettings: ToastSettings = {
-				message: `Saved the ${inputTitle} Note`,
-				background: `variant-filled-success`,
-				hideDismiss: true,
-				timeout: 3000
-			};
-
-			toastStore.trigger(toastSettings);
-		});
 	}
 	function resetNote() {
 		const modalSettings: ModalSettings = {
@@ -270,7 +284,7 @@
 						<NotesCardPlaceHolder />
 					{:else}
 						{#each $displayedNotes as note}
-							<NotesCard title={note.title} text={note.text} {loadNote} />
+							<NotesCard title={note.title} text={note.text} index={note.index} {loadNote} />
 						{/each}
 						<button
 							class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
