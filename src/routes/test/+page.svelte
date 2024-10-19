@@ -21,7 +21,20 @@
 	}
 </script>
 
-<div class="w-1/2 h-full bg-surface-500 p-6 flex flex-col">
-	<!-- <VisualsLibrary {section2} showNextSection={test} showNextButton={true} /> -->
-	<VisualsLibrary {section} showNextSection={test} showNextButton={true} />
+<div class="sketchfab-embed-wrapper w-screen h-screen p-10">
+	<iframe
+		title="Human Skeleton"
+		class="size-full"
+		frameborder="0"
+		allowfullscreen
+		mozallowfullscreen="true"
+		webkitallowfullscreen="true"
+		allow="autoplay; fullscreen; xr-spatial-tracking"
+		xr-spatial-tracking
+		execution-while-out-of-viewport
+		execution-while-not-rendered
+		web-share
+		src="https://sketchfab.com/models/acf6b25134d945f8b0bc8ae5e04861df/embed"
+	>
+	</iframe>
 </div>

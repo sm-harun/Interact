@@ -1,5 +1,17 @@
 <script lang="ts">
+	import { evaluate } from 'mathjs';
+
 	let phrase = '';
+	let filteredPhrase = '';
+	let result = '';
+
+	$: {
+		try {
+			if (filteredPhrase != '') result = evaluate(filteredPhrase);
+		} catch (error) {
+			result = '';
+		}
+	}
 
 	let bracketsOpened = 0;
 
@@ -7,35 +19,78 @@
 	let inversed: boolean = false;
 
 	function sqrtPhrase(char: string) {
-		if (char == '(' && bracketsOpened !== 0) {
-			char = ')';
-			bracketsOpened--;
+		let finalChar = char;
+
+		switch (char) {
+			case '×':
+				filteredPhrase = filteredPhrase.concat('*');
+				break;
+			case '÷':
+				filteredPhrase = filteredPhrase.concat('/');
+				break;
+			case '(':
+				if (bracketsOpened == 0) {
+					bracketsOpened++;
+					filteredPhrase = filteredPhrase.concat('(');
+				} else {
+					bracketsOpened--;
+					filteredPhrase = filteredPhrase.concat(')');
+					finalChar = ')';
+				}
+				break;
+			case 'sin(':
+				bracketsOpened++;
+				filteredPhrase = filteredPhrase.concat('sin(');
+				break;
+			case 'cos(':
+				bracketsOpened++;
+				filteredPhrase = filteredPhrase.concat('cos(');
+				break;
+			case 'tan(':
+				bracketsOpened++;
+				filteredPhrase = filteredPhrase.concat('tan(');
+				break;
+			case 'log(':
+				bracketsOpened++;
+				filteredPhrase = filteredPhrase.concat('log10(');
+				break;
+			case 'ln(':
+				bracketsOpened++;
+				filteredPhrase = filteredPhrase.concat('log(');
+				break;
+			case 'π':
+				filteredPhrase = filteredPhrase.concat('pi');
+				break;
+			case '√':
+				bracketsOpened++;
+				filteredPhrase = filteredPhrase.concat('sqrt(');
+				finalChar = '√(';
+				break;
+			default:
+				filteredPhrase = filteredPhrase.concat(char);
 		}
 
-		let bracketCheck =
-			char == 'log(' ||
-			char == '(' ||
-			char == 'ln(' ||
-			char == 'sin(' ||
-			char == 'cos(' ||
-			char == 'tan(';
+		phrase = phrase.concat(finalChar);
+	}
 
-		if (bracketCheck) bracketsOpened++;
-
-		phrase = phrase.concat(char);
+	function equalTo() {
+		phrase = evaluate(filteredPhrase).toString();
+		filteredPhrase = phrase;
 	}
 
 	function clear() {
 		phrase = '';
+		filteredPhrase = '';
 	}
 </script>
 
 <main class="size-full p-5 flex flex-col gap-3 pt-16 2xl:pt-5 overflow-hidden">
-	<input
-		type="text"
-		class="h-[15%] w-full flex-shrink-0 bg-black/40 text-5xl p-5 tracking-wide overflow-auto"
-		bind:value={phrase}
-	/>
+	<div
+		class="h-[15%] w-full flex-shrink-0 bg-black/40 p-5 tracking-wide overflow-hidden flex flex-col justify-between items-end"
+	>
+		<p class="text-5xl overflow-hidden">{phrase}</p>
+		<p class="text-">{result}</p>
+	</div>
 
 	<div class="flex-grow w-full grid grid-cols-4 grid-rows-8 gap-1 lg:gap-3">
 		<button
@@ -255,7 +310,7 @@
 		</button>
 		<button
 			class="size-full bg-secondary-500 text-3xl grid place-items-center rounded-container-token hover:brightness-125 active:scale-95 transition"
-			on:click={() => sqrtPhrase('=')}
+			on:click={equalTo}
 		>
 			=
 		</button>

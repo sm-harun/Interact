@@ -119,6 +119,19 @@
 						{/if}
 					</a>
 				</li>
+				<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+				<li class="crumb">
+					<a
+						href="/simulations"
+						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						><span>Simulations</span>
+						{#if $page.url.pathname === '/simulations'}
+							<div
+								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+							></div>
+						{/if}
+					</a>
+				</li>
 			</ol>
 		</section>
 	{/if}
