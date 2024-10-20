@@ -3,6 +3,8 @@
 	import Messages from './Messages.svelte';
 	import { GoogleGenerativeAI } from '@google/generative-ai';
 	import { onMount } from 'svelte';
+	import { Avatar, ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+	import { slide } from 'svelte/transition';
 
 	let GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY;
 
@@ -11,6 +13,10 @@
 	let messages = writable<{ role: 'user' | 'model'; parts: { text: string }[] }[]>([]);
 
 	let messagesContainer: HTMLElement;
+
+	let currentLang = 'English';
+
+	let showLangPopup = false;
 
 	let genAI;
 	let model;
@@ -47,30 +53,99 @@
 		}, 200);
 
 		// Gets the response from Gemini
-		getResponse(messageValue).then((response: string) => {
-			// try {
-			// 	console.log(JSON.parse(response).question, JSON.parse(response).answer);
-			// } catch (SyntaxError: any) {
-			// 	console.error(SyntaxError);
-			// }
-			let modelAnswer = {
-				role: 'model',
-				parts: [{ text: response }]
-			};
-			messages.update((currentMessages: any[]) => [...currentMessages, modelAnswer]);
+		getResponse(`${messageValue} use the ${currentLang} language for your response`).then(
+			(response: string) => {
+				// try {
+				// 	console.log(JSON.parse(response).question, JSON.parse(response).answer);
+				// } catch (SyntaxError: any) {
+				// 	console.error(SyntaxError);
+				// }
+				let modelAnswer = {
+					role: 'model',
+					parts: [{ text: response }]
+				};
+				messages.update((currentMessages: any[]) => [...currentMessages, modelAnswer]);
 
-			setTimeout(() => {
-				messagesContainer.scrollTo({
-					top: messagesContainer.scrollHeight,
-					behavior: 'smooth'
-				});
-			}, 200);
-		});
+				setTimeout(() => {
+					messagesContainer.scrollTo({
+						top: messagesContainer.scrollHeight,
+						behavior: 'smooth'
+					});
+				}, 200);
+			}
+		);
 		messageValue = '';
 	}
 </script>
 
 <main class="size-full relative flex flex-col overflow-hidden">
+	<header class="flex-shrink-0 h-16 w-full bg-surface-500 p-2 px-6 flex items-center gap-5">
+		<Avatar
+			src={'/assets/robot-logo.jpg'}
+			width="h-[90%]"
+			rounded="rounded-full"
+			border="border-2 bg-surface-800-100-token"
+			fontSize={400}
+		/>
+		<h3 class="h3">AI Assistant</h3>
+		<div class="variant-ringed-primary ml-auto relative">
+			<button
+				class="btn size-full justify-between px-10"
+				on:click={() => (showLangPopup = !showLangPopup)}>{currentLang}</button
+			>
+			{#if showLangPopup}
+				<div
+					class="w-full h-auto bg-surface-200-700-token absolute top-full right-0 z-50"
+					transition:slide
+				>
+					<ListBox>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="English">English</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="Amharic">Amharic</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="French">French</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="German">German</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="Japanese">Japanese</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="Mandarin">Mandarin</ListBoxItem
+						>
+					</ListBox>
+				</div>
+			{/if}
+		</div>
+	</header>
 	<section
 		class="flex-grow flex flex-col pt-16 2xl:pt-3 p-3 max-w-full overflow-y-auto"
 		bind:this={messagesContainer}
