@@ -118,6 +118,20 @@
 							rounded={'rounded-none'}
 							name="medium"
 							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="Oromo">Oromo</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+							value="Arabic">Arabic</ListBoxItem
+						>
+						<ListBoxItem
+							bind:group={currentLang}
+							rounded={'rounded-none'}
+							name="medium"
+							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
 							value="French">French</ListBoxItem
 						>
 						<ListBoxItem

@@ -2,7 +2,9 @@
 	import { fly } from 'svelte/transition';
 
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
+
 	import HumanSkeletonCard from '$lib/components/simulations/biology/humanskeleton/MainCard.svelte';
+	import VectorsPlane2DCard from '$lib/components/simulations/maths/vectorsplane/2D/MainCard.svelte';
 </script>
 
 <div class="h-screen flex flex-col">
@@ -13,8 +15,9 @@
 		out:fly={{ x: 100, duration: 500 }}
 	>
 		<h1 class="h1 mb-3">All Simulations</h1>
-		<div class="p-3">
+		<div class="p-3 flex gap-4">
 			<HumanSkeletonCard />
+			<VectorsPlane2DCard />
 		</div>
 	</main>
 </div>
