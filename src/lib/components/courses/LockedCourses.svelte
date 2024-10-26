@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	export let title: string;
-	export let image: string;
+	interface Props {
+		title: string;
+		image: string;
+	}
+
+	let { title, image }: Props = $props();
 </script>
 
 <div

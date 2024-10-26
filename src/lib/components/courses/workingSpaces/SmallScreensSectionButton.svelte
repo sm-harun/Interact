@@ -5,7 +5,7 @@
 <div class="absolute top-full right-5 grid grid-cols-4 gap-1 2xl:hidden">
 	<button
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-bl-container-token"
-		on:click={() => {
+		onclick={() => {
 			setMobSectionsPosition(0);
 			setSectionsPosition(0);
 		}}
@@ -20,7 +20,7 @@
 	</button>
 	<button
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
-		on:click={() => {
+		onclick={() => {
 			setSectionsPosition(0);
 			setMobSectionsPosition(100);
 		}}
@@ -35,7 +35,7 @@
 	</button>
 	<button
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
-		on:click={() => {
+		onclick={() => {
 			setSectionsPosition(100);
 			setMobSectionsPosition(100);
 		}}
@@ -50,7 +50,7 @@
 	</button>
 	<button
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-br-container-token"
-		on:click={() => {
+		onclick={() => {
 			setSectionsPosition(200);
 			setMobSectionsPosition(100);
 		}}

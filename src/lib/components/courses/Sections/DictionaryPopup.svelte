@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { ProgressBar } from '@skeletonlabs/skeleton';
 
-	let popupElement: HTMLDivElement;
+	let popupElement: HTMLDivElement = $state();
 
 	// These are the types for the dictionaryapi
 	type word = {
@@ -28,7 +28,7 @@
 	};
 
 	// This will make sure the popup never gets out of the window
-	let revisedX: number;
+	let revisedX: number = $state();
 
 	// This will hold every type of definition
 

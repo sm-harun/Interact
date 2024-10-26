@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import type { EquationSectionType } from '$lib/stores/courses';
 	import { updateDoc } from 'firebase/firestore';
@@ -13,38 +15,32 @@
 	import { slide } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 
-	export let section: EquationSectionType;
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		section: EquationSectionType;
+		course: string;
+		lesson: string;
+	}
 
-	let sectionTitle = section.title;
+	let { section, course, lesson }: Props = $props();
+
+	let sectionTitle = $state(section.title);
 	let sectionEquations = writable(section.equations);
-	let sectionSkip = section.skip;
+	let sectionSkip = $state(section.skip);
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
 
-	let buttonSynced = true;
+	let buttonSynced = $state(true);
 
-	let oldTitle: string;
-	let oldEquations: string[];
-	let oldSkip: boolean;
+	let oldTitle: string = $state();
+	let oldEquations: string[] = $state();
+	let oldSkip: boolean = $state();
 
 	onMount(() => {
 		oldTitle = sectionTitle;
 		oldEquations = [...$sectionEquations];
 		oldSkip = sectionSkip;
 	});
-
-	// Check if we are in sync when an input value changes
-	$: buttonSynced = checkIfChanged(
-		sectionTitle,
-		oldTitle,
-		$sectionEquations,
-		oldEquations,
-		sectionSkip,
-		oldSkip
-	);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
@@ -134,6 +130,17 @@
 		};
 		modalStore.trigger(modalSettings);
 	}
+	// Check if we are in sync when an input value changes
+	run(() => {
+		buttonSynced = checkIfChanged(
+			sectionTitle,
+			oldTitle,
+			$sectionEquations,
+			oldEquations,
+			sectionSkip,
+			oldSkip
+		);
+	});
 </script>
 
 <div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
@@ -150,9 +157,9 @@
 				class="input font-bold my-3"
 				type="text"
 				placeholder="Equation {i + 1}"
-				bind:value={equation}
+				bind:value={$sectionEquations[i]}
 			/>
-			<button on:click={() => deleteChoice(i)}>
+			<button aria-label="Close" onclick={() => deleteChoice(i)}>
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"
@@ -172,7 +179,7 @@
 	<div class="w-full flex justify-between mt-2">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={resetChanges}
+			onclick={resetChanges}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -184,7 +191,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addChoice}>
+		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addChoice}>
 			<span>Add Equation</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -192,7 +199,7 @@
 		</button>
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={syncSection}
+			onclick={syncSection}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -208,7 +215,7 @@
 <div class="w-full flex justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={changeSkip}
+		onclick={changeSkip}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path

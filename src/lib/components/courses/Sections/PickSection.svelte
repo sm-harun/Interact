@@ -4,14 +4,18 @@
 	import { onMount } from 'svelte';
 	import { renderText } from '$lib/stores/themes';
 
-	export let section: PickSection;
-	export let showNextButton: boolean;
-	export let showNextSection: () => void;
+	interface Props {
+		section: PickSection;
+		showNextButton: boolean;
+		showNextSection: () => void;
+	}
+
+	let { section, showNextButton, showNextSection }: Props = $props();
 
 	let slicedAnswers: string[];
 
 	// This will update the choices for use (flexible)
-	let choicesUpdater = 0;
+	let choicesUpdater = $state(0);
 	function updateChoices() {
 		choicesUpdater++;
 	}
@@ -20,8 +24,8 @@
 	let answeredChoices: string[] = [];
 
 	// These will check if we should show the Continue button
-	let showButton = false;
-	let allAnswered: boolean;
+	let showButton = $state(false);
+	let allAnswered: boolean = $state();
 
 	onMount(() => {
 		slicedAnswers = section.answers;
@@ -64,7 +68,7 @@
 					class="btn p-3 px-5 {answeredChoices.includes(choice)
 						? 'variant-ghost-success'
 						: 'variant-ghost-primary'}"
-					on:click={() => evaluateAnswer(choice)}
+					onclick={() => evaluateAnswer(choice)}
 				>
 					{choice}
 				</button>
@@ -78,7 +82,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

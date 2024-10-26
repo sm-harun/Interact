@@ -5,23 +5,27 @@
 	import { fly, slide, fade } from 'svelte/transition';
 	import { renderText } from '$lib/stores/themes';
 
-	export let section: QuestionSection;
-	export let showNextSection: () => void;
-	export let showNextButton: boolean;
+	interface Props {
+		section: QuestionSection;
+		showNextSection: () => void;
+		showNextButton: boolean;
+	}
+
+	let { section, showNextSection, showNextButton }: Props = $props();
 
 	// This will be used to control the explanation
-	let explained = false;
-	let wrongSelections = 0;
-	let choiceUpdater = 0;
+	let explained = $state(false);
+	let wrongSelections = $state(0);
+	let choiceUpdater = $state(0);
 
 	// This will be used for the wrong answer icon
-	let showIcon = false;
+	let showIcon = $state(false);
 
 	// The in animation won't display unless manually shown on mount
-	let show = false;
+	let show = $state(false);
 
 	// This is for the continue button, it will be displayed when answered
-	let showButton: boolean;
+	let showButton: boolean = $state();
 	// This is for making sure the continue button doesn't appear
 	let shown = false;
 
@@ -94,7 +98,7 @@
 								: 'hover:bg-primary-500/30'} {!explained && wrongSelections == i + 1
 								? 'bg-primary-500/30'
 								: ''} w-full mt-2 p-3 rounded-container-token active:scale-[98%] transition flex items-center justify-start"
-							on:click={() => answered(i + 1)}
+							onclick={() => answered(i + 1)}
 						>
 							<span class="font-bold">{letter(i + 1)}. </span>
 							<span class="text-lg ml-2">{@html renderText(choice)}</span>
@@ -134,7 +138,7 @@
 			{#if section.answer === 0 && !explained}
 				<button
 					class="btn variant-filled-primary z-10 absolute top-full right-0 mt-5"
-					on:click={() => answered(0)}
+					onclick={() => answered(0)}
 					transition:slide>Show Answer!</button
 				>
 			{/if}
@@ -166,7 +170,7 @@
 					class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 					in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 					out:slide
-					on:click={() => {
+					onclick={() => {
 						showNextSection();
 						hideButton();
 					}}>Continue</button

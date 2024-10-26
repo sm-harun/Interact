@@ -5,20 +5,24 @@
 	import { onMount } from 'svelte';
 	import { Plane } from '../coordinatePlane';
 
-	export let section: Section;
-	export let showNextSection: () => void;
+	interface Props {
+		section: Section;
+		showNextSection: () => void;
+	}
 
-	let canvas: HTMLCanvasElement;
+	let { section, showNextSection }: Props = $props();
+
+	let canvas: HTMLCanvasElement = $state();
 	let ctx: CanvasRenderingContext2D;
 
 	let plane: Plane;
 
-	let showButton = true;
+	let showButton = $state(true);
 
-	let greenVector = { x: 0, y: 0 };
+	let greenVector = $state({ x: 0, y: 0 });
 
 	// A variable to check shadow state for resultant vector
-	let inverseVector = false;
+	let inverseVector = $state(false);
 
 	// This checks if the answer has been filled correctly
 	let explained = false;
@@ -112,7 +116,7 @@
 		<div>
 			<button
 				class="btn {inverseVector ? 'variant-filled-primary' : 'variant-ghost-primary'}"
-				on:click={() => (inverseVector = !inverseVector)}>Inverse the Vector</button
+				onclick={() => (inverseVector = !inverseVector)}>Inverse the Vector</button
 			>
 		</div>
 	</section>
@@ -123,7 +127,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				showButton = false;
 			}}>Continue</button

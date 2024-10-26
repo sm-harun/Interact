@@ -1,10 +1,21 @@
 <script lang="ts">
-	export let inputTitle: string;
-	export let textArea: string;
-	export let currentCollection: string;
-	export let oldTextArea: string;
-	export let saveNote: () => void;
-	export let resetNote: () => void;
+	interface Props {
+		inputTitle: string;
+		textArea: string;
+		currentCollection: string;
+		oldTextArea: string;
+		saveNote: () => void;
+		resetNote: () => void;
+	}
+
+	let {
+		inputTitle = $bindable(),
+		textArea = $bindable(),
+		currentCollection = $bindable(),
+		oldTextArea = $bindable(),
+		saveNote,
+		resetNote
+	}: Props = $props();
 </script>
 
 <div class="flex-1 h-full border-l-2 border-primary-500 flex flex-col relative">
@@ -17,7 +28,7 @@
 		<textarea
 			class="textarea border-none p-5 px-5 !bg-transparent flex-grow text-xl"
 			bind:value={textArea}
-		/>
+		></textarea>
 		{#if oldTextArea !== textArea}
 			<p class="text-2xl text-error-500 absolute top-4 right-4">Unsaved!</p>
 		{/if}
@@ -27,13 +38,13 @@
 				class="{oldTextArea == textArea
 					? 'variant-ghost-primary'
 					: 'variant-filled-primary'} btn text-xl px-6"
-				on:click={resetNote}>Reset</button
+				onclick={resetNote}>Reset</button
 			>
 			<button
 				class="{oldTextArea == textArea
 					? 'variant-ghost-primary'
 					: 'variant-filled-primary'} btn text-xl px-6"
-				on:click={saveNote}>Save</button
+				onclick={saveNote}>Save</button
 			>
 		</div>
 	{:else}

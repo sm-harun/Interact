@@ -5,13 +5,17 @@
 	import { onMount } from 'svelte';
 	import { renderText } from '$lib/stores/themes';
 
-	export let section: BasicSection;
-	export let showNextSection: () => void;
-	export let showNextButton: boolean;
+	interface Props {
+		section: BasicSection;
+		showNextSection: () => void;
+		showNextButton: boolean;
+	}
 
-	let showButton = showNextButton;
+	let { section, showNextSection, showNextButton }: Props = $props();
 
-	let show = false;
+	let showButton = $state(showNextButton);
+
+	let show = $state(false);
 
 	onMount(() => {
 		show = true;
@@ -38,7 +42,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

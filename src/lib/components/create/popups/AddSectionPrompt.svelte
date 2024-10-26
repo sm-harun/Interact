@@ -3,7 +3,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { fly } from 'svelte/transition';
 
-	let popupElement: HTMLDivElement;
+	let popupElement: HTMLDivElement = $state();
 
 	function listentopointer(e: PointerEvent) {
 		if (!popupElement.contains(e.target)) {
@@ -29,56 +29,56 @@
 >
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('Text');
 			hideSectionPopup();
 		}}>Text</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('List');
 			hideSectionPopup();
 		}}>List</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('Equation');
 			hideSectionPopup();
 		}}>Equation</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('Question');
 			hideSectionPopup();
 		}}>Question</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('TrueOrFalse');
 			hideSectionPopup();
 		}}>True | False</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('Pick');
 			hideSectionPopup();
 		}}>Pick Question</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('Attention');
 			hideSectionPopup();
 		}}>Attention</button
 	>
 	<button
 		class="text-xl btn rounded-container-token w-full hover:bg-primary-500/30"
-		on:click={() => {
+		onclick={() => {
 			$sectionPopupPosition.callback('Visual');
 			hideSectionPopup();
 		}}>Visual</button

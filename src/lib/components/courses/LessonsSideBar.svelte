@@ -3,9 +3,7 @@
 	import { page } from '$app/stores';
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
 
-	export let course;
-	export let lessons;
-	export let updateLessons;
+	let { course, lessons, updateLessons } = $props();
 
 	let drawerStore = getDrawerStore();
 
@@ -27,7 +25,7 @@
 				class="{$page.params.lesson === lesson.title
 					? 'border-b-2 border-primary-500'
 					: ''} w-full h-14 flex items-center pl-4 hover:backdrop-brightness-150 px-2"
-				on:click={() => {
+				onclick={() => {
 					updateLessons();
 					drawerStore.close();
 				}}>{i + 1}. {lesson.title}</a

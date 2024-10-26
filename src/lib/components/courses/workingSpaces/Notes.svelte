@@ -18,20 +18,24 @@
 	import NoteCard from '$lib/components/notes/cards/NoteCard.svelte';
 	import NoteCardPlaceHolder from '$lib/components/notes/placeHolders/NoteCardPlaceHolder.svelte';
 
-	export let course: string;
+	interface Props {
+		course: string;
+	}
 
-	let inputTitle: string;
-	let textArea: string;
+	let { course }: Props = $props();
 
-	let oldTextArea: string;
+	let inputTitle: string = $state();
+	let textArea: string = $state();
+
+	let oldTextArea: string = $state();
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
 
 	let displayedNotes = writable([]);
-	let fetchSuccefull = false;
+	let fetchSuccefull = $state(false);
 
-	let notesUpdater = 0;
+	let notesUpdater = $state(0);
 	let updateNotes = () => (notesUpdater = notesUpdater + 1);
 
 	let right = tweened(0, {
@@ -171,7 +175,7 @@
 				{/each}
 				<button
 					class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
-					on:click={addNewNote}
+					onclick={addNewNote}
 				>
 					<svg
 						fill="none"
@@ -198,7 +202,7 @@
 	</div>
 	<div class="size-full absolute top-0 flex flex-col" style="left: {100 - $right}%">
 		<header class="flex-shrink-0 h-16 w-full flex items-center px-5">
-			<button class="active:scale-90 transition" on:click={goBack}>
+			<button class="active:scale-90 transition" onclick={goBack}>
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"
@@ -225,20 +229,20 @@
 			<textarea
 				class="textarea border-none p-5 px-5 !bg-transparent flex-grow text-xl"
 				bind:value={textArea}
-			/>
+			></textarea>
 
 			<div class="absolute bottom-10 right-8 flex gap-5">
 				<button
 					class="{oldTextArea == textArea
 						? 'variant-ghost-primary'
 						: 'variant-filled-primary'} btn text-xl px-6"
-					on:click={resetNote}>Reset</button
+					onclick={resetNote}>Reset</button
 				>
 				<button
 					class="{oldTextArea == textArea
 						? 'variant-ghost-primary'
 						: 'variant-filled-primary'} btn text-xl px-6"
-					on:click={saveNote}>Save</button
+					onclick={saveNote}>Save</button
 				>
 			</div>
 		</div>

@@ -1,10 +1,19 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	export let title: string;
-	export let lessons: number;
-	export let subjects: string[];
-	export let image: string;
+	interface Props {
+		title: string;
+		lessons: number;
+		subjects: string[];
+		image: string;
+	}
+
+	let {
+		title,
+		lessons,
+		subjects,
+		image
+	}: Props = $props();
 </script>
 
 <div

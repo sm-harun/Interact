@@ -12,7 +12,7 @@
 		class="{$subject === 'All'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col items-center justify-center gap-2 text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
-		on:click={() => setSubject('All')}
+		onclick={() => setSubject('All')}
 	>
 		<svg viewBox="0 0 64 64" class="size-14">
 			<g>
@@ -47,7 +47,7 @@
 		class="{$subject === 'Math'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col gap-1 justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
-		on:click={() => setSubject('Math')}
+		onclick={() => setSubject('Math')}
 	>
 		<svg viewBox="0 0 512.001 512.001" class="size-12 rotate-[200deg] translate-y-2">
 			<g>
@@ -79,7 +79,7 @@
 		class="{$subject === 'Chemistry'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
-		on:click={() => setSubject('Chemistry')}
+		onclick={() => setSubject('Chemistry')}
 	>
 		<svg viewBox="0 0 479.6 479.6" class="size-12">
 			<g>
@@ -162,7 +162,7 @@
 		class="{$subject === 'Physics'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
-		on:click={() => setSubject('Physics')}
+		onclick={() => setSubject('Physics')}
 	>
 		<svg viewBox="0 0 512 512" class="size-10">
 			<g stroke="currentColor">
@@ -202,7 +202,7 @@
 		class="{$subject === 'Biology'
 			? 'bg-primary-500/70'
 			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
-		on:click={() => setSubject('Biology')}
+		onclick={() => setSubject('Biology')}
 	>
 		<svg class="size-12" viewBox="0 0 496.246 496.246" xml:space="preserve" fill="#000000"
 			><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g

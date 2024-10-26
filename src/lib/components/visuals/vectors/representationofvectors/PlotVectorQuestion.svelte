@@ -6,24 +6,28 @@
 	import { fly, slide, fade } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 
-	export let section: VisualSection;
-	export let showNextSection: () => void;
+	interface Props {
+		section: VisualSection;
+		showNextSection: () => void;
+	}
 
-	let canvas: HTMLCanvasElement;
+	let { section, showNextSection }: Props = $props();
+
+	let canvas: HTMLCanvasElement = $state();
 	let ctx: CanvasRenderingContext2D;
 
 	let plane: Plane;
 
-	let xCord = 0;
-	let yCord = 0;
+	let xCord = $state(0);
+	let yCord = $state(0);
 
-	let showButton = true;
+	let showButton = $state(true);
 
 	// This will be used for styles when the user answered correct
-	let answered = false;
+	let answered = $state(false);
 
 	// This will be used for styles when the user in incorrect
-	let incorrect = false;
+	let incorrect = $state(false);
 
 	function submitAnswer() {
 		if (xCord === 7 && yCord === 5) {
@@ -108,7 +112,7 @@
 			</div>
 		</div>
 		<div class="flex-1 flex justify-end items-end">
-			<button class="btn variant-filled-primary mt-5" on:click={submitAnswer}>Submit</button>
+			<button class="btn variant-filled-primary mt-5" onclick={submitAnswer}>Submit</button>
 		</div>
 	</section>
 </div>
@@ -118,7 +122,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				showButton = false;
 			}}>Too Hard?</button

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import * as Three from 'three';
 
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -17,6 +17,8 @@
 	let controls: any;
 
 	let cameraPos = tweened({ x: -0.03, y: 2.04, z: 5.72 });
+
+	let animationFrameId: number;
 
 	onMount(() => {
 		const scene = new Three.Scene();
@@ -78,12 +80,12 @@
 			// console.log(camera.position, controls.target);
 
 			renderer.render(scene, camera);
-			requestAnimationFrame(loop);
+			animationFrameId = requestAnimationFrame(loop);
 		}
 		loop();
 	});
 
-	const camPos = (x: any, y: any, z: any, xt: any, yt: any, zt: any) => {
+	const camPos = (x: number, y: number, z: number, xt: number, yt: number, zt: number) => {
 		gsap.to(camera.position, {
 			x: x,
 			y: y,
@@ -105,6 +107,10 @@
 			}
 		});
 	};
+
+	onDestroy(() => {
+		cancelAnimationFrame(animationFrameId);
+	});
 </script>
 
 <div class="h-screen flex flex-col">
@@ -118,7 +124,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() => camPos(0.42, 3.31, 1.1, -2.88, 1.94, -3.88)}>The Skull</button
+					onclick={() => camPos(0.42, 3.31, 1.1, -2.88, 1.94, -3.88)}>The Skull</button
 				>
 				<p>
 					This bony structure protects the brain and supports the facial structure. It consists of
@@ -129,7 +135,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() =>
+					onclick={() =>
 						camPos(
 							-0.04256517403098109,
 							1.8884632943557536,
@@ -147,7 +153,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() => camPos(0.01710151577782377, 2.535, 1.026, -0.037, -1.362, -4.395)}
+					onclick={() => camPos(0.01710151577782377, 2.535, 1.026, -0.037, -1.362, -4.395)}
 					>Clavicle (Collarbone)</button
 				>
 				<p>
@@ -158,7 +164,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() => camPos(-1.091, 2.612, -1.281, -0.143, -4.48, 3.152)}
+					onclick={() => camPos(-1.091, 2.612, -1.281, -0.143, -4.48, 3.152)}
 					>Scapula (Shoulder Blade)</button
 				>
 				<p>
@@ -169,7 +175,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() =>
+					onclick={() =>
 						camPos(-1.5878253642273372, 2.3502056428404976, -0.23052700054321135, 0, 0, 0)}
 					>Humerus</button
 				>
@@ -181,7 +187,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() => camPos(2.821140491880763, 0.528520953490227, 0.5192174259698517, 0, 0, 0)}
+					onclick={() => camPos(2.821140491880763, 0.528520953490227, 0.5192174259698517, 0, 0, 0)}
 					>Radius and Ulna</button
 				>
 				<p>
@@ -192,7 +198,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() =>
+					onclick={() =>
 						camPos(-0.005281986426970726, 0.3591750770339941, 1.0070987454090417, 0, 0, 0)}
 					>Pelvis</button
 				>
@@ -204,7 +210,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() =>
+					onclick={() =>
 						camPos(-1.291032972273586, -2.978302601995149, 0.08254831728223572, 0, 0, 0)}
 					>Femur</button
 				>
@@ -216,7 +222,7 @@
 			<section class="mt-4 p-5">
 				<button
 					class="h3 btn underline underline-offset-4"
-					on:click={() =>
+					onclick={() =>
 						camPos(1.007026919029579, -4.858627370926829, 0.03176244191537859, 0, 0, 0)}
 					>Tibia and Fibula</button
 				>

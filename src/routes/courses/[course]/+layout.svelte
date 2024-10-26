@@ -21,12 +21,12 @@
 	import type { Lesson } from '$lib/stores/courses.js';
 	import type { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore/lite';
 
-	export let data;
+	let { data } = $props();
 
 	let drawerStore = getDrawerStore();
 
 	let lessons: Lesson[] = [];
-	let updater = 0;
+	let updater = $state(0);
 
 	onMount(async () => {
 		await getLessons().then((fetchedLessons) => {
@@ -60,7 +60,7 @@
 	<header
 		class="flex-shrink-0 variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 pr-5 flex items-center justify-start gap-2 z-30"
 	>
-		<button class="btn-icon block lg:hidden" on:click={() => drawerStore.open()}>
+		<button class="btn-icon block lg:hidden" onclick={() => drawerStore.open()}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

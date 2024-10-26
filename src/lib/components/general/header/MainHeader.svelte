@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	import { fly } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 
 	import { webTitle } from '$lib/stores/themes';
 
@@ -9,10 +9,19 @@
 	import TopIcon from './TopIcon.svelte';
 	import HomeButton from './HomeButton.svelte';
 
-	export let title = $webTitle;
-	export let showMainRoutes = true;
-	export let showBackButton = false;
-	export let showHomeButton = false;
+	interface Props {
+		title?: any;
+		showMainRoutes?: boolean;
+		showBackButton?: boolean;
+		showHomeButton?: boolean;
+	}
+
+	let {
+		title = $webTitle,
+		showMainRoutes = true,
+		showBackButton = false,
+		showHomeButton = false
+	}: Props = $props();
 
 	function goBack() {
 		window.history.back();
@@ -27,7 +36,7 @@
 	<section class="flex-[2_1_0] p-3 flex items-center justify-between">
 		<div class="flex justify-between items-center gap-4 pl-4">
 			{#if showBackButton}
-				<button on:click={goBack}>
+				<button onclick={goBack}>
 					<svg
 						fill="none"
 						viewBox="0 0 24 24"
@@ -76,6 +85,7 @@
 						{#if $page.url.pathname === '/home'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								transition:slide
 							></div>
 						{/if}
 					</a>
@@ -89,6 +99,7 @@
 						{#if $page.url.pathname === '/courses'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								transition:slide
 							></div>
 						{/if}
 					</a>
@@ -102,6 +113,7 @@
 						{#if $page.url.pathname === '/notes'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								transition:slide
 							></div>
 						{/if}
 					</a>
@@ -115,6 +127,7 @@
 						{#if $page.url.pathname === '/tests'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								transition:slide
 							></div>
 						{/if}
 					</a>
@@ -128,6 +141,7 @@
 						{#if $page.url.pathname === '/simulations'}
 							<div
 								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								transition:slide
 							></div>
 						{/if}
 					</a>

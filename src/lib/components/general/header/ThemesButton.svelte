@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { showThemesPopup } from '$lib/stores/components';
 
-	let button: HTMLButtonElement;
+	let button: HTMLButtonElement = $state();
 
 	onMount(() => {
 		button.onclick = (e) => {

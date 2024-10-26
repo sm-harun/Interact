@@ -1,15 +1,24 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 
-	export let title: string;
-	export let text: string;
-	export let index: number;
-	export let loadNote: (title: string) => void;
+	interface Props {
+		title: string;
+		text: string;
+		index: number;
+		loadNote: (title: string) => void;
+	}
+
+	let {
+		title,
+		text,
+		index,
+		loadNote
+	}: Props = $props();
 </script>
 
 <button
 	class="card card-hover size-60 flex flex-col items-center gap-5 p-4 relative"
-	on:click={() => loadNote(title)}
+	onclick={() => loadNote(title)}
 	transition:slide={{ axis: 'x' }}
 >
 	<h1 class="h3 text-center flex-shrink-0">{title}</h1>

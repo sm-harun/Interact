@@ -18,9 +18,13 @@
 
 	import type { VisualSection } from '$lib/stores/courses';
 
-	export let section: VisualSection;
-	export let showNextSection: () => void;
-	export let showNextButton: boolean;
+	interface Props {
+		section: VisualSection;
+		showNextSection: () => void;
+		showNextButton: boolean;
+	}
+
+	let { section, showNextSection, showNextButton }: Props = $props();
 </script>
 
 {#if section.title == 'vector-scales'}

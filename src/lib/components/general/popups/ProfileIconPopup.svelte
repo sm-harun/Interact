@@ -52,7 +52,7 @@
 		modalStore.trigger(modal);
 	}
 
-	let popupElement: HTMLDivElement;
+	let popupElement: HTMLDivElement = $state();
 
 	function listentopointer(e: PointerEvent) {
 		if (!popupElement.contains(e.target)) {
@@ -86,7 +86,7 @@
 	<a
 		href="/create"
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30"
-		on:click={hideProfilePopup}
+		onclick={hideProfilePopup}
 		><span>Create</span>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path
@@ -99,7 +99,7 @@
 	<a
 		href="/settings"
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30"
-		on:click={hideProfilePopup}
+		onclick={hideProfilePopup}
 		><span>Settings</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@
 	<a
 		href="/test"
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30"
-		on:click={hideProfilePopup}
+		onclick={hideProfilePopup}
 		><span>Test</span>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@
 		</svg>
 	</a>
 	<button
-		on:click={() => {
+		onclick={() => {
 			confirmLogout();
 			hideProfilePopup();
 		}}

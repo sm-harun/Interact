@@ -3,10 +3,19 @@
 	import { getLessonsDoc } from '$lib/docRefs';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 
-	export let words: string;
-	export let course: string;
-	export let lesson: string;
-	export let dictUpdater: number;
+	interface Props {
+		words: string;
+		course: string;
+		lesson: string;
+		dictUpdater: number;
+	}
+
+	let {
+		words,
+		course,
+		lesson,
+		dictUpdater = $bindable()
+	}: Props = $props();
 
 	let toastStore = getToastStore();
 
@@ -35,7 +44,7 @@
 		{#each words as word}
 			<li class="group font-bold flex gap-9 items-center">
 				<span class="text-2xl">‣ {word}</span>
-				<button on:click={() => deleteDictionary(word)}>
+				<button onclick={() => deleteDictionary(word)}>
 					<svg
 						fill="none"
 						viewBox="0 0 24 24"

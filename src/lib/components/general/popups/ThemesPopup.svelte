@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { ListBox, ListBoxItem, LightSwitch } from '@skeletonlabs/skeleton';
 
 	import { fly } from 'svelte/transition';
@@ -11,17 +13,17 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { getAuth } from 'firebase/auth';
 
-	let currentTheme: Theme = $theme;
-	let popupElement: HTMLDivElement;
+	let currentTheme: Theme = $state($theme);
+	let popupElement: HTMLDivElement = $state();
 
 	// Updates the theme store.
-	$: {
+	run(() => {
 		if (getAuth().currentUser) {
 			updateTheme(currentTheme);
 		} else {
 			setTheme(currentTheme);
 		}
-	}
+	});
 
 	function listentopointer(e: PointerEvent) {
 		if (!popupElement.contains(e.target)) {

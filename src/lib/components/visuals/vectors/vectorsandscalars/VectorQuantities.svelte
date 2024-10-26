@@ -5,10 +5,9 @@
 
 	import { drawCircle, rotatePoint, drawLine, Ball } from '../functions';
 
-	export let section;
-	export let showNextSection;
+	let { section, showNextSection } = $props();
 
-	let showButton = true;
+	let showButton = $state(true);
 	function hideButton() {
 		showButton = false;
 	}
@@ -16,14 +15,14 @@
 	// This will hold all the balls
 	let balls: any = [];
 
-	let launch = () => {};
+	let launch = $state(() => {});
 
 	let clear = () => (balls = []);
 
-	let magnitude: number = 10;
-	let direction: number = 30;
+	let magnitude: number = $state(10);
+	let direction: number = $state(30);
 
-	let canvas: HTMLCanvasElement;
+	let canvas: HTMLCanvasElement = $state();
 	let ctx: CanvasRenderingContext2D;
 
 	onMount(() => {
@@ -88,8 +87,8 @@
 			</div>
 		</div>
 		<div class="w-full py-5 flex items-center justify-between gap-10">
-			<button class="btn variant-filled-primary text-xl" on:click={launch}>Launch</button>
-			<button class="btn variant-filled-primary text-xl" on:click={clear}>Clear</button>
+			<button class="btn variant-filled-primary text-xl" onclick={launch}>Launch</button>
+			<button class="btn variant-filled-primary text-xl" onclick={clear}>Clear</button>
 		</div>
 		<blockquote class="blockquote mt-5">
 			The magnitude and direction combined give the ball the power and direction, in this case they
@@ -103,7 +102,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

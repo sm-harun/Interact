@@ -18,7 +18,7 @@
 	class="{$fullScreenMode
 		? 'bg-primary-100-800-token stroke-black'
 		: ''} p-3 rounded-full justify-center"
-	on:click={toggleFullscreen}
+	onclick={toggleFullscreen}
 	><svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 		<path
 			stroke-linecap="round"

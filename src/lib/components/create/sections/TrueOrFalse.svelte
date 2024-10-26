@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import type { TrueOrFalseType } from '$lib/stores/courses';
 	import {
@@ -13,24 +15,28 @@
 	import { writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
 
-	export let section: TrueOrFalseType;
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		section: TrueOrFalseType;
+		course: string;
+		lesson: string;
+	}
+
+	let { section, course, lesson }: Props = $props();
 
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
-	let sectionTitle = section.title;
-	let sectionSkip = section.skip;
+	let sectionTitle = $state(section.title);
+	let sectionSkip = $state(section.skip);
 	let sectionQuestions = writable(section.questions);
 	let sectionAnswers = writable(section.answers);
 
-	let oldTitle: string;
-	let oldSkip: boolean;
-	let oldQuestions: string[];
-	let oldAnswers: number[];
+	let oldTitle: string = $state();
+	let oldSkip: boolean = $state();
+	let oldQuestions: string[] = $state();
+	let oldAnswers: number[] = $state();
 
-	let buttonSynced = true;
+	let buttonSynced = $state(true);
 
 	onMount(() => {
 		oldTitle = sectionTitle;
@@ -38,17 +44,6 @@
 		oldQuestions = [...$sectionQuestions];
 		oldAnswers = [...$sectionAnswers];
 	});
-
-	$: buttonSynced = checkIfChanged(
-		sectionTitle,
-		oldTitle,
-		$sectionQuestions,
-		oldQuestions,
-		$sectionAnswers,
-		oldAnswers,
-		sectionSkip,
-		oldSkip
-	);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: (string | number)[], b: (string | number)[]) => {
@@ -171,18 +166,36 @@
 	function changeSkip() {
 		sectionSkip = !sectionSkip;
 	}
+	run(() => {
+		buttonSynced = checkIfChanged(
+			sectionTitle,
+			oldTitle,
+			$sectionQuestions,
+			oldQuestions,
+			$sectionAnswers,
+			oldAnswers,
+			sectionSkip,
+			oldSkip
+		);
+	});
 </script>
 
 <div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
 	<h1 class="h3 mb-5">True or False</h1>
 	{#each $sectionQuestions as question, i}
 		<div class="flex items-center gap-4 lg:px-5 mb-3" transition:slide>
-			<input class="input" type="text" placeholder="Question {i + 1}" bind:value={question} />
+			<input
+				class="input"
+				type="text"
+				placeholder="Question {i + 1}"
+				bind:value={$sectionQuestions[i]}
+			/>
 			<button
+				aria-label="Close"
 				class="btn-icon border-2 border-success-400-500-token {$sectionAnswers[i] == 1
 					? 'bg-success-400-500-token'
 					: ''}"
-				on:click={() => changeAnswer(1, i)}
+				onclick={() => changeAnswer(1, i)}
 			>
 				<svg
 					fill="none"
@@ -195,10 +208,11 @@
 				</svg>
 			</button>
 			<button
+				aria-label="Close"
 				class="btn-icon border-2 border-error-400-500-token {$sectionAnswers[i] == 0
 					? 'bg-error-400-500-token'
 					: ''}"
-				on:click={() => changeAnswer(0, i)}
+				onclick={() => changeAnswer(0, i)}
 			>
 				<svg
 					fill="none"
@@ -210,7 +224,7 @@
 					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 				</svg>
 			</button>
-			<button class="ml-5" on:click={() => deleteQuestion(i)}>
+			<button class="ml-5" onclick={() => deleteQuestion(i)}>
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"
@@ -230,7 +244,7 @@
 	<div class="w-full flex items-center justify-between mt-5">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={resetChanges}
+			onclick={resetChanges}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -242,7 +256,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addQuestion}>
+		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addQuestion}>
 			<span>Add Question</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -250,7 +264,7 @@
 		</button>
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={syncSection}
+			onclick={syncSection}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -266,7 +280,7 @@
 <div class="w-full flex justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={changeSkip}
+		onclick={changeSkip}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path

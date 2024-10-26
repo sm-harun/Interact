@@ -5,13 +5,17 @@
 	import { onMount } from 'svelte';
 	import { Plane } from '../coordinatePlane';
 
-	export let section: Section;
-	export let showNextSection: () => void;
+	interface Props {
+		section: Section;
+		showNextSection: () => void;
+	}
 
-	let canvas: HTMLCanvasElement;
+	let { section, showNextSection }: Props = $props();
+
+	let canvas: HTMLCanvasElement = $state();
 	let ctx: CanvasRenderingContext2D;
 
-	let showButton = true;
+	let showButton = $state(true);
 
 	let plane: Plane;
 
@@ -65,7 +69,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				showButton = false;
 			}}>Continue</button

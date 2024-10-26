@@ -5,7 +5,7 @@
 
 	import Contacts from './Contacts.svelte';
 
-	let popupElement: HTMLDivElement;
+	let popupElement: HTMLDivElement = $state();
 
 	function listentopointer(e: PointerEvent) {
 		if (!popupElement.contains(e.target)) {
@@ -31,7 +31,7 @@
 >
 	<a
 		href="/signup"
-		on:click={hideLoginPopup}
+		onclick={hideLoginPopup}
 		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30 close"
 	>
 		<span>Sign In</span>

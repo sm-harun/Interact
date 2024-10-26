@@ -2,10 +2,14 @@
 	import { onMount } from 'svelte';
 	import { Plane } from '../coordinatePlane';
 
-	export let section;
-	export let showNextSection: () => void;
+	interface Props {
+		section: any;
+		showNextSection: () => void;
+	}
 
-	let canvas: HTMLCanvasElement;
+	let { section, showNextSection }: Props = $props();
+
+	let canvas: HTMLCanvasElement = $state();
 	let ctx: CanvasRenderingContext2D;
 
 	onMount(() => {

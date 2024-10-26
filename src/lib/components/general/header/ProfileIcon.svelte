@@ -6,7 +6,7 @@
 
 	import { user } from '$lib/stores/credentials';
 
-	let profileIcon: HTMLDivElement;
+	let profileIcon: HTMLDivElement = $state();
 
 	onMount(() => {
 		profileIcon.onclick = (e) => {

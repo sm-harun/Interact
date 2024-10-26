@@ -7,7 +7,7 @@
 		class="flex-1 {$sectionsPosition == 0
 			? 'variant-filled-primary'
 			: 'variant-ghost-primary'} transition rounded-tl-container-token rounded-bl-container-token text-xl p-3 px-3 active:scale-95 flex gap-3 items-center justify-center"
-		on:click={() => setSectionsPosition(0)}
+		onclick={() => setSectionsPosition(0)}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path
@@ -22,7 +22,7 @@
 		class="flex-1 {$sectionsPosition == 100
 			? 'variant-filled-primary'
 			: 'variant-ghost-primary'} transition text-xl p-3 px-3 active:scale-95 flex gap-3 items-center justify-center"
-		on:click={() => setSectionsPosition(100)}
+		onclick={() => setSectionsPosition(100)}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path
@@ -37,7 +37,7 @@
 		class="flex-1 {$sectionsPosition == 200
 			? 'variant-filled-primary'
 			: 'variant-ghost-primary'} transition rounded-tr-container-token rounded-br-container-token text-xl p-3 px-5 active:scale-95 flex gap-3 items-center justify-center"
-		on:click={() => setSectionsPosition(200)}
+		onclick={() => setSectionsPosition(200)}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path

@@ -5,26 +5,30 @@
 	import { onMount } from 'svelte';
 	import { Plane } from '../coordinatePlane';
 
-	export let section: Section;
-	export let showNextSection: () => void;
+	interface Props {
+		section: Section;
+		showNextSection: () => void;
+	}
 
-	let canvas: HTMLCanvasElement;
+	let { section, showNextSection }: Props = $props();
+
+	let canvas: HTMLCanvasElement = $state();
 	let ctx: CanvasRenderingContext2D;
 
 	let plane: Plane;
 
-	let showButton = true;
+	let showButton = $state(true);
 
-	let greenVector = { x: 0, y: 0 };
-	let redVector = { x: 0, y: 0 };
+	let greenVector = $state({ x: 0, y: 0 });
+	let redVector = $state({ x: 0, y: 0 });
 
 	// A variable to check shadow state for resultant vector
-	let showShadow = true;
+	let showShadow = $state(true);
 
 	// This checks if the answer has been filled correctly
-	let explained = false;
+	let explained = $state(false);
 
-	let wrongAnswer = false;
+	let wrongAnswer = $state(false);
 
 	onMount(() => {
 		ctx = canvas.getContext('2d');
@@ -160,9 +164,9 @@
 		>
 			<button
 				class="btn {showShadow ? 'variant-filled-primary' : 'variant-ghost-primary'}"
-				on:click={() => (showShadow = !showShadow)}>Show Shadow</button
+				onclick={() => (showShadow = !showShadow)}>Show Shadow</button
 			>
-			<button class="btn variant-filled-primary self-end" on:click={checkAnswer}>Submit</button>
+			<button class="btn variant-filled-primary self-end" onclick={checkAnswer}>Submit</button>
 		</div>
 	</section>
 </div>
@@ -172,7 +176,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				showButton = false;
 			}}>Too Hard?</button

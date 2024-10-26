@@ -2,12 +2,21 @@
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 
-	export let src: string;
-	export let section: any;
-	export let showNextButton: boolean;
-	export let showNextSection: () => void;
+	interface Props {
+		src: string;
+		section: any;
+		showNextButton: boolean;
+		showNextSection: () => void;
+	}
 
-	let showButton = showNextButton;
+	let {
+		src,
+		section,
+		showNextButton,
+		showNextSection
+	}: Props = $props();
+
+	let showButton = $state(showNextButton);
 
 	function hideButton() {
 		showButton = false;
@@ -29,7 +38,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

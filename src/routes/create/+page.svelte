@@ -62,7 +62,7 @@
 			{/each}
 			<button
 				class="btn justify-between absolute top-5 right-5 variant-filled-primary"
-				on:click={addNewCourse}
+				onclick={addNewCourse}
 			>
 				<span>Add Course</span>
 				<svg

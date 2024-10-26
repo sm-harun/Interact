@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { writable } from 'svelte/store';
 	import Messages from './Messages.svelte';
 	import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -8,15 +10,15 @@
 
 	let GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY;
 
-	let messageValue: string;
+	let messageValue: string = $state();
 
 	let messages = writable<{ role: 'user' | 'model'; parts: { text: string }[] }[]>([]);
 
-	let messagesContainer: HTMLElement;
+	let messagesContainer: HTMLElement = $state();
 
-	let currentLang = 'English';
+	let currentLang = $state('English');
 
-	let showLangPopup = false;
+	let showLangPopup = $state(false);
 
 	let genAI;
 	let model;
@@ -91,7 +93,7 @@
 		<div class="variant-ringed-primary ml-auto relative">
 			<button
 				class="btn size-full justify-between px-10"
-				on:click={() => (showLangPopup = !showLangPopup)}>{currentLang}</button
+				onclick={() => (showLangPopup = !showLangPopup)}>{currentLang}</button
 			>
 			{#if showLangPopup}
 				<div
@@ -171,7 +173,7 @@
 		{/each}
 	</section>
 
-	<form class="flex-shrink-0 h-14 w-full" on:submit|preventDefault={addMessage}>
+	<form class="flex-shrink-0 h-14 w-full" onsubmit={preventDefault(addMessage)}>
 		<div class="h-full w-full input-group input-group-divider grid-cols-[1fr_auto] rounded-none">
 			<input class="p-3" type="text" placeholder="Enter message..." bind:value={messageValue} />
 			<button class="variant-filled-secondary hover:varient-filled-primary">

@@ -1,8 +1,12 @@
 <script lang="ts">
 	import NoteCourse from '../cards/NoteCourse.svelte';
 
-	export let courseNotesCollection: any;
-	export let updateNotes: any;
+	interface Props {
+		courseNotesCollection: any;
+		updateNotes: any;
+	}
+
+	let { courseNotesCollection, updateNotes }: Props = $props();
 </script>
 
 <!-- Course Notes Section -->

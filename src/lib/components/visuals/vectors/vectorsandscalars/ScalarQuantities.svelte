@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 
-	export let section;
-	export let showNextSection;
+	let { section, showNextSection } = $props();
 
-	let showButton = true;
+	let showButton = $state(true);
 	function hideButton() {
 		showButton = false;
 	}
@@ -22,14 +23,12 @@
 		ball2.vyi = -1 / ball2Resistance;
 	}
 
-	let adjustBall1 = (radius: number) => {};
-	let adjustBall2 = (radius: number) => {};
+	let adjustBall1 = $state((radius: number) => {});
+	let adjustBall2 = $state((radius: number) => {});
 
-	let ball1Radius = 50;
-	let ball1Resistance = 0.1;
+	let ball1Radius = $state(50);
+	let ball1Resistance = $state(0.1);
 
-	$: adjustBall1(ball1Radius);
-	$: adjustBall2(ball2Radius);
 
 	let ball1 = {
 		xi: 0,
@@ -45,8 +44,8 @@
 		friction: 0.65
 	};
 
-	let ball2Radius = 50;
-	let ball2Resistance = 0.1;
+	let ball2Radius = $state(50);
+	let ball2Resistance = $state(0.1);
 
 	let ball2 = {
 		xi: 0,
@@ -164,6 +163,12 @@
 		ctx.stroke();
 		ctx.closePath();
 	}
+	run(() => {
+		adjustBall1(ball1Radius);
+	});
+	run(() => {
+		adjustBall2(ball2Radius);
+	});
 </script>
 
 <div class="w-full h-[60rem] lg:h-[40rem] flex flex-col lg:flex-row" id="canvas-parent">
@@ -184,7 +189,7 @@
 				<span>Mass: </span>
 				<input type="range" bind:value={ball1Resistance} min="0.001" max="0.2" step={0.001} />
 			</div>
-			<button class="btn variant-filled-primary mt-5" on:click={lauchFirstBall}>Launch</button>
+			<button class="btn variant-filled-primary mt-5" onclick={lauchFirstBall}>Launch</button>
 		</div>
 
 		<div class="w-full flex-1">
@@ -197,7 +202,7 @@
 				<span>Mass: </span>
 				<input type="range" bind:value={ball2Resistance} min="0.001" max="0.2" step={0.001} />
 			</div>
-			<button class="btn variant-filled-primary mt-5" on:click={launchSecondBall}>Launch</button>
+			<button class="btn variant-filled-primary mt-5" onclick={launchSecondBall}>Launch</button>
 		</div>
 
 		<blockquote class="blockquote mt-4 lg:mt-0">
@@ -211,7 +216,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

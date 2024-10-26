@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { updateDoc } from 'firebase/firestore';
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import { onMount } from 'svelte';
@@ -15,29 +17,33 @@
 	import { writable } from 'svelte/store';
 	import { type QuestionSectionType } from '$lib/stores/courses';
 
-	export let section: QuestionSectionType;
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		section: QuestionSectionType;
+		course: string;
+		lesson: string;
+	}
+
+	let { section, course, lesson }: Props = $props();
 
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
 	// These will be binded to input values
 	let sectionChoices = writable(section.choices);
-	let sectionTitle = section.title;
-	let sectionExplanation = section.explanation;
-	let sectionAnswer = section.answer;
-	let sectionSkip = section.skip;
+	let sectionTitle = $state(section.title);
+	let sectionExplanation = $state(section.explanation);
+	let sectionAnswer = $state(section.answer);
+	let sectionSkip = $state(section.skip);
 
 	// Holds the sync state
-	let buttonSynced = true;
+	let buttonSynced = $state(true);
 
 	// These varables are used to detect whether we are synced or not
-	let oldChoices: string[];
-	let oldTitle: string;
-	let oldExplanation: string;
-	let oldAnswer: number;
-	let oldSkip: boolean;
+	let oldChoices: string[] = $state();
+	let oldTitle: string = $state();
+	let oldExplanation: string = $state();
+	let oldAnswer: number = $state();
+	let oldSkip: boolean = $state();
 
 	// At initialization they should be in sync
 	onMount(() => {
@@ -47,20 +53,6 @@
 		oldAnswer = sectionAnswer;
 		oldSkip = sectionSkip;
 	});
-
-	// Check if we are in sync when an input value changes
-	$: buttonSynced = checkIfChanged(
-		sectionTitle,
-		oldTitle,
-		sectionExplanation,
-		oldExplanation,
-		$sectionChoices,
-		oldChoices,
-		sectionAnswer,
-		oldAnswer,
-		sectionSkip,
-		oldSkip
-	);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
@@ -182,6 +174,21 @@
 		};
 		modalStore.trigger(modalSettings);
 	}
+	// Check if we are in sync when an input value changes
+	run(() => {
+		buttonSynced = checkIfChanged(
+			sectionTitle,
+			oldTitle,
+			sectionExplanation,
+			oldExplanation,
+			$sectionChoices,
+			oldChoices,
+			sectionAnswer,
+			oldAnswer,
+			sectionSkip,
+			oldSkip
+		);
+	});
 </script>
 
 <div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
@@ -194,10 +201,11 @@
 				<div class="flex items-center mt-3 gap-4" transition:slide>
 					<strong>Choice {i + 1}: </strong>
 					<button
+						aria-label="Close"
 						class="size-5 rounded-container-token {sectionAnswer == i + 1
 							? 'bg-primary-600-300-token'
 							: ''} grid place-items-center"
-						on:click={() => changeAnswer(i + 1)}
+						onclick={() => changeAnswer(i + 1)}
 					>
 						<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-4">
 							<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -205,8 +213,13 @@
 					</button>
 				</div>
 				<div class="flex items-center gap-4 lg:px-5" transition:slide>
-					<input class="input" type="text" placeholder="Choice {i + 1}" bind:value={choice} />
-					<button on:click={() => deleteChoice(i)}>
+					<input
+						class="input"
+						type="text"
+						placeholder="Choice {i + 1}"
+						bind:value={$sectionChoices[i]}
+					/>
+					<button onclick={() => deleteChoice(i)} aria-label="Close">
 						<svg
 							fill="none"
 							viewBox="0 0 24 24"
@@ -235,7 +248,7 @@
 	<div class="w-full flex items-center justify-between mt-5">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={resetChanges}
+			onclick={resetChanges}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -247,7 +260,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addChoice}>
+		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addChoice}>
 			<span>Add Choice</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -255,7 +268,7 @@
 		</button>
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={syncSection}
+			onclick={syncSection}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -271,7 +284,7 @@
 <div class="w-full flex justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={changeSkip}
+		onclick={changeSkip}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path

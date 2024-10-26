@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { getSectionsDoc, renameDocument } from '$lib/docRefs';
 	import { updateDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
@@ -10,25 +12,29 @@
 		type ModalSettings
 	} from '@skeletonlabs/skeleton';
 
-	export let section: ExplainSection;
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		section: ExplainSection;
+		course: string;
+		lesson: string;
+	}
+
+	let { section, course, lesson }: Props = $props();
 
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
 	// These will be binded to input values
-	let sectionText = section.text;
-	let sectionTitle = section.title;
-	let sectionSkip = section.skip;
+	let sectionText = $state(section.text);
+	let sectionTitle = $state(section.title);
+	let sectionSkip = $state(section.skip);
 
 	// Holds the sync state
-	let buttonSynced = true;
+	let buttonSynced = $state(true);
 
 	// These varables are used to detect whether we are synced or not
-	let oldText: string;
-	let oldTitle: string;
-	let oldSkip: boolean;
+	let oldText: string = $state();
+	let oldTitle: string = $state();
+	let oldSkip: boolean = $state();
 
 	// At initialization they should be in sync
 	onMount(() => {
@@ -37,8 +43,6 @@
 		oldSkip = sectionSkip;
 	});
 
-	// Check if we are in sync when an input value changes
-	$: checkIfChanged(sectionTitle, oldTitle, sectionText, oldText, sectionSkip, oldSkip);
 
 	function checkIfChanged(
 		nTitle: string,
@@ -112,6 +116,10 @@
 		};
 		modalStore.trigger(modalSettings);
 	}
+	// Check if we are in sync when an input value changes
+	run(() => {
+		checkIfChanged(sectionTitle, oldTitle, sectionText, oldText, sectionSkip, oldSkip);
+	});
 </script>
 
 <div class="w-full bg-surface-300-600-token rounded-container-token p-4">
@@ -130,12 +138,12 @@
 			rows="3"
 			placeholder="Explanation to the topic..."
 			bind:value={sectionText}
-		/>
+		></textarea>
 	</label>
 	<div class="w-full flex justify-between mt-2">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={resetChanges}
+			onclick={resetChanges}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -149,7 +157,7 @@
 		</button>
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={syncSection}
+			onclick={syncSection}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -165,7 +173,7 @@
 <div class="w-full flex justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={changeSkip}
+		onclick={changeSkip}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path

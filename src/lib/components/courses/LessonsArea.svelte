@@ -26,13 +26,17 @@
 
 	import { onMount } from 'svelte';
 
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		course: string;
+		lesson: string;
+	}
+
+	let { course, lesson }: Props = $props();
 
 	let sections: Section[] = [];
-	let visibleSectionsCount = 1;
+	let visibleSectionsCount = $state(1);
 
-	let sectionElement: HTMLElement;
+	let sectionElement: HTMLElement = $state();
 
 	function showNextSection() {
 		visibleSectionsCount++;
@@ -47,7 +51,7 @@
 	}
 
 	// To know if we have fetched the data yet.
-	let fetched = false;
+	let fetched = $state(false);
 
 	onMount(async () => {
 		await fetchSections().then((fetchedSections) => {

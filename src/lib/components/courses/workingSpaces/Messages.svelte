@@ -5,8 +5,12 @@
 	import { user } from '$lib/stores/credentials';
 	import { renderText } from '$lib/stores/themes';
 
-	export let message: string;
-	export let side: boolean;
+	interface Props {
+		message: string;
+		side: boolean;
+	}
+
+	let { message, side }: Props = $props();
 
 	function takeFirstTwoLetters(name: string | null | undefined) {
 		if (!name) return;

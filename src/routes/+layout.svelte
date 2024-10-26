@@ -33,6 +33,11 @@
 	import DictionaryPopup from '$lib/components/courses/Sections/DictionaryPopup.svelte';
 
 	import 'katex/dist/katex.min.css';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	initializeStores();
 	let auth = getAuth(app);
@@ -55,7 +60,7 @@
 	});
 
 	onDestroy(() => {
-		unsubscribe;
+		unsubscribe();
 	});
 </script>
 
@@ -81,4 +86,5 @@
 {#if $dictPopupState}
 	<DictionaryPopup />
 {/if}
-<slot />
+
+{@render children?.()}

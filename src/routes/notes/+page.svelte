@@ -36,13 +36,13 @@
 
 	let displayedNotes = writable([]);
 
-	let inputTitle: string;
-	let textArea: string;
+	let inputTitle: string = $state();
+	let textArea: string = $state();
 
-	let oldTextArea: string;
+	let oldTextArea: string = $state();
 
-	let fetchedCollections = false;
-	let fetchedNotes = false;
+	let fetchedCollections = $state(false);
+	let fetchedNotes = $state(false);
 
 	// This is used to move the sections
 	let right = tweened(0, {
@@ -114,7 +114,7 @@
 	}
 
 	// This keeps track of which collection we are currently viewing
-	let currentCollection: string | null = null;
+	let currentCollection: string | null = $state(null);
 
 	let notesUpdater = 0;
 
@@ -257,7 +257,11 @@
 			<div class="size-full flex flex-col overflow-y-auto absolute" style="left: {100 - $right}%">
 				<!-- This is the header -->
 				<header class="p-5 px-5 flex-shrink-0 w-full flex items-center gap-6">
-					<button class="active:scale-90 transition" on:click={transitionPlane}>
+					<button
+						aria-labelledby="button"
+						class="active:scale-90 transition"
+						onclick={transitionPlane}
+					>
 						<svg
 							fill="none"
 							viewBox="0 0 24 24"
@@ -288,7 +292,7 @@
 						{/each}
 						<button
 							class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
-							on:click={addNewNote}
+							onclick={addNewNote}
 						>
 							<svg
 								fill="none"

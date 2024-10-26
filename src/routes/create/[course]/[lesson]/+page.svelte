@@ -34,24 +34,24 @@
 	} from '$lib/stores/courses.js';
 	import { writable } from 'svelte/store';
 
-	export let data;
+	let { data } = $props();
 
 	// These are used to update UI easily
-	let dictUpdater = 0;
+	let dictUpdater = $state(0);
 
-	let container: HTMLDivElement;
+	let container: HTMLDivElement = $state();
 
-	let button: HTMLButtonElement;
+	let button: HTMLButtonElement = $state();
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
-	let words: any[] = [];
+	let words: any[] = $state([]);
 	let emptyArray: any[] = [];
 
 	let sections = writable<Section[]>([]);
 
 	// This is needed to check if we need a loading bar.
-	let fetched = false;
+	let fetched = $state(false);
 
 	onMount(async () => {
 		let fetchedSections = await getDocs(
@@ -234,7 +234,7 @@
 		<ul class="flex items-center justify-between gap-4">
 			<button
 				class="btn variant-ringed-primary hover:variant-filled-primary"
-				on:click={addDictionary}
+				onclick={addDictionary}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

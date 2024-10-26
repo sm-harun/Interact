@@ -11,7 +11,7 @@
 	import { getLessonsColl, getLessonsDoc } from '$lib/docRefs.js';
 	import type { Lesson } from '$lib/stores/courses.js';
 
-	export let data;
+	let { data } = $props();
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
@@ -89,7 +89,7 @@
 			{/each}
 			<button
 				class="btn justify-between absolute top-5 right-5 variant-filled-primary"
-				on:click={addNewLesson}
+				onclick={addNewLesson}
 			>
 				<svg
 					fill="none"

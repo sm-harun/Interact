@@ -6,9 +6,13 @@
 	import VectorsLibrary from '$lib/components/visuals/vectors/VectorsLibrary.svelte';
 	import EnzymesLibrary from '$lib/components/visuals/enzymes/EnzymesLibrary.svelte';
 
-	export let section: VisualSection;
-	export let showNextSection = () => console.log('hello');
-	export let showNextButton: boolean;
+	interface Props {
+		section: VisualSection;
+		showNextSection?: any;
+		showNextButton: boolean;
+	}
+
+	let { section, showNextSection = () => console.log('hello'), showNextButton }: Props = $props();
 
 	let show = true;
 </script>

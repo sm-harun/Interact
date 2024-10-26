@@ -9,16 +9,26 @@
 	import { getLessonsDoc } from '$lib/docRefs';
 	import type { ExplainSection } from '$lib/stores/courses';
 
-	export let section: ExplainSection;
-	export let showNextSection;
-	export let showNextButton: boolean;
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		section: ExplainSection;
+		showNextSection: any;
+		showNextButton: boolean;
+		course: string;
+		lesson: string;
+	}
+
+	let {
+		section,
+		showNextSection,
+		showNextButton,
+		course,
+		lesson
+	}: Props = $props();
 
 	// The in animation won't display unless manually showwen on mount.
-	let show = false;
+	let show = $state(false);
 
-	let showButton: boolean;
+	let showButton: boolean = $state();
 
 	// This is dummy data for now.
 	let dictionaryapi: string[] = [];
@@ -56,7 +66,7 @@
 				class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 				in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 				out:slide
-				on:click={() => {
+				onclick={() => {
 					showNextSection();
 					hideButton();
 				}}>Continue</button

@@ -1,9 +1,13 @@
 <script lang="ts">
 	import PersonalNotes from '../cards/PersonalNotes.svelte';
 
-	export let personalNotesCollection: any;
-	export let addNewCollection: any;
-	export let updateNotes: any;
+	interface Props {
+		personalNotesCollection: any;
+		addNewCollection: any;
+		updateNotes: any;
+	}
+
+	let { personalNotesCollection, addNewCollection, updateNotes }: Props = $props();
 </script>
 
 <!-- Personal Notes Section -->
@@ -19,7 +23,7 @@
 		{/each}
 		<button
 			class="card card-hover size-full border-2 border-primary-500 py-8 flex gap-5 justify-center items-center text-xl"
-			on:click={addNewCollection}
+			onclick={addNewCollection}
 		>
 			<span>Add Collection</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">

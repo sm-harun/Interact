@@ -1,22 +1,24 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { evaluate } from 'mathjs';
 
-	let phrase = '';
-	let filteredPhrase = '';
-	let result = '';
+	let phrase = $state('');
+	let filteredPhrase = $state('');
+	let result = $state('');
 
-	$: {
+	run(() => {
 		try {
 			if (filteredPhrase != '') result = evaluate(filteredPhrase);
 		} catch (error) {
 			result = '';
 		}
-	}
+	});
 
 	let bracketsOpened = 0;
 
 	// This will show the reverse function for some buttons.
-	let inversed: boolean = false;
+	let inversed: boolean = $state(false);
 
 	function sqrtPhrase(char: string) {
 		let finalChar = char;
@@ -95,7 +97,7 @@
 	<div class="flex-grow w-full grid grid-cols-4 grid-rows-8 gap-1 lg:gap-3">
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('√')}
+			onclick={() => sqrtPhrase('√')}
 		>
 			{#if inversed}
 				<span>x<sup>2</sup></span>
@@ -105,31 +107,31 @@
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('π')}
+			onclick={() => sqrtPhrase('π')}
 		>
 			π
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('^')}
+			onclick={() => sqrtPhrase('^')}
 		>
 			^
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('!')}
+			onclick={() => sqrtPhrase('!')}
 		>
 			!
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('')}
+			onclick={() => sqrtPhrase('')}
 		>
 			RAD
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('sin(')}
+			onclick={() => sqrtPhrase('sin(')}
 		>
 			<span>
 				sin
@@ -140,7 +142,7 @@
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('cos(')}
+			onclick={() => sqrtPhrase('cos(')}
 		>
 			<span>
 				cos
@@ -151,7 +153,7 @@
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('tan(')}
+			onclick={() => sqrtPhrase('tan(')}
 		>
 			<span>
 				tan
@@ -164,19 +166,19 @@
 			class="size-full {inversed
 				? 'bg-surface-500'
 				: 'bg-surface-500/20'} text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => (inversed = !inversed)}
+			onclick={() => (inversed = !inversed)}
 		>
 			INV
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('e')}
+			onclick={() => sqrtPhrase('e')}
 		>
 			e
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('ln(')}
+			onclick={() => sqrtPhrase('ln(')}
 		>
 			{#if inversed}
 				<span>e<sup>x</sup></span>
@@ -186,7 +188,7 @@
 		</button>
 		<button
 			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('log(')}
+			onclick={() => sqrtPhrase('log(')}
 		>
 			{#if inversed}
 				<span>10<sup>x</sup></span>
@@ -196,121 +198,121 @@
 		</button>
 		<button
 			class="size-full bg-tertiary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={clear}
+			onclick={clear}
 		>
 			AC
 		</button>
 		<button
 			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('(')}
+			onclick={() => sqrtPhrase('(')}
 		>
 			( )
 		</button>
 		<button
 			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('%')}
+			onclick={() => sqrtPhrase('%')}
 		>
 			%
 		</button>
 		<button
 			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('÷')}
+			onclick={() => sqrtPhrase('÷')}
 		>
 			÷
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('7')}
+			onclick={() => sqrtPhrase('7')}
 		>
 			7
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('8')}
+			onclick={() => sqrtPhrase('8')}
 		>
 			8
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('9')}
+			onclick={() => sqrtPhrase('9')}
 		>
 			9
 		</button>
 		<button
 			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('×')}
+			onclick={() => sqrtPhrase('×')}
 		>
 			×
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('4')}
+			onclick={() => sqrtPhrase('4')}
 		>
 			4
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('5')}
+			onclick={() => sqrtPhrase('5')}
 		>
 			5
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('6')}
+			onclick={() => sqrtPhrase('6')}
 		>
 			6
 		</button>
 		<button
 			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('-')}
+			onclick={() => sqrtPhrase('-')}
 		>
 			-
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('1')}
+			onclick={() => sqrtPhrase('1')}
 		>
 			1
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('2')}
+			onclick={() => sqrtPhrase('2')}
 		>
 			2
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('3')}
+			onclick={() => sqrtPhrase('3')}
 		>
 			3
 		</button>
 		<button
 			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('+')}
+			onclick={() => sqrtPhrase('+')}
 		>
 			+
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('0')}
+			onclick={() => sqrtPhrase('0')}
 		>
 			0
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('.')}
+			onclick={() => sqrtPhrase('.')}
 		>
 			.
 		</button>
 		<button
 			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
-			on:click={() => sqrtPhrase('T')}
+			onclick={() => sqrtPhrase('T')}
 		>
 			DT
 		</button>
 		<button
 			class="size-full bg-secondary-500 text-3xl grid place-items-center rounded-container-token hover:brightness-125 active:scale-95 transition"
-			on:click={equalTo}
+			onclick={equalTo}
 		>
 			=
 		</button>

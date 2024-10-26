@@ -1,10 +1,19 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 
-	export let x: number;
-	export let y: number;
-	export let name: string;
-	export let color: string;
+	interface Props {
+		x: number;
+		y: number;
+		name: string;
+		color: string;
+	}
+
+	let {
+		x = $bindable(),
+		y = $bindable(),
+		name,
+		color = $bindable()
+	}: Props = $props();
 </script>
 
 <div

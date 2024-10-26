@@ -5,11 +5,15 @@
 
 	import katex from 'katex';
 
-	export let section: EquationSectionType;
-	export let showNextSection: () => void;
-	export let showNextButton: boolean;
+	interface Props {
+		section: EquationSectionType;
+		showNextSection: () => void;
+		showNextButton: boolean;
+	}
 
-	let showButton = showNextButton;
+	let { section, showNextSection, showNextButton }: Props = $props();
+
+	let showButton = $state(showNextButton);
 
 	function hideButton() {
 		showButton = false;
@@ -43,7 +47,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

@@ -5,19 +5,23 @@
 	import { renderText } from '$lib/stores/themes';
 	import { onMount } from 'svelte';
 
-	export let section: TrueOrFalseType;
-	export let showNextSection: () => void;
-	export let showNextButton: boolean;
+	interface Props {
+		section: TrueOrFalseType;
+		showNextSection: () => void;
+		showNextButton: boolean;
+	}
 
-	let show = false;
+	let { section, showNextSection, showNextButton }: Props = $props();
 
-	let showButton = true;
+	let show = $state(false);
 
-	let answered: number[] = [];
+	let showButton = $state(true);
+
+	let answered: number[] = $state([]);
 	let results: boolean[] = [];
 
 	// This will check if the questions have been done
-	let explained = false;
+	let explained = $state(false);
 
 	onMount(() => {
 		show = true;
@@ -79,13 +83,13 @@
 								class="btn text-lg {answered[i] === 1
 									? 'variant-filled-success'
 									: 'variant-ghost-success'}"
-								on:click={() => setAnswer(i, 1)}><span>True</span></button
+								onclick={() => setAnswer(i, 1)}><span>True</span></button
 							>
 							<button
 								class="btn text-lg {answered[i] === 0
 									? 'variant-filled-error'
 									: 'variant-ghost-error'}"
-								on:click={() => setAnswer(i, 0)}><span>False</span></button
+								onclick={() => setAnswer(i, 0)}><span>False</span></button
 							>
 						</div>
 					</div>
@@ -100,7 +104,7 @@
 			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
-			on:click={() => {
+			onclick={() => {
 				showNextSection();
 				hideButton();
 			}}>Continue</button

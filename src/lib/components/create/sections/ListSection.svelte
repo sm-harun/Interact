@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { slide } from 'svelte/transition';
@@ -14,37 +16,32 @@
 
 	import { type ListSectionType } from '$lib/stores/courses';
 
-	export let section: ListSectionType;
-	export let course: string;
-	export let lesson: string;
+	interface Props {
+		section: ListSectionType;
+		course: string;
+		lesson: string;
+	}
 
-	let sectionTitle = section.title;
+	let { section, course, lesson }: Props = $props();
+
+	let sectionTitle = $state(section.title);
 	let sectionList = writable(section.list);
-	let sectionSkip = section.skip;
+	let sectionSkip = $state(section.skip);
 
 	let toastStore = getToastStore();
 	let modalStore = getModalStore();
 
-	let buttonSynced = true;
+	let buttonSynced = $state(true);
 
-	let oldTitle: string;
-	let oldList: string[];
-	let oldSkip: boolean;
+	let oldTitle: string = $state();
+	let oldList: string[] = $state();
+	let oldSkip: boolean = $state();
 
 	onMount(() => {
 		oldTitle = sectionTitle;
 		oldList = [...$sectionList];
 		oldSkip = sectionSkip;
 	});
-
-	$: buttonSynced = checkIfChanged(
-		sectionTitle,
-		oldTitle,
-		$sectionList,
-		oldList,
-		sectionSkip,
-		oldSkip
-	);
 
 	// This is used to campare arrays cause normal '==' won't work
 	const compareArrays = (a: string[], b: string[]) => {
@@ -134,6 +131,16 @@
 		};
 		modalStore.trigger(modalSettings);
 	}
+	run(() => {
+		buttonSynced = checkIfChanged(
+			sectionTitle,
+			oldTitle,
+			$sectionList,
+			oldList,
+			sectionSkip,
+			oldSkip
+		);
+	});
 </script>
 
 <div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
@@ -147,8 +154,8 @@
 		{#each $sectionList as list, i}
 			<li class="text-xlm mt-3 flex gap-2 items-center" transition:slide>
 				<span>{i + 1}. </span>
-				<input class="input font-bold text-xl px-4" type="text" bind:value={list} />
-				<button on:click={() => deleteList(i)}>
+				<input class="input font-bold text-xl px-4" type="text" bind:value={$sectionList[i]} />
+				<button onclick={() => deleteList(i)} aria-label="Close">
 					<svg
 						fill="none"
 						viewBox="0 0 24 24"
@@ -169,7 +176,7 @@
 	<div class="w-full flex items-center justify-between mt-5">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={resetChanges}
+			onclick={resetChanges}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -181,7 +188,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addList}>
+		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addList}>
 			<span>Add List</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -189,7 +196,7 @@
 		</button>
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-			on:click={syncChanges}
+			onclick={syncChanges}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path
@@ -205,7 +212,7 @@
 <div class="w-full flex justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
-		on:click={changeSkip}
+		onclick={changeSkip}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 			<path

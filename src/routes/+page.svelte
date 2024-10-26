@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import * as Three from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-	let canvas: HTMLCanvasElement;
+	let canvas: HTMLCanvasElement = $state();
+	let animationFrameId: number;
 
 	onMount(() => {
 		const scene = new Three.Scene();
@@ -41,10 +42,14 @@
 			controls.update();
 
 			renderer.render(scene, camera);
-			requestAnimationFrame(loop);
+			animationFrameId = requestAnimationFrame(loop);
 		}
 
 		loop();
+	});
+
+	onDestroy(() => {
+		cancelAnimationFrame(animationFrameId);
 	});
 </script>
 

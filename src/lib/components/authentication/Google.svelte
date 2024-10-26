@@ -60,7 +60,7 @@
 
 <button
 	class="btn w-96 p-5 bg-surface-200-700-token mt-6 flex justify-start items-center gap-4 px-8 hover:bg-primary-500/80 transition rounded-container-token"
-	on:click={signUpWithGoogle}
+	onclick={signUpWithGoogle}
 >
 	<svg viewBox="-0.5 0 48 48" class="size-7">
 		<g id="Color-" transform="translate(-401.000000, -860.000000)">

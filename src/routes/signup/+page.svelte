@@ -16,9 +16,9 @@
 
 	let auth = getAuth(app);
 
-	let email: string;
-	let password: string;
-	let username: string;
+	let email: string = $state();
+	let password: string = $state();
+	let username: string = $state();
 
 	const toastStore = getToastStore();
 
@@ -84,7 +84,7 @@
 				<span>Username: </span>
 				<input class="input" type="text" placeholder="username" bind:value={username} />
 			</label>
-			<button class="btn variant-filled" on:click={signUpWithEmail}>Sign up</button>
+			<button class="btn variant-filled" onclick={signUpWithEmail}>Sign up</button>
 			<a href="/signin" class="anchor text-sm">I have an account?</a>
 		</div>
 	</section>
