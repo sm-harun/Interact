@@ -18,7 +18,7 @@ export class Plane {
     this.xOrigin = this.canvas.width / 2;
     this.yOrigin = this.canvas.height / 2;
 
-    this.divisions = canvas.width / zoom - 1;
+    this.divisions = canvas.width / zoom * 2;
     this.zoom = zoom;
 
     this.maxWidth = canvas.width;

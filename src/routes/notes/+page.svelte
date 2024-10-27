@@ -237,11 +237,11 @@
 <div class="h-screen flex flex-col">
 	<MainHeader />
 	<main
-		class="flex-grow flex overflow-hidden"
+		class="flex-grow flex overflow-hidden flex-col xl:flex-row"
 		in:fly={{ x: 100, duration: 500, delay: 500 }}
 		out:fly={{ x: -100, duration: 500 }}
 	>
-		<div class="flex-1 h-full overflow-hidden relative">
+		<div class="flex-[1_1_0] xl:flex-1 h-full overflow-hidden relative">
 			<!-- This is the section that displays all the notes collection -->
 			<div class="size-full p-6 pt-10 absolute overflow-y-auto" style="right: {$right}%;">
 				{#if !fetchedCollections}
@@ -293,6 +293,7 @@
 						<button
 							class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
 							onclick={addNewNote}
+							aria-label="Add Notes"
 						>
 							<svg
 								fill="none"

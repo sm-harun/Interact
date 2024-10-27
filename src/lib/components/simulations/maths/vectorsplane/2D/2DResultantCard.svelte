@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 
-	import type { Vector, Resultant } from '$lib/types';
+	import type { Vector2d } from '$lib/types';
 
 	interface Props {
 		vectors: Vector[];

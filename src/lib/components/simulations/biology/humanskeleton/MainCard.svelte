@@ -1,5 +1,5 @@
 <a
-	class="group card size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
+	class="group card flex-shrink-0 size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
 	href="/simulations/thehumanskeleton"
 >
 	<h3 class="h3 text-surface-800-100-token z-10 transition">The Human Skeleton</h3>

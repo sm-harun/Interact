@@ -8,12 +8,7 @@
 		color: string;
 	}
 
-	let {
-		x = $bindable(),
-		y = $bindable(),
-		name,
-		color = $bindable()
-	}: Props = $props();
+	let { x = $bindable(), y = $bindable(), name, color = $bindable() }: Props = $props();
 </script>
 
 <div

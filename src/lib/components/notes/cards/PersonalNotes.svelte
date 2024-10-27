@@ -11,7 +11,7 @@
 </script>
 
 <button
-	class="card card-hover size-full p-5 py-5 flex flex-col justify-center"
+	class="card card-hover flex-grow min-w-52 h-24 p-5 py-5 flex flex-col justify-center"
 	onclick={todo}
 	transition:slide={{ axis: 'x' }}
 >

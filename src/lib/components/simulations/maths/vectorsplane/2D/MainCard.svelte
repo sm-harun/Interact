@@ -1,5 +1,5 @@
 <a
-	class="group card size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
+	class="group card size-60 flex-shrink-0 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
 	href="/simulations/vectorsPlane2D"
 	><h3 class="h3 text-surface-800-100-token z-10 transition">Vectors Plane 2D</h3>
 	<div class="absolute size-full top-0 left-0"></div>
@@ -58,6 +58,11 @@
 
 <style>
 	.inside-shadow {
-		box-shadow: inset 0 -2rem 3rem black;
+		transition-duration: 1s;
+		box-shadow: inset 0 0 10rem 1rem black;
+	}
+
+	.inside-shadow:hover {
+		box-shadow: inset 0 0 2rem 0.2rem black;
 	}
 </style>

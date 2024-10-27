@@ -13,7 +13,7 @@
 <!-- Personal Notes Section -->
 <section class="w-full h-auto pt-10">
 	<h2 class="h2 pb-5">Personal Notes</h2>
-	<div class="grid grid-cols-3 gap-4">
+	<div class="flex flex-wrap gap-4">
 		{#each $personalNotesCollection as collection}
 			<PersonalNotes
 				title={collection.title}
@@ -22,7 +22,7 @@
 			/>
 		{/each}
 		<button
-			class="card card-hover size-full border-2 border-primary-500 py-8 flex gap-5 justify-center items-center text-xl"
+			class="card card-hover flex-grow min-w-52 border-2 border-primary-500 py-8 flex gap-5 justify-center items-center text-xl"
 			onclick={addNewCollection}
 		>
 			<span>Add Collection</span>

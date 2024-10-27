@@ -31,12 +31,12 @@
 <header
 	class="{showMainRoutes
 		? 'h-36'
-		: 'h-24'} flex-shrink-0 w-screen variant-glass-surface sticky top-0 flex flex-col"
+		: 'h-24'} flex-shrink-0 w-screen variant-glass-surface sticky top-0 flex flex-col overflow-hidden"
 >
 	<section class="flex-[2_1_0] p-3 flex items-center justify-between">
 		<div class="flex justify-between items-center gap-4 pl-4">
 			{#if showBackButton}
-				<button onclick={goBack}>
+				<button onclick={goBack} aria-label="Back Button">
 					<svg
 						fill="none"
 						viewBox="0 0 24 24"
@@ -74,7 +74,7 @@
 	</section>
 
 	{#if showMainRoutes}
-		<section class="flex-[2_1_0] px-4 flex items-center">
+		<section class="flex-[2_1_0] px-4 flex items-center overflow-x-auto">
 			<ol class="flex gap-4">
 				<li class="crumb">
 					<a

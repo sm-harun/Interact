@@ -4,7 +4,7 @@
 	import VectorsCard from '$lib/components/simulations/maths/vectorsplane/2D/2DVectorCard.svelte';
 	import ResultantsCard from '$lib/components/simulations/maths/vectorsplane/2D/2DResultantCard.svelte';
 
-	import { type Vector, type Resultant } from '$lib/types';
+	import { type Vector2d, type Resultant2d } from '$lib/types';
 
 	import { Plane } from '$lib/components/simulations/maths/vectorsplane/2D/VectorsPlane2D';
 
@@ -19,8 +19,8 @@
 
 	let zoom: number = $state(30);
 
-	let vectors: Vector[] = $state([]);
-	let resultants: Resultant[] = $state([]);
+	let vectors: Vector2d[] = $state([]);
+	let resultants: Resultant2d[] = $state([]);
 
 	let vectorPopupState = $state(false);
 	let popupPostion = $state({ x: 0, y: 0 });
@@ -62,7 +62,7 @@
 	});
 
 	// This adds up all the vectors, scalars and unit vectors in the resultant
-	function calcResultantVector(resultant: Resultant): { x: number; y: number } {
+	function calcResultantVector(resultant: Resultant2d): { x: number; y: number } {
 		let x: number = 0;
 		let y: number = 0;
 
@@ -73,9 +73,9 @@
 		});
 
 		// Adds up all unit vectors
-		resultant.unitVectors.forEach((vector) => {
-			if (vector == 0) x += 1;
-			if (vector == 1) y += 1;
+		resultant.unitVectors.forEach((unitVector: number) => {
+			if (unitVector == 0) x += 1;
+			if (unitVector == 1) y += 1;
 		});
 
 		// Adds up all other resultants
@@ -86,7 +86,7 @@
 		});
 
 		// Adds up all scalars
-		resultant.scalars.forEach((scalar) => {
+		resultant.scalars.forEach((scalar: number) => {
 			x *= scalar;
 			y *= scalar;
 		});
@@ -130,7 +130,7 @@
 	}
 
 	// Resturns the actual vectors using the names of the vectors
-	function getVectorsFromNames(names: string[]): Vector[] {
+	function getVectorsFromNames(names: string[]): Vector2d[] {
 		return vectors.filter((vector) => names.includes(vector.name));
 	}
 
