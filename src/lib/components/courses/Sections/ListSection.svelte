@@ -27,7 +27,7 @@
 
 {#if show}
 	<main
-		class="w-full bg-surface-200-700-token rounded-container-token p-4 mb-5"
+		class="w-full bg-surface-100-800-token rounded-container-token p-4 mb-5"
 		in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 	>
 		<h3 class="h3 ml-5">{@html renderText(section.title)}</h3>

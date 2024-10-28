@@ -31,7 +31,7 @@
 <header
 	class="{showMainRoutes
 		? 'h-36'
-		: 'h-24'} flex-shrink-0 w-screen variant-glass-surface sticky top-0 flex flex-col overflow-hidden"
+		: 'h-24'} flex-shrink-0 w-screen bg-surface-100-800-token sticky top-0 flex flex-col overflow-hidden header-shadow z-40"
 >
 	<section class="flex-[2_1_0] p-3 flex items-center justify-between">
 		<div class="flex justify-between items-center gap-4 pl-4">
@@ -150,3 +150,9 @@
 		</section>
 	{/if}
 </header>
+
+<style>
+	.header-shadow {
+		box-shadow: 0 -0.5rem 2rem 0.1rem black;
+	}
+</style>

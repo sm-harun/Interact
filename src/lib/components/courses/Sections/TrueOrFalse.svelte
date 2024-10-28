@@ -52,10 +52,11 @@
 {#if show}
 	<div class="relative w-auto self-center">
 		<main
-			class="w-full bg-surface-200-700-token rounded-container-token p-4 transition border-token border-transparent"
+			class="w-full bg-surface-100-800-token rounded-container-token p-4 transition border-token border-transparent"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 		>
-			<h1 class="h3 font-bold w-full mb-4 flex items-center gap-3">True or False</h1>
+			<h1 class="h3 font-bold w-full px-3 p-2 mb-4 flex items-center gap-3">True or False</h1>
+			<hr />
 			{#each section.questions as question, i}
 				<div
 					class="flex flex-col mb-4 p-3 px-3 rounded-container-token transition border-2 {explained

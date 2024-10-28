@@ -10,7 +10,7 @@
 	let emptyArray: null[] = [];
 </script>
 
-<nav class="w-80 bg-surface-200-700-token h-full flex-shrink-0 relative z-50 overflow-y-auto">
+<nav class="w-80 h-full flex-shrink-0 relative overflow-y-auto nav flex flex-col">
 	{#if JSON.stringify(lessons) === JSON.stringify(emptyArray)}
 		<ProgressBar
 			meter={'bg-primary-500 h-1'}
@@ -18,19 +18,35 @@
 			rounded={'rounded-none'}
 		/>
 	{:else}
-		<h2 class="h2 w-full grid place-items-center p-4">Lessons</h2>
-		{#each lessons as lesson, i}
-			<a
-				href="/courses/{course}/{lesson.title}"
-				class="{$page.params.lesson === lesson.title
-					? 'border-b-2 border-primary-500'
-					: ''} w-full h-14 flex items-center pl-4 hover:backdrop-brightness-150 px-2"
-				onclick={() => {
-					updateLessons();
-					drawerStore.close();
-				}}>{i + 1}. {lesson.title}</a
-			>
-			<hr />
-		{/each}
+		<h2
+			class="h2 w-full bg-surface-100-800-token grid place-items-center p-4 reverse_item border-r-2 border-primary-500"
+		>
+			Lessons
+		</h2>
+		<hr />
+		<div class="flex flex-col flex-grow reverse_item overflow-visible">
+			{#each lessons as lesson, i}
+				<a
+					href="/courses/{course}/{lesson.title}"
+					class="{$page.params.lesson === lesson.title
+						? 'border-t-primary-500 border-b-primary-500 border-l-primary-500 z-10'
+						: 'bg-surface-100-800-token border-r-primary-500 hover:brightness-150'} border-transparent border-2 w-full flex-grow flex items-center pl-4 p-8 py-6 px-2 transition duration-500 relative"
+					onclick={() => {
+						updateLessons();
+						drawerStore.close();
+					}}>{i + 1}. {lesson.title}</a
+				>
+			{/each}
+		</div>
 	{/if}
 </nav>
+
+<style>
+	.nav {
+		transform: scaleX(-1);
+	}
+
+	.reverse_item {
+		transform: scaleX(-1);
+	}
+</style>

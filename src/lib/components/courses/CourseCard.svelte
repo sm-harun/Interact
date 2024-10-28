@@ -8,24 +8,18 @@
 		image: string;
 	}
 
-	let {
-		title,
-		lessons,
-		subjects,
-		image
-	}: Props = $props();
+	let { title, lessons, subjects, image }: Props = $props();
 </script>
 
 <div
 	class="group card size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token bg-cover bg-center hover:scale-110 duration-500 relative"
-	style="background-image: url({image});"
 	transition:fly={{ x: 100, duration: 300 }}
 >
 	<div
-		class="w-full h-full rounded-container-token bg-gradient-to-t from-10% from-surface-900/90 dark:from-surface-500 to-transparent to-100% flex flex-col justify-end gap-3 p-3 px-4 relative"
+		class="w-full h-full rounded-container-token bg-gradient-to-tr from-20% from-transparent to-primary-900 to-100% flex flex-col justify-end gap-3 p-3 px-4 relative"
 	>
 		<h1
-			class="text-2xl w-4/5 font-bold decoration-500-400-token text-primary-500-400-token absolute bottom-5 left-5
+			class="text-2xl w-4/5 font-bold decoration-500-400-token text-primary-900-50-token absolute bottom-5 left-5
       group-hover:text-4xl group-hover:bottom-1/2 group-hover:left-1/2
       group-hover:-translate-x-1/2 group-hover:translate-y-1/2 duration-500"
 		>

@@ -58,9 +58,13 @@
 	/>
 	<hr />
 	<header
-		class="flex-shrink-0 variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 pr-5 flex items-center justify-start gap-2 z-30"
+		class="flex-shrink-0 bg-surface-100-800-token header-shadow w-screen h-20 sticky top-1 p-9 px-3 pr-5 flex items-center justify-start gap-2 z-30"
 	>
-		<button class="btn-icon block lg:hidden" onclick={() => drawerStore.open()}>
+		<button
+			class="btn-icon block lg:hidden"
+			aria-label="Opens Drawer"
+			onclick={() => drawerStore.open()}
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -145,3 +149,9 @@
 		</div>
 	</main>
 </main>
+
+<style>
+	.header-shadow {
+		box-shadow: 0 -0.5rem 2rem 0.1rem black;
+	}
+</style>

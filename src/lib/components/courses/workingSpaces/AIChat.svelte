@@ -20,6 +20,18 @@
 
 	let showLangPopup = $state(false);
 
+	// This will hold all the options the AI can talk with
+	let supportedLanguages = [
+		'English',
+		'Amharic',
+		'Oromo',
+		'Arabic',
+		'French',
+		'German',
+		'Japanese',
+		'Mandarin'
+	];
+
 	let genAI;
 	let model;
 	let chat: any;
@@ -80,15 +92,10 @@
 	}
 </script>
 
-<main class="size-full relative flex flex-col overflow-hidden">
-	<header class="flex-shrink-0 h-16 w-full bg-surface-500 p-2 px-6 flex items-center gap-5">
-		<Avatar
-			src={'/assets/robot-logo.jpg'}
-			width="h-[90%]"
-			rounded="rounded-full"
-			border="border-2 bg-surface-800-100-token"
-			fontSize={400}
-		/>
+<main class="size-full flex flex-col overflow-hidden relative">
+	<header
+		class="flex-shrink-0 h-16 w-full variant-glass-surface p-2 px-6 flex items-center gap-5 absolute top-0 left-0 z-50"
+	>
 		<h3 class="h3">AI Assistant</h3>
 		<div class="variant-ringed-primary ml-auto relative">
 			<button
@@ -101,62 +108,15 @@
 					transition:slide
 				>
 					<ListBox>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="English">English</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="Amharic">Amharic</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="Oromo">Oromo</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="Arabic">Arabic</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="French">French</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="German">German</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="Japanese">Japanese</ListBoxItem
-						>
-						<ListBoxItem
-							bind:group={currentLang}
-							rounded={'rounded-none'}
-							name="medium"
-							on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
-							value="Mandarin">Mandarin</ListBoxItem
-						>
+						{#each supportedLanguages as language}
+							<ListBoxItem
+								bind:group={currentLang}
+								rounded={'rounded-none'}
+								name="medium"
+								on:click={() => setTimeout(() => (showLangPopup = !showLangPopup), 10)}
+								value={language}>{language}</ListBoxItem
+							>
+						{/each}
 					</ListBox>
 				</div>
 			{/if}
@@ -167,7 +127,9 @@
 		bind:this={messagesContainer}
 	>
 		<!-- Initial message from the bot -->
-		<Messages message={'Ask me anything, I will guide you.'} side={false} />
+		<div class="mt-16">
+			<Messages message={'Ask me anything, I will guide you.'} side={false} />
+		</div>
 		{#each $messages.slice(2) as message}
 			<Messages message={message.parts[0].text} side={message.role == 'user'} />
 		{/each}
@@ -176,7 +138,10 @@
 	<form class="flex-shrink-0 h-14 w-full" onsubmit={preventDefault(addMessage)}>
 		<div class="h-full w-full input-group input-group-divider grid-cols-[1fr_auto] rounded-none">
 			<input class="p-3" type="text" placeholder="Enter message..." bind:value={messageValue} />
-			<button class="variant-filled-secondary hover:varient-filled-primary">
+			<button
+				class="variant-filled-secondary hover:varient-filled-primary"
+				aria-label="submit prompt"
+			>
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"

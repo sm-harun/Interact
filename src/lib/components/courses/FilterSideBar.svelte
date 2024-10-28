@@ -4,7 +4,7 @@
 </script>
 
 <nav
-	class="w-20 sm:w-24 flex-shrink-0 bg-surface-200-700-token overflow-y-auto"
+	class="w-20 sm:w-24 flex-shrink-0 bg-surface-100-800-token overflow-y-auto"
 	in:fly={{ x: -50, duration: 500, delay: 500 }}
 	out:fly={{ x: -50, duration: 500 }}
 >

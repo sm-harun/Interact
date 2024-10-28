@@ -119,7 +119,7 @@
 		<div class="flex-[2_1_0]" bind:this={container}>
 			<canvas bind:this={canvas} id="main-canvas"></canvas>
 		</div>
-		<div class="flex-1 bg-surface-200-700-token p-10 overflow-y-auto">
+		<div class="flex-1 bg-surface-100-800-token p-10 overflow-y-auto">
 			<h1 class="h1">The Human Skeleton</h1>
 			<section class="mt-4 p-5">
 				<button
