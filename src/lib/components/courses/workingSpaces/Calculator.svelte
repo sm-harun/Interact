@@ -90,8 +90,8 @@
 	<div
 		class="h-[15%] w-full flex-shrink-0 bg-black/40 p-5 tracking-wide overflow-hidden flex flex-col justify-between items-end"
 	>
-		<p class="text-5xl overflow-hidden">{phrase}</p>
-		<p class="text-">{result}</p>
+		<p class="text-xl lg:text-5xl overflow-hidden">{phrase}</p>
+		<p class="bg-transparent">{result}</p>
 	</div>
 
 	<div class="flex-grow w-full grid grid-cols-4 grid-rows-8 gap-1 lg:gap-3">

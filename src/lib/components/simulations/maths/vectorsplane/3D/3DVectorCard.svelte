@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="h-full aspect-square card-hover rounded-container-token bg-surface-200-700-token p-3 box-border flex flex-col"
+	class="size-60 xl:size-72 flex-shrink-0 card-hover rounded-container-token bg-surface-200-700-token p-3 box-border flex flex-col"
 	transition:slide={{ axis: 'x' }}
 >
 	<header class="px-3 flex justify-between">

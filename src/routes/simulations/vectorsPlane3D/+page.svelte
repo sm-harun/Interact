@@ -75,7 +75,7 @@
 		controls.maxDistance = 100;
 
 		// Creates the 3 axis
-		const axesHelper = new Three.AxesHelper(zoom);
+		const axesHelper = new Three.AxesHelper(zoom / 2);
 		scene.add(axesHelper);
 
 		// Creates a 2D grid
@@ -168,13 +168,13 @@
 	}
 
 	function addNewVector() {
-		vectors.push({ x: 0, y: 0, z: 0, name: `Vector ${vectors.length + 1}`, color: '#FFFF00' });
+		vectors.push({ x: 0, y: 0, z: 0, name: `Vector ${vectors.length + 1}`, color: '#FFAA00' });
 
 		let newVector = new Three.ArrowHelper(
 			new Three.Vector3(0, 0, 0),
 			new Three.Vector3(0, 0, 0),
 			1,
-			'#000000'
+			'#FFAA00'
 		);
 
 		vecArray.push(newVector);
@@ -188,14 +188,14 @@
 			unitVectors: [],
 			resultants: [],
 			name: `RV ${resultants.length + 1}`,
-			color: '#FFFF00'
+			color: '#FF00FF'
 		});
 
 		let newRes = new Three.ArrowHelper(
 			new Three.Vector3(0, 0, 0),
 			new Three.Vector3(0, 0, 0),
 			1,
-			'#000000'
+			'#FF00FF'
 		);
 
 		resArray.push(newRes);
@@ -271,19 +271,21 @@
 	});
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="h-screen flex flex-col overflow-hidden">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
 	<div class="flex-1 h-full overflow-hidden">
 		<main class="flex-grow flex flex-col h-full xl:flex-row overflow-hidden">
-			<div bind:this={container} class="flex-1 h-full">
-				<canvas bind:this={canvas} class="border-2"></canvas>
+			<div bind:this={container} class="flex-1 flex-shrink-0 border-2 border-primary-500">
+				<canvas bind:this={canvas}></canvas>
 			</div>
-			<section class="flex-1 h-full flex flex-col border-l-2 relative overflow-y-auto">
+			<section
+				class="flex-1 flex-shrink-0 relative overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 dark:via-surface-800 to-surface-50 dark:to-surface-900"
+			>
 				<!-- This is the vectors section -->
-				<div class="w-full flex-[1_1_0] p-10 flex flex-col justify-center overflow-hidden">
-					<h1 class="h1 flex-1">Vectors</h1>
+				<div class="w-full p-8 overflow-hidden">
+					<h1 class="h1 pb-5">Vectors</h1>
 					<div
-						class="w-full flex-[3_1_0] inside-shadow border-2 rounded-container-token flex p-3 gap-3 overflow-x-auto"
+						class="w-full inside-shadow border-2 border-primary-500-400-token bg-surface-100-800-token rounded-container-token flex p-3 gap-3 overflow-x-auto"
 					>
 						{#each vectors as vector, i}
 							<VectorsCard
@@ -296,7 +298,7 @@
 						{/each}
 						<button
 							aria-label="Close"
-							class="card-hover h-full aspect-square rounded-container-token bg-surface-200-700-token grid place-items-center"
+							class="card-hover size-60 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token grid place-items-center"
 							onclick={addNewVector}
 						>
 							<svg
@@ -313,10 +315,10 @@
 				</div>
 
 				<!-- This is the Resultants section -->
-				<div class="w-full flex-[1_1_0] p-10 flex flex-col justify-center">
-					<h1 class="h1 flex-1">Resultants</h1>
+				<div class="w-full p-10">
+					<h1 class="h1 pb-5">Resultants</h1>
 					<div
-						class="w-full flex-[3_1_0] border-2 inside-shadow rounded-container-token flex p-3 gap-3 overflow-x-auto"
+						class="w-full border-2 border-primary-500-400-token bg-surface-100-800-token inside-shadow rounded-container-token flex p-3 gap-3 overflow-x-auto"
 					>
 						{#each resultants as resultant}
 							<ResultantsCard
@@ -331,7 +333,7 @@
 						{/each}
 						<button
 							aria-label="show popup"
-							class="card-hover h-full aspect-square rounded-container-token bg-surface-200-700-token grid place-items-center"
+							class="card-hover size-60 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token grid place-items-center"
 							onclick={addNewResultant}
 						>
 							<svg
@@ -348,13 +350,10 @@
 				</div>
 
 				<!-- This is the planes section -->
-				<div class="w-full h-[20%] flex-shrink-0 p-6 flex flex-col">
+				<div class="w-full h-auto flex-shrink-0 p-6 flex flex-col">
 					<h1 class="h1">Plane</h1>
-					<div
-						class="w-full flex-[3_1_0] flex justify-between items-center p-3 gap-3 overflow-x-auto"
-					>
-						<div class="h-3/5 w-auto">
-							<label for="zoom-input">Zoom </label>
+					<div class="w-full flex-[3_1_0] flex justify-between items-center p-3 gap-3">
+						<div>
 							<input type="number" name="zoom-input" class="input" bind:value={zoom} min="0" />
 						</div>
 						<div>
@@ -436,3 +435,9 @@
 		{/each}
 	</div>
 {/if}
+
+<style>
+	.inside-shadow {
+		box-shadow: inset 0 0 1rem black;
+	}
+</style>

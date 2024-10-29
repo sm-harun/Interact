@@ -25,7 +25,7 @@
 </script>
 
 <div
-	class="card-hover h-full aspect-square rounded-container-token bg-surface-200-700-token flex flex-col box-border p-3"
+	class="card-hover size-60 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token flex flex-col box-border p-3"
 	transition:slide={{ axis: 'x' }}
 >
 	<header class="flex justify-between">

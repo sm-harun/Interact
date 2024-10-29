@@ -2,7 +2,7 @@
 	class="group card flex-shrink-0 size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
 	href="/simulations/thehumanskeleton"
 >
-	<h3 class="h3 text-surface-800-100-token z-10 transition">The Human Skeleton</h3>
+	<h3 class="h3 text-surface-200 z-10 transition">The Human Skeleton</h3>
 	<div
 		class="absolute size-full -top-5 left-0 z-0 flex items-center justify-center group-hover:scale-110 transition duration-1000"
 	>

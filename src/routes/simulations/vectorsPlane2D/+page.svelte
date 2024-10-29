@@ -25,6 +25,8 @@
 	let vectorPopupState = $state(false);
 	let popupPostion = $state({ x: 0, y: 0 });
 
+	let showGrid = $state(true);
+
 	// This will hold the value of the rv who is gonna get a vector
 	let popupResultantId: string;
 
@@ -44,7 +46,7 @@
 		function loop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-			plane.drawFullPlane(zoom);
+			plane.drawFullPlane(zoom, showGrid);
 
 			vectors.forEach((vector) => {
 				plane.drawVector(vector.x, vector.y, vector.color, false);
@@ -115,7 +117,7 @@
 	}
 
 	function addNewVector() {
-		vectors.push({ x: 0, y: 0, name: `Vector ${vectors.length + 1}`, color: '#000000' });
+		vectors.push({ x: 0, y: 0, name: `Vector ${vectors.length + 1}`, color: '#FFAA00' });
 	}
 
 	function addNewResultant() {
@@ -125,7 +127,7 @@
 			unitVectors: [],
 			resultants: [],
 			name: `RV ${resultants.length + 1}`,
-			color: '#000000'
+			color: '#FF00FF'
 		});
 	}
 
@@ -176,6 +178,10 @@
 		vectorPopupState = false;
 	}
 
+	function toggleGrid() {
+		showGrid = !showGrid;
+	}
+
 	onDestroy(() => {
 		cancelAnimationFrame(animationFrameId);
 	});
@@ -184,15 +190,17 @@
 <div class="h-screen flex flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
 	<main class="flex-grow flex flex-col xl:flex-row overflow-hidden">
-		<div class="flex-1 h-full">
-			<canvas bind:this={canvas} class="border-2"></canvas>
+		<div class="flex-1 flex-shrink-0 border-2 border-primary-500">
+			<canvas bind:this={canvas}></canvas>
 		</div>
-		<section class="flex-1 h-full flex flex-col border-l-2 relative">
+		<section
+			class="flex-1 relative overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 dark:via-surface-800 to-surface-50 dark:to-surface-900"
+		>
 			<!-- This is the vectors section -->
-			<div class="w-full flex-[1_1_0] p-10 flex flex-col justify-center">
-				<h1 class="h1 flex-1">Vectors</h1>
+			<div class="w-full h-auto p-8">
+				<h1 class="h1 pb-5">Vectors</h1>
 				<div
-					class="w-full flex-[3_1_0] inside-shadow border-2 rounded-container-token flex p-3 gap-3 overflow-x-auto"
+					class="w-full inside-shadow border-2 border-primary-500-400-token bg-surface-100-800-token rounded-container-token flex p-3 gap-3 overflow-x-auto"
 				>
 					{#each vectors as vector, i}
 						<VectorsCard
@@ -204,7 +212,7 @@
 					{/each}
 					<button
 						aria-label="Close"
-						class="card-hover h-full aspect-square rounded-container-token bg-surface-200-700-token grid place-items-center"
+						class="card-hover flex-shrink-0 size-52 xl:size-72 rounded-container-token bg-surface-200-700-token grid place-items-center"
 						onclick={addNewVector}
 					>
 						<svg
@@ -221,10 +229,10 @@
 			</div>
 
 			<!-- This is the Resultants section -->
-			<div class="w-full flex-[1_1_0] p-10 flex flex-col justify-center">
-				<h1 class="h1 flex-1">Resultants</h1>
+			<div class="w-full h-auto p-8 justify-center">
+				<h1 class="h1 pb-5">Resultants</h1>
 				<div
-					class="w-full flex-[3_1_0] border-2 inside-shadow rounded-container-token flex p-3 gap-3 overflow-x-auto"
+					class="w-full h-auto border-2 border-primary-500-400-token bg-surface-100-800-token inside-shadow rounded-container-token flex p-3 gap-3 overflow-x-auto"
 				>
 					{#each resultants as resultant}
 						<ResultantsCard
@@ -239,7 +247,7 @@
 					{/each}
 					<button
 						aria-label="show popup"
-						class="card-hover h-full aspect-square rounded-container-token bg-surface-200-700-token grid place-items-center"
+						class="card-hover size-52 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token grid place-items-center"
 						onclick={addNewResultant}
 					>
 						<svg
@@ -256,12 +264,17 @@
 			</div>
 
 			<!-- This is the planes section -->
-			<div class="w-full h-[20%] flex-shrink-0 p-6 flex flex-col">
+			<div class="w-full h-auto flex-shrink-0 p-6 flex flex-col">
 				<h1 class="h1">Plane</h1>
-				<div class="w-full flex-[3_1_0] flex p-3 gap-3 overflow-x-auto">
-					<div class="h-3/5 w-auto">
-						<label for="zoom-input">Zoom </label>
+				<div class="w-full flex-[3_1_0] flex justify-between items-center p-3 gap-3">
+					<div>
 						<input type="number" name="zoom-input" class="input" bind:value={zoom} min="0" />
+					</div>
+					<div>
+						<button
+							class="btn {showGrid ? 'variant-filled-primary' : 'variant-ghost-primary'}"
+							onclick={toggleGrid}>Show Grid</button
+						>
 					</div>
 				</div>
 			</div>

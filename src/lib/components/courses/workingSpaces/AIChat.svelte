@@ -94,10 +94,10 @@
 
 <main class="size-full flex flex-col overflow-hidden relative">
 	<header
-		class="flex-shrink-0 h-16 w-full variant-glass-surface p-2 px-6 flex items-center gap-5 absolute top-0 left-0 z-50"
+		class="flex-shrink-0 h-16 w-full variant-glass-surface p-2 px-6 flex justify-between items-center gap-5 absolute top-0 left-0 z-20"
 	>
-		<h3 class="h3">AI Assistant</h3>
-		<div class="variant-ringed-primary ml-auto relative">
+		<h3 class="h3 hidden 2xl:block">AI Assistant</h3>
+		<div class="variant-ringed-primary relative">
 			<button
 				class="btn size-full justify-between px-10"
 				onclick={() => (showLangPopup = !showLangPopup)}>{currentLang}</button

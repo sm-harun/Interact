@@ -2,8 +2,9 @@
 	import { setSectionsPosition, setMobSectionsPosition } from '$lib/stores/themes.js';
 </script>
 
-<div class="absolute top-full right-5 grid grid-cols-4 gap-1 2xl:hidden">
+<div class="absolute top-full right-5 grid grid-cols-4 gap-1 2xl:hidden z-30">
 	<button
+		aria-label="Lessons section"
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-bl-container-token"
 		onclick={() => {
 			setMobSectionsPosition(0);
@@ -19,6 +20,7 @@
 		</svg>
 	</button>
 	<button
+		aria-label="AI section"
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
 		onclick={() => {
 			setSectionsPosition(0);
@@ -34,6 +36,7 @@
 		</svg>
 	</button>
 	<button
+		aria-label="Calculator Section"
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
 		onclick={() => {
 			setSectionsPosition(100);
@@ -49,6 +52,7 @@
 		</svg>
 	</button>
 	<button
+		aria-label="Calculator Section"
 		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-br-container-token"
 		onclick={() => {
 			setSectionsPosition(200);

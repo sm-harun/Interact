@@ -1,7 +1,7 @@
 <a
 	class="group card size-60 flex-shrink-0 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
 	href="/simulations/vectorsPlane3D"
-	><h3 class="h3 text-surface-800-100-token z-10 transition">
+	><h3 class="h3 text-primary-300-600-token z-10 transition">
 		Vectors Plane <span class="font-bold text-4xl text-secondary-500">3D</span>
 	</h3>
 	<div class="absolute size-full top-0 left-0"></div>

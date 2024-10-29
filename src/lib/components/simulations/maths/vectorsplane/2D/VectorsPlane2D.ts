@@ -25,7 +25,7 @@ export class Plane {
     this.maxHeight = canvas.height;
   }
 
-  drawFullPlane(zoom: number) {
+  drawFullPlane(zoom: number, drawGrid: boolean) {
 
     this.zoom = zoom;
     this.divisions = this.canvas.width / this.zoom - 1;
@@ -57,30 +57,32 @@ export class Plane {
     this.drawCircle(this.xOrigin, 0, 4, true, 'grey');
     this.drawCircle(this.xOrigin, this.maxHeight, 4, true, 'grey');
 
-    // This draws the grid.
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = "grey";
-    this.ctx.lineWidth = 0.3;
+    if (drawGrid) {
+      // This draws the grid.
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = "grey";
+      this.ctx.lineWidth = 0.3;
 
-    for (let i = 0; i < this.zoom; i++) {
+      for (let i = 0; i < this.zoom; i++) {
 
-      // Addeds lines after y-axis.
-      this.ctx.moveTo(this.xOrigin + i * this.divisions, 0);
-      this.ctx.lineTo(this.xOrigin + i * this.divisions, this.maxHeight);
+        // Addeds lines after y-axis.
+        this.ctx.moveTo(this.xOrigin + i * this.divisions, 0);
+        this.ctx.lineTo(this.xOrigin + i * this.divisions, this.maxHeight);
 
-      // Addeds lines before y-axis.
-      this.ctx.moveTo(this.xOrigin - i * this.divisions, 0);
-      this.ctx.lineTo(this.xOrigin - i * this.divisions, this.maxHeight);
+        // Addeds lines before y-axis.
+        this.ctx.moveTo(this.xOrigin - i * this.divisions, 0);
+        this.ctx.lineTo(this.xOrigin - i * this.divisions, this.maxHeight);
 
-      this.ctx.moveTo(0, this.yOrigin + i * this.divisions);
-      this.ctx.lineTo(this.maxWidth, this.yOrigin + i * this.divisions);
+        this.ctx.moveTo(0, this.yOrigin + i * this.divisions);
+        this.ctx.lineTo(this.maxWidth, this.yOrigin + i * this.divisions);
 
-      this.ctx.moveTo(0, this.yOrigin - i * this.divisions);
-      this.ctx.lineTo(this.maxWidth, this.yOrigin - i * this.divisions);
+        this.ctx.moveTo(0, this.yOrigin - i * this.divisions);
+        this.ctx.lineTo(this.maxWidth, this.yOrigin - i * this.divisions);
+      }
+
+      this.ctx.stroke();
+      this.ctx.closePath();
     }
-
-    this.ctx.stroke();
-    this.ctx.closePath();
   }
 
   drawCircle(xCord: number, yCord: number, r: number, filled: boolean, color: string) {
