@@ -12,6 +12,7 @@ export type Resultant2d = {
   resultants: string[];
   name: string;
   color: string;
+  showShadows: boolean;
 };
 
 export type Vector3d = {

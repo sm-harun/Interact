@@ -9,7 +9,11 @@
 	import { Plane } from '$lib/components/simulations/maths/vectorsplane/2D/VectorsPlane2D';
 
 	import { onDestroy, onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
+
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+
+	let modalStore = getModalStore();
 
 	let animationFrameId: number;
 
@@ -41,6 +45,8 @@
 
 		plane = new Plane(canvas, ctx, zoom);
 
+		plane.drawFloatingVector(4, -3, 2, 6, 'red');
+
 		loop();
 
 		function loop() {
@@ -54,7 +60,21 @@
 
 			// This adds up all the vectors, scalars and unit vectors in the resultant
 			resultants.forEach((resultant) => {
-				let { x, y } = calcResultantVector(resultant);
+				let { x, y, sumVectors } = calcResultantVector(resultant);
+
+				// Draws all the vectors that make up the resultant in chains
+				if (resultant.showShadow) {
+					// This will be used to draw the sum vectors in chains
+					let sumX: number = 0;
+					let sumY: number = 0;
+
+					sumVectors.forEach((sum) => {
+						plane.drawFloatingVector(sumX, sumY, sum.x, sum.y, sum.color);
+
+						sumX += sum.x;
+						sumY += sum.y;
+					});
+				}
 
 				plane.drawVector(x, y, resultant.color, false);
 			});
@@ -64,52 +84,112 @@
 	});
 
 	// This adds up all the vectors, scalars and unit vectors in the resultant
-	function calcResultantVector(resultant: Resultant2d): { x: number; y: number } {
+	function calcResultantVector(resultant: Resultant2d): {
+		x: number;
+		y: number;
+		sumVectors: { x: number; y: number; color: string }[];
+	} {
 		let x: number = 0;
 		let y: number = 0;
+
+		// We will return this to draw the shadows of the vector if nesseccary
+		let sumVectors: { x: number; y: number; color: string }[] = [];
 
 		// Adds up all vectors
 		getVectorsFromNames(resultant.vectors).forEach((vector) => {
 			x += vector.x;
 			y += vector.y;
+
+			sumVectors.push({ x: vector.x, y: vector.y, color: vector.color });
 		});
 
 		// Adds up all unit vectors
 		resultant.unitVectors.forEach((unitVector: number) => {
-			if (unitVector == 0) x += 1;
-			if (unitVector == 1) y += 1;
+			if (unitVector == 0) {
+				x += 1;
+				sumVectors.push({ x: 1, y: 0, color: 'red' });
+			}
+			if (unitVector == 1) {
+				y += 1;
+				sumVectors.push({ x: 0, y: 1, color: 'green' });
+			}
 		});
 
 		// Adds up all other resultants
-		let values = getAllResultants(resultant.resultants);
-		values.forEach((value) => {
+		let res = getAllResultants(resultant.resultants);
+		res.forEach((value) => {
 			x += value.x;
 			y += value.y;
+
+			// This will collect every vector from this single res to multiply them with it's own scalar
+			let newValues: { x: number; y: number; color: string }[] = [];
+
+			// Pushes every vector and resultant found in the resultant and multiplies them by their scalar
+			getVectorsFromNames(value.vecs).forEach((vec) => {
+				newValues.push({ x: vec.x, y: vec.y, color: vec.color });
+			});
+			value.unitVectors.forEach((vec) => {
+				if (vec == 0) newValues.push({ x: 1, y: 0, color: 'red' });
+				if (vec == 1) newValues.push({ x: 0, y: 1, color: 'green' });
+			});
+			value.scalars.forEach((scalar) => {
+				newValues.forEach((val) => {
+					val.x *= scalar;
+					val.y *= scalar;
+				});
+			});
+
+			// Pushes every value to the main array
+			newValues.forEach((val) => {
+				sumVectors.push(val);
+			});
 		});
 
 		// Adds up all scalars
 		resultant.scalars.forEach((scalar: number) => {
 			x *= scalar;
 			y *= scalar;
+
+			sumVectors.forEach((sum) => {
+				sum.x *= scalar;
+				sum.y *= scalar;
+			});
 		});
 
-		return { x: x, y: y };
+		return { x, y, sumVectors };
 	}
 
 	// This returns the sum of all the resultants, colors and names, given an array of their names
-	function getAllResultants(
-		resNames: string[]
-	): { name: string; x: number; y: number; color: string }[] {
+	function getAllResultants(resNames: string[]): {
+		name: string;
+		x: number;
+		y: number;
+		color: string;
+		unitVectors: number[];
+		scalars: number[];
+		vecs: string[];
+	}[] {
 		let filteredRes = resultants.filter((res) => resNames.includes(res.name));
 
-		let finalArr: { name: string; x: number; y: number; color: string }[] = [];
+		let finalArr: {
+			name: string;
+			x: number;
+			y: number;
+			color: string;
+			unitVectors: number[];
+			scalars: number[];
+			vecs: string[];
+		}[] = [];
 
 		filteredRes.forEach((res) => {
 			finalArr.push({
 				name: res.name,
 				x: calcResultantVector(res).x,
 				y: calcResultantVector(res).y,
-				color: res.color
+				color: res.color,
+				unitVectors: res.unitVectors,
+				scalars: res.scalars,
+				vecs: res.vectors
 			});
 		});
 
@@ -117,7 +197,36 @@
 	}
 
 	function addNewVector() {
-		vectors.push({ x: 0, y: 0, name: `Vector ${vectors.length + 1}`, color: '#FFAA00' });
+		vectors.push({
+			x: 0,
+			y: 0,
+			name: `${createVectorsId()}`,
+			color: '#FFAA00'
+		});
+	}
+
+	// This creates a unique but predictable id's for the vectors
+	function createVectorsId() {
+		if (vectors.length == 0) return 1;
+		return parseInt(vectors[vectors.length - 1].name) + 1;
+	}
+
+	function deleteVector(name: string) {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: `Are you sure you want to delete ${name}`,
+			response: (r: string) => {
+				if (!r) return;
+
+				vectors.forEach((vector, index) => {
+					if (vector.name == name) {
+						vectors.splice(index, 1);
+					}
+				});
+			}
+		};
+
+		modalStore.trigger(modalSettings);
 	}
 
 	function addNewResultant() {
@@ -126,8 +235,39 @@
 			scalars: [],
 			unitVectors: [],
 			resultants: [],
-			name: `RV ${resultants.length + 1}`,
-			color: '#FF00FF'
+			name: `${createResId()}`,
+			color: '#FF00FF',
+			showShadow: true
+		});
+	}
+
+	// This creates a unique but predictable id's for the resultants
+	function createResId() {
+		if (resultants.length == 0) return 1;
+		return parseInt(resultants[resultants.length - 1].name) + 1;
+	}
+
+	function deleteResultant(name: string) {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: `Are you sure you want to delete ${name}`,
+			response: (r: string) => {
+				if (!r) return;
+
+				resultants.forEach((res, index) => {
+					if (res.name == name) {
+						resultants.splice(index, 1);
+					}
+				});
+			}
+		};
+
+		modalStore.trigger(modalSettings);
+	}
+
+	function toggleResShadows(name: string) {
+		resultants.forEach((res) => {
+			if (res.name == name) res.showShadow = !res.showShadow;
 		});
 	}
 
@@ -208,6 +348,7 @@
 							bind:y={vectors[i].y}
 							bind:color={vectors[i].color}
 							name={vector.name}
+							{deleteVector}
 						/>
 					{/each}
 					<button
@@ -243,6 +384,9 @@
 							name={resultant.name}
 							bind:color={resultant.color}
 							showPopup={showAddVectorPopup}
+							bind:showShadow={resultant.showShadow}
+							toggleShadow={toggleResShadows}
+							deleteRes={deleteResultant}
 						/>
 					{/each}
 					<button
@@ -312,7 +456,7 @@
 				onclick={() => addVectorToResultant(vector.name)}
 			>
 				<div class="w-full p-1 px-5 flex justify-between items-center">
-					<h3 class="h5">{vector.name}</h3>
+					<h3 class="h5">Vector {vector.name}</h3>
 					<div class="size-6 rounded-full" style="background-color: {vector.color};"></div>
 				</div>
 				<div class="w-full flex items-center justify-around">
@@ -330,7 +474,7 @@
 					onclick={() => addResultantToResultant(resultant.name)}
 				>
 					<div class="w-full p-1 px-5 flex justify-between items-center">
-						<h3 class="h5">{resultant.name}</h3>
+						<h3 class="h5">RV {resultant.name}</h3>
 						<div class="size-6 rounded-full" style="background-color: {resultant.color};"></div>
 					</div>
 					<div class="w-full flex items-center justify-around">

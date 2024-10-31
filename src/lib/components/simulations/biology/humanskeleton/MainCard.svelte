@@ -4,7 +4,7 @@
 >
 	<h3 class="h3 text-surface-200 z-10 transition">The Human Skeleton</h3>
 	<div
-		class="absolute size-full -top-5 left-0 z-0 flex items-center justify-center group-hover:scale-110 transition duration-1000"
+		class="absolute size-full bottom-0 left-0 z-0 flex items-center justify-center group-hover:scale-110 transition duration-1000"
 	>
 		<img
 			src="/assets/human-skull.png"
@@ -17,7 +17,7 @@
 <style>
 	.inside-shadow {
 		transition-duration: 1s;
-		box-shadow: inset 0 0 5rem 1rem black;
+		box-shadow: inset 0 0 3rem 1rem black;
 	}
 
 	.inside-shadow:hover {

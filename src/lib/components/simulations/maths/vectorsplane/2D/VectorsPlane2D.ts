@@ -1,3 +1,5 @@
+import { number, string } from "mathjs";
+
 export class Plane {
   maxWidth: number;
   maxHeight: number;
@@ -133,6 +135,28 @@ export class Plane {
       this.ctx.fillStyle = fillColor;
       this.ctx.fillText(`( ${x}, ${y} )`, this.xOrigin + x * this.divisions, this.yOrigin - y * this.divisions);
     }
+  }
+
+  drawFloatingVector(x1: number, y1: number, x2: number, y2: number, fillColor: string) {
+    const tempElement = document.createElement("span");
+    tempElement.style.color = fillColor;
+    document.body.appendChild(tempElement);
+
+    // Get the computed color, which will be in RGB format
+    const computedColor = getComputedStyle(tempElement).color;
+    const finalColor = computedColor.replace("rgb(", "rgba(").replace(")", ", 0.3)");
+
+    document.body.removeChild(tempElement);
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = finalColor;
+    this.ctx.lineWidth = 3;
+
+    this.ctx.moveTo(this.xOrigin + x1 * this.divisions, this.yOrigin - y1 * this.divisions);
+    this.ctx.lineTo(this.xOrigin + x1 * this.divisions + x2 * this.divisions, this.yOrigin - (y1 * this.divisions + y2 * this.divisions));
+
+    this.ctx.stroke();
+    this.ctx.closePath();
   }
 
 }
