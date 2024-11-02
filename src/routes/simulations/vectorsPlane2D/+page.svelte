@@ -29,7 +29,17 @@
 	let vectorPopupState = $state(false);
 	let popupPostion = $state({ x: 0, y: 0 });
 
+	type QuadrantModeType =
+		| 'Full Plane'
+		| 'First Quadrant'
+		| 'Second Quadrant'
+		| 'Third Quadrant'
+		| 'Forth Quadrant';
+
+	let quadrantMode: QuadrantModeType = $state('Full Plane');
+
 	let showGrid = $state(true);
+	let showShadows = $state(true);
 
 	// This will hold the value of the rv who is gonna get a vector
 	let popupResultantId: string;
@@ -39,6 +49,15 @@
 		if (parent) {
 			canvas.width = parent?.clientWidth;
 			canvas.height = parent?.clientHeight;
+
+			// Adds event listener to update the zoom value
+			parent.addEventListener('wheel', (event) => {
+				if (event.deltaY > 0) {
+					zoom -= 1;
+				} else if (event.deltaY < 0) {
+					zoom += 1;
+				}
+			});
 		}
 
 		ctx = canvas.getContext('2d');
@@ -52,7 +71,11 @@
 		function loop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-			plane.drawFullPlane(zoom, showGrid);
+			if (quadrantMode == 'Full Plane') plane.drawFullPlane(zoom, showGrid);
+			if (quadrantMode == 'First Quadrant') plane.drawFirstQuadrant(zoom, showGrid);
+			if (quadrantMode == 'Second Quadrant') plane.drawSecondQuadrant(zoom, showGrid);
+			if (quadrantMode == 'Third Quadrant') plane.drawThirdQuadrant(zoom, showGrid);
+			if (quadrantMode == 'Forth Quadrant') plane.drawFourthQuadrant(zoom, showGrid);
 
 			vectors.forEach((vector) => {
 				plane.drawVector(vector.x, vector.y, vector.color, false);
@@ -63,7 +86,7 @@
 				let { x, y, sumVectors } = calcResultantVector(resultant);
 
 				// Draws all the vectors that make up the resultant in chains
-				if (resultant.showShadow) {
+				if (showShadows && resultant.showShadow) {
 					// This will be used to draw the sum vectors in chains
 					let sumX: number = 0;
 					let sumY: number = 0;
@@ -318,8 +341,16 @@
 		vectorPopupState = false;
 	}
 
+	function changeQuadrantMode(mode: QuadrantModeType) {
+		quadrantMode = mode;
+	}
+
 	function toggleGrid() {
 		showGrid = !showGrid;
+	}
+
+	function toggleShadows() {
+		showShadows = !showShadows;
 	}
 
 	onDestroy(() => {
@@ -329,9 +360,46 @@
 
 <div class="h-screen flex flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
-	<main class="flex-grow flex flex-col xl:flex-row overflow-hidden">
+	<main class="flex-grow flex flex-col xl:flex-row overflow-hidden relative">
 		<div class="flex-1 flex-shrink-0 border-2 border-primary-500">
 			<canvas bind:this={canvas}></canvas>
+		</div>
+		<div class="absolute top-0 left-0">
+			<button
+				class="btn text-lg {quadrantMode == 'Full Plane'
+					? 'variant-glass-primary'
+					: ''} rounded-none w-full"
+				onclick={() => changeQuadrantMode('Full Plane')}>Full Plane</button
+			>
+			<hr class="!border-dotted !border-primary-500 mx-auto" />
+			<button
+				class="btn text-lg {quadrantMode == 'First Quadrant'
+					? 'variant-glass-primary'
+					: ''} rounded-none w-full"
+				onclick={() => changeQuadrantMode('First Quadrant')}>1<sup>st</sup> Quardrant</button
+			>
+			<hr class="!border-dotted !border-primary-500 mx-auto" />
+			<button
+				class="btn text-lg {quadrantMode == 'Second Quadrant'
+					? 'variant-glass-primary'
+					: ''} rounded-none w-full"
+				onclick={() => changeQuadrantMode('Second Quadrant')}>2<sup>st</sup> Quardrant</button
+			>
+			<hr class="!border-dotted !border-primary-500 mx-auto" />
+			<button
+				class="btn text-lg {quadrantMode == 'Third Quadrant'
+					? 'variant-glass-primary'
+					: ''} rounded-none w-full"
+				onclick={() => changeQuadrantMode('Third Quadrant')}>3<sup>st</sup> Quardrant</button
+			>
+			<hr class="!border-dotted !border-primary-500 mx-auto" />
+			<button
+				class="btn text-lg {quadrantMode == 'Forth Quadrant'
+					? 'variant-glass-primary'
+					: ''} rounded-none w-full"
+				onclick={() => changeQuadrantMode('Forth Quadrant')}>4<sup>st</sup> Quardrant</button
+			>
+			<hr class="!border-dotted !border-primary-500 mx-auto" />
 		</div>
 		<section
 			class="flex-1 relative overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 dark:via-surface-800 to-surface-50 dark:to-surface-900"
@@ -410,15 +478,28 @@
 			<!-- This is the planes section -->
 			<div class="w-full h-auto flex-shrink-0 p-6 flex flex-col">
 				<h1 class="h1">Plane</h1>
-				<div class="w-full flex-[3_1_0] flex justify-between items-center p-3 gap-3">
-					<div>
-						<input type="number" name="zoom-input" class="input" bind:value={zoom} min="0" />
-					</div>
-					<div>
+				<div class="w-full flex-[3_1_0] p-3 gap-3 flex items-center">
+					<!-- This will hold buttons in a grid -->
+					<div class="flex-grow pt-3 flex gap-5 items-center">
 						<button
 							class="btn {showGrid ? 'variant-filled-primary' : 'variant-ghost-primary'}"
 							onclick={toggleGrid}>Show Grid</button
 						>
+						<button
+							class="btn {showShadows ? 'variant-filled-primary' : 'variant-ghost-primary'}"
+							onclick={toggleShadows}>Disable Shadows</button
+						>
+					</div>
+					<div class="flex-shrink-0 flex flex-col gap-2 items-center">
+						<p class="text-2xl font-heading-token font-bold">Zoom</p>
+						<input
+							type="number"
+							name="zoom-input"
+							class="input"
+							bind:value={zoom}
+							min="0"
+							step="1"
+						/>
 					</div>
 				</div>
 			</div>

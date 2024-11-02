@@ -29,6 +29,9 @@ export class Plane {
 
   drawFullPlane(zoom: number, drawGrid: boolean) {
 
+    this.xOrigin = this.canvas.width / 2;
+    this.yOrigin = this.canvas.height / 2;
+
     this.zoom = zoom;
     this.divisions = this.canvas.width / this.zoom - 1;
 
@@ -86,6 +89,210 @@ export class Plane {
       this.ctx.closePath();
     }
   }
+
+  // This will only draw the first quadrant making the bottom left it's origin
+  drawFirstQuadrant(zoom: number, drawGrid: boolean) {
+
+    // Sets the origins a bit further from bottom left to add padding
+    this.xOrigin = 20;
+    this.yOrigin = this.canvas.height - 20;
+
+    this.zoom = zoom;
+    this.divisions = this.canvas.width / this.zoom - 1;
+
+    // This draws the main two axis.
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "red";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(20, this.yOrigin);
+    this.ctx.lineTo(this.maxWidth - 20, this.yOrigin);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "green";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(this.xOrigin, 20);
+    this.ctx.lineTo(this.xOrigin, this.maxHeight - 20);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.drawCircle(20, 20, 4, true, 'green');
+    this.drawCircle(this.maxWidth - 20, this.maxHeight - 20, 4, true, 'red');
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "grey";
+    this.ctx.lineWidth = 0.3;
+
+    if (drawGrid) {
+      for (let i = 0; i < this.zoom; i++) {
+        this.ctx.moveTo(this.xOrigin + i * this.divisions, 20);
+        this.ctx.lineTo(this.xOrigin + i * this.divisions, this.maxHeight - 20);
+
+        this.ctx.moveTo(20, this.yOrigin - i * this.divisions);
+        this.ctx.lineTo(this.maxWidth - 20, this.yOrigin - i * this.divisions);
+      }
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
+  }
+  // This will only draw the first quadrant making the bottom left it's origin
+  drawSecondQuadrant(zoom: number, drawGrid: boolean) {
+
+    // Sets the origins a bit further from bottom left to add padding
+    this.xOrigin = this.canvas.width - 20;
+    this.yOrigin = this.canvas.height - 20;
+
+    this.zoom = zoom;
+    this.divisions = this.canvas.width / this.zoom - 1;
+
+    // This draws the main two axis.
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "red";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(20, this.yOrigin);
+    this.ctx.lineTo(this.maxWidth - 20, this.yOrigin);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "green";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(this.xOrigin, 20);
+    this.ctx.lineTo(this.xOrigin, this.maxHeight - 20);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.drawCircle(this.maxWidth - 20, 20, 4, true, 'green');
+    this.drawCircle(20, this.maxHeight - 20, 4, true, 'red');
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "grey";
+    this.ctx.lineWidth = 0.3;
+
+    if (drawGrid) {
+      for (let i = 0; i < this.zoom; i++) {
+        this.ctx.moveTo(this.xOrigin - i * this.divisions, 20);
+        this.ctx.lineTo(this.xOrigin - i * this.divisions, this.maxHeight - 20);
+
+        this.ctx.moveTo(20, this.yOrigin - i * this.divisions);
+        this.ctx.lineTo(this.maxWidth - 20, this.yOrigin - i * this.divisions);
+      }
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
+  }
+
+  // This will only draw the first quadrant making the bottom left it's origin
+  drawThirdQuadrant(zoom: number, drawGrid: boolean) {
+
+    // Sets the origins a bit further from bottom left to add padding
+    this.xOrigin = this.canvas.width - 20;
+    this.yOrigin = 20;
+
+    this.zoom = zoom;
+    this.divisions = this.canvas.width / this.zoom - 1;
+
+    // This draws the main two axis.
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "red";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(20, this.yOrigin);
+    this.ctx.lineTo(this.maxWidth - 20, this.yOrigin);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "green";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(this.xOrigin, 20);
+    this.ctx.lineTo(this.xOrigin, this.maxHeight - 20);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.drawCircle(this.maxWidth - 20, this.maxHeight - 20, 4, true, 'green');
+    this.drawCircle(20, 20, 4, true, 'red');
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "grey";
+    this.ctx.lineWidth = 0.3;
+
+    if (drawGrid) {
+      for (let i = 0; i < this.zoom; i++) {
+        this.ctx.moveTo(this.xOrigin - i * this.divisions, 20);
+        this.ctx.lineTo(this.xOrigin - i * this.divisions, this.maxHeight - 20);
+
+        this.ctx.moveTo(20, this.yOrigin + i * this.divisions);
+        this.ctx.lineTo(this.maxWidth - 20, this.yOrigin + i * this.divisions);
+      }
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
+  }
+
+  // This will only draw the first quadrant making the bottom left it's origin
+  drawFourthQuadrant(zoom: number, drawGrid: boolean) {
+
+    // Sets the origins a bit further from bottom left to add padding
+    this.xOrigin = 20;
+    this.yOrigin = 20;
+
+    this.zoom = zoom;
+    this.divisions = this.canvas.width / this.zoom - 1;
+
+    // This draws the main two axis.
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "red";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(20, this.yOrigin);
+    this.ctx.lineTo(this.maxWidth - 20, this.yOrigin);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "green";
+    this.ctx.lineWidth = 2;
+
+    this.ctx.moveTo(this.xOrigin, 20);
+    this.ctx.lineTo(this.xOrigin, this.maxHeight - 20);
+
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+    this.drawCircle(20, this.maxHeight - 20, 4, true, 'green');
+    this.drawCircle(this.maxWidth - 20, 20, 4, true, 'red');
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "grey";
+    this.ctx.lineWidth = 0.3;
+
+    if (drawGrid) {
+      for (let i = 0; i < this.zoom; i++) {
+        this.ctx.moveTo(this.xOrigin + i * this.divisions, 20);
+        this.ctx.lineTo(this.xOrigin + i * this.divisions, this.maxHeight - 20);
+
+        this.ctx.moveTo(20, this.yOrigin + i * this.divisions);
+        this.ctx.lineTo(this.maxWidth - 20, this.yOrigin + i * this.divisions);
+      }
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
+  }
+
 
   drawCircle(xCord: number, yCord: number, r: number, filled: boolean, color: string) {
     this.ctx.beginPath();
