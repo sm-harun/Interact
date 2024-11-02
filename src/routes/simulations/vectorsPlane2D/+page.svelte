@@ -106,6 +106,14 @@
 		}
 	});
 
+	function downlaodCanvasImage() {
+		const dataURL = canvas.toDataURL('image/png');
+		const link = document.createElement('a');
+		link.href = dataURL;
+		link.download = 'canvas_image.png';
+		link.click();
+	}
+
 	// This adds up all the vectors, scalars and unit vectors in the resultant
 	function calcResultantVector(resultant: Resultant2d): {
 		x: number;
@@ -361,45 +369,65 @@
 <div class="h-screen flex flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
 	<main class="flex-grow flex flex-col xl:flex-row overflow-hidden relative">
-		<div class="flex-1 flex-shrink-0 border-2 border-primary-500">
-			<canvas bind:this={canvas}></canvas>
-		</div>
-		<div class="absolute top-0 left-0">
+		<div class="flex-1 h-full flex-shrink-0 border-2 border-primary-500 relative">
+			<div class="h-full">
+				<canvas bind:this={canvas}></canvas>
+			</div>
 			<button
-				class="btn text-lg {quadrantMode == 'Full Plane'
-					? 'variant-glass-primary'
-					: ''} rounded-none w-full"
-				onclick={() => changeQuadrantMode('Full Plane')}>Full Plane</button
+				class="absolute top-0 left-0 btn-icon"
+				onclick={downlaodCanvasImage}
+				aria-label="download canvas image"
 			>
-			<hr class="!border-dotted !border-primary-500 mx-auto" />
-			<button
-				class="btn text-lg {quadrantMode == 'First Quadrant'
-					? 'variant-glass-primary'
-					: ''} rounded-none w-full"
-				onclick={() => changeQuadrantMode('First Quadrant')}>1<sup>st</sup> Quardrant</button
-			>
-			<hr class="!border-dotted !border-primary-500 mx-auto" />
-			<button
-				class="btn text-lg {quadrantMode == 'Second Quadrant'
-					? 'variant-glass-primary'
-					: ''} rounded-none w-full"
-				onclick={() => changeQuadrantMode('Second Quadrant')}>2<sup>st</sup> Quardrant</button
-			>
-			<hr class="!border-dotted !border-primary-500 mx-auto" />
-			<button
-				class="btn text-lg {quadrantMode == 'Third Quadrant'
-					? 'variant-glass-primary'
-					: ''} rounded-none w-full"
-				onclick={() => changeQuadrantMode('Third Quadrant')}>3<sup>st</sup> Quardrant</button
-			>
-			<hr class="!border-dotted !border-primary-500 mx-auto" />
-			<button
-				class="btn text-lg {quadrantMode == 'Forth Quadrant'
-					? 'variant-glass-primary'
-					: ''} rounded-none w-full"
-				onclick={() => changeQuadrantMode('Forth Quadrant')}>4<sup>st</sup> Quardrant</button
-			>
-			<hr class="!border-dotted !border-primary-500 mx-auto" />
+				<svg
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m-6 3.75 3 3m0 0 3-3m-3 3V1.5m6 9h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75"
+					/>
+				</svg>
+			</button>
+			<div class="absolute top-0 right-0 flex xl:flex-col">
+				<button
+					class="btn text-sm xl:text-lg {quadrantMode == 'Full Plane'
+						? 'variant-glass-primary'
+						: ''} rounded-none w-full"
+					onclick={() => changeQuadrantMode('Full Plane')}>Full Plane</button
+				>
+				<button
+					class="btn text-sm xl:text-lg {quadrantMode == 'First Quadrant'
+						? 'variant-glass-primary'
+						: ''} rounded-none w-full"
+					onclick={() => changeQuadrantMode('First Quadrant')}
+					>1<sup>st</sup> <span class="hidden xl:inline">Quardrant</span></button
+				>
+				<button
+					class="btn text-sm xl:text-lg {quadrantMode == 'Second Quadrant'
+						? 'variant-glass-primary'
+						: ''} rounded-none w-full"
+					onclick={() => changeQuadrantMode('Second Quadrant')}
+					>2<sup>st</sup> <span class="hidden xl:inline">Quardrant</span></button
+				>
+				<button
+					class="btn text-sm xl:text-lg {quadrantMode == 'Third Quadrant'
+						? 'variant-glass-primary'
+						: ''} rounded-none w-full"
+					onclick={() => changeQuadrantMode('Third Quadrant')}
+					>3<sup>st</sup> <span class="hidden xl:inline">Quardrant</span></button
+				>
+				<button
+					class="btn text-sm xl:text-lg {quadrantMode == 'Forth Quadrant'
+						? 'variant-glass-primary'
+						: ''} rounded-none w-full"
+					onclick={() => changeQuadrantMode('Forth Quadrant')}
+					>4<sup>st</sup> <span class="hidden xl:inline">Quardrant</span></button
+				>
+			</div>
 		</div>
 		<section
 			class="flex-1 relative overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 dark:via-surface-800 to-surface-50 dark:to-surface-900"
@@ -478,7 +506,7 @@
 			<!-- This is the planes section -->
 			<div class="w-full h-auto flex-shrink-0 p-6 flex flex-col">
 				<h1 class="h1">Plane</h1>
-				<div class="w-full flex-[3_1_0] p-3 gap-3 flex items-center">
+				<div class="w-full flex-[3_1_0] p-3 gap-8 xl:gap-3 flex flex-col xl:flex-row items-center">
 					<!-- This will hold buttons in a grid -->
 					<div class="flex-grow pt-3 flex gap-5 items-center">
 						<button

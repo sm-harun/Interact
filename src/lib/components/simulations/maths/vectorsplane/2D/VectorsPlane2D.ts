@@ -129,7 +129,7 @@ export class Plane {
     this.ctx.lineWidth = 0.3;
 
     if (drawGrid) {
-      for (let i = 0; i < this.zoom; i++) {
+      for (let i = 0; i < this.zoom * 2; i++) {
         this.ctx.moveTo(this.xOrigin + i * this.divisions, 20);
         this.ctx.lineTo(this.xOrigin + i * this.divisions, this.maxHeight - 20);
 
@@ -179,7 +179,7 @@ export class Plane {
     this.ctx.lineWidth = 0.3;
 
     if (drawGrid) {
-      for (let i = 0; i < this.zoom; i++) {
+      for (let i = 0; i < this.zoom * 2; i++) {
         this.ctx.moveTo(this.xOrigin - i * this.divisions, 20);
         this.ctx.lineTo(this.xOrigin - i * this.divisions, this.maxHeight - 20);
 
@@ -230,7 +230,7 @@ export class Plane {
     this.ctx.lineWidth = 0.3;
 
     if (drawGrid) {
-      for (let i = 0; i < this.zoom; i++) {
+      for (let i = 0; i < this.zoom * 2; i++) {
         this.ctx.moveTo(this.xOrigin - i * this.divisions, 20);
         this.ctx.lineTo(this.xOrigin - i * this.divisions, this.maxHeight - 20);
 
@@ -281,7 +281,7 @@ export class Plane {
     this.ctx.lineWidth = 0.3;
 
     if (drawGrid) {
-      for (let i = 0; i < this.zoom; i++) {
+      for (let i = 0; i < this.zoom * 2; i++) {
         this.ctx.moveTo(this.xOrigin + i * this.divisions, 20);
         this.ctx.lineTo(this.xOrigin + i * this.divisions, this.maxHeight - 20);
 

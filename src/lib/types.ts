@@ -30,4 +30,5 @@ export type Resultant3d = {
   resultants: string[];
   name: string;
   color: string;
+  showShadows: boolean;
 };

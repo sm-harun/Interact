@@ -5,16 +5,20 @@
 	import * as Three from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+
 	import { onDestroy, onMount } from 'svelte';
 
 	import { type Vector3d, type Resultant3d } from '$lib/types';
 
 	import VectorsCard from '$lib/components/simulations/maths/vectorsplane/3D/3DVectorCard.svelte';
 	import ResultantsCard from '$lib/components/simulations/maths/vectorsplane/3D/3DResultantCard.svelte';
+	import { derived } from 'svelte/store';
+
+	let modalStore = getModalStore();
 
 	let canvas: HTMLCanvasElement;
 	let container: HTMLDivElement;
-	let ctx: CanvasRenderingContext2D;
 
 	let animationFrameId: number;
 
@@ -24,7 +28,7 @@
 	let gridHelper: any;
 
 	let popupPostion = $state({ x: 0, y: 0 });
-	let popupResultantId: string;
+	let popupResultantId: string | undefined = $state();
 	let vectorPopupState = $state(false);
 
 	let zoom: number = $state(100);
@@ -35,7 +39,7 @@
 	let vecArray: any[] = [];
 	let resArray: any[] = [];
 
-	let showGrid = $state(false);
+	let showGrid = $state(true);
 
 	onMount(() => {
 		let parent = canvas.parentElement;
@@ -72,7 +76,6 @@
 		controls.panSpeed = 1.0; // Adjust the pan speed if needed
 
 		controls.minDistance = 1;
-		controls.maxDistance = 100;
 
 		// Creates the 3 axis
 		const axesHelper = new Three.AxesHelper(zoom / 2);
@@ -80,6 +83,7 @@
 
 		// Creates a 2D grid
 		gridHelper = new Three.GridHelper(zoom, zoom);
+		scene.add(gridHelper);
 
 		vectors.forEach((vector) => {
 			const direction = new Three.Vector3(vector.x, vector.y, vector.z).normalize();
@@ -107,7 +111,11 @@
 			});
 
 			resultants.forEach((resultant, i) => {
-				let { x, y, z } = calcResultantVector(resultant);
+				let { x, y, z, sumVectors } = calcResultantVector(resultant);
+
+				// 	TODO add shadow functionality to 3D vectors
+				// sumVectors.forEach((sum) => {
+				// });
 
 				let newRes = new Three.Vector3(x, y, z);
 				resArray[i].setDirection(newRes.clone().normalize());
@@ -120,6 +128,20 @@
 		loop();
 	});
 
+	function downlaodCanvasImage() {
+		const dataURL = canvas.toDataURL('image/png');
+		const link = document.createElement('a');
+		link.href = dataURL;
+		link.download = 'canvas_image.png';
+		link.click();
+	}
+
+	function updateGrid() {
+		scene.remove(gridHelper);
+		gridHelper = new Three.GridHelper(zoom, zoom);
+		scene.add(gridHelper);
+	}
+
 	function toggleGrid() {
 		if (showGrid) {
 			scene.remove(gridHelper);
@@ -130,28 +152,76 @@
 		}
 	}
 
-	function calcResultantVector(resultant: Resultant3d) {
+	function getAllResultants(resNames: string[]) {
+		let filteredRes = resultants.filter((res) => resNames.includes(res.name));
+
+		let finalArr: {
+			name: string;
+			x: number;
+			y: number;
+			z: number;
+			color: string;
+			unitVectors: number[];
+			scalars: number[];
+			vecs: string[];
+		}[] = [];
+
+		filteredRes.forEach((res) => {
+			finalArr.push({
+				name: res.name,
+				x: calcResultantVector(res).x,
+				y: calcResultantVector(res).y,
+				z: calcResultantVector(res).z,
+				color: res.color,
+				unitVectors: res.unitVectors,
+				scalars: res.scalars,
+				vecs: res.vectors
+			});
+		});
+
+		return finalArr;
+	}
+
+	function calcResultantVector(resultant: Resultant3d): {
+		x: number;
+		y: number;
+		z: number;
+		sumVectors: { x: number; y: number; z: number; color: string }[];
+	} {
 		let x: number = 0;
 		let y: number = 0;
 		let z: number = 0;
+
+		let sumVectors: { x: number; y: number; z: number; color: string }[] = [];
 
 		// Adds up all vectors
 		getVectorsFromNames(resultant.vectors).forEach((vector) => {
 			x += vector.x;
 			y += vector.y;
 			z += vector.z;
+
+			sumVectors.push({ x: vector.x, y: vector.y, z: vector.z, color: vector.color });
 		});
 
 		// Adds up all unit vectors
 		resultant.unitVectors.forEach((unitVector: number) => {
-			if (unitVector == 0) x += 1;
-			if (unitVector == 1) y += 1;
-			if (unitVector == 2) z += 1;
+			if (unitVector == 0) {
+				x += 1;
+				sumVectors.push({ x: 1, y: 0, z: 0, color: 'red' });
+			}
+			if (unitVector == 1) {
+				y += 1;
+				sumVectors.push({ x: 0, y: 1, z: 0, color: 'green' });
+			}
+			if (unitVector == 2) {
+				z += 1;
+				sumVectors.push({ x: 0, y: 0, z: 1, color: 'blue' });
+			}
 		});
 
 		// Adds up all other resultants
-		let values = getAllResultants(resultant.resultants);
-		values.forEach((value) => {
+		let res = getAllResultants(resultant.resultants);
+		res.forEach((value) => {
 			x += value.x;
 			y += value.y;
 			z += value.z;
@@ -162,13 +232,19 @@
 			x *= scalar;
 			y *= scalar;
 			z *= scalar;
+
+			sumVectors.forEach((sum) => {
+				sum.x *= scalar;
+				sum.y *= scalar;
+				sum.z *= scalar;
+			});
 		});
 
-		return { x: x, y: y, z: z };
+		return { x, y, z, sumVectors };
 	}
 
 	function addNewVector() {
-		vectors.push({ x: 0, y: 0, z: 0, name: `Vector ${vectors.length + 1}`, color: '#FFAA00' });
+		vectors.push({ x: 0, y: 0, z: 0, name: `${createVectorId()}`, color: '#FFAA00' });
 
 		let newVector = new Three.ArrowHelper(
 			new Three.Vector3(0, 0, 0),
@@ -181,13 +257,47 @@
 		scene.add(newVector);
 	}
 
+	// This creates a unique but predictable id's for the vectors
+	function createVectorId() {
+		if (vectors.length == 0) return 1;
+		return parseInt(vectors[vectors.length - 1].name) + 1;
+	}
+
+	function deleteVector(name: string) {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: `Are you sure you want to delete ${name}`,
+			response: (r: string) => {
+				if (!r) return;
+
+				vectors.forEach((vector, index) => {
+					if (vector.name == name) {
+						vectors.splice(index, 1);
+
+						// Removes the vector from the scene and array
+						scene.remove(vecArray[index]);
+						vecArray.splice(index, 1);
+					}
+				});
+			}
+		};
+
+		modalStore.trigger(modalSettings);
+	}
+
+	// This creates a unique but predictable id's for the resultants
+	function createResId() {
+		if (resultants.length == 0) return 1;
+		return parseInt(resultants[resultants.length - 1].name) + 1;
+	}
+
 	function addNewResultant() {
 		resultants.push({
 			vectors: [],
 			scalars: [],
 			unitVectors: [],
 			resultants: [],
-			name: `RV ${resultants.length + 1}`,
+			name: `${createResId()}`,
 			color: '#FF00FF'
 		});
 
@@ -202,22 +312,26 @@
 		scene.add(newRes);
 	}
 
-	function getAllResultants(resNames: string[]) {
-		let filteredRes = resultants.filter((res) => resNames.includes(res.name));
+	function deleteResultant(name: string) {
+		const modalSettings: ModalSettings = {
+			type: 'confirm',
+			title: `Are you sure you want to delete ${name}`,
+			response: (r: string) => {
+				if (!r) return;
 
-		let finalArr: { name: string; x: number; y: number; z: number; color: string }[] = [];
+				resultants.forEach((res, index) => {
+					if (res.name == name) {
+						resultants.splice(index, 1);
 
-		filteredRes.forEach((res) => {
-			finalArr.push({
-				name: res.name,
-				x: calcResultantVector(res).x,
-				y: calcResultantVector(res).y,
-				z: calcResultantVector(res).z,
-				color: res.color
-			});
-		});
+						// Removes the vector from the scene and array
+						scene.remove(resArray[index]);
+						resArray.splice(index, 1);
+					}
+				});
+			}
+		};
 
-		return finalArr;
+		modalStore.trigger(modalSettings);
 	}
 
 	function getVectorsFromNames(names: string[]) {
@@ -275,8 +389,29 @@
 	<MainHeader showBackButton={true} showMainRoutes={false} />
 	<div class="flex-1 h-full overflow-hidden">
 		<main class="flex-grow flex flex-col h-full xl:flex-row overflow-hidden">
-			<div bind:this={container} class="flex-1 flex-shrink-0 border-2 border-primary-500">
-				<canvas bind:this={canvas}></canvas>
+			<div class="flex-1 h-full flex-shrink-0 border-2 border-primary-500 relative">
+				<div bind:this={container} class="flex-1 h-full flex-shrink-0 border-2 border-primary-500">
+					<canvas bind:this={canvas}></canvas>
+				</div>
+				<button
+					class="absolute top-0 left-0 btn-icon"
+					onclick={downlaodCanvasImage}
+					aria-label="download canvas image"
+				>
+					<svg
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-6"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m-6 3.75 3 3m0 0 3-3m-3 3V1.5m6 9h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75"
+						/>
+					</svg>
+				</button>
 			</div>
 			<section
 				class="flex-1 flex-shrink-0 relative overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 dark:via-surface-800 to-surface-50 dark:to-surface-900"
@@ -294,6 +429,7 @@
 								bind:z={vectors[i].z}
 								bind:color={vectors[i].color}
 								name={vector.name}
+								{deleteVector}
 							/>
 						{/each}
 						<button
@@ -314,7 +450,7 @@
 					</div>
 				</div>
 
-				<!-- This is the Resultants section -->
+				<!-- This is the Resultants section -->evenZoom
 				<div class="w-full p-10">
 					<h1 class="h1 pb-5">Resultants</h1>
 					<div
@@ -328,6 +464,7 @@
 								resultants={getAllResultants(resultant.resultants)}
 								name={resultant.name}
 								bind:color={resultant.color}
+								deleteRes={deleteResultant}
 								showPopup={showAddVectorPopup}
 							/>
 						{/each}
@@ -352,15 +489,25 @@
 				<!-- This is the planes section -->
 				<div class="w-full h-auto flex-shrink-0 p-6 flex flex-col">
 					<h1 class="h1">Plane</h1>
-					<div class="w-full flex-[3_1_0] flex justify-between items-center p-3 gap-3">
-						<div>
-							<input type="number" name="zoom-input" class="input" bind:value={zoom} min="0" />
-						</div>
-						<div>
+					<div class="w-full flex-[3_1_0] p-3 gap-3 flex items-center">
+						<!-- This will hold buttons in a grid -->
+						<div class="flex-grow pt-3 flex gap-5 items-center">
 							<button
 								class="btn {showGrid ? 'variant-filled-primary' : 'variant-ghost-primary'}"
 								onclick={toggleGrid}>Show Grid</button
 							>
+						</div>
+						<div class="flex-shrink-0 flex flex-col gap-2 items-center">
+							<p class="text-2xl font-heading-token font-bold">Grid Size</p>
+							<input
+								type="number"
+								name="zoom-input"
+								class="input"
+								onchange={updateGrid}
+								bind:value={zoom}
+								min="0"
+								step="2"
+							/>
 						</div>
 					</div>
 				</div>
