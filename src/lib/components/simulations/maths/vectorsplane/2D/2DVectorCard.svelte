@@ -4,17 +4,25 @@
 	interface Props {
 		x: number;
 		y: number;
+		magnitude: number;
+		direction: number;
 		name: string;
 		color: string;
 		deleteVector: (name: string) => void;
+		inputMode: 'XYZ mode' | 'Magnitude mode';
+		changeInputMode: (name: string) => void;
 	}
 
 	let {
 		x = $bindable(),
 		y = $bindable(),
+		magnitude = $bindable(),
+		direction = $bindable(),
 		name,
 		color = $bindable(),
-		deleteVector
+		deleteVector,
+		inputMode = $bindable(),
+		changeInputMode
 	}: Props = $props();
 </script>
 
@@ -23,11 +31,66 @@
 	transition:slide={{ axis: 'x' }}
 >
 	<header class="px-3 flex flex-col xl:flex-row gap-2 justify-between items-start xl:items-center">
-		<h3 class="h3">Vector {name}</h3>
-		<div class="flex gap-4 justify-between w-full xl:w-auto items-center">
-			<input type="color" bind:value={color} class="input" />
+		<h3 class="h4">Vector {name}</h3>
+		<div class="flex gap-3 justify-between w-full xl:w-auto items-center">
+			<input type="color" bind:value={color} class="input !size-10" />
 			<button
-				class="btn-icon bg-primary-500"
+				class="btn-icon size-auto p-1 grid place-items-center"
+				aria-label="Switch input type"
+				onclick={() => changeInputMode(name)}
+			>
+				{#if inputMode === 'XYZ mode'}
+					<svg
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-6"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+						/>
+					</svg>
+				{:else if inputMode === 'Magnitude mode'}
+					<svg fill="currentColor" stroke="currentColor" viewBox="0 0 93.615 93.615" class="size-6">
+						<g>
+							<path
+								d="M89.684,50.137c-2.146,0-3.904,1.731-3.904,3.903v3.108H65.4c0.109-0.274,0.191-0.577,0.109-0.907 c-0.357-1.65-0.936-3.272-1.706-4.785c-0.385-0.771-1.348-1.072-2.09-0.66c-0.771,0.386-1.071,1.349-0.66,2.091 c0.66,1.265,1.128,2.612,1.431,3.987c0.027,0.082,0.082,0.164,0.109,0.274H31.159c0.082-0.358,0.138-0.743,0.22-1.101 c0.22-0.824-0.275-1.678-1.1-1.926c-0.825-0.22-1.678,0.274-1.926,1.102c-0.165,0.633-0.274,1.292-0.385,1.925H7.81V54.04 c0-2.145-1.732-3.903-3.905-3.903S0,51.868,0,54.04v14.027c0,2.145,1.732,3.904,3.905,3.904s3.905-1.732,3.905-3.904V64.96 h77.996v3.107c0,2.145,1.732,3.904,3.905,3.904c2.146,0,3.904-1.732,3.904-3.904V54.042 C93.589,51.896,91.857,50.137,89.684,50.137z"
+							></path>
+							<path
+								d="M54.839,44.554c-0.468,0.743-0.248,1.705,0.494,2.145c1.211,0.743,2.312,1.678,3.272,2.725 c0.303,0.328,0.715,0.494,1.155,0.494c0.386,0,0.771-0.138,1.045-0.412c0.632-0.578,0.66-1.568,0.082-2.201 c-1.155-1.237-2.475-2.337-3.905-3.245C56.27,43.619,55.306,43.838,54.839,44.554z"
+							></path>
+							<path
+								d="M33.497,46.562c-1.211,1.184-2.283,2.531-3.136,3.988c-0.439,0.742-0.192,1.705,0.55,2.145 c0.248,0.139,0.522,0.221,0.798,0.221c0.522,0,1.045-0.274,1.348-0.77c0.715-1.211,1.595-2.338,2.641-3.328 c0.604-0.605,0.632-1.595,0.027-2.201C35.092,45.983,34.129,45.957,33.497,46.562z"
+							></path>
+							<path
+								d="M42.298,41.692c-1.65,0.385-3.246,1.018-4.73,1.843c-0.743,0.413-1.018,1.375-0.605,2.118 c0.275,0.522,0.825,0.797,1.375,0.797c0.248,0,0.522-0.055,0.743-0.192c1.237-0.688,2.585-1.21,3.96-1.54 c0.825-0.192,1.348-1.045,1.155-1.87C43.975,41.996,43.151,41.474,42.298,41.692z"
+							></path>
+							<path
+								d="M45.763,42.684c-0.027,0.853,0.66,1.567,1.513,1.595c1.43,0.027,2.833,0.275,4.208,0.66 c0.138,0.055,0.303,0.055,0.438,0.055c0.66,0,1.293-0.44,1.485-1.1c0.248-0.825-0.221-1.705-1.045-1.953 c-1.623-0.495-3.301-0.77-5.006-0.797C46.423,41.116,45.763,41.804,45.763,42.684z"
+							></path>
+						</g>
+						<g>
+							<path
+								d="M29.922,24.586l-1.019,0.275c-0.137,0.027-0.357,0.083-0.494,0.083c-0.66,0-1.266-0.55-1.266-1.238 c0-0.578,0.385-1.073,0.963-1.238l1.843-0.55c0.55-0.138,0.962-0.248,1.348-0.248h0.027c0.797,0,1.43,0.633,1.43,1.43v10.561 c0,0.797-0.633,1.43-1.43,1.43c-0.798,0-1.431-0.632-1.431-1.43v-9.076L29.922,24.586L29.922,24.586z"
+							></path>
+							<path
+								d="M35.339,31.353v-0.027c0-1.595,0.743-2.53,2.118-3.163c-1.018-0.605-1.65-1.458-1.65-2.86v-0.055 c-0.027-2.008,1.815-3.575,4.593-3.575s4.593,1.567,4.593,3.603v0.028c0,1.402-0.659,2.255-1.649,2.86 c1.319,0.688,2.117,1.54,2.117,3.08v0.027c0,2.42-2.145,3.851-5.061,3.851C37.485,35.121,35.339,33.635,35.339,31.353z M42.655,31.132v-0.028c0-1.018-0.963-1.595-2.256-1.595c-1.319,0-2.255,0.604-2.255,1.595v0.028 c0,0.907,0.853,1.623,2.255,1.623C41.803,32.754,42.655,32.04,42.655,31.132z M42.27,25.604v-0.027c0-0.797-0.688-1.54-1.87-1.54 s-1.87,0.715-1.87,1.513v0.027c0,0.908,0.743,1.595,1.87,1.595C41.527,27.2,42.27,26.512,42.27,25.604z"
+							></path>
+							<path
+								d="M47.303,28.437V28.41c0-3.795,2.365-6.766,5.83-6.766c3.466,0,5.805,2.942,5.805,6.738v0.028 c0,3.795-2.339,6.765-5.832,6.765C49.613,35.174,47.303,32.232,47.303,28.437z M55.966,28.437V28.41 c0-2.365-1.155-4.181-2.888-4.181c-1.733,0-2.834,1.733-2.834,4.125v0.027c0,2.393,1.129,4.18,2.889,4.18 C54.895,32.562,55.966,30.803,55.966,28.437z"
+							></path>
+							<path
+								d="M60.724,24.642v-0.027c0-1.595,1.267-2.86,2.888-2.86c1.65,0,2.86,1.265,2.86,2.833v0.028c0,1.595-1.265,2.86-2.888,2.86 C61.934,27.501,60.724,26.236,60.724,24.642z M60.779,29.151c0-0.33,0.273-0.605,0.604-0.605h4.373 c0.33,0,0.605,0.275,0.605,0.605s-0.275,0.605-0.605,0.605H61.41C61.054,29.756,60.779,29.481,60.779,29.151z M64.932,24.642 v-0.027c0-0.798-0.55-1.513-1.375-1.513c-0.824,0-1.32,0.688-1.32,1.485v0.028c0,0.797,0.551,1.513,1.375,1.513 C64.438,26.154,64.932,25.466,64.932,24.642z"
+							></path>
+						</g>
+					</svg>
+				{/if}
+			</button>
+			<button
+				class="btn-icon box-content size-auto p-1"
 				aria-label="Delete Vector"
 				onclick={() => deleteVector(name)}
 			>
@@ -48,14 +111,25 @@
 		</div>
 	</header>
 	<hr class="my-2" />
-	<div class="flex-grow w-full flex flex-col p-2">
-		<div class="flex-1 flex gap-3 items-center">
-			<span>X : </span>
-			<input class="input !w-[80%] !h-9" bind:value={x} type="number" />
-		</div>
-		<div class="flex-1 flex gap-3 items-center">
-			<span>Y : </span>
-			<input class="input !w-[80%] !h-9" bind:value={y} type="number" />
-		</div>
+	<div class="flex-grow w-full flex flex-col gap-2 p-2">
+		{#if inputMode === 'XYZ mode'}
+			<div class="flex-1 flex gap-3 items-center">
+				<span>X : </span>
+				<input class="input !w-[80%] !h-9" bind:value={x} type="number" />
+			</div>
+			<div class="flex-1 flex gap-3 items-center">
+				<span>Y : </span>
+				<input class="input !w-[80%] !h-9" bind:value={y} type="number" />
+			</div>
+		{:else if inputMode === 'Magnitude mode'}
+			<div class="flex-1 flex flex-col gap-3">
+				<span>Magnitude</span>
+				<input class="input !w-[80%] !h-9" bind:value={magnitude} type="number" />
+			</div>
+			<div class="flex-1 flex flex-col gap-3">
+				<span>Direction</span>
+				<input class="input !w-[80%] !h-9" bind:value={direction} type="number" />
+			</div>
+		{/if}
 	</div>
 </div>
