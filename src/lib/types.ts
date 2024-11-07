@@ -1,6 +1,9 @@
 export type Vector2d = {
   x: number;
   y: number;
+  magnitude: number;
+  dir: number;
+  inputMode: "XYZ mode" | "Magnitude mode";
   name: string;
   color: string;
 };

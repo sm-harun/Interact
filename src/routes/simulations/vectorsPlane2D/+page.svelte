@@ -26,9 +26,6 @@
 	let vectors: Vector2d[] = $state([]);
 	let resultants: Resultant2d[] = $state([]);
 
-	let vectorPopupState = $state(false);
-	let popupPostion = $state({ x: 0, y: 0 });
-
 	type QuadrantModeType =
 		| 'Full Plane'
 		| 'First Quadrant'
@@ -38,6 +35,8 @@
 
 	let quadrantMode: QuadrantModeType = $state('Full Plane');
 
+	let vectorPopupState = $state(false);
+	let popupPostion = $state({ x: 0, y: 0 });
 	let showGrid = $state(true);
 	let showShadows = $state(true);
 
@@ -106,12 +105,47 @@
 		}
 	});
 
+	// This updates vectors x, y, and z when you change the magnitude and direction
+	$effect(() => {
+		vectors.forEach((vector) => {
+			if (vector.inputMode == 'Magnitude mode') {
+				vector.x = parseFloat(
+					(vector.magnitude * Math.cos((vector.dir * Math.PI) / 180)).toFixed(2)
+				);
+				vector.y = parseFloat(
+					(vector.magnitude * Math.sin((vector.dir * Math.PI) / 180)).toFixed(2)
+				);
+			}
+		});
+	});
+
+	// This updates the magnitude and direction when changing x, y, and z
+	$effect(() => {
+		vectors.forEach((vector) => {
+			if (vector.inputMode == 'XYZ mode') {
+				vector.magnitude = parseFloat(
+					Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2)).toFixed(2)
+				);
+				vector.dir = parseFloat(((Math.atan2(vector.y, vector.x) * 180) / Math.PI).toFixed(2));
+			}
+		});
+	});
+
 	function downlaodCanvasImage() {
 		const dataURL = canvas.toDataURL('image/png');
 		const link = document.createElement('a');
 		link.href = dataURL;
 		link.download = 'canvas_image.png';
 		link.click();
+	}
+
+	function changeInputMode(name: string) {
+		vectors.forEach((vector) => {
+			if (vector.name == name) {
+				if (vector.inputMode === 'XYZ mode') vector.inputMode = 'Magnitude mode';
+				else if (vector.inputMode === 'Magnitude mode') vector.inputMode = 'XYZ mode';
+			}
+		});
 	}
 
 	// This adds up all the vectors, scalars and unit vectors in the resultant
@@ -187,7 +221,11 @@
 			});
 		});
 
-		return { x, y, sumVectors };
+		// Makes sure they will be a 2 decimal digit numbers
+		let finalX = parseFloat(x.toFixed(2));
+		let finalY = parseFloat(y.toFixed(2));
+
+		return { x: finalX, y: finalY, sumVectors };
 	}
 
 	// This returns the sum of all the resultants, colors and names, given an array of their names
@@ -231,6 +269,9 @@
 		vectors.push({
 			x: 0,
 			y: 0,
+			magnitude: 0,
+			dir: 0,
+			inputMode: 'XYZ mode',
 			name: `${createVectorsId()}`,
 			color: '#FFAA00'
 		});
@@ -442,9 +483,13 @@
 						<VectorsCard
 							bind:x={vectors[i].x}
 							bind:y={vectors[i].y}
+							bind:magnitude={vectors[i].magnitude}
+							bind:direction={vectors[i].dir}
 							bind:color={vectors[i].color}
 							name={vector.name}
 							{deleteVector}
+							bind:inputMode={vectors[i].inputMode}
+							{changeInputMode}
 						/>
 					{/each}
 					<button
