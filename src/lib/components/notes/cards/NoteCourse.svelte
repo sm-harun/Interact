@@ -15,6 +15,16 @@
                 border-[0.1rem] border-transparent hover:scale-[1.02] hover:brightness-110 transition"
 	onclick={todo}
 >
-	<h3 class="h2">{title}</h3>
+	<h3 class="h2 text-overflow">{title}</h3>
 	<p>{notes} notes</p>
 </button>
+
+<style>
+	.text-overflow {
+		line-clamp: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 250px;
+	}
+</style>
