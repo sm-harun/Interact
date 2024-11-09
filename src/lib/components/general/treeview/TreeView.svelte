@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	let { text, children } = $props();
+
+	interface Props {
+		text: string;
+		children: any;
+	}
+
+	let { text, children }: Props = $props();
 
 	let opened = $state(false);
 	let checked = $state(false);
@@ -19,7 +25,7 @@
 				<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 			</svg>
 		</button>
-		<h3 class="h3">{text}</h3>
+		<h3 class="h3 ellipsis-text">{text}</h3>
 		<button class="ml-3" aria-label="Course Checkbox" onclick={() => (checked = !checked)}>
 			<svg
 				fill="none"

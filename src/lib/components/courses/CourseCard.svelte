@@ -21,7 +21,7 @@
 		<h1
 			class="text-2xl w-4/5 font-bold decoration-500-400-token text-primary-900-50-token absolute bottom-5 left-5
       group-hover:text-4xl group-hover:bottom-1/2 group-hover:left-1/2
-      group-hover:-translate-x-1/2 group-hover:translate-y-1/2 duration-500 text-overflow"
+      group-hover:-translate-x-1/2 group-hover:translate-y-1/2 duration-500 ellipsis-text"
 		>
 			{title}
 		</h1>
@@ -39,12 +39,3 @@
 		</p>
 	</div>
 </div>
-
-<style>
-	.text-overflow {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		max-width: 250px;
-	}
-</style>

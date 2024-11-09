@@ -5,39 +5,60 @@
 	import TreeView from '$lib/components/general/treeview/TreeView.svelte';
 	import TreeViewChildren from '$lib/components/general/treeview/TreeViewChildren.svelte';
 	import { getDocs } from 'firebase/firestore';
-	import { getCourseColl, getLessonsColl } from '$lib/docRefs';
+	import { getCollNotesColl, getCourseColl, getLessonsColl, getNotesColl } from '$lib/docRefs';
+	import { user } from '$lib/stores/credentials';
 
 	type Course = {
 		title: string;
 		lessons: string[];
 	};
 
-	// let courses = [
-	// 	{ title: 'Vectors', lessons: ['Introduction', 'Quit Down', 'Something'] },
-	// 	{ title: 'Enzymes', lessons: ['Introduction to En', 'Quit Down', 'Something'] },
-	// 	{ title: 'Humans', lessons: ['Humaaane', 'Quit Down', 'Something'] }
-	// ];
+	type Note = {
+		title: string;
+		notes: string[];
+	};
 
-	let courses: Course[] = [];
-	let fetched = $state(false);
+	let courses: Course[] = $state([]);
+	let couresNotesColls: Note[] = $state([]);
+	let personalNotesColls: Note[] = $state([]);
 
 	$effect.pre(() => {
-		getDocs(getCourseColl()).then((fetchedCourses) => {
-			fetchedCourses.forEach((course) => {
-				let newCourse: Course = {
-					title: course.data().title,
-					lessons: []
-				};
+		// This makes sure we have a user to fetches user's notes
+		if ($user) {
+			// Fetches all the courses and the lessons inside those courses
+			getDocs(getCourseColl()).then((fetchedCourses) => {
+				fetchedCourses.forEach((course) => {
+					let newCourse: Course = {
+						title: course.data().title,
+						lessons: []
+					};
 
-				getDocs(getLessonsColl(course.data().title)).then((lessons) => {
-					lessons.forEach((lesson) => newCourse.lessons.push(lesson.data().title));
+					getDocs(getLessonsColl(course.data().title)).then((lessons) => {
+						lessons.forEach((lesson) => newCourse.lessons.push(lesson.data().title));
+					});
+
+					courses.push(newCourse);
 				});
-
-				courses.push(newCourse);
 			});
 
-			fetched = true;
-		});
+			// Fetches all Notes collections and notes inside them
+			getDocs(getNotesColl($user?.uid)).then((fetchedNotes) => {
+				fetchedNotes.forEach((noteColl) => {
+					let newNote: Note = {
+						title: noteColl.data().title,
+						notes: []
+					};
+
+					getDocs(getCollNotesColl($user?.uid, noteColl.data().title)).then((notes) => {
+						notes.forEach((note) => newNote.notes.push(note.data().title));
+					});
+
+					// Pushs them to a separate array based on type of note
+					if (noteColl.data().type == 'course') couresNotesColls.push(newNote);
+					if (noteColl.data().type == 'personal') personalNotesColls.push(newNote);
+				});
+			});
+		}
 	});
 </script>
 
@@ -46,45 +67,54 @@
 	<main class="flex-grow flex overflow-hidden">
 		<!-- This is the Content Selection Section -->
 		<section class="flex-[3_1_0] flex overflow-hidden">
-			<!-- This will display the courses -->
-			<div class="flex-[1_1_0] flex flex-col overflow-hidden">
+			<div class="flex-[1_1_0] overflow-hidden relative">
 				<header
-					class="flex-shrink-0 w-full h-20 bg-surface-100-800-token course-header-shadow flex items-center px-10"
+					class="w-full h-20 variant-glass-surface flex items-center px-10 absolute top-0 left-0 z-20"
 				>
 					<h2 class="h2">Courses</h2>
 				</header>
-				<main class="flex-grow p-5 flex flex-col gap-5 overflow-y-scroll">
-					{#if fetched}
-						{#each courses as course}
-							<TreeView text={course.title}>
-								{#each course.lessons as lesson}
-									<TreeViewChildren>{lesson}</TreeViewChildren>
-								{/each}
-							</TreeView>
-						{/each}
-					{/if}
+
+				<!-- This will display the courses -->
+				<main class="size-full flex flex-col gap-5 p-5 overflow-y-scroll pt-24">
+					{#each courses as course}
+						<TreeView text={course.title}>
+							{#each course.lessons as lesson}
+								<TreeViewChildren>{lesson}</TreeViewChildren>
+							{/each}
+						</TreeView>
+					{/each}
 				</main>
 			</div>
 
-			<!-- This will display the Notes -->
-			<div class="flex-[1_1_0] border-surface-500 border-l-2 overflow-hidden">
+			<div class="flex-[1_1_0] border-surface-500 border-l-2 overflow-hidden relative">
 				<header
-					class="flex-shrink-0 w-full h-20 bg-surface-100-800-token notes-header-shadow flex items-center px-10"
+					class="w-full h-20 variant-glass-surface flex items-center px-10 absolute top-0 left-0"
 				>
 					<h2 class="h2">Notes</h2>
 				</header>
+
+				<!-- This will display the Notes -->
+				<main class="size-full flex flex-col gap-5 p-5 overflow-y-scroll pt-24">
+					<h2 class="h2">Course Notes</h2>
+					{#each couresNotesColls as noteColl}
+						<TreeView text={noteColl.title}>
+							{#each noteColl.notes as note}
+								<TreeViewChildren>{note}</TreeViewChildren>
+							{/each}
+						</TreeView>
+					{/each}
+					<h2 class="h2 mt-10">Personal Notes</h2>
+					{#each personalNotesColls as noteColl}
+						<TreeView text={noteColl.title}>
+							{#each noteColl.notes as note}
+								<TreeViewChildren>{note}</TreeViewChildren>
+							{/each}
+						</TreeView>
+					{/each}
+				</main>
 			</div>
 		</section>
 
 		<TestSettings />
 	</main>
 </div>
-
-<style>
-	.course-header-shadow {
-		box-shadow: 0 -0.5rem 2rem 0.1rem black;
-	}
-	.notes-header-shadow {
-		box-shadow: 0 -0.5rem 2rem 0.1rem black;
-	}
-</style>

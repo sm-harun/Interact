@@ -1,5 +1,9 @@
 <script lang="ts">
-	let { children } = $props();
+	interface Props {
+		children: any;
+	}
+
+	let { children }: Props = $props();
 
 	let checked = $state(false);
 </script>
