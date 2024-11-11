@@ -1,11 +1,10 @@
 <script lang="ts">
 	interface Props {
 		children: any;
+		checked: boolean;
 	}
 
-	let { children }: Props = $props();
-
-	let checked = $state(false);
+	let { children, checked = $bindable() }: Props = $props();
 </script>
 
 <div class="flex gap-3">

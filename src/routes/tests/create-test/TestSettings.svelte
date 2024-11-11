@@ -1,3 +1,11 @@
+<script lang="ts">
+	interface Props {
+		filterChecked: () => void;
+	}
+
+	let { filterChecked }: Props = $props();
+</script>
+
 <section class="flex-[2_1_0] border-surface-500 border-l-2 p-8 relative">
 	<h1 class="h1">Test Settings</h1>
 	<hr class="my-5 opacity-0" />
@@ -53,5 +61,7 @@
 		<button class="btn variant-ghost-primary h-12">Use AI</button>
 	</div>
 
-	<button class="btn variant-filled-primary absolute bottom-5 right-5">Create Test</button>
+	<button class="btn variant-filled-primary absolute bottom-5 right-5" onclick={filterChecked}
+		>Create Test</button
+	>
 </section>

@@ -4,12 +4,14 @@
 	interface Props {
 		text: string;
 		children: any;
+		checked: boolean;
+		type: 'course' | 'personalN' | 'courseN';
+		changeAllChecks: (type: 'course' | 'personalN' | 'courseN', id: string, state: boolean) => void;
 	}
 
-	let { text, children }: Props = $props();
+	let { text, children, checked = $bindable(), type, changeAllChecks }: Props = $props();
 
 	let opened = $state(false);
-	let checked = $state(false);
 </script>
 
 <div class="">
@@ -26,7 +28,14 @@
 			</svg>
 		</button>
 		<h3 class="h3 ellipsis-text">{text}</h3>
-		<button class="ml-3" aria-label="Course Checkbox" onclick={() => (checked = !checked)}>
+		<button
+			class="ml-3"
+			aria-label="Course Checkbox"
+			onclick={() => {
+				checked = !checked;
+				changeAllChecks(type, text, checked);
+			}}
+		>
 			<svg
 				fill="none"
 				viewBox="0 0 24 24"
