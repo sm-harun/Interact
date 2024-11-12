@@ -4,9 +4,22 @@
 
 	import TreeView from '$lib/components/general/treeview/TreeView.svelte';
 	import TreeViewChildren from '$lib/components/general/treeview/TreeViewChildren.svelte';
-	import { getDocs } from 'firebase/firestore';
-	import { getCollNotesColl, getCourseColl, getLessonsColl, getNotesColl } from '$lib/docRefs';
+	import { getDocs, setDoc } from 'firebase/firestore';
+	import {
+		getCollNotesColl,
+		getCourseColl,
+		getLessonsColl,
+		getNotesColl,
+		getTestsDoc
+	} from '$lib/docRefs';
 	import { user } from '$lib/stores/credentials';
+
+	import {
+		getModalStore,
+		type ModalSettings,
+		getToastStore,
+		type ToastSettings
+	} from '@skeletonlabs/skeleton';
 
 	type Course = {
 		title: string;
@@ -23,6 +36,31 @@
 	let courses: Course[] = $state([]);
 	let couresNotesColls: Note[] = $state([]);
 	let personalNotesColls: Note[] = $state([]);
+
+	let modalStore = getModalStore();
+	let toastStore = getToastStore();
+
+	type Settings = {
+		truefalse: 0 | 1 | 3 | 5 | 8 | 10;
+		choices: 0 | 1 | 3 | 5 | 8 | 10;
+		pick: 0 | 1 | 3 | 5 | 8 | 10;
+		time: 1 | 3 | 5 | 10 | 15 | 30 | 60;
+		showInstantAnswers: boolean;
+		useCalculator: boolean;
+		useAI: boolean;
+		promptBeforeStart: boolean;
+	};
+
+	let settings: Settings = $state({
+		truefalse: 0,
+		choices: 0,
+		pick: 0,
+		time: 10,
+		showInstantAnswers: false,
+		useCalculator: false,
+		useAI: false,
+		promptBeforeStart: false
+	});
 
 	// Fetches all the courses and the lessons inside those courses
 	$effect.pre(() => {
@@ -139,7 +177,7 @@
 	});
 
 	// Changes the checked state of all elements inside the array if we click the array itself
-	function changeAllChecks(type: 'coures' | 'personalN' | 'courseN', id: string, state: boolean) {
+	function changeAllChecks(type: 'course' | 'personalN' | 'courseN', id: string, state: boolean) {
 		switch (type) {
 			case 'course':
 				courses.forEach((course) => {
@@ -161,12 +199,17 @@
 
 	function filterChecked() {
 		// This will hold the final array with all unchecked lessons and courses filtered
-		let filteredCourses: Course[] = [];
+		let filteredCourses: { title: string; lessons: string[]; type: 'course' }[] = [];
+		let filteredNoteColls: { title: string; notes: string[]; type: 'note' }[] = [];
 
 		courses.forEach((course) => {
 			// Grabs the whole course if is is checked already
 			if (course.checked == true) {
-				filteredCourses.push(course);
+				filteredCourses.push({
+					title: course.title,
+					lessons: course.lessons.map((lesson) => lesson.title),
+					type: 'course'
+				});
 			} else {
 				// This filters the lessons that are only checked
 				let filteredLessons = course.lessons.filter((lesson) => lesson.checked == true);
@@ -176,13 +219,90 @@
 					// Pushes the coures with only the filtered lessons
 					filteredCourses.push({
 						title: course.title,
-						lessons: filteredLessons,
-						checked: course.checked
+						lessons: filteredLessons.map((lesson) => lesson.title),
+						type: 'course'
 					});
 			}
 		});
 
-		console.log(filteredCourses);
+		personalNotesColls.forEach((notesColl) => {
+			if (notesColl.checked == true) {
+				filteredNoteColls.push({
+					title: notesColl.title,
+					notes: notesColl.notes.map((note) => note.title),
+					type: 'note'
+				});
+			} else {
+				let filteredNotes = notesColl.notes.filter((note) => note.checked == true);
+
+				if (filteredNotes.length !== 0) {
+					filteredNoteColls.push({
+						title: notesColl.title,
+						notes: filteredNotes.map((note) => note.title),
+						type: 'note'
+					});
+				}
+			}
+		});
+
+		couresNotesColls.forEach((notesColl) => {
+			if (notesColl.checked == true) {
+				filteredNoteColls.push({
+					title: notesColl.title,
+					notes: notesColl.notes.map((note) => note.title),
+					type: 'note'
+				});
+			} else {
+				let filteredNotes = notesColl.notes.filter((note) => note.checked == true);
+
+				if (filteredNotes.length !== 0) {
+					filteredNoteColls.push({
+						title: notesColl.title,
+						notes: filteredNotes.map((note) => note.title),
+						type: 'note'
+					});
+				}
+			}
+		});
+
+		return { filteredCourses, filteredNoteColls };
+	}
+
+	function createTest() {
+		const modalSettings: ModalSettings = {
+			type: 'prompt',
+			title: 'What is the name of your test?',
+			valueAttr: { type: 'text', minlength: 1, maxlength: 50, required: true },
+			response: async (r: string) => {
+				// Stops excustion if user canceled
+				if (!r) return;
+
+				let newTest = {
+					title: r,
+					courses: filterChecked().filteredCourses,
+					notes: filterChecked().filteredNoteColls,
+					settings: settings
+				};
+
+				await setDoc(getTestsDoc($user?.uid, r), newTest)
+					.then(() => {
+						// Success Toast
+						const toastSettings: ToastSettings = {
+							message: `Created Test Successfully`,
+							background: `variant-filled-success`,
+							hideDismiss: true,
+							timeout: 3000
+						};
+						toastStore.trigger(toastSettings);
+					})
+					.catch((error) => {
+						console.log('I am error');
+						console.log(error);
+					});
+			}
+		};
+
+		modalStore.trigger(modalSettings);
 	}
 </script>
 
@@ -254,6 +374,17 @@
 			</div>
 		</section>
 
-		<TestSettings {filterChecked} />
+		<TestSettings
+			{filterChecked}
+			{createTest}
+			bind:truefalse={settings.truefalse}
+			bind:choices={settings.choices}
+			bind:pick={settings.pick}
+			bind:time={settings.time}
+			bind:showAnswerInstantly={settings.showInstantAnswers}
+			bind:useCalculator={settings.useCalculator}
+			bind:useAI={settings.useAI}
+			bind:promptBeforeStart={settings.promptBeforeStart}
+		/>
 	</main>
 </div>

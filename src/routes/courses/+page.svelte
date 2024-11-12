@@ -1,6 +1,5 @@
 <script lang="ts">
 	import CourseCard from '$lib/components/courses/CourseCard.svelte';
-	import LockedCourse from '$lib/components/courses/LockedCourses.svelte';
 	import FilterSideBar from '$lib/components/courses/FilterSideBar.svelte';
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 

@@ -41,6 +41,14 @@ export function getCollNotesNote(userId: string, docId: string, noteId: string) 
   return doc(getCollNotesColl(userId, docId), noteId);
 }
 
+export function getTestsColl(userId: string) {
+  return collection(doc(collection(DataBase, 'users'), userId), 'Tests');
+}
+
+export function getTestsDoc(userId: string, docId: string) {
+  return doc(getTestsColl(userId), docId);
+}
+
 // Renames a firebase doc by deleting and creating it again, only works with documents without a collection
 export async function renameDocument(oldDocRef: DocumentReference, newDocName: string) {
   try {
