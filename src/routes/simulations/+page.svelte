@@ -14,7 +14,7 @@
 	<main
 		class="flex-grow p-6 overflow-y-auto overflow-x-hidden"
 		in:fly={{ x: 100, duration: 500, delay: 500 }}
-		out:fly={{ x: 100, duration: 500 }}
+		out:fly={{ x: -100, duration: 500 }}
 	>
 		<h1 class="h1 mb-3 bg-transparent">All Simulations</h1>
 		<div class="p-3 flex gap-4 flex-wrap">

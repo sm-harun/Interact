@@ -15,6 +15,6 @@
                 border-[0.1rem] border-transparent hover:scale-[1.02] hover:brightness-110 transition"
 	onclick={todo}
 >
-	<h3 class="h2">{title}</h3>
+	<h3 class="h2 ellipsis-text">{title}</h3>
 	<p>{notes} notes</p>
 </button>

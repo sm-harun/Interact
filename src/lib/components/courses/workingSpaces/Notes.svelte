@@ -44,16 +44,18 @@
 	});
 
 	onMount(async () => {
-		await getNotesCollection().then((notes) => {
-			displayedNotes.set([...notes]);
-			fetchSuccefull = true;
-			updateNotes();
-		});
+		if ($user) {
+			await getNotesCollection($user.uid).then((notes) => {
+				displayedNotes.set([...notes]);
+				fetchSuccefull = true;
+				updateNotes();
+			});
+		}
 	});
 
-	async function getNotesCollection() {
+	async function getNotesCollection(userId: string) {
 		const fetchedNotes = await getDocs(
-			query(getCollNotesColl($user?.uid, course), orderBy('index', 'asc'))
+			query(getCollNotesColl(userId, course), orderBy('index', 'asc'))
 		);
 		let pushedNotes: any[] = [];
 
@@ -176,6 +178,7 @@
 				<button
 					class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
 					onclick={addNewNote}
+					aria-label="Add a new note"
 				>
 					<svg
 						fill="none"
