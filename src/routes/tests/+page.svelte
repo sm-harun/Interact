@@ -68,7 +68,9 @@
 				</svg>
 			</a>
 			{#each tests as test}
-				<TestCard title={test.title} courses={test.courses} notes={test.notes} />
+				<a href="/tests/{test.title}">
+					<TestCard title={test.title} courses={test.courses} notes={test.notes} />
+				</a>
 			{/each}
 		</div>
 	</main>
