@@ -82,7 +82,7 @@ export const questionTypeSchema = {
     },
     answer: {
       type: SchemaType.NUMBER,
-      description: 'The index of the correct answer in the choices array',
+      description: 'The index of the correct answer in the choices array starting from 0',
       nullable: false
     },
     explanation: {
@@ -119,22 +119,22 @@ export const trueFalseSchema = {
       description: "The title of the question set",
       nullable: false,
     },
-    questions: {
+    statements: {
       type: SchemaType.ARRAY,
-      description: "Array of individual true/false questions",
+      description: "Array of individual true or false statements",
       items: {
         type: SchemaType.STRING,
-        description: "An individual true/false question",
+        description: "A statment that might be true or false",
         nullable: false,
       },
       nullable: false,
     },
     answers: {
       type: SchemaType.ARRAY,
-      description: "Array of answers, represented as 0 (False) or 1 (True), corresponding to a questions of the same index on the questions array",
+      description: "An array of 0's (False) and 1's (true), representing the truthness of a statment that has the same array index in the statments array",
       items: {
         type: SchemaType.NUMBER,
-        description: "Answer for the corresponding question: 0 for False, 1 for True, corresponding to a question of the same index on the questions array",
+        description: "A number that represents 0 if it's corresponding statment is false and 1 if it's correponding statment is true",
         nullable: false,
       },
       nullable: false,
@@ -150,7 +150,7 @@ export const trueFalseSchema = {
       nullable: false,
     },
   },
-  required: ["type", "title", "skip", "index", "questions", "answers"],
+  required: ["type", "title", "skip", "index", "statements", "answers"],
 };
 
 export const pickSchema = {
@@ -168,6 +168,27 @@ export const pickSchema = {
       description: "The text of the question, describing what to pick",
       nullable: false,
     },
+    choices: {
+      type: SchemaType.ARRAY,
+      description: "An array of words that contains one or more correct answers and also wrong ones",
+      items: {
+        type: SchemaType.STRING,
+        description: "A single choice option that might be right or wrong",
+        nullable: false,
+      },
+      nullable: false,
+    },
+    answers: {
+      type: SchemaType.ARRAY,
+      description:
+        "Array of words which contains the words that are correct from the choices array",
+      items: {
+        type: SchemaType.STRING,
+        description: "A correct answer from the choices array",
+        nullable: false,
+      },
+      nullable: false,
+    },
     skip: {
       type: SchemaType.BOOLEAN,
       description: "Indicates if the question can be skipped",
@@ -176,27 +197,6 @@ export const pickSchema = {
     index: {
       type: SchemaType.NUMBER,
       description: "The index of the question",
-      nullable: false,
-    },
-    choices: {
-      type: SchemaType.ARRAY,
-      description: "Array of possible choices for the question",
-      items: {
-        type: SchemaType.STRING,
-        description: "A single choice option",
-        nullable: false,
-      },
-      nullable: false,
-    },
-    answers: {
-      type: SchemaType.ARRAY,
-      description:
-        "Array of words that are part of the choices array and represent correct answers",
-      items: {
-        type: SchemaType.STRING,
-        description: "A correct answer from the choices array",
-        nullable: false,
-      },
       nullable: false,
     },
   },

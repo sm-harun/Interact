@@ -60,7 +60,7 @@
 		<span class="">Welcome to Interact </span>
 	</h1>
 	<h1 class="h1">
-		<a href="/home" class="btn variant-ghost-primary text-2xl">Go to Home Page</a>
+		<a href="/courses" class="btn variant-ghost-primary text-2xl">Go to Course Page</a>
 	</h1>
 </main>
 <canvas class="" bind:this={canvas} id="main-canvas"></canvas>
