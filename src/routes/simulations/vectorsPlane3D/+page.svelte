@@ -450,7 +450,7 @@
 					</div>
 				</div>
 
-				<!-- This is the Resultants section -->evenZoom
+				<!-- This is the Resultants section -->
 				<div class="w-full p-10">
 					<h1 class="h1 pb-5">Resultants</h1>
 					<div

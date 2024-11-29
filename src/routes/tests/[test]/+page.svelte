@@ -71,7 +71,6 @@
 		fetchTest().then((fetchedTest) => {
 			// Get the settings first
 			settings = fetchedTest.settings;
-			console.log(settings);
 
 			fetchedTest.courses.forEach((course) => {
 				// Gets all the sections inside the selected lessons
@@ -123,8 +122,6 @@
 
 	async function createModel(choices: number, truefalse: number, pick: number) {
 		let res = [];
-
-		console.log(testContent);
 
 		// Create True/False questions
 		for (let i = 0; i < truefalse; i++) {
@@ -280,7 +277,7 @@
 					{:then response}
 						<div class="size-full grid place-items-center overflow-hidden">
 							<div
-								class="h-full w-[60%] p-10 flex flex-col gap-5 overflow-y-auto border-x-4 border-surface-100-800-token"
+								class="h-full w-full xl:w-[60%] p-10 flex flex-col gap-5 overflow-y-auto border-x-4 border-surface-100-800-token"
 							>
 								{#each response as res}
 									{#if res.type == 'TrueFalse'}

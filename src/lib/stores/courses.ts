@@ -116,12 +116,12 @@ export const trueFalseSchema = {
     },
     title: {
       type: SchemaType.STRING,
-      description: "The title of the question set",
+      description: "A title to indecate what type of questions they will be.",
       nullable: false,
     },
     statements: {
       type: SchemaType.ARRAY,
-      description: "Array of individual true or false statements",
+      description: "Array of individual true or false statements, they are statments not open ended questions",
       items: {
         type: SchemaType.STRING,
         description: "A statment that might be true or false",
