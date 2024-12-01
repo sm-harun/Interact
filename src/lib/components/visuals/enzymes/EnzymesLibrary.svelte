@@ -19,7 +19,8 @@
 		src={'/courses/enzymes/lowering-activation-energy-by-enzymes.webp'}
 	/>
 {:else}
-	<p class="opacity-100 {showNextSection()}">
+	{showNextSection()}
+	<p class="opacity-100">
 		The Enzymes library didn't find the <strong class="mx-2">{section.title}</strong> visual
 	</p>
 {/if}

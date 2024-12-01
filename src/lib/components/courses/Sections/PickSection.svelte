@@ -55,6 +55,7 @@
 	class="w-full bg-surface-200-700-token rounded-container-token p-4 relative transition border-2 {allAnswered
 		? 'border-success-500'
 		: 'border-transparent'}"
+	in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 >
 	<h1 class="h4 w-full flex items-center gap-3">
 		<span class="font-black italic">Q. </span>

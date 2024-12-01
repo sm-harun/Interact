@@ -40,7 +40,7 @@
 
 	onMount(async () => {
 		genAI = new GoogleGenerativeAI(GEMINI_KEY);
-		model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+		model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-8b' });
 		chat = model.startChat({
 			history: $messages
 		});
