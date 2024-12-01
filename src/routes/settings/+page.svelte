@@ -6,7 +6,7 @@
 	<MainHeader showMainRoutes={false} showHomeButton={true} showBackButton={true} />
 	<main class="flex-grow flex">
 		<nav class="flex-shrink-0 h-full w-96 bg-surface-100-800-token p-5">
-			<h2 class="h2">This Nav</h2>
+			<h2 class="h2">The Nav</h2>
 		</nav>
 		<section class="flex-grow py-10 px-96">
 			<h1 class="h1">This is the Settings Page</h1>

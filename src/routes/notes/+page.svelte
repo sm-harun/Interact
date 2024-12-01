@@ -10,7 +10,13 @@
 	import PersonalNotesSection from '$lib/components/notes/sections/PersonalNotesSection.svelte';
 	import NoteInputSection from '$lib/components/notes/sections/NoteInputSection.svelte';
 
-	import { getNotesDoc, getNotesColl, getCollNotesColl, getCollNotesNote } from '$lib/docRefs';
+	import {
+		getNotesDoc,
+		getNotesColl,
+		getCollNotesColl,
+		getCollNotesNote,
+		renameDocument
+	} from '$lib/docRefs';
 	import { user } from '$lib/stores/credentials';
 
 	import { tweened } from 'svelte/motion';
@@ -36,10 +42,11 @@
 
 	let displayedNotes = writable([]);
 
-	let inputTitle: string = $state();
-	let textArea: string = $state();
+	let inputTitle: string | null = $state(null);
+	let textArea: string | null = $state(null);
 
-	let oldTextArea: string = $state();
+	let oldTitle: string | null = $state(null);
+	let oldTextArea: string | null = $state(null);
 
 	let fetchedCollections = $state(false);
 	let fetchedNotes = $state(false);
@@ -50,7 +57,7 @@
 		easing: cubicInOut
 	});
 
-	onMount(async () => {
+	$effect.pre(async () => {
 		await getCollections().then(({ personalNotes, courseNotes }) => {
 			personalNotesCollection.set([...personalNotes]);
 			courseNotesCollection.set([...courseNotes]);
@@ -180,16 +187,23 @@
 				inputTitle = note.title;
 				textArea = note.text;
 
+				oldTitle = inputTitle;
 				oldTextArea = textArea;
 			}
 		});
 	}
 
 	function saveNote() {
-		updateDoc(getCollNotesNote($user?.uid, currentCollection, inputTitle), {
+		updateDoc(getCollNotesNote($user?.uid, currentCollection, oldTitle), {
+			title: inputTitle,
 			text: textArea
 		})
 			.then(() => {
+				// Changes the name of the actual document
+				if (oldTitle !== inputTitle) {
+					renameDocument(getCollNotesNote($user?.uid, currentCollection, oldTitle), inputTitle);
+				}
+
 				displayedNotes.update((currentValue) => {
 					currentValue.forEach((note) => {
 						if (note.title == inputTitle) note.text = textArea;
@@ -198,6 +212,7 @@
 					return currentValue;
 				});
 
+				oldTitle = inputTitle;
 				oldTextArea = textArea;
 
 				const toastSettings: ToastSettings = {
@@ -226,6 +241,7 @@
 			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
 			response: (r: string) => {
 				if (!r) return;
+				inputTitle = oldTitle;
 				textArea = oldTextArea;
 			}
 		};
@@ -312,8 +328,8 @@
 		<NoteInputSection
 			bind:inputTitle
 			bind:textArea
+			bind:oldTitle
 			bind:oldTextArea
-			bind:currentCollection
 			{resetNote}
 			{saveNote}
 		/>

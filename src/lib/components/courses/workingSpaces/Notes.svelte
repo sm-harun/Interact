@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getDocs, setDoc, updateDoc, query, orderBy } from 'firebase/firestore';
-	import { getCollNotesColl, getCollNotesNote, getNotesDoc } from '$lib/docRefs';
+	import { getCollNotesColl, getCollNotesNote, getNotesDoc, renameDocument } from '$lib/docRefs';
 	import { user } from '$lib/stores/credentials';
 
 	import { onMount } from 'svelte';
@@ -24,10 +24,11 @@
 
 	let { course }: Props = $props();
 
-	let inputTitle: string = $state();
-	let textArea: string = $state();
+	let inputTitle: string | undefined = $state();
+	let textArea: string | undefined = $state();
 
-	let oldTextArea: string = $state();
+	let oldTitle: string | undefined = $state();
+	let oldTextArea: string | undefined = $state();
 
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
@@ -43,7 +44,7 @@
 		easing: cubicInOut
 	});
 
-	onMount(async () => {
+	$effect.pre(async () => {
 		if ($user) {
 			await getNotesCollection($user.uid).then((notes) => {
 				displayedNotes.set([...notes]);
@@ -106,6 +107,7 @@
 				inputTitle = note.title;
 				textArea = note.text;
 
+				oldTitle = inputTitle;
 				oldTextArea = textArea;
 			}
 		});
@@ -116,10 +118,16 @@
 	}
 
 	function saveNote() {
-		updateDoc(getCollNotesNote($user?.uid, course, inputTitle), {
+		updateDoc(getCollNotesNote($user?.uid, course, oldTitle), {
+			title: inputTitle,
 			text: textArea
 		})
 			.then(() => {
+				// Changes the name of the actual document
+				if (oldTitle !== inputTitle) {
+					renameDocument(getCollNotesNote($user?.uid, course, oldTitle), inputTitle);
+				}
+
 				displayedNotes.update((currentValue) => {
 					currentValue.forEach((note) => {
 						if (note.title == inputTitle) note.text = textArea;
@@ -128,6 +136,7 @@
 					return currentValue;
 				});
 
+				oldTitle = inputTitle;
 				oldTextArea = textArea;
 
 				const toastSettings: ToastSettings = {
@@ -157,6 +166,7 @@
 			valueAttr: { type: 'text', minlength: 3, maxlength: 35, required: true },
 			response: (r: string) => {
 				if (!r) return;
+				inputTitle = oldTitle;
 				textArea = oldTextArea;
 			}
 		};
@@ -205,7 +215,7 @@
 	</div>
 	<div class="size-full absolute top-0 flex flex-col" style="left: {100 - $right}%">
 		<header class="flex-shrink-0 h-16 w-full flex items-center px-5">
-			<button class="active:scale-90 transition" onclick={goBack}>
+			<button class="active:scale-90 transition" onclick={goBack} aria-label="Go Back">
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"
@@ -226,7 +236,7 @@
 		<div class="flex-grow w-full flex flex-col">
 			<input
 				class="input rounded-none border-none !bg-transparent px-10 h-40 h1 flex-shrink-0"
-				value={inputTitle}
+				bind:value={inputTitle}
 			/>
 			<hr class="mx-4 mb-8" />
 			<textarea
@@ -236,13 +246,13 @@
 
 			<div class="absolute bottom-10 right-8 flex gap-5">
 				<button
-					class="{oldTextArea == textArea
+					class="{oldTextArea == textArea && oldTitle == inputTitle
 						? 'variant-ghost-primary'
 						: 'variant-filled-primary'} btn text-xl px-6"
 					onclick={resetNote}>Reset</button
 				>
 				<button
-					class="{oldTextArea == textArea
+					class="{oldTextArea == textArea && oldTitle == inputTitle
 						? 'variant-ghost-primary'
 						: 'variant-filled-primary'} btn text-xl px-6"
 					onclick={saveNote}>Save</button
