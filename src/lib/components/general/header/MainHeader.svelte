@@ -29,7 +29,7 @@
 		window.history.back();
 	}
 
-	let slidderPosition = $state(true);
+	let slidderPosition = $state(false);
 </script>
 
 <header
