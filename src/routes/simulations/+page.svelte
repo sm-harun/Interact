@@ -3,6 +3,8 @@
 
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 
+	import PhysicsEngineCard from './physicsEngine2D/MainCard.svelte';
+
 	import HumanSkeletonCard from '$lib/components/simulations/biology/humanskeleton/MainCard.svelte';
 	import VectorsPlane2DCard from '$lib/components/simulations/maths/vectorsplane/2D/MainCard.svelte';
 
@@ -21,6 +23,11 @@
 			<HumanSkeletonCard />
 			<VectorsPlane2DCard />
 			<VectorsPlane3DCard />
+			<PhysicsEngineCard />
+		</div>
+		<h1 class="h1 mt-7 mb-3">Physics</h1>
+		<div class="p-3 flex gap-4 flex-wrap">
+			<PhysicsEngineCard />
 		</div>
 		<h1 class="h1 mt-7 mb-3">Maths</h1>
 		<div class="p-3 flex gap-4 flex-wrap">

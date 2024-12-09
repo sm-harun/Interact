@@ -14,25 +14,47 @@
 		showMainRoutes?: boolean;
 		showBackButton?: boolean;
 		showHomeButton?: boolean;
+		showSlidder?: boolean;
 	}
 
 	let {
 		title = $webTitle,
 		showMainRoutes = true,
 		showBackButton = false,
-		showHomeButton = false
+		showHomeButton = false,
+		showSlidder = $bindable(false)
 	}: Props = $props();
 
 	function goBack() {
 		window.history.back();
 	}
+
+	let slidderPosition = $state(true);
 </script>
 
 <header
-	class="{showMainRoutes
-		? 'h-36'
-		: 'h-24'} flex-shrink-0 w-screen bg-surface-100-800-token sticky top-0 flex flex-col overflow-hidden header-shadow z-40"
+	class="{showMainRoutes ? 'h-36' : 'h-24'} {slidderPosition
+		? '-translate-y-full'
+		: ''} flex-shrink-0 w-screen bg-surface-100-800-token sticky top-0 flex flex-col header-shadow z-40 transition duration-500"
 >
+	{#if showSlidder}
+		<button
+			class="bg-surface-200-700-token absolute top-full right-64 px-8 py-3 rounded-b-xl"
+			aria-label="slide up the header"
+			onclick={() => (slidderPosition = !slidderPosition)}
+		>
+			<svg
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="size-6 {slidderPosition ? '' : 'rotate-180'} transition"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+			</svg>
+		</button>
+	{/if}
+
 	<section class="flex-[2_1_0] p-3 flex items-center justify-between">
 		<div class="flex justify-between items-center gap-4 pl-4">
 			{#if showBackButton}
