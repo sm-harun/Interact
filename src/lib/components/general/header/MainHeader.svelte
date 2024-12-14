@@ -22,7 +22,7 @@
 		showMainRoutes = true,
 		showBackButton = false,
 		showHomeButton = false,
-		showSlidder = $bindable(false)
+		showSlidder = false
 	}: Props = $props();
 
 	function goBack() {

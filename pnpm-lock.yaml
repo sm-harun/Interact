@@ -35,6 +35,9 @@ importers:
       mathjs:
         specifier: ^13.2.0
         version: 13.2.0
+      matter-js:
+        specifier: ^0.20.0
+        version: 0.20.0
       three:
         specifier: ^0.168.0
         version: 0.168.0
@@ -63,6 +66,9 @@ importers:
       '@types/eslint':
         specifier: ^9.6.0
         version: 9.6.1
+      '@types/matter-js':
+        specifier: ^0.19.8
+        version: 0.19.8
       '@types/node':
         specifier: 22.5.0
         version: 22.5.0
@@ -736,6 +742,9 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
+  '@types/matter-js@0.19.8':
+    resolution: {integrity: sha512-W2ZWG58Lijv/4v768NgpeyFqqiOyslmAU7qqM1Lhz4XBoUgGtZtPz4CjcOKYtqHIak14dvPldslQhltqLTWwsw==}
+
   '@types/node@22.5.0':
     resolution: {integrity: sha512-DkFrJOe+rfdHTqqMg0bSNlGlQ85hSoh2TPzZyhHsXnMtligRWpxUySiyw8FY14ITt24HVCiQPWxS3KO/QlGmWg==}
 
@@ -1373,6 +1382,9 @@ packages:
     resolution: {integrity: sha512-P5PZoiUX2Tkghkv3tsSqlK0B9My/ErKapv1j6wdxd0MOrYQ30cnGE4LH/kzYB2gA5rN46Njqc4cFgJjaxgijoQ==}
     engines: {node: '>= 18'}
     hasBin: true
+
+  matter-js@0.20.0:
+    resolution: {integrity: sha512-iC9fYR7zVT3HppNnsFsp9XOoQdQN2tUyfaKg4CHLH8bN+j6GT4Gw7IH2rP0tflAebrHFw730RR3DkVSZRX8hwA==}
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
@@ -2577,6 +2589,8 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
+  '@types/matter-js@0.19.8': {}
+
   '@types/node@22.5.0':
     dependencies:
       undici-types: 6.19.8
@@ -3249,6 +3263,8 @@ snapshots:
       seedrandom: 3.0.5
       tiny-emitter: 2.1.0
       typed-function: 4.2.1
+
+  matter-js@0.20.0: {}
 
   mdn-data@2.0.30: {}
 

@@ -1,10 +1,11 @@
 <script lang="ts">
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
+	import MatterScene from './MatterScene.svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
 
 	// Status of the navbar whether it is opened or closed
-	let navBarStatus = $state(true);
+	let navBarStatus = $state(false);
 
 	let navSectionsStatus = tweened<number>(0, {
 		duration: 1000,
@@ -14,9 +15,9 @@
 
 <div class="h-screen flex flex-col relative">
 	<MainHeader showBackButton={true} showMainRoutes={false} showSlidder={true} />
-	<main class="absolute top-0 right-0 size-full border-2">
+	<main class="absolute top-0 right-0 size-full">
 		<nav
-			class="bg-surface-100-800-token absolute bottom-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
+			class="bg-surface-100/50 dark:bg-surface-800/50 absolute bottom-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
 				? ''
 				: '-translate-x-full'}"
 		>
@@ -116,5 +117,8 @@
 				</div>
 			</section>
 		</nav>
+
+		<!-- This will hold the matter canvas scene -->
+		<MatterScene />
 	</main>
 </div>
