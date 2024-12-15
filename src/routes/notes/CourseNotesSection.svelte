@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NoteCourse from '../cards/NoteCourse.svelte';
+	import NoteCourse from '$lib/components/notes/cards/NoteCourse.svelte';
 
 	interface Props {
 		courseNotesCollection: any;
@@ -13,11 +13,11 @@
 <section class="w-full h-auto">
 	<h2 class="h2 pb-5">Course Notes</h2>
 	<div class="flex flex-wrap gap-4">
-		{#if $courseNotesCollection.length !== 0}
-			{#each $courseNotesCollection as collection}
+		{#if courseNotesCollection.length !== 0}
+			{#each courseNotesCollection as collection}
 				<NoteCourse
 					title={collection.title}
-					notes={34}
+					notes={collection.length}
 					todo={() => updateNotes(collection.title)}
 				/>
 			{/each}

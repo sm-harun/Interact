@@ -6,9 +6,9 @@
 
 	import PlaceHoldersCollection from '$lib/components/notes/placeHolders/PlaceHoldersCollection.svelte';
 
-	import CourseNotesSection from '$lib/components/notes/sections/CourseNotesSection.svelte';
-	import PersonalNotesSection from '$lib/components/notes/sections/PersonalNotesSection.svelte';
-	import NoteInputSection from '$lib/components/notes/sections/NoteInputSection.svelte';
+	import CourseNotesSection from './CourseNotesSection.svelte';
+	import PersonalNotesSection from './PersonalNotesSection.svelte';
+	import NoteInputSection from './NoteInputSection.svelte';
 
 	import {
 		getNotesDoc,
@@ -23,7 +23,6 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { writable } from 'svelte/store';
-	import { onMount } from 'svelte';
 
 	import { setDoc, getDocs, updateDoc, query, orderBy } from 'firebase/firestore';
 
@@ -37,8 +36,8 @@
 	let modalStore = getModalStore();
 	let toastStore = getToastStore();
 
-	let courseNotesCollection = writable([]);
-	let personalNotesCollection = writable([]);
+	let courseNotesCollection = $state([]);
+	let personalNotesCollection = $state([]);
 
 	let displayedNotes = writable([]);
 
@@ -59,8 +58,8 @@
 
 	$effect.pre(async () => {
 		await getCollections().then(({ personalNotes, courseNotes }) => {
-			personalNotesCollection.set([...personalNotes]);
-			courseNotesCollection.set([...courseNotes]);
+			personalNotesCollection = [...personalNotes];
+			courseNotesCollection = [...courseNotes];
 
 			fetchedCollections = true;
 		});
@@ -102,15 +101,26 @@
 		let personalNotes: PersonalNotes[] = [];
 		let courseNotes: CourseNotes[] = [];
 
-		fetchedCourses.forEach(async (note: any) => {
+		let iteretableNotes: (PersonalNotes | CourseNotes)[] = [];
+
+		// We do this so that we have a real iteretable array that works with async-await
+		fetchedCourses.forEach((note: any) => {
+			iteretableNotes.push(note);
+		});
+
+		for (const note of iteretableNotes) {
 			let newCollection = {
 				type: note.data().type,
-				title: note.data().title
+				title: note.data().title,
+				length: 0
 			};
 
-			if (newCollection.type == 'personal') personalNotes.push(newCollection);
-			if (newCollection.type == 'course') courseNotes.push(newCollection);
-		});
+			const notes = await getNotesCollection(note.data().title);
+			newCollection.length = notes.length;
+
+			if (newCollection.type === 'personal') personalNotes.push(newCollection);
+			if (newCollection.type === 'course') courseNotes.push(newCollection);
+		}
 
 		return { personalNotes: personalNotes, courseNotes: courseNotes };
 	}
@@ -130,7 +140,7 @@
 		transitionPlane();
 		updateNotesUI();
 
-		await getNotesCollection().then((notes) => {
+		await getNotesCollection(currentCollection).then((notes) => {
 			displayedNotes.set([...notes]);
 			fetchedNotes = true;
 		});
@@ -140,9 +150,9 @@
 		notesUpdater++;
 	}
 
-	async function getNotesCollection() {
+	async function getNotesCollection(coll: string) {
 		const fetchedNotes = await getDocs(
-			query(getCollNotesColl($user?.uid, currentCollection), orderBy('index', 'asc'))
+			query(getCollNotesColl($user?.uid, coll), orderBy('index', 'asc'))
 		);
 
 		let pushedNotes: PersonalNotes[] = [];

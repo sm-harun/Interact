@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PersonalNotes from '../cards/PersonalNotes.svelte';
+	import PersonalNotes from '$lib/components/notes/cards/PersonalNotes.svelte';
 
 	interface Props {
 		personalNotesCollection: any;
@@ -14,10 +14,10 @@
 <section class="w-full h-auto pt-10">
 	<h2 class="h2 pb-5">Personal Notes</h2>
 	<div class="flex flex-wrap gap-4">
-		{#each $personalNotesCollection as collection}
+		{#each personalNotesCollection as collection}
 			<PersonalNotes
 				title={collection.title}
-				notes={34}
+				notes={collection.length}
 				todo={() => updateNotes(collection.title)}
 			/>
 		{/each}
