@@ -1,11 +1,42 @@
 <script lang="ts">
 	import Matter from 'matter-js';
 
+	interface Props {
+		engineSettings: EngineSettings;
+	}
+
+	type EngineSettings = {
+		timeScale: number;
+		timeState: boolean; // Weather it is played or not
+		gravityScale: number;
+		gravityX: number;
+		gravityY: number;
+	};
+
+	let { engineSettings = $bindable() }: Props = $props();
+
 	let container: HTMLDivElement;
 
 	const { Engine, Render, Runner, Bodies, Composite } = Matter;
 
 	let engine = Engine.create();
+
+	// Affects the time
+	$effect(() => {
+		if (engineSettings.timeState == true) engine.timing.timeScale = engineSettings.timeScale;
+		else engine.timing.timeScale = 0;
+	});
+
+	// These there affect gravity settings
+	$effect(() => {
+		engine.gravity.scale = engineSettings.gravityScale;
+	});
+	$effect(() => {
+		engine.gravity.x = engineSettings.gravityX;
+	});
+	$effect(() => {
+		engine.gravity.y = engineSettings.gravityY;
+	});
 
 	let render: Matter.Render;
 
@@ -123,4 +154,4 @@
 	}
 </script>
 
-<div class="size-full" bind:this={container}></div>
+<div class="flex-grow w-full" bind:this={container}></div>
