@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
+	import ObjectsSection from './NavBarSections/objectSection/ObjectsSection.svelte';
+	import RecordingsSection from './NavBarSections/RecordingsSection.svelte';
+	import StatesSection from './NavBarSections/StatesSection.svelte';
 
 	// Status of the navbar whether it is opened or closed
 	let navBarStatus = $state(false);
@@ -12,7 +15,7 @@
 </script>
 
 <nav
-	class="bg-surface-100/50 dark:bg-surface-800/50 absolute bottom-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
+	class="variant-glass absolute bottom-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
 		? ''
 		: '-translate-x-full'}"
 >
@@ -92,23 +95,8 @@
 		</button>
 	</header>
 	<section class="flex-grow w-full border-2 relative overflow-hidden">
-		<div
-			class="w-full h-full absolute top-0 border-2 grid place-items-center"
-			style="right: {$navSectionsStatus}%"
-		>
-			This is the Objects Section
-		</div>
-		<div
-			class="w-full h-full absolute top-0 border-2 grid place-items-center"
-			style="right: {$navSectionsStatus - 100}%"
-		>
-			This is the Recordings Section
-		</div>
-		<div
-			class="w-full h-full absolute top-0 border-2 grid place-items-center"
-			style="right: {$navSectionsStatus - 200}%"
-		>
-			This is the States Section
-		</div>
+		<ObjectsSection {navSectionsStatus} />
+		<RecordingsSection {navSectionsStatus} />
+		<StatesSection {navSectionsStatus} />
 	</section>
 </nav>
