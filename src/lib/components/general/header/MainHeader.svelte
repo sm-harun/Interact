@@ -33,7 +33,7 @@
 </script>
 
 <header
-	class="{showMainRoutes ? 'h-36' : 'h-24'} {slidderPosition
+	class="{showMainRoutes ? 'h-36' : 'h-24'} {slidderPosition && showSlidder
 		? '-translate-y-full'
 		: ''} flex-shrink-0 w-screen bg-surface-100-800-token sticky top-0 flex flex-col header-shadow z-40 transition duration-500"
 >
