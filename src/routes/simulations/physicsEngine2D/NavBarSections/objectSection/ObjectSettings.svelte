@@ -14,7 +14,7 @@
 
 	let modalStore = getModalStore();
 
-	let position: { x: number; y: number } = { x: 100, y: 100 };
+	let position: { x: number; y: number } = $state({ x: 100, y: 100 });
 	let dimenstions: { width: number; height: number } = $state({ width: 50, height: 50 });
 	let radius: number = $state(50);
 
@@ -107,7 +107,7 @@
 		<hr class="my-3" />
 
 		<div class="w-full relative">
-			<input class="input" type="text" min="0" step="1" value={options.plugin.name} />
+			<input class="input" type="text" bind:value={options.plugin.name} />
 			<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Name</span>
 		</div>
 	</div>

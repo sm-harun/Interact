@@ -23,6 +23,8 @@
 	$effect.pre(() => {
 		// Event listner to use the Space bar to Pause and Play the simulation
 		function listenSpaceKey(e: any) {
+			e.preventDefault();
+
 			if (e.code == 'Space') {
 				engineSettings.timeState = !engineSettings.timeState;
 			}
