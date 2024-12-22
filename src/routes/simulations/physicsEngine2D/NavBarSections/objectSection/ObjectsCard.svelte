@@ -40,8 +40,9 @@
 		<input type="color" class="input" bind:value={body.render.fillStyle} />
 	</div>
 
+	<hr class="my-3" />
+
 	<!-- The Position Section -->
-	<h4 class="h4 mb-3 text-secondary-700-200-token">Position</h4>
 	<div class="flex items-center gap-2">
 		<div class="flex items-center gap-4 max-w-40">
 			<p class="flex-shrink-0 text-secondary-700-200-token">X</p>
@@ -52,6 +53,8 @@
 			<input class="input" type="number" min="0" step="1" bind:value={body.position.y} />
 		</div>
 	</div>
+
+	<hr class="my-3" />
 
 	<!-- Edit Button -->
 	<div class="w-full flex justify-between items-center mt-5">
