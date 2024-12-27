@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type Matter from 'matter-js';
 	import { slide } from 'svelte/transition';
+	import { shapes } from '../../states.svelte';
+	import Matter from 'matter-js';
 
 	interface Props {
-		body: Matter.Body;
+		body: { id: number; name: string; x: number; y: number; fillStyle: string };
 	}
 
 	let { body }: Props = $props();
@@ -31,13 +32,29 @@
 			deleteButtonHovered = false;
 		};
 	});
+
+	function xValueChanged(e: Event) {
+		shapes.forEach((shape: Matter.Body) => {
+			if (shape.id == body.id) {
+				Matter.Body.setPosition(shape, { x: e.target.value, y: shape.position.y });
+			}
+		});
+	}
+
+	function yValueChanged(e: Event) {
+		shapes.forEach((shape: Matter.Body) => {
+			if (shape.id == body.id) {
+				Matter.Body.setPosition(shape, { x: shape.position.x, y: e.target.value });
+			}
+		});
+	}
 </script>
 
 <div class="flex-shrink-0 w-full variant-ghost-secondary p-6 card-hover" transition:slide>
 	<!-- Title and Color -->
 	<div class="flex justify-between items-center">
-		<h3 class="h3 pb-3">{body.label}</h3>
-		<input type="color" class="input" bind:value={body.render.fillStyle} />
+		<h3 class="h3 pb-3">{body.name}</h3>
+		<input type="color" class="input" value={body.fillStyle} />
 	</div>
 
 	<hr class="my-3" />
@@ -46,11 +63,25 @@
 	<div class="flex items-center gap-2">
 		<div class="flex items-center gap-4 max-w-40">
 			<p class="flex-shrink-0 text-secondary-700-200-token">X</p>
-			<input class="input" type="number" min="0" step="1" bind:value={body.position.x} />
+			<input
+				class="input"
+				type="number"
+				min="0"
+				step="1"
+				bind:value={body.x}
+				onchange={xValueChanged}
+			/>
 		</div>
 		<div class="flex items-center gap-4 max-w-40 ml-5">
 			<p class="flex-shrink-0 text-secondary-700-200-token">Y</p>
-			<input class="input" type="number" min="0" step="1" bind:value={body.position.y} />
+			<input
+				class="input"
+				type="number"
+				min="0"
+				step="1"
+				bind:value={body.y}
+				onchange={yValueChanged}
+			/>
 		</div>
 	</div>
 

@@ -1,17 +1,5 @@
 <script lang="ts">
-	interface Props {
-		engineSettings: EngineSettings;
-	}
-
-	type EngineSettings = {
-		timeScale: number;
-		timeState: boolean; // Weather it is played or not
-		gravityScale: number;
-		gravityX: number;
-		gravityY: number;
-	};
-
-	let { engineSettings = $bindable() }: Props = $props();
+	import { engineSettings } from './states.svelte';
 
 	function convertToEarthGravity(value: number) {
 		return (value * 9800).toFixed(1);

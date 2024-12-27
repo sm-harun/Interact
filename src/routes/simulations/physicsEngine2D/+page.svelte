@@ -3,29 +3,13 @@
 	import Footer from './Footer.svelte';
 	import MatterScene from './MatterScene.svelte';
 	import NavBar from './NavBar.svelte';
-
-	type EngineSettings = {
-		timeScale: number;
-		timeState: boolean; // Weather it is played or not
-		gravityScale: number;
-		gravityX: number;
-		gravityY: number;
-	};
-
-	let engineSettings: EngineSettings = $state({
-		timeScale: 1,
-		timeState: true,
-		gravityScale: 0.001,
-		gravityX: 0,
-		gravityY: 1
-	});
+	import { engineSettings } from './states.svelte';
 
 	$effect.pre(() => {
 		// Event listner to use the Space bar to Pause and Play the simulation
 		function listenSpaceKey(e: any) {
-			e.preventDefault();
-
-			if (e.code == 'Space') {
+			if (e.code == 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+				e.preventDefault();
 				engineSettings.timeState = !engineSettings.timeState;
 			}
 		}
@@ -43,8 +27,8 @@
 	<main class="absolute top-0 right-0 size-full flex flex-col">
 		<NavBar />
 		<!-- This will hold the matter canvas scene -->
-		<MatterScene bind:engineSettings />
+		<MatterScene />
 
-		<Footer bind:engineSettings />
+		<Footer />
 	</main>
 </div>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Matter from 'matter-js';
 	import { fly } from 'svelte/transition';
-	import { bodies } from '../../states.svelte';
 	import { getModalStore } from '@skeletonlabs/skeleton';
+	import { addNewObject } from '../../states.svelte';
 
 	type ModalView = 'ObjectSelection' | 'ObjectSettings';
 
@@ -38,7 +38,8 @@
 	function createObject() {
 		if (options.label == 'Circle Body') {
 			let newBody = Matter.Bodies.circle(position.x, position.y, radius, options);
-			bodies.update((currrentBodies) => [...currrentBodies, newBody]);
+			// bodies.update((currrentBodies) => [...currrentBodies, newBody]);
+			addNewObject([newBody]);
 		} else if (options.label == 'Rectangle Body') {
 			let newBody = Matter.Bodies.rectangle(
 				position.x,
@@ -47,7 +48,7 @@
 				dimenstions.height,
 				options
 			);
-			bodies.update((currrentBodies) => [...currrentBodies, newBody]);
+			// bodies.update((currrentBodies) => [...currrentBodies, newBody]);
 		}
 
 		modalStore.close();

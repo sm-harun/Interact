@@ -3,7 +3,7 @@
 	import ObjectCreationModal from './ObjectCreationModal.svelte';
 	import { getModalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
 
-	import { bodies } from '../../states.svelte';
+	import { shapeStats } from '../../states.svelte';
 	import ObjectsCard from './ObjectsCard.svelte';
 
 	interface Props {
@@ -29,8 +29,8 @@
 	class="w-full h-full p-5 absolute top-0 flex flex-col gap-8 overflow-y-auto border-2 border-green-500"
 	style="right: {$navSectionsStatus}%"
 >
-	{#each $bodies as body}
-		<ObjectsCard {body} />
+	{#each shapeStats as body, i}
+		<ObjectsCard body={shapeStats[i]} />
 	{/each}
 
 	<button
