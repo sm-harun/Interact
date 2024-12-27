@@ -34,7 +34,7 @@
 </script>
 
 <section
-	class="w-full h-full p-5 absolute top-0 flex flex-col gap-8 overflow-y-auto border-2 border-green-500"
+	class="w-full h-full p-5 absolute top-0 flex flex-col gap-8 overflow-y-auto"
 	style="right: {$navSectionsStatus}%"
 >
 	<button
@@ -55,7 +55,9 @@
 	<h2 class="h3">Dynamic Bodies</h2>
 	<hr class="my-1" />
 	{#if dynamicBodiesEmpty}
-		<div class="w-full card variant-glass-surface p-8 text-xl text-white/50">No Dynamic Bodies</div>
+		<div class="w-full card variant-glass-surface p-8 text-xl text-black/50 dark:text-white/50">
+			No Dynamic Bodies
+		</div>
 	{:else}
 		{#each shapeStats as body, i}
 			{#if body.type == 'Dynamic'}
@@ -67,7 +69,9 @@
 	<h2 class="h3">Static Bodies</h2>
 	<hr class="my-1" />
 	{#if staticBodiesEmpty}
-		<div class="w-full card variant-glass-surface p-8 text-xl text-white/50">No Static Bodies</div>
+		<div class="w-full card variant-glass-surface p-8 text-xl text-black/50 dark:text-white/50">
+			No Static Bodies
+		</div>
 	{:else}
 		{#each shapeStats as body, i}
 			{#if body.type == 'Static'}

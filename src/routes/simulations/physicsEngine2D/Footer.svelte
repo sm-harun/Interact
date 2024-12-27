@@ -12,7 +12,7 @@
 		<div>
 			<div class="flex justify-around w-full">
 				<p class="font-bold">Gravity Scale</p>
-				<p>{convertToEarthGravity(engineSettings.gravityScale)} m/s.s</p>
+				<p>{convertToEarthGravity(engineSettings.gravityScale)} m/s<sup>2</sup></p>
 			</div>
 			<input
 				type="range"

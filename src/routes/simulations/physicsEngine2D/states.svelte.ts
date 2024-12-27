@@ -1,10 +1,10 @@
 import Matter from "matter-js";
 
-const { Engine, Bodies, Composite, Runner, Render } = Matter;
+const { Engine, Bodies, Composite, Runner, Render, World } = Matter;
 
 // export const bodies: Writable<Matter.Body[]> = writable([]);
-export const engine: Matter.Engine = Engine.create();
 export const shapes: Matter.Body[] = [];
+export const engine: Matter.Engine = Engine.create();
 
 export const engineSettings: EngineSettings = $state({
   timeScale: 1,
@@ -48,6 +48,14 @@ export function addNewObject(bodies: Matter.Body[]) {
   })
 }
 
+export function removeObject(objectId: number) {
+  const shapeIndex = shapes.findIndex(shape => shape.id == objectId);
+  World.remove(engine.world, shapes[shapeIndex]);
+  shapes.splice(shapeIndex, 1);
+
+  shapeStats.splice(shapeStats.findIndex(shape => shape.id == objectId), 1);
+}
+
 function drawObjects() {
   for (let i = 1; i <= 4; i++) {
     for (let j = 1; j <= 4; j++) {
@@ -78,10 +86,10 @@ export function createBarrier(type: 'ground' | 'ceiling' | 'wall-right' | 'wall-
     case 'ceiling':
       drawCeiling();
       return;
-    case 'wall-right':
+    case 'wall-left':
       drawRightWall();
       return;
-    case 'wall-left':
+    case 'wall-right':
       drawLeftWall();
       return;
   }

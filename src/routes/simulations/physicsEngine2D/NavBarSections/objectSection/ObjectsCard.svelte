@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { shapes, engineSettings } from '../../states.svelte';
+	import { shapes, engineSettings, removeObject } from '../../states.svelte';
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import Matter from 'matter-js';
 
@@ -116,9 +116,13 @@
 
 	<hr class="my-3" />
 
-	<!-- Edit Button -->
+	<!-- The Delete Button -->
 	<div class="w-full flex justify-between items-center mt-5">
-		<button class="group btn variant-glass-primary" bind:this={deleteButton}>
+		<button
+			class="group btn variant-glass-primary"
+			bind:this={deleteButton}
+			onclick={() => removeObject(body.id)}
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -137,6 +141,8 @@
 				<span transition:slide={{ axis: 'x' }}>Delete</span>
 			{/if}
 		</button>
+
+		<!-- Edit Button -->
 		<button class="group btn variant-glass-primary" bind:this={editButton}
 			>{#if editButtonHovered}
 				<span transition:slide={{ axis: 'x' }}>Edit</span>

@@ -55,9 +55,7 @@
 
 	function createObject() {
 		if (options.label == 'Circle Body') {
-			let newBody = Matter.Bodies.circle(position.x, position.y, radius, options);
 			addNewObject([Matter.Bodies.circle(position.x, position.y, radius, options)]);
-			console.log(newBody);
 		} else if (options.label == 'Rectangle Body') {
 			addNewObject([
 				Matter.Bodies.rectangle(

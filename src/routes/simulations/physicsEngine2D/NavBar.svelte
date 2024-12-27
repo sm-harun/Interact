@@ -12,10 +12,15 @@
 		duration: 1000,
 		easing: cubicInOut
 	});
+
+	let headerSectionIndicator = tweened<number>(66.6, {
+		duration: 1000,
+		easing: cubicInOut
+	});
 </script>
 
 <nav
-	class="variant-glass absolute top-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
+	class="variant-glass absolute top-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col border-2 border-surface-300-600-token {navBarStatus
 		? ''
 		: '-translate-x-full'}"
 >
@@ -34,11 +39,14 @@
 			<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 		</svg>
 	</button>
-	<header class="flex-shrink-0 h-24 w-full grid grid-cols-3 z-30">
+	<header class="flex-shrink-0 h-24 w-full grid grid-cols-3 z-30 relative">
 		<button
-			class="border-2 grid place-items-center"
+			class="border-r-2 border-b-2 border-surface-300-600-token grid place-items-center"
 			aria-label="Record Objects"
-			onclick={() => navSectionsStatus.set(0)}
+			onclick={() => {
+				navSectionsStatus.set(0);
+				headerSectionIndicator.set(0);
+			}}
 		>
 			<svg fill="currentColor" viewBox="0 0 36 36" class="size-[60%]">
 				<path
@@ -54,9 +62,12 @@
 			</svg>
 		</button>
 		<button
-			class="border-2 grid place-items-center"
+			class="border-r-2 border-b-2 border-surface-300-600-token grid place-items-center"
 			aria-label="Record Objects"
-			onclick={() => navSectionsStatus.set(100)}
+			onclick={() => {
+				navSectionsStatus.set(100);
+				headerSectionIndicator.set(33.3);
+			}}
 		>
 			<svg
 				fill="none"
@@ -73,9 +84,12 @@
 			</svg>
 		</button>
 		<button
-			class="border-2 grid place-items-center"
+			class="border-b-2 border-surface-300-600-token grid place-items-center"
 			aria-label="Record Objects"
-			onclick={() => navSectionsStatus.set(200)}
+			onclick={() => {
+				navSectionsStatus.set(200);
+				headerSectionIndicator.set(66.6);
+			}}
 		>
 			<svg viewBox="0 0 1024 1024" fill="currentColor" class="size-[60%] stroke-surface-500"
 				><path
@@ -93,8 +107,12 @@
 				></path></svg
 			>
 		</button>
+		<div
+			class="absolute top-0 w-1/3 h-full bg-primary-500/30 -z-20"
+			style="left: {$headerSectionIndicator}%"
+		></div>
 	</header>
-	<section class="flex-grow w-full border-2 relative overflow-hidden">
+	<section class="flex-grow w-full relative overflow-hidden">
 		<ObjectsSection {navSectionsStatus} />
 		<RecordingsSection {navSectionsStatus} />
 		<StatesSection {navSectionsStatus} />
