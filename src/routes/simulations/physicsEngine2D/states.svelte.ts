@@ -70,7 +70,6 @@ function drawGround(canvasWidth: number, canvasHeight: number) {
     isStatic: true,
     render: {
       fillStyle: '#00700f',
-      strokeStyle: 'black'
     },
     plugin: { name: 'Ground' }
   })])
@@ -83,19 +82,23 @@ function drawLeftWall(canvasWidth: number, canvasHeight: number) {
     60,
     canvasHeight,
     {
-      isStatic: true
-    }
+      isStatic: true,
+      plugin: { name: 'Left Wall' }
+    },
   )]);
 }
 
 function drawRightWall(canvasWidth: number, canvasHeight: number) {
   addNewObject([Bodies.rectangle(0, canvasHeight / 2, 60, canvasWidth, {
-    isStatic: true
-  })]);
+    isStatic: true,
+    plugin: { name: 'Right Wall' }
+  }
+  )]);
 }
 
 function drawCeiling(canvasWidth: number) {
   addNewObject([Bodies.rectangle(canvasWidth / 2, 0, canvasWidth, 60, {
-    isStatic: true
+    isStatic: true,
+    plugin: { name: 'Ceiling' }
   })]);
 }

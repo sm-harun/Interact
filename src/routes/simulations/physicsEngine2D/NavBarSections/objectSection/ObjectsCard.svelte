@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { shapes } from '../../states.svelte';
+	import { shapes, engineSettings } from '../../states.svelte';
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import Matter from 'matter-js';
 
 	interface Props {
@@ -8,6 +9,8 @@
 	}
 
 	let { body }: Props = $props();
+
+	let toastStore = getToastStore();
 
 	let editButtonHovered = $state(false);
 	let deleteButtonHovered = $state(false);
@@ -34,17 +37,51 @@
 	});
 
 	function xValueChanged(e: Event) {
-		shapes.forEach((shape: Matter.Body) => {
-			if (shape.id == body.id) {
-				Matter.Body.setPosition(shape, { x: e.target.value, y: shape.position.y });
-			}
-		});
+		if (engineSettings.timeState == false) {
+			shapes.forEach((shape: Matter.Body) => {
+				if (shape.id == body.id) {
+					Matter.Body.setPosition(shape, { x: e.target.value, y: shape.position.y });
+				}
+			});
+		} else {
+			e.target.value = body.x;
+
+			// Falied Toast
+			const toastSettings: ToastSettings = {
+				message: `Pause Engine to change positon directly`,
+				background: `variant-filled-error`,
+				hideDismiss: true,
+				timeout: 3000
+			};
+			toastStore.trigger(toastSettings);
+		}
 	}
 
 	function yValueChanged(e: Event) {
+		if (engineSettings.timeState == false) {
+			shapes.forEach((shape: Matter.Body) => {
+				if (shape.id == body.id) {
+					Matter.Body.setPosition(shape, { x: shape.position.x, y: e.target.value });
+				}
+			});
+		} else {
+			e.target.value = body.y;
+
+			// Falied Toast
+			const toastSettings: ToastSettings = {
+				message: `Pause Engine to change positon directly`,
+				background: `variant-filled-error`,
+				hideDismiss: true,
+				timeout: 3000
+			};
+			toastStore.trigger(toastSettings);
+		}
+	}
+
+	function colorChange(e: Event) {
 		shapes.forEach((shape: Matter.Body) => {
 			if (shape.id == body.id) {
-				Matter.Body.setPosition(shape, { x: shape.position.x, y: e.target.value });
+				shape.render.fillStyle = e.target.value;
 			}
 		});
 	}
@@ -54,7 +91,7 @@
 	<!-- Title and Color -->
 	<div class="flex justify-between items-center">
 		<h3 class="h3 pb-3">{body.name}</h3>
-		<input type="color" class="input" value={body.fillStyle} />
+		<input type="color" class="input" value={body.fillStyle} oninput={colorChange} />
 	</div>
 
 	<hr class="my-3" />
@@ -63,25 +100,11 @@
 	<div class="flex items-center gap-2">
 		<div class="flex items-center gap-4 max-w-40">
 			<p class="flex-shrink-0 text-secondary-700-200-token">X</p>
-			<input
-				class="input"
-				type="number"
-				min="0"
-				step="1"
-				bind:value={body.x}
-				onchange={xValueChanged}
-			/>
+			<input class="input" type="number" min="0" step="1" value={body.x} oninput={xValueChanged} />
 		</div>
 		<div class="flex items-center gap-4 max-w-40 ml-5">
 			<p class="flex-shrink-0 text-secondary-700-200-token">Y</p>
-			<input
-				class="input"
-				type="number"
-				min="0"
-				step="1"
-				bind:value={body.y}
-				onchange={yValueChanged}
-			/>
+			<input class="input" type="number" min="0" step="1" value={body.y} oninput={yValueChanged} />
 		</div>
 	</div>
 

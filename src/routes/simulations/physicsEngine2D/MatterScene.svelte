@@ -38,25 +38,22 @@
 			}
 		});
 
-		// window.addEventListener('resize', resizeCanvas);
-		//
-		// function resizeCanvas() {
-		// 	if (container) {
-		// 		const { clientWidth: newWidth, clientHeight: newHeight } = container!;
-		//
-		// 		render.canvas.width = newWidth;
-		// 		render.canvas.height = newHeight;
-		// 		render.options.width = newWidth;
-		// 		render.options.height = newHeight;
-		// 	}
-		// }
-
 		start(render);
+
+		// window.addEventListener('resize', resizeCanvas);
 
 		return () => {
 			window.removeEventListener('resize', resizeCanvas);
 		};
 	});
+
+	// function resizeCanvas() {
+	// const { clientWidth: newWidth, clientHeight: newHeight } = container;
+	// render.canvas.width = newWidth;
+	// render.canvas.height = newHeight;
+	// render.options.width = newWidth;
+	// render.options.height = newHeight;
+	// }
 </script>
 
 <div class="flex-grow w-full" bind:this={container}></div>
