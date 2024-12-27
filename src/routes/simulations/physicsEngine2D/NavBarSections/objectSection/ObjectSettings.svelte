@@ -38,7 +38,6 @@
 	function createObject() {
 		if (options.label == 'Circle Body') {
 			let newBody = Matter.Bodies.circle(position.x, position.y, radius, options);
-			// bodies.update((currrentBodies) => [...currrentBodies, newBody]);
 			addNewObject([newBody]);
 		} else if (options.label == 'Rectangle Body') {
 			let newBody = Matter.Bodies.rectangle(
@@ -48,7 +47,7 @@
 				dimenstions.height,
 				options
 			);
-			// bodies.update((currrentBodies) => [...currrentBodies, newBody]);
+			addNewObject([newBody]);
 		}
 
 		modalStore.close();

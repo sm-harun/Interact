@@ -27,6 +27,8 @@ export function start(render: Matter.Render) {
   drawRightWall(canvasWidth, canvasHeight);
   drawCeiling(canvasWidth);
 
+  // drawObjects();
+
   Render.run(render);
 
   Composite.add(engine.world, [createMouseConstraint(render.canvas)]);
@@ -46,8 +48,8 @@ export function addNewObject(bodies: Matter.Body[]) {
 function drawObjects() {
   for (let i = 1; i <= 4; i++) {
     for (let j = 1; j <= 4; j++) {
-      addNewObject([Bodies.circle(i * 300, j * 200, 50, { friction: 0.1, restitution: 1 })]);
-      addNewObject([Bodies.rectangle(i * 200, 200, 60, 60, { restitution: 1, friction: 0.1 })]);
+      addNewObject([Bodies.circle(i * 300, j * 200, 50, { friction: 0.1, restitution: 1, plugin: { name: `Circle ${i + j - 1}` } })]);
+      addNewObject([Bodies.rectangle(i * 200, 200, 60, 60, { restitution: 1, friction: 0.1, plugin: { name: `Box ${i + j - 1}` } })]);
     }
   }
 }

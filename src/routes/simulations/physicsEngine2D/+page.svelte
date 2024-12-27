@@ -7,8 +7,13 @@
 
 	$effect.pre(() => {
 		// Event listner to use the Space bar to Pause and Play the simulation
+		// Exeptions are when focused on input elements that are not type number
 		function listenSpaceKey(e: any) {
-			if (e.code == 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+			if (
+				e.code == 'Space' &&
+				((e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') ||
+					e.target.type == 'number')
+			) {
 				e.preventDefault();
 				engineSettings.timeState = !engineSettings.timeState;
 			}

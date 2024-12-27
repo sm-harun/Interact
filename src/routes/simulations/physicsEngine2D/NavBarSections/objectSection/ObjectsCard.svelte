@@ -12,6 +12,9 @@
 
 	let toastStore = getToastStore();
 
+	let xPosInput: HTMLInputElement;
+	let yPosInput: HTMLInputElement;
+
 	let editButtonHovered = $state(false);
 	let deleteButtonHovered = $state(false);
 
@@ -36,6 +39,17 @@
 		};
 	});
 
+	$effect(() => {
+		if (engineSettings.timeState !== true) {
+			shapes.forEach((shape: Matter.Body) => {
+				if (shape.id == body.id) {
+					xPosInput.value = Math.floor(shape.position.x).toString();
+					yPosInput.value = Math.floor(shape.position.y).toString();
+				}
+			});
+		}
+	});
+
 	function xValueChanged(e: Event) {
 		if (engineSettings.timeState == false) {
 			shapes.forEach((shape: Matter.Body) => {
@@ -44,8 +58,6 @@
 				}
 			});
 		} else {
-			e.target.value = body.x;
-
 			// Falied Toast
 			const toastSettings: ToastSettings = {
 				message: `Pause Engine to change positon directly`,
@@ -65,8 +77,6 @@
 				}
 			});
 		} else {
-			e.target.value = body.y;
-
 			// Falied Toast
 			const toastSettings: ToastSettings = {
 				message: `Pause Engine to change positon directly`,
@@ -100,11 +110,29 @@
 	<div class="flex items-center gap-2">
 		<div class="flex items-center gap-4 max-w-40">
 			<p class="flex-shrink-0 text-secondary-700-200-token">X</p>
-			<input class="input" type="number" min="0" step="1" value={body.x} oninput={xValueChanged} />
+			<input
+				class="input"
+				type="number"
+				min="0"
+				step="1"
+				bind:this={xPosInput}
+				value={body.x}
+				oninput={xValueChanged}
+				disabled={engineSettings.timeState}
+			/>
 		</div>
 		<div class="flex items-center gap-4 max-w-40 ml-5">
 			<p class="flex-shrink-0 text-secondary-700-200-token">Y</p>
-			<input class="input" type="number" min="0" step="1" value={body.y} oninput={yValueChanged} />
+			<input
+				class="input"
+				type="number"
+				min="0"
+				step="1"
+				bind:this={yPosInput}
+				value={body.y}
+				oninput={yValueChanged}
+				disabled={engineSettings.timeState}
+			/>
 		</div>
 	</div>
 
