@@ -51,41 +51,19 @@
 	});
 
 	function xValueChanged(e: Event) {
-		if (engineSettings.timeState == false) {
-			shapes.forEach((shape: Matter.Body) => {
-				if (shape.id == body.id) {
-					Matter.Body.setPosition(shape, { x: e.target.value, y: shape.position.y });
-				}
-			});
-		} else {
-			// Falied Toast
-			const toastSettings: ToastSettings = {
-				message: `Pause Engine to change positon directly`,
-				background: `variant-filled-error`,
-				hideDismiss: true,
-				timeout: 3000
-			};
-			toastStore.trigger(toastSettings);
-		}
+		shapes.forEach((shape: Matter.Body) => {
+			if (shape.id == body.id) {
+				Matter.Body.setPosition(shape, { x: e.target.value, y: shape.position.y });
+			}
+		});
 	}
 
 	function yValueChanged(e: Event) {
-		if (engineSettings.timeState == false) {
-			shapes.forEach((shape: Matter.Body) => {
-				if (shape.id == body.id) {
-					Matter.Body.setPosition(shape, { x: shape.position.x, y: e.target.value });
-				}
-			});
-		} else {
-			// Falied Toast
-			const toastSettings: ToastSettings = {
-				message: `Pause Engine to change positon directly`,
-				background: `variant-filled-error`,
-				hideDismiss: true,
-				timeout: 3000
-			};
-			toastStore.trigger(toastSettings);
-		}
+		shapes.forEach((shape: Matter.Body) => {
+			if (shape.id == body.id) {
+				Matter.Body.setPosition(shape, { x: shape.position.x, y: e.target.value });
+			}
+		});
 	}
 
 	function colorChange(e: Event) {

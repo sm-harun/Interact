@@ -18,14 +18,17 @@ type shapeStats = { id: number; type: 'Static' | 'Dynamic'; name: string; fillSt
 
 export const shapeStats: { id: number; name: string; x: number; y: number; fillStyle: string; }[] = $state([]);
 
-export function start(render: Matter.Render) {
-  const canvasWidth = render.canvas.width;
-  const canvasHeight = render.canvas.height;
+let canvasWidth: number;
+let canvasHeight: number;
 
-  drawGround(canvasWidth, canvasHeight);
-  drawLeftWall(canvasWidth, canvasHeight);
-  drawRightWall(canvasWidth, canvasHeight);
-  drawCeiling(canvasWidth);
+export function start(render: Matter.Render) {
+  canvasWidth = render.canvas.width;
+  canvasHeight = render.canvas.height;
+
+  // drawGround(canvasWidth, canvasHeight);
+  // drawLeftWall(canvasWidth, canvasHeight);
+  // drawRightWall(canvasWidth, canvasHeight);
+  // drawCeiling(canvasWidth);
 
   // drawObjects();
 
@@ -67,17 +70,31 @@ function createMouseConstraint(canvas: HTMLCanvasElement) {
   return mouseConstraint;
 }
 
-function drawGround(canvasWidth: number, canvasHeight: number) {
+export function createBarrier(type: 'ground' | 'ceiling' | 'wall-right' | 'wall-left') {
+  switch (type) {
+    case 'ground':
+      drawGround();
+      return;
+    case 'ceiling':
+      drawCeiling();
+      return;
+    case 'wall-right':
+      drawRightWall();
+      return;
+    case 'wall-left':
+      drawLeftWall();
+      return;
+  }
+}
+
+function drawGround() {
   addNewObject([Bodies.rectangle(canvasWidth / 2, canvasHeight, canvasWidth, 60, {
     isStatic: true,
-    render: {
-      fillStyle: '#00700f',
-    },
     plugin: { name: 'Ground' }
   })])
 }
 
-function drawLeftWall(canvasWidth: number, canvasHeight: number) {
+function drawLeftWall() {
   addNewObject([Bodies.rectangle(
     canvasWidth,
     canvasHeight / 2,
@@ -90,7 +107,7 @@ function drawLeftWall(canvasWidth: number, canvasHeight: number) {
   )]);
 }
 
-function drawRightWall(canvasWidth: number, canvasHeight: number) {
+function drawRightWall() {
   addNewObject([Bodies.rectangle(0, canvasHeight / 2, 60, canvasWidth, {
     isStatic: true,
     plugin: { name: 'Right Wall' }
@@ -98,7 +115,7 @@ function drawRightWall(canvasWidth: number, canvasHeight: number) {
   )]);
 }
 
-function drawCeiling(canvasWidth: number) {
+function drawCeiling() {
   addNewObject([Bodies.rectangle(canvasWidth / 2, 0, canvasWidth, 60, {
     isStatic: true,
     plugin: { name: 'Ceiling' }

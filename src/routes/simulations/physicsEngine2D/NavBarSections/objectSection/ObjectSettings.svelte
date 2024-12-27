@@ -16,10 +16,26 @@
 
 	let position: { x: number; y: number } = $state({ x: 100, y: 100 });
 	let dimenstions: { width: number; height: number } = $state({ width: 50, height: 50 });
-	let radius: number = $state(50);
+	let radius: number = $state(pickRandom([20, 30, 40, 50, 60, 80, 100]));
+
+	function pickRandom(choices: any[]) {
+		return Matter.Common.choose(choices);
+	}
 
 	let options: Matter.IChamferableBodyDefinition = $state({
-		plugin: { name: 'New Object' },
+		plugin: {
+			name: pickRandom([
+				'Moving Object',
+				'The Rocket',
+				'Normal Object',
+				'Gizmo',
+				'Yussuf',
+				'Blinker',
+				'Arcane',
+				'Yimrahane',
+				'Widget'
+			])
+		},
 		angle: 0,
 		label: 'Circle Body',
 		mass: 2.5,
@@ -27,27 +43,31 @@
 		friction: 0.1,
 		frictionAir: 0.01,
 		frictionStatic: 0.5,
+		restitution: 0.5,
+		isStatic: false,
 		render: {
 			opacity: 1,
 			lineWidth: 0,
-			fillStyle: '#FFFFF',
-			strokeStyle: '#FFFFF'
+			fillStyle: pickRandom(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']),
+			strokeStyle: pickRandom(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1'])
 		}
 	});
 
 	function createObject() {
 		if (options.label == 'Circle Body') {
 			let newBody = Matter.Bodies.circle(position.x, position.y, radius, options);
-			addNewObject([newBody]);
+			addNewObject([Matter.Bodies.circle(position.x, position.y, radius, options)]);
+			console.log(newBody);
 		} else if (options.label == 'Rectangle Body') {
-			let newBody = Matter.Bodies.rectangle(
-				position.x,
-				position.y,
-				dimenstions.width,
-				dimenstions.height,
-				options
-			);
-			addNewObject([newBody]);
+			addNewObject([
+				Matter.Bodies.rectangle(
+					position.x,
+					position.y,
+					dimenstions.width,
+					dimenstions.height,
+					options
+				)
+			]);
 		}
 
 		modalStore.close();
@@ -79,6 +99,7 @@
 		<button class="variant-filled-primary btn" onclick={createObject}>Create</button>
 	</div>
 
+	<!-- Type of Object -->
 	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
 		<h4 class="h4">Type</h4>
 
@@ -100,9 +121,9 @@
 		</div>
 	</div>
 
-	<!-- Name and ID -->
+	<!-- Name -->
 	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Name and ID</h4>
+		<h4 class="h4">Name</h4>
 
 		<hr class="my-3" />
 
@@ -193,9 +214,9 @@
 		</div>
 	</div>
 
-	<!-- Friction and Resisitance -->
+	<!-- Friction and Restitution -->
 	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Friction and Resisitance</h4>
+		<h4 class="h4">Friction and Restitution</h4>
 
 		<hr class="my-3" />
 
@@ -251,6 +272,46 @@
 					bind:value={options.frictionStatic}
 				/>
 			</div>
+		</div>
+
+		<!-- Restitution -->
+		<div class="flex flex-col gap-2 mt-2">
+			<div class="size-full flex justify-between items-end">
+				<h4 class="h4">Restitution</h4>
+				<p>{options.restitution}</p>
+			</div>
+			<div class="size-full">
+				<input
+					class="input"
+					type="range"
+					min="0"
+					max="1"
+					step="0.01"
+					bind:value={options.restitution}
+				/>
+			</div>
+		</div>
+	</div>
+
+	<!-- Static or Dynamic -->
+	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
+		<h4 class="h4">Static or Dynamic</h4>
+
+		<hr class="my-3" />
+
+		<div class="flex">
+			<button
+				class="btn flex-1 rounded-r-none {!options.isStatic
+					? 'variant-filled-primary'
+					: 'variant-glass-primary'}"
+				onclick={() => (options.isStatic = false)}>Dynamic</button
+			>
+			<button
+				class="btn flex-1 rounded-l-none {options.isStatic
+					? 'variant-filled-primary'
+					: 'variant-glass-primary'}"
+				onclick={() => (options.isStatic = true)}>Static</button
+			>
 		</div>
 	</div>
 

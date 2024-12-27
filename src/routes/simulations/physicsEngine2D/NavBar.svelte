@@ -15,7 +15,7 @@
 </script>
 
 <nav
-	class="variant-glass absolute bottom-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
+	class="variant-glass absolute top-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col {navBarStatus
 		? ''
 		: '-translate-x-full'}"
 >
