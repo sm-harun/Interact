@@ -13,7 +13,7 @@
 		easing: cubicInOut
 	});
 
-	let headerSectionIndicator = tweened<number>(66.6, {
+	let headerSectionIndicator = tweened<number>(0, {
 		duration: 1000,
 		easing: cubicInOut
 	});

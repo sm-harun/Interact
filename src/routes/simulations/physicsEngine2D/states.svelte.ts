@@ -21,14 +21,13 @@ export const shapeStats: { id: number; name: string; x: number; y: number; fillS
 let canvasWidth: number;
 let canvasHeight: number;
 
-export function start(render: Matter.Render) {
-  canvasWidth = render.canvas.width;
-  canvasHeight = render.canvas.height;
+export function updateCanvasSize(newWidth: number, newHeight: number) {
+  canvasWidth = newWidth;
+  canvasHeight = newHeight;
+}
 
-  // drawGround(canvasWidth, canvasHeight);
-  // drawLeftWall(canvasWidth, canvasHeight);
-  // drawRightWall(canvasWidth, canvasHeight);
-  // drawCeiling(canvasWidth);
+export function start(render: Matter.Render) {
+  updateCanvasSize(render.canvas.width, render.canvas.height);
 
   // drawObjects();
 
@@ -119,6 +118,7 @@ function drawRightWall() {
   addNewObject([Bodies.rectangle(0, canvasHeight / 2, 60, canvasWidth, {
     isStatic: true,
     plugin: { name: 'Right Wall' }
+
   }
   )]);
 }

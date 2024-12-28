@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Matter from 'matter-js';
 	import { engine } from './states.svelte';
-	import { start, engineSettings } from './states.svelte';
+	import { start, engineSettings, updateCanvasSize } from './states.svelte';
 
 	let container: HTMLDivElement;
 
@@ -39,21 +39,25 @@
 		});
 
 		start(render);
+	});
 
-		// window.addEventListener('resize', resizeCanvas);
+	window.addEventListener('resize', resizeCanvas);
 
+	function resizeCanvas() {
+		const { clientWidth: newWidth, clientHeight: newHeight } = container;
+		render.canvas.width = newWidth;
+		render.canvas.height = newHeight;
+		render.options.width = newWidth;
+		render.options.height = newHeight;
+
+		updateCanvasSize(render.canvas.width, render.canvas.height);
+	}
+
+	$effect.pre(() => {
 		return () => {
 			window.removeEventListener('resize', resizeCanvas);
 		};
 	});
-
-	// function resizeCanvas() {
-	// const { clientWidth: newWidth, clientHeight: newHeight } = container;
-	// render.canvas.width = newWidth;
-	// render.canvas.height = newHeight;
-	// render.options.width = newWidth;
-	// render.options.height = newHeight;
-	// }
 </script>
 
 <div class="flex-grow w-full" bind:this={container}></div>
