@@ -3,6 +3,11 @@
 	import { fly } from 'svelte/transition';
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { addNewObject } from '../../states.svelte';
+	import MultipleInputsContainer from '$lib/components/general/customInputs/MultipleInputsContainer.svelte';
+	import FancyInput from '$lib/components/general/customInputs/FancyInput.svelte';
+	import FancyMultipleInputContainer from '$lib/components/general/customInputs/FancyMultipleInputContainer.svelte';
+	import FancyMultipleInput from '$lib/components/general/customInputs/FancyMultipleInput.svelte';
+	import FancySlider from '$lib/components/general/customInputs/FancySlider.svelte';
 
 	type ModalView = 'ObjectSelection' | 'ObjectSettings';
 
@@ -39,10 +44,9 @@
 		angle: 0,
 		label: 'Circle Body',
 		mass: 2.5,
-		density: 0.001,
 		friction: 0.1,
 		frictionAir: 0.01,
-		frictionStatic: 0.5,
+		frictionStatic: 1,
 		restitution: 0.5,
 		isStatic: false,
 		render: {
@@ -53,16 +57,26 @@
 		}
 	});
 
+	let density = $derived.by(() => {
+		let mass = options.mass as number;
+
+		return options.label == 'Rectangle Body'
+			? mass / (dimenstions.width * dimenstions.height)
+			: mass / (radius * radius * Math.PI);
+	});
+
 	function createObject() {
 		if (options.label == 'Circle Body') {
-			addNewObject([Matter.Bodies.circle(position.x, position.y, radius, options)]);
+			addNewObject([
+				Matter.Bodies.circle(Math.round(position.x), Math.round(position.y), radius, options)
+			]);
 		} else if (options.label == 'Rectangle Body') {
 			addNewObject([
 				Matter.Bodies.rectangle(
-					position.x,
-					position.y,
-					dimenstions.width,
-					dimenstions.height,
+					Math.round(position.x),
+					Math.round(position.y),
+					Math.round(dimenstions.width),
+					Math.round(dimenstions.height),
 					options
 				)
 			]);
@@ -98,11 +112,7 @@
 	</div>
 
 	<!-- Type of Object -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Type</h4>
-
-		<hr class="my-3" />
-
+	<MultipleInputsContainer title={'Type'}>
 		<div class="flex">
 			<button
 				class="btn flex-1 rounded-r-none {options.label == 'Circle Body'
@@ -117,186 +127,60 @@
 				onclick={() => (options.label = 'Rectangle Body')}>Rectangle</button
 			>
 		</div>
-	</div>
+	</MultipleInputsContainer>
 
 	<!-- Name -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Name</h4>
-
-		<hr class="my-3" />
-
-		<div class="w-full relative">
-			<input class="input" type="text" bind:value={options.plugin.name} />
-			<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Name</span>
-		</div>
-	</div>
+	<MultipleInputsContainer title={'Name'}>
+		<FancyInput type="text" bind:value={options.plugin.name}>Name</FancyInput>
+	</MultipleInputsContainer>
 
 	<!-- Position and Orientation -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Position and Orientation</h4>
+	<MultipleInputsContainer title={'Position and Orientation'}>
+		<FancyMultipleInputContainer>
+			<FancyMultipleInput bind:value={position.x} text="X" />
+			<FancyMultipleInput bind:value={position.y} text="Y" />
+		</FancyMultipleInputContainer>
 
-		<hr class="my-3" />
-
-		<h4 class="h4">Position</h4>
-		<div class="flex justify-start items-center gap-5">
-			<div class="w-full relative">
-				<input class="input" type="number" min="0" step="1" bind:value={position.x} />
-				<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">X</span>
-			</div>
-			<div class="w-full relative">
-				<input class="input" type="number" min="0" step="1" bind:value={position.y} />
-				<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Y</span>
-			</div>
-		</div>
-
-		<div class="flex flex-col gap-2 mt-2">
-			<div class="size-full flex justify-between items-end">
-				<h4 class="h4">Angle</h4>
-				<p>{options.angle}</p>
-			</div>
-			<div class="size-full">
-				<input class="input" type="range" min="0" max="360" step="1" bind:value={options.angle} />
-			</div>
-		</div>
-	</div>
+		<FancySlider bind:value={options.angle} text="Angle" min="0" step="1" max="360" />
+	</MultipleInputsContainer>
 
 	{#if options.label == 'Circle Body'}
 		<!-- Radius and Area -->
-		<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-			<div class="flex justify-between items-center">
-				<h4 class="h4">Radius and Area</h4>
-				<p>Area: {(Math.PI * Math.pow(radius, 2)).toFixed(0)}</p>
-			</div>
-
-			<hr class="my-3" />
-
-			<div class="w-auto relative">
-				<input class="input" type="number" min="0" step="1" bind:value={radius} />
-				<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Radius</span>
-			</div>
-		</div>
+		<MultipleInputsContainer
+			title={'Radius and Area'}
+			sideText="Area: "
+			sideValue={parseInt((Math.PI * Math.pow(radius, 2)).toFixed(0))}
+		>
+			<FancyInput type="number" bind:value={radius}>Radius</FancyInput>
+		</MultipleInputsContainer>
 	{:else if options.label == 'Rectangle Body'}
 		<!-- Dimensions and Area -->
-		<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-			<div class="flex justify-between items-center">
-				<h4 class="h4">Dimensions</h4>
-				<p>Area: {dimenstions.width * dimenstions.height}</p>
-			</div>
-
-			<div class="w-auto relative">
-				<input class="input" type="number" min="0" step="1" bind:value={dimenstions.width} />
-				<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Width</span>
-			</div>
-
-			<div class="w-auto relative">
-				<input class="input" type="number" min="0" step="1" bind:value={dimenstions.height} />
-				<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Height</span>
-			</div>
-		</div>
+		<MultipleInputsContainer
+			title={'Dimensions'}
+			sideText="Area: "
+			sideValue={dimenstions.width * dimenstions.height}
+		>
+			<FancyInput type="number" bind:value={dimenstions.width}>Width</FancyInput>
+			<FancyInput type="number" bind:value={dimenstions.height}>Height</FancyInput>
+		</MultipleInputsContainer>
 	{/if}
 
-	<!-- Mass and Density -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Mass and Density</h4>
-
-		<hr class="my-3" />
-
-		<div class="w-auto relative">
-			<input class="input" type="number" min="0" step="1" bind:value={options.mass} />
-			<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Mass</span>
-		</div>
-
-		<div class="w-auto relative">
-			<input class="input" type="number" min="0" step="1" bind:value={options.density} />
-			<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Density</span>
-		</div>
-	</div>
-
 	<!-- Friction and Restitution -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Friction and Restitution</h4>
-
-		<hr class="my-3" />
-
-		<!-- Sliding Friction -->
-		<div class="flex flex-col gap-2 mt-2">
-			<div class="size-full flex justify-between items-end">
-				<h4 class="h4">Friction</h4>
-				<p>{options.friction}</p>
-			</div>
-			<div class="size-full">
-				<input
-					class="input"
-					type="range"
-					min="0"
-					max="1"
-					step="0.01"
-					bind:value={options.friction}
-				/>
-			</div>
-		</div>
-
-		<!-- Air Resisitance -->
-		<div class="flex flex-col gap-2 mt-2">
-			<div class="size-full flex justify-between items-end">
-				<h4 class="h4">Air Resisitance</h4>
-				<p>{options.frictionAir}</p>
-			</div>
-			<div class="size-full">
-				<input
-					class="input"
-					type="range"
-					min="0"
-					max="1"
-					step="0.01"
-					bind:value={options.frictionAir}
-				/>
-			</div>
-		</div>
-
-		<!-- Static Friction -->
-		<div class="flex flex-col gap-2 mt-2">
-			<div class="size-full flex justify-between items-end">
-				<h4 class="h4">Static Friction</h4>
-				<p>{options.frictionStatic}</p>
-			</div>
-			<div class="size-full">
-				<input
-					class="input"
-					type="range"
-					min="0"
-					max="1"
-					step="0.01"
-					bind:value={options.frictionStatic}
-				/>
-			</div>
-		</div>
-
-		<!-- Restitution -->
-		<div class="flex flex-col gap-2 mt-2">
-			<div class="size-full flex justify-between items-end">
-				<h4 class="h4">Restitution</h4>
-				<p>{options.restitution}</p>
-			</div>
-			<div class="size-full">
-				<input
-					class="input"
-					type="range"
-					min="0"
-					max="1"
-					step="0.01"
-					bind:value={options.restitution}
-				/>
-			</div>
-		</div>
-	</div>
+	<MultipleInputsContainer title={'Friction and Restitution'}>
+		<FancySlider text="Friction" bind:value={options.friction} min="0" step="0.01" max="1" />
+		<FancySlider
+			text="Air Resisitance"
+			bind:value={options.frictionAir}
+			min="0"
+			step="0.01"
+			max="1"
+		/>
+		<FancySlider text="Restitution" bind:value={options.restitution} min="0" step="0.01" max="1" />
+		<FancySlider text="Static Friction" bind:value={options.frictionStatic} min="0" />
+	</MultipleInputsContainer>
 
 	<!-- Static or Dynamic -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Static or Dynamic</h4>
-
-		<hr class="my-3" />
-
+	<MultipleInputsContainer title={'Static or Dynamic'}>
 		<div class="flex">
 			<button
 				class="btn flex-1 rounded-r-none {!options.isStatic
@@ -311,32 +195,11 @@
 				onclick={() => (options.isStatic = true)}>Static</button
 			>
 		</div>
-	</div>
+	</MultipleInputsContainer>
 
 	<!-- Render Properties -->
-	<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-		<h4 class="h4">Render Properites</h4>
-
-		<hr class="my-3" />
-
-		<!-- Opacity -->
-		<div class="flex flex-col gap-2 mt-2">
-			<div class="size-full flex justify-between items-end">
-				<h4 class="h4">Opacity</h4>
-				<p>{options.render?.opacity}</p>
-			</div>
-			<div class="size-full">
-				<input
-					class="input"
-					type="range"
-					min="0"
-					max="1"
-					step="0.01"
-					bind:value={options.render.opacity}
-				/>
-			</div>
-		</div>
-
+	<MultipleInputsContainer title={'Render Properties'}>
+		<FancySlider text="Opacity" bind:value={options.render.opacity} min="0" max="1" step="0.01" />
 		<!-- Fill and Stroke Style -->
 		<div class="flex my-3">
 			<div class="flex-1 h-full flex flex-col gap-2 items-center justify-around">
@@ -351,10 +214,6 @@
 			</div>
 		</div>
 
-		<!-- Line Width -->
-		<div class="w-auto relative">
-			<input class="input" type="number" min="0" step="1" bind:value={options.render.lineWidth} />
-			<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold">Stroke Width</span>
-		</div>
-	</div>
+		<FancyInput bind:value={options.render.lineWidth} min="0">Stroke Width</FancyInput>
+	</MultipleInputsContainer>
 </div>
