@@ -26,6 +26,7 @@
 		plugin: { name: body?.plugin.name },
 		label: body.label,
 		mass: body.isStatic ? 50 : body.mass,
+		angle: Math.round(body.angle),
 		friction: body.friction,
 		frictionAir: body.frictionAir,
 		frictionStatic: body.frictionStatic,
@@ -45,8 +46,8 @@
 	});
 
 	let dimenstions = $state({
-		width: Math.abs(body.vertices[1].x - body.vertices[0].x),
-		height: Math.abs(body.vertices[3].y - body.vertices[0].y)
+		width: Math.round(Math.abs(body.vertices[1].x - body.vertices[0].x)),
+		height: Math.round(Math.abs(body.vertices[3].y - body.vertices[0].y))
 	});
 
 	let radius = $state(body.circleRadius);
@@ -66,8 +67,8 @@
 
 		shapes[index].plugin.name = options.plugin.name;
 
-		shapes[index].position.x = position.x;
-		shapes[index].position.y = position.y;
+		Matter.Body.setPosition(shapes[index], { x: position.x, y: position.y });
+		Matter.Body.setAngle(shapes[index], options.angle as number);
 
 		if (shapes[index].label == 'Rectangle Body') {
 			updateRectVerticies(shapes[index], dimenstions);
@@ -78,13 +79,12 @@
 			updateCircleVerticies(shapes[index]);
 		}
 
-		shapes[index].isStatic = options.isStatic as boolean;
-
 		// Changes mass when an object turns from static to dynamic
 		if (options.isStatic) {
-			shapes[index].mass = Infinity;
+			Matter.Body.setStatic(shapes[index], options.isStatic);
 		} else {
-			shapes[index].mass = options.mass as number;
+			Matter.Body.setStatic(shapes[index], options.isStatic as boolean);
+			Matter.Body.setMass(shapes[index], options.mass as number);
 		}
 
 		// Friction
@@ -173,6 +173,8 @@
 				<FancyMultipleInput bind:value={position.x} text="X" />
 				<FancyMultipleInput bind:value={position.y} text="Y" />
 			</FancyMultipleInputContainer>
+
+			<FancySlider bind:value={options.angle} text="Angle" min="0" step="1" max="360" />
 		</MultipleInputsContainer>
 
 		{#if options.label == 'Circle Body'}
