@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import { shapes, engineSettings, removeObject } from '../../states.svelte';
-	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import { type ModalComponent, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
 	import Matter from 'matter-js';
+	import ObjectEditingModal from './ObjectEditingModal.svelte';
 
 	interface Props {
 		body: { id: number; name: string; x: number; y: number; fillStyle: string };
 	}
 
 	let { body }: Props = $props();
-
-	let toastStore = getToastStore();
 
 	let xPosInput: HTMLInputElement;
 	let yPosInput: HTMLInputElement;
@@ -72,6 +71,29 @@
 				shape.render.fillStyle = e.target.value;
 			}
 		});
+	}
+
+	function updateCardAfterEdit(name: string, x: number, y: number, fillStyle: string) {
+		body.name = name;
+		body.x = x;
+		body.y = y;
+		body.fillStyle = fillStyle;
+	}
+
+	let modalStore = getModalStore();
+
+	function editBody() {
+		const editingModal: ModalComponent = {
+			ref: ObjectEditingModal,
+			props: { bodyID: body.id, updateFunc: updateCardAfterEdit }
+		};
+
+		const editingModalSettings: ModalSettings = {
+			type: 'component',
+			component: editingModal
+		};
+
+		modalStore.trigger(editingModalSettings);
 	}
 </script>
 
@@ -143,7 +165,11 @@
 		</button>
 
 		<!-- Edit Button -->
-		<button class="group btn variant-glass-primary" bind:this={editButton}
+		<button
+			class="group btn variant-glass-primary"
+			bind:this={editButton}
+			onclick={editBody}
+			disabled={engineSettings.timeState}
 			>{#if editButtonHovered}
 				<span transition:slide={{ axis: 'x' }}>Edit</span>
 			{/if}
