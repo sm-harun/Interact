@@ -6,7 +6,7 @@
 	</h3>
 	<div class="absolute size-full top-0 left-0"></div>
 	<svg
-		class="size-1/2 absolute top-0 left-[30%] group-hover:scale-110 group-hover:-translate-y-10 group-hover:-translate-x-16 transition duration-1000"
+		class="size-1/2 absolute bottom-0 left-[30%] group-hover:scale-110 group-hover:-translate-y-10 group-hover:-translate-x-16 transition duration-1000"
 		version="1.1"
 		id="Layer_1"
 		viewBox="0 0 512.04 512.04"
@@ -25,7 +25,7 @@
 		</g></svg
 	>
 	<svg
-		class="size-1/2 rotate-[30deg] group-hover:rotate-90 absolute right-0 bottom-1/2 group-hover:scale-110 group-hover:-translate-y-14 group-hover:translate-x-6 transition duration-1000"
+		class="size-1/2 rotate-[30deg] group-hover:rotate-90 absolute right-0 top-1/3 group-hover:scale-110 group-hover:-translate-y-14 group-hover:translate-x-6 transition duration-1000"
 		fill="green"
 		viewBox="-6 0 32 32"
 		><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g>
@@ -35,7 +35,7 @@
 		</g></svg
 	>
 	<svg
-		class="size-1/2 fill-secondary-500 group-hover:rotate-[-10deg] absolute right-1/2 bottom-[10%] group-hover:scale-110 group-hover:-translate-y-14 group-hover:-translate-x-6 transition duration-1000"
+		class="size-1/2 fill-secondary-500 group-hover:rotate-[-10deg] absolute right-1/2 top-[10%] group-hover:scale-110 group-hover:-translate-y-14 group-hover:-translate-x-6 transition duration-1000"
 		viewBox="0 0 100 100"
 		enable-background="new 0 0 100 100"
 		xml:space="preserve"
@@ -47,7 +47,7 @@
 		</g></svg
 	>
 	<svg
-		class="size-1/3 group-hover:rotate-[10deg] absolute fill-primary-500 left-1/2 bottom-[10%] group-hover:scale-110 group-hover:-translate-y-14 group-hover:translate-x-6 transition duration-1000"
+		class="size-1/3 group-hover:rotate-[10deg] absolute fill-primary-500 left-1/2 top-[10%] group-hover:scale-110 group-hover:-translate-y-14 group-hover:translate-x-6 transition duration-1000"
 		viewBox="0 0 24 24"
 		fill="#000000"
 		><g id="SVGRepo_iconCarrier"
