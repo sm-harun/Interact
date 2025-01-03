@@ -12,5 +12,5 @@
 	class="w-full h-full absolute top-0 border-2 grid place-items-center"
 	style="right: {$navSectionsStatus}%"
 >
-	This is the States Section
+	This is the Objects Section
 </div>
