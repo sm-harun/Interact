@@ -12,12 +12,12 @@
 
 {#if $modalStore[0]}
 	<div
-		class="w-[40rem] h-[50rem] bg-surface-100-800-token rounded-container-token p-8 overflow-y-auto"
+		class="bg-surface-100-800-token h-[50rem] w-[40rem] overflow-y-auto p-8 rounded-container-token"
 	>
 		{#if modalView == 'ObjectSelection'}
-			<div class="w-full h-full" transition:fly={{ x: -200 }}>
+			<div class="h-full w-full" transition:fly={{ x: -200 }}>
 				<button
-					class="w-full btn variant-glass-primary py-5 text-xl rounded-none"
+					class="variant-glass-primary btn w-full rounded-none py-5 text-xl"
 					onclick={() => (modalView = 'ObjectSettings')}
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -32,31 +32,31 @@
 					<span>Create new</span></button
 				>
 
-				<h1 class="h3 mt-10 mb-5">Pre-Built Bodies</h1>
+				<h1 class="h3 mb-5 mt-10">Pre-Built Bodies</h1>
 				<div class="flex flex-wrap gap-5">
 					<button
-						class="btn variant-ghost-secondary text-2xl size-full p-5 px-8 justify-start rounded-none"
+						class="variant-ghost-secondary btn size-full justify-start rounded-none p-5 px-8 text-2xl"
 						onclick={() => {
 							createBarrier('ground');
 							modalStore.close();
 						}}>Ground</button
 					>
 					<button
-						class="btn variant-ghost-secondary text-2xl size-full p-5 px-8 justify-start rounded-none"
+						class="variant-ghost-secondary btn size-full justify-start rounded-none p-5 px-8 text-2xl"
 						onclick={() => {
 							createBarrier('ceiling');
 							modalStore.close();
 						}}>Ceiling</button
 					>
 					<button
-						class="btn variant-ghost-secondary text-2xl size-full p-5 px-8 justify-start rounded-none"
+						class="variant-ghost-secondary btn size-full justify-start rounded-none p-5 px-8 text-2xl"
 						onclick={() => {
 							createBarrier('wall-right');
 							modalStore.close();
 						}}>Right Wall</button
 					>
 					<button
-						class="btn variant-ghost-secondary text-2xl size-full p-5 px-8 justify-start rounded-none"
+						class="variant-ghost-secondary btn size-full justify-start rounded-none p-5 px-8 text-2xl"
 						onclick={() => {
 							createBarrier('wall-left');
 							modalStore.close();

@@ -34,11 +34,11 @@
 </script>
 
 <section
-	class="w-full h-full p-5 absolute top-0 flex flex-col gap-8 overflow-y-auto"
+	class="absolute top-0 flex h-full w-full flex-col gap-8 overflow-y-auto p-5"
 	style="right: {$navSectionsStatus}%"
 >
 	<button
-		class="flex-shrink-0 btn variant-ghost-primary rounded-none w-full h-32 text-2xl gap-4"
+		class="variant-ghost-primary btn h-32 w-full flex-shrink-0 gap-4 rounded-none text-2xl"
 		onclick={triggerModal}
 		><svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
 	<h2 class="h3">Dynamic Bodies</h2>
 	<hr class="my-1" />
 	{#if dynamicBodiesEmpty}
-		<div class="w-full card variant-glass-surface p-8 text-xl text-black/50 dark:text-white/50">
+		<div class="card variant-glass-surface w-full p-8 text-xl text-black/50 dark:text-white/50">
 			No Dynamic Bodies
 		</div>
 	{:else}
@@ -69,7 +69,7 @@
 	<h2 class="h3">Static Bodies</h2>
 	<hr class="my-1" />
 	{#if staticBodiesEmpty}
-		<div class="w-full card variant-glass-surface p-8 text-xl text-black/50 dark:text-white/50">
+		<div class="card variant-glass-surface w-full p-8 text-xl text-black/50 dark:text-white/50">
 			No Static Bodies
 		</div>
 	{:else}

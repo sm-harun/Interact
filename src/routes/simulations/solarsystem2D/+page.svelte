@@ -2,7 +2,7 @@
 	import MainHeader from '$lib/components/general/header/MainHeader.svelte';
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
 	<main class="flex-grow overflow-hidden">
 		<p

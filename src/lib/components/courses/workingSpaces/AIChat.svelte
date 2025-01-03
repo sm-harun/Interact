@@ -92,9 +92,9 @@
 	}
 </script>
 
-<main class="size-full flex flex-col overflow-hidden relative">
+<main class="relative flex size-full flex-col overflow-hidden">
 	<header
-		class="flex-shrink-0 h-16 w-full variant-glass-surface p-2 px-6 flex justify-between items-center gap-5 absolute top-0 left-0 z-20"
+		class="variant-glass-surface absolute left-0 top-0 z-20 flex h-16 w-full flex-shrink-0 items-center justify-between gap-5 p-2 px-6"
 	>
 		<h3 class="h3 hidden 2xl:block">AI Assistant</h3>
 		<div class="variant-ringed-primary relative">
@@ -104,7 +104,7 @@
 			>
 			{#if showLangPopup}
 				<div
-					class="w-full h-auto bg-surface-200-700-token absolute top-full right-0 z-50"
+					class="bg-surface-200-700-token absolute right-0 top-full z-50 h-auto w-full"
 					transition:slide
 				>
 					<ListBox>
@@ -123,7 +123,7 @@
 		</div>
 	</header>
 	<section
-		class="flex-grow flex flex-col pt-16 2xl:pt-3 p-3 max-w-full overflow-y-auto"
+		class="flex max-w-full flex-grow flex-col overflow-y-auto p-3 pt-16 2xl:pt-3"
 		bind:this={messagesContainer}
 	>
 		<!-- Initial message from the bot -->
@@ -135,11 +135,11 @@
 		{/each}
 	</section>
 
-	<form class="flex-shrink-0 h-14 w-full" onsubmit={preventDefault(addMessage)}>
-		<div class="h-full w-full input-group input-group-divider grid-cols-[1fr_auto] rounded-none">
+	<form class="h-14 w-full flex-shrink-0" onsubmit={preventDefault(addMessage)}>
+		<div class="input-group input-group-divider h-full w-full grid-cols-[1fr_auto] rounded-none">
 			<input class="p-3" type="text" placeholder="Enter message..." bind:value={messageValue} />
 			<button
-				class="variant-filled-secondary hover:varient-filled-primary"
+				class="hover:varient-filled-primary variant-filled-secondary"
 				aria-label="submit prompt"
 			>
 				<svg

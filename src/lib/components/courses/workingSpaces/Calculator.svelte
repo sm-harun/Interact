@@ -86,17 +86,17 @@
 	}
 </script>
 
-<main class="size-full p-5 flex flex-col gap-3 pt-16 2xl:pt-5 overflow-hidden">
+<main class="flex size-full flex-col gap-3 overflow-hidden p-5 pt-16 2xl:pt-5">
 	<div
-		class="h-[15%] w-full flex-shrink-0 bg-black/40 p-5 tracking-wide overflow-hidden flex flex-col justify-between items-end"
+		class="flex h-[15%] w-full flex-shrink-0 flex-col items-end justify-between overflow-hidden bg-black/40 p-5 tracking-wide"
 	>
-		<p class="text-xl lg:text-5xl overflow-hidden">{phrase}</p>
+		<p class="overflow-hidden text-xl lg:text-5xl">{phrase}</p>
 		<p class="bg-transparent">{result}</p>
 	</div>
 
-	<div class="flex-grow w-full grid grid-cols-4 grid-rows-8 gap-1 lg:gap-3">
+	<div class="grid w-full flex-grow grid-cols-4 grid-rows-8 gap-1 lg:gap-3">
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('√')}
 		>
 			{#if inversed}
@@ -106,31 +106,31 @@
 			{/if}
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('π')}
 		>
 			π
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('^')}
 		>
 			^
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('!')}
 		>
 			!
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('')}
 		>
 			RAD
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('sin(')}
 		>
 			<span>
@@ -141,7 +141,7 @@
 			</span>
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('cos(')}
 		>
 			<span>
@@ -152,7 +152,7 @@
 			</span>
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('tan(')}
 		>
 			<span>
@@ -165,19 +165,19 @@
 		<button
 			class="size-full {inversed
 				? 'bg-surface-500'
-				: 'bg-surface-500/20'} text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+				: 'bg-surface-500/20'} grid place-items-center text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => (inversed = !inversed)}
 		>
 			INV
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('e')}
 		>
 			e
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('ln(')}
 		>
 			{#if inversed}
@@ -187,7 +187,7 @@
 			{/if}
 		</button>
 		<button
-			class="size-full bg-surface-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-surface-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('log(')}
 		>
 			{#if inversed}
@@ -197,121 +197,121 @@
 			{/if}
 		</button>
 		<button
-			class="size-full bg-tertiary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-tertiary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={clear}
 		>
 			AC
 		</button>
 		<button
-			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-secondary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('(')}
 		>
 			( )
 		</button>
 		<button
-			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-secondary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('%')}
 		>
 			%
 		</button>
 		<button
-			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-secondary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('÷')}
 		>
 			÷
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('7')}
 		>
 			7
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('8')}
 		>
 			8
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('9')}
 		>
 			9
 		</button>
 		<button
-			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-secondary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('×')}
 		>
 			×
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('4')}
 		>
 			4
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('5')}
 		>
 			5
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('6')}
 		>
 			6
 		</button>
 		<button
-			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-secondary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('-')}
 		>
 			-
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('1')}
 		>
 			1
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('2')}
 		>
 			2
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('3')}
 		>
 			3
 		</button>
 		<button
-			class="size-full bg-secondary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-secondary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('+')}
 		>
 			+
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('0')}
 		>
 			0
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('.')}
 		>
 			.
 		</button>
 		<button
-			class="size-full bg-primary-500/20 text-3xl grid place-items-center rounded-container-token hover:brightness-125"
+			class="grid size-full place-items-center bg-primary-500/20 text-3xl rounded-container-token hover:brightness-125"
 			onclick={() => sqrtPhrase('T')}
 		>
 			DT
 		</button>
 		<button
-			class="size-full bg-secondary-500 text-3xl grid place-items-center rounded-container-token hover:brightness-125 active:scale-95 transition"
+			class="grid size-full place-items-center bg-secondary-500 text-3xl transition rounded-container-token hover:brightness-125 active:scale-95"
 			onclick={equalTo}
 		>
 			=

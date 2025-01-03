@@ -23,7 +23,7 @@
 </script>
 
 <div
-	class="w-72 card p-3 rounded-container-token variant-surface-700 z-50 fixed"
+	class="variant-surface-700 card fixed z-50 w-72 p-3 rounded-container-token"
 	style="top: {$loginPopupPosition.y}px; right: {$loginPopupPosition.x}px;"
 	bind:this={popupElement}
 	in:fly={{ y: 10, duration: 300 }}
@@ -32,7 +32,7 @@
 	<a
 		href="/signup"
 		onclick={hideLoginPopup}
-		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30 close"
+		class="close btn w-full justify-between text-xl rounded-container-token hover:bg-primary-500/30"
 	>
 		<span>Sign In</span>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

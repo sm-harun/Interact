@@ -19,24 +19,24 @@
 </script>
 
 <div
-	class="flex-[2_1_0] xl:flex-1 h-full border-t-2 xl:border-t-0 xl:border-l-2 border-primary-500 flex flex-col relative"
+	class="relative flex h-full flex-[2_1_0] flex-col border-t-2 border-primary-500 xl:flex-1 xl:border-l-2 xl:border-t-0"
 >
 	{#if inputTitle !== null}
 		<input
-			class="input rounded-none border-none !bg-transparent px-10 h-24 md:h-40 h1 flex-shrink-0"
+			class="input h1 h-24 flex-shrink-0 rounded-none border-none !bg-transparent px-10 md:h-40"
 			bind:value={inputTitle}
 		/>
 		<hr class="mx-4 mb-8" />
 		<textarea
-			class="textarea border-none p-5 px-5 !bg-transparent flex-grow text-xl"
+			class="textarea flex-grow border-none !bg-transparent p-5 px-5 text-xl"
 			bind:value={textArea}
 		></textarea>
 
 		{#if oldTextArea !== textArea || oldTitle !== inputTitle}
-			<p class="text-2xl text-error-500 absolute top-4 right-4">Unsaved!</p>
+			<p class="absolute right-4 top-4 text-2xl text-error-500">Unsaved!</p>
 		{/if}
 
-		<div class="w-full h-auto bottom-10 gap-5 flex justify-end p-6">
+		<div class="bottom-10 flex h-auto w-full justify-end gap-5 p-6">
 			<button
 				class="{oldTextArea == textArea && oldTitle == inputTitle
 					? 'variant-ghost-primary'
@@ -52,7 +52,7 @@
 		</div>
 	{:else}
 		<h2
-			class="h2 w-4/5 grid place-items-center absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 text-surface-500/40"
+			class="h2 absolute right-1/2 top-1/2 grid w-4/5 -translate-y-1/2 translate-x-1/2 place-items-center text-surface-500/40"
 		>
 			No Note has been selected!
 		</h2>

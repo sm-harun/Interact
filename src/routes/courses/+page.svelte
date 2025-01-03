@@ -52,13 +52,13 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col overflow-hidden">
+<div class="flex h-screen flex-col overflow-hidden">
 	<MainHeader />
 
-	<main class="flex-grow overflow-hidden flex">
+	<main class="flex flex-grow overflow-hidden">
 		<FilterSideBar />
 		<section
-			class="h-full p-5 lg:p-10 overflow-y-scroll flex-grow relative"
+			class="relative h-full flex-grow overflow-y-scroll p-5 lg:p-10"
 			in:fly={{ x: 200, duration: 500, delay: 500 }}
 			out:fly={{ x: 200, duration: 500 }}
 		>

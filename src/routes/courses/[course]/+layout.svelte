@@ -49,7 +49,7 @@
 	<LessonsSideBar {lessons} {updateLessons} course={data.params.course} />
 </Drawer>
 
-<main class="flex flex-col w-screen h-screen">
+<main class="flex h-screen w-screen flex-col">
 	<MainHeader
 		title={data.params.course}
 		showMainRoutes={false}
@@ -58,7 +58,7 @@
 	/>
 	<hr />
 	<header
-		class="flex-shrink-0 bg-surface-100-800-token header-shadow w-screen h-20 sticky top-1 p-9 px-3 pr-5 flex items-center justify-start gap-2 z-30"
+		class="header-shadow bg-surface-100-800-token sticky top-1 z-30 flex h-20 w-screen flex-shrink-0 items-center justify-start gap-2 p-9 px-3 pr-5"
 	>
 		<button
 			class="btn-icon block lg:hidden"
@@ -81,24 +81,24 @@
 			</svg>
 		</button>
 		{#if data.params.lesson !== undefined}
-			<h1 class="text-3xl font-bold text-primary-800-100-token px-5">{data.params.lesson}</h1>
+			<h1 class="text-primary-800-100-token px-5 text-3xl font-bold">{data.params.lesson}</h1>
 
 			<SmallScreenSectionButtons />
 			<LargeScreenSectionButtons />
 		{:else}
-			<h1 class="text-3xl font-bold text-primary-500-400-token px-5">Welcome</h1>
+			<h1 class="text-primary-500-400-token px-5 text-3xl font-bold">Welcome</h1>
 		{/if}
 	</header>
 
-	<main class="flex-grow flex overflow-hidden">
+	<main class="flex flex-grow overflow-hidden">
 		{#key updater}
 			<div class=" hidden lg:block">
 				<LessonsSideBar {lessons} {updateLessons} course={data.params.course} />
 			</div>
 		{/key}
 
-		<div class="flex-grow h-full overflow-hidden">
-			<main class="flex h-full relative overflow-hidden">
+		<div class="h-full flex-grow overflow-hidden">
+			<main class="relative flex h-full overflow-hidden">
 				<!-- Main lesson -->
 				{#if data.params.lesson !== undefined}
 					{#key $lessonsUpdater}
@@ -106,15 +106,15 @@
 					{/key}
 				{:else}
 					<!-- This will show up as a welcome screen to every course -->
-					<main class="size-[80%] self-center mx-auto flex flex-col h1 overflow-hidden">
-						<h1 class="flex-1 flex justify-center items-center flex-shrink-0">
+					<main class="h1 mx-auto flex size-[80%] flex-col self-center overflow-hidden">
+						<h1 class="flex flex-1 flex-shrink-0 items-center justify-center">
 							Welcome to the <span class="mx-3 font-bold text-primary-500"
 								>{data.params.course}</span
 							> Course
 						</h1>
-						<h3 class="h2 py-5 flex-shrink-0">Lessons in this course:</h3>
+						<h3 class="h2 flex-shrink-0 py-5">Lessons in this course:</h3>
 						<ul
-							class="flex-1 p-8 list-disc list-inside grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-5 overflow-y-auto"
+							class="grid flex-1 list-inside list-disc grid-cols-1 gap-5 overflow-y-auto p-8 xl:grid-cols-2 2xl:grid-cols-3"
 						>
 							{#key updater}
 								{#each lessons as lesson}
@@ -128,19 +128,19 @@
 				<!-- These are the three sections -->
 				{#if data.params.lesson !== undefined}
 					<section
-						class="absolute w-full flex-1 2xl:flex-[2_1_0] h-full flex-shrink-0 overflow-hidden 2xl:sticky border-l-[0.05rem] border-l-surface-400"
+						class="absolute h-full w-full flex-1 flex-shrink-0 overflow-hidden border-l-[0.05rem] border-l-surface-400 2xl:sticky 2xl:flex-[2_1_0]"
 						style="left: {100 - $mobSectionsPosition}%;"
 					>
-						<div class="size-full absolute overflow-hidden" style="right: {$sectionsPosition}%">
+						<div class="absolute size-full overflow-hidden" style="right: {$sectionsPosition}%">
 							<AIChat />
 						</div>
 						<div
-							class="size-full absolute overflow-hidden"
+							class="absolute size-full overflow-hidden"
 							style="left: {100 - $sectionsPosition}%"
 						>
 							<Calculator />
 						</div>
-						<div class="size-full absolute" style="left: {200 - $sectionsPosition}%">
+						<div class="absolute size-full" style="left: {200 - $sectionsPosition}%">
 							<Notes course={data.params.course} />
 						</div>
 					</section>

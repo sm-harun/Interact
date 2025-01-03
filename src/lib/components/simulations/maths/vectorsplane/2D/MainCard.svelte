@@ -1,10 +1,10 @@
 <a
-	class="group card size-60 flex-shrink-0 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
+	class="inside-shadow group card border-secondary-500-400-token relative flex size-60 flex-shrink-0 items-end p-5 transition duration-1000 border-token rounded-container-token sm:size-72"
 	href="/simulations/vectorsPlane2D"
-	><h3 class="h3 text-primary-300-600-token z-10 transition">Vectors Plane 2D</h3>
-	<div class="absolute size-full top-0 left-0"></div>
+	><h3 class="text-primary-300-600-token h3 z-10 transition">Vectors Plane 2D</h3>
+	<div class="absolute left-0 top-0 size-full"></div>
 	<svg
-		class="size-1/2 absolute top-0 left-[30%] group-hover:scale-110 group-hover:-translate-y-10 group-hover:-translate-x-16 transition duration-1000"
+		class="absolute left-[30%] top-0 size-1/2 transition duration-1000 group-hover:-translate-x-16 group-hover:-translate-y-10 group-hover:scale-110"
 		version="1.1"
 		id="Layer_1"
 		viewBox="0 0 512.04 512.04"
@@ -23,7 +23,7 @@
 		</g></svg
 	>
 	<svg
-		class="size-1/2 rotate-[30deg] group-hover:rotate-90 absolute right-0 bottom-1/2 group-hover:scale-110 group-hover:-translate-y-14 group-hover:translate-x-6 transition duration-1000"
+		class="absolute bottom-1/2 right-0 size-1/2 rotate-[30deg] transition duration-1000 group-hover:-translate-y-14 group-hover:translate-x-6 group-hover:rotate-90 group-hover:scale-110"
 		fill="green"
 		viewBox="-6 0 32 32"
 		><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g>
@@ -33,7 +33,7 @@
 		</g></svg
 	>
 	<svg
-		class="size-1/2 fill-secondary-500 group-hover:rotate-[-10deg] absolute right-1/2 bottom-[10%] group-hover:scale-110 group-hover:-translate-y-14 group-hover:-translate-x-6 transition duration-1000"
+		class="absolute bottom-[10%] right-1/2 size-1/2 fill-secondary-500 transition duration-1000 group-hover:-translate-x-6 group-hover:-translate-y-14 group-hover:rotate-[-10deg] group-hover:scale-110"
 		viewBox="0 0 100 100"
 		enable-background="new 0 0 100 100"
 		xml:space="preserve"
@@ -45,7 +45,7 @@
 		</g></svg
 	>
 	<svg
-		class="size-1/3 group-hover:rotate-[10deg] absolute fill-primary-500 left-1/2 bottom-[10%] group-hover:scale-110 group-hover:-translate-y-14 group-hover:translate-x-6 transition duration-1000"
+		class="absolute bottom-[10%] left-1/2 size-1/3 fill-primary-500 transition duration-1000 group-hover:-translate-y-14 group-hover:translate-x-6 group-hover:rotate-[10deg] group-hover:scale-110"
 		viewBox="0 0 24 24"
 		fill="#000000"
 		><g id="SVGRepo_iconCarrier"

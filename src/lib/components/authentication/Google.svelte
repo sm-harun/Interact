@@ -59,7 +59,7 @@
 </script>
 
 <button
-	class="btn w-96 p-5 bg-surface-200-700-token mt-6 flex justify-start items-center gap-4 px-8 hover:bg-primary-500/80 transition rounded-container-token"
+	class="bg-surface-200-700-token btn mt-6 flex w-96 items-center justify-start gap-4 p-5 px-8 transition rounded-container-token hover:bg-primary-500/80"
 	onclick={signUpWithGoogle}
 >
 	<svg viewBox="-0.5 0 48 48" class="size-7">

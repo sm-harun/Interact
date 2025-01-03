@@ -11,10 +11,10 @@
 </script>
 
 <button
-	class="w-96 h-24 rounded-container-token variant-glass-secondary flex justify-around items-center
-                border-[0.1rem] border-transparent hover:scale-[1.02] hover:brightness-110 transition"
+	class="variant-glass-secondary flex h-24 w-96 items-center justify-around border-[0.1rem]
+                border-transparent transition rounded-container-token hover:scale-[1.02] hover:brightness-110"
 	onclick={todo}
 >
-	<h3 class="h2 ellipsis-text">{title}</h3>
+	<h3 class="ellipsis-text h2">{title}</h3>
 	<p>{notes} notes</p>
 </button>

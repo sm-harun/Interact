@@ -21,7 +21,7 @@
 	}
 </script>
 
-<div class="sketchfab-embed-wrapper w-screen h-screen p-10">
+<div class="sketchfab-embed-wrapper h-screen w-screen p-10">
 	<iframe
 		title="Human Skeleton"
 		class="size-full"

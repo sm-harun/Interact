@@ -140,10 +140,10 @@
 </script>
 
 <div
-	class="w-[40rem] h-[50rem] bg-surface-100-800-token rounded-container-token p-8 overflow-y-auto"
+	class="bg-surface-100-800-token h-[50rem] w-[40rem] overflow-y-auto p-8 rounded-container-token"
 >
 	<div transition:fly={{ x: 200, delay: 300 }} class="flex flex-col gap-5">
-		<div class="flex justify-between items-center">
+		<div class="flex items-center justify-between">
 			<button class="btn-icon" aria-label="Back button"
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -279,11 +279,11 @@
 				<!-- Dynamic Button popup -->
 				<div
 					data-popup={'popupHover: Dynamic Body'}
-					class="card bg-surface-200-700-token p-3 px-6 border-2 border-surface-300-600-token"
+					class="card bg-surface-200-700-token border-surface-300-600-token border-2 p-3 px-6"
 				>
 					<p>A Body that can move</p>
 					<div
-						class="arrow bg-surface-200-700-token border-b-2 border-r-2 border-surface-400-500-token"
+						class="bg-surface-200-700-token border-surface-400-500-token arrow border-b-2 border-r-2"
 					></div>
 				</div>
 
@@ -301,11 +301,11 @@
 				<!-- Static Button popup -->
 				<div
 					data-popup={'popupHover: Static Body'}
-					class="card bg-surface-200-700-token p-3 px-6 border-2 border-surface-300-600-token"
+					class="card bg-surface-200-700-token border-surface-300-600-token border-2 p-3 px-6"
 				>
 					<p>A Body that never moves</p>
 					<div
-						class="arrow bg-surface-200-700-token border-b-2 border-r-2 border-surface-400-500-token"
+						class="bg-surface-200-700-token border-surface-400-500-token arrow border-b-2 border-r-2"
 					></div>
 				</div>
 			</div>
@@ -322,9 +322,9 @@
 				description="Visibility of the object"
 			/>
 			<!-- Fill and Stroke Style -->
-			<div class="flex my-3">
+			<div class="my-3 flex">
 				<div
-					class="flex-1 h-full flex flex-col gap-2 items-center justify-around"
+					class="flex h-full flex-1 flex-col items-center justify-around gap-2"
 					use:popup={{
 						event: 'hover',
 						target: 'popupHover: FillStyle',
@@ -339,16 +339,16 @@
 				<!-- Fill Button popup -->
 				<div
 					data-popup={'popupHover: FillStyle'}
-					class="card bg-surface-200-700-token p-3 px-6 border-2 border-surface-300-600-token"
+					class="card bg-surface-200-700-token border-surface-300-600-token border-2 p-3 px-6"
 				>
 					<p>Color of the object</p>
 					<div
-						class="arrow bg-surface-200-700-token border-b-2 border-r-2 border-surface-400-500-token"
+						class="bg-surface-200-700-token border-surface-400-500-token arrow border-b-2 border-r-2"
 					></div>
 				</div>
 
 				<div
-					class="flex-1 h-full flex flex-col gap-2 items-center justify-around"
+					class="flex h-full flex-1 flex-col items-center justify-around gap-2"
 					use:popup={{
 						event: 'hover',
 						target: 'popupHover: StrokeStyle',
@@ -363,11 +363,11 @@
 				<!-- Stroke Button popup -->
 				<div
 					data-popup={'popupHover: StrokeStyle'}
-					class="card bg-surface-200-700-token p-3 px-6 border-2 border-surface-300-600-token"
+					class="card bg-surface-200-700-token border-surface-300-600-token border-2 p-3 px-6"
 				>
 					<p>Border color of the object</p>
 					<div
-						class="arrow bg-surface-200-700-token border-b-2 border-r-2 border-surface-400-500-token"
+						class="bg-surface-200-700-token border-surface-400-500-token arrow border-b-2 border-r-2"
 					></div>
 				</div>
 			</div>

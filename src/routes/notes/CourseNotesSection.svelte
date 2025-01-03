@@ -10,7 +10,7 @@
 </script>
 
 <!-- Course Notes Section -->
-<section class="w-full h-auto">
+<section class="h-auto w-full">
 	<h2 class="h2 pb-5">Course Notes</h2>
 	<div class="flex flex-wrap gap-4">
 		{#if courseNotesCollection.length !== 0}
@@ -22,7 +22,7 @@
 				/>
 			{/each}
 		{:else}
-			<div class="text-xl text-surface-600-300-token bg-surface-500/20 p-8 rounded-container-token">
+			<div class="text-surface-600-300-token bg-surface-500/20 p-8 text-xl rounded-container-token">
 				To see course notes add some when taking courses
 			</div>
 		{/if}

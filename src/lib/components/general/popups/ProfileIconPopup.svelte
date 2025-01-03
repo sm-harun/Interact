@@ -70,7 +70,7 @@
 </script>
 
 <div
-	class="w-72 card p-3 rounded-container-token variant-surface-700 z-50 fixed"
+	class="variant-surface-700 card fixed z-50 w-72 p-3 rounded-container-token"
 	style="top: {$profilePopupPosition.y}px; right: {$profilePopupPosition.x}px;"
 	bind:this={popupElement}
 	in:fly={{ y: 10, duration: 300 }}
@@ -78,14 +78,14 @@
 >
 	<!-- Even if this component won't render, it will still be there, thats why ths if statement is needed. -->
 	{#if $user}
-		<h1 class="text-xl font-bold px-3 mb-3 w-full grid place-items-center">
+		<h1 class="mb-3 grid w-full place-items-center px-3 text-xl font-bold">
 			{$user.displayName}
 		</h1>
-		<hr class="mt-2 mb-2" />
+		<hr class="mb-2 mt-2" />
 	{/if}
 	<a
 		href="/create"
-		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30"
+		class="btn w-full justify-between text-xl rounded-container-token hover:bg-primary-500/30"
 		onclick={hideProfilePopup}
 		><span>Create</span>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -98,7 +98,7 @@
 	</a>
 	<a
 		href="/settings"
-		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30"
+		class="btn w-full justify-between text-xl rounded-container-token hover:bg-primary-500/30"
 		onclick={hideProfilePopup}
 		><span>Settings</span>
 		<svg
@@ -123,7 +123,7 @@
 	</a>
 	<a
 		href="/test"
-		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30"
+		class="btn w-full justify-between text-xl rounded-container-token hover:bg-primary-500/30"
 		onclick={hideProfilePopup}
 		><span>Test</span>
 		<svg
@@ -151,7 +151,7 @@
 			confirmLogout();
 			hideProfilePopup();
 		}}
-		class="text-xl btn rounded-container-token w-full justify-between hover:bg-primary-500/30 close"
+		class="close btn w-full justify-between text-xl rounded-container-token hover:bg-primary-500/30"
 	>
 		<span>Sign out</span>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

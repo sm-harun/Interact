@@ -13,6 +13,6 @@
 	<h4 class="h4">{title}</h4>
 {/if}
 
-<div class="flex justify-start items-center gap-5">
+<div class="flex items-center justify-start gap-5">
 	{@render children()}
 </div>

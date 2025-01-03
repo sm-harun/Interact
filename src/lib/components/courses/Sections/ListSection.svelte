@@ -27,21 +27,21 @@
 
 {#if show}
 	<main
-		class="w-full bg-surface-100-800-token rounded-container-token p-4 mb-5"
+		class="bg-surface-100-800-token mb-5 w-full p-4 rounded-container-token"
 		in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 	>
 		<h3 class="h3 ml-5">{@html renderText(section.title)}</h3>
-		<ul class="list-disc px-5 mt-3">
+		<ul class="mt-3 list-disc px-5">
 			{#each section.list as list}
-				<li class="text-lg mt-5">{@html renderText(list)}</li>
+				<li class="mt-5 text-lg">{@html renderText(list)}</li>
 			{/each}
 		</ul>
 	</main>
 {/if}
 {#if showNextButton && showButton && !section.skip}
-	<div class="w-full pb-2 flex justify-end items-center mt-6">
+	<div class="mt-6 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

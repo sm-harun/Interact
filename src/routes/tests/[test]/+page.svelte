@@ -157,25 +157,25 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader showMainRoutes={false} showBackButton={true} showHomeButton={true} />
-	<main class="flex-grow flex justify-center items-center overflow-hidden">
+	<main class="flex flex-grow items-center justify-center overflow-hidden">
 		{#key startingState}
 			{#if startingState === 'prompt'}
 				<div
-					class="max-w-[100%] w-[70rem] h-[40rem] bg-surface-100-800-token rounded-container-token border-[0.1rem] border-surface-300-600-token p-10 relative"
+					class="bg-surface-100-800-token border-surface-300-600-token relative h-[40rem] w-[70rem] max-w-[100%] border-[0.1rem] p-10 rounded-container-token"
 				>
 					<h2 class="h2">{$page.params.test}</h2>
 					<hr class="my-5" />
 					{#if fetchingTestStatus}
-						<div class="w-full h-16 flex flex-col gap-4">
+						<div class="flex h-16 w-full flex-col gap-4">
 							<h3 class="h3">True/False</h3>
 							<div class="flex gap-1">
 								{#each questionChoices as choice, i}
 									<button
 										class="btn h-12 w-20 {settings.truefalse == choice
-											? 'variant-filled-primary disabled:vaiant-filled-surface'
-											: 'variant-ghost-primary disabled:varant-ghost-surface'} {i == 0
+											? 'disabled:vaiant-filled-surface variant-filled-primary'
+											: 'disabled:varant-ghost-surface variant-ghost-primary'} {i == 0
 											? 'rounded-r-none'
 											: ''} {i == questionChoices.length - 1 ? 'rounded-l-none' : ''} {i !== 0 &&
 										i !== questionChoices.length - 1
@@ -191,8 +191,8 @@
 								{#each questionChoices as choice, i}
 									<button
 										class="btn h-12 w-20 {settings.choices == choice
-											? 'variant-filled-primary disabled:vaiant-filled-surface'
-											: 'variant-ghost-primary disabled:varant-ghost-surface'} {i == 0
+											? 'disabled:vaiant-filled-surface variant-filled-primary'
+											: 'disabled:varant-ghost-surface variant-ghost-primary'} {i == 0
 											? 'rounded-r-none'
 											: ''} {i == questionChoices.length - 1 ? 'rounded-l-none' : ''} {i !== 0 &&
 										i !== questionChoices.length - 1
@@ -208,8 +208,8 @@
 								{#each questionChoices as choice, i}
 									<button
 										class="btn h-12 w-20 {settings.pick == choice
-											? 'variant-filled-primary disabled:vaiant-filled-surface'
-											: 'variant-ghost-primary disabled:varant-ghost-surface'} {i == 0
+											? 'disabled:vaiant-filled-surface variant-filled-primary'
+											: 'disabled:varant-ghost-surface variant-ghost-primary'} {i == 0
 											? 'rounded-r-none'
 											: ''} {i == questionChoices.length - 1 ? 'rounded-l-none' : ''} {i !== 0 &&
 										i !== questionChoices.length - 1
@@ -225,8 +225,8 @@
 								{#each timeChioces as choice, i}
 									<button
 										class="btn h-12 w-20 {settings.time == choice
-											? 'variant-filled-primary disabled:vaiant-filled-surface'
-											: 'variant-ghost-primary disabled:varant-ghost-surface'} {i == 0
+											? 'disabled:vaiant-filled-surface variant-filled-primary'
+											: 'disabled:varant-ghost-surface variant-ghost-primary'} {i == 0
 											? 'rounded-r-none'
 											: ''} {i == timeChioces.length - 1 ? 'rounded-l-none' : ''} {i !== 0 &&
 										i !== timeChioces.length - 1
@@ -240,7 +240,7 @@
 						</div>
 					{:else}
 						<div
-							class="place-items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2"
+							class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col place-items-center gap-2"
 						>
 							<ProgressRadial
 								strokeLinecap={'round'}
@@ -254,14 +254,14 @@
 					{/if}
 					<button
 						disabled={!fetchingTestStatus}
-						class="btn variant-filled-primary absolute bottom-5 right-5 disabled:bg-surface-500"
+						class="variant-filled-primary btn absolute bottom-5 right-5 disabled:bg-surface-500"
 						onclick={loadTest}>Start Test</button
 					>
 				</div>
 			{:else if startingState === 'test'}
 				{#key generationTrials}
 					{#await createModel(settings.choices, settings.truefalse, settings.pick)}
-						<div class="w-64 flex flex-col items-center gap-2">
+						<div class="flex w-64 flex-col items-center gap-2">
 							<p>
 								Generated Questions {progressBarValue} / {settings.choices +
 									settings.truefalse +
@@ -275,9 +275,9 @@
 							/>
 						</div>
 					{:then response}
-						<div class="size-full grid place-items-center overflow-hidden">
+						<div class="grid size-full place-items-center overflow-hidden">
 							<div
-								class="h-full w-full xl:w-[60%] p-10 flex flex-col gap-5 overflow-y-auto border-x-4 border-surface-100-800-token"
+								class="border-surface-100-800-token flex h-full w-full flex-col gap-5 overflow-y-auto border-x-4 p-10 xl:w-[60%]"
 							>
 								{#each response as res}
 									{#if res.type == 'TrueFalse'}
@@ -320,15 +320,15 @@
 						</div>
 					{:catch}
 						{(progressBarValue = 0)}
-						<div class="bg-surface-200-700-token rounded-container-token p-8 px-14 box-content">
+						<div class="bg-surface-200-700-token box-content p-8 px-14 rounded-container-token">
 							<h3 class="h4">Failed to Generate Exam</h3>
-							<div class="p-2 my-2">
-								<p class="text-xl mb-1">Possible Causes:</p>
+							<div class="my-2 p-2">
+								<p class="mb-1 text-xl">Possible Causes:</p>
 								<li>Unstable Internet connection</li>
 								<li>Using a wrong version of the site</li>
 								<p class="mt-1">Check console for information</p>
 							</div>
-							<button class="btn variant-filled-surface" onclick={() => (generationTrials += 1)}
+							<button class="variant-filled-surface btn" onclick={() => (generationTrials += 1)}
 								>Try Again!</button
 							>
 						</div>

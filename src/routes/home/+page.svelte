@@ -3,7 +3,7 @@
 	import { fly } from 'svelte/transition';
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader />
 
 	<main class="p-5">

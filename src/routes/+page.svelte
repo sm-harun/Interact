@@ -54,13 +54,13 @@
 </script>
 
 <main
-	class="h-auto w-auto grid place-items-center gap-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+	class="absolute left-1/2 top-1/2 grid h-auto w-auto -translate-x-1/2 -translate-y-1/2 place-items-center gap-2"
 >
 	<h1 class="h1 text-3xl lg:text-5xl 2xl:text-7xl">
 		<span class="">Welcome to Interact </span>
 	</h1>
 	<h1 class="h1">
-		<a href="/courses" class="btn variant-ghost-primary text-2xl">Go to Course Page</a>
+		<a href="/courses" class="variant-ghost-primary btn text-2xl">Go to Course Page</a>
 	</h1>
 </main>
 <canvas class="" bind:this={canvas} id="main-canvas"></canvas>

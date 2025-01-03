@@ -31,12 +31,12 @@
 </script>
 
 <div
-	class="card-hover size-60 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token flex flex-col box-border p-3"
+	class="bg-surface-200-700-token card-hover box-border flex size-60 flex-shrink-0 flex-col p-3 rounded-container-token xl:size-72"
 	transition:slide={{ axis: 'x' }}
 >
-	<header class="flex flex-col gap-2 xl:flex-row justify-between items-start xl:items-center">
+	<header class="flex flex-col items-start justify-between gap-2 xl:flex-row xl:items-center">
 		<h3 class="h3 inline">RV {name}</h3>
-		<div class="flex justify-between w-full xl:w-auto gap-2 items-center">
+		<div class="flex w-full items-center justify-between gap-2 xl:w-auto">
 			<input type="color" bind:value={color} class="input flex-shrink-0" />
 			<button
 				class="btn-icon {showShadow ? 'bg-primary-500' : ''} flex-shrink-0 p-2"
@@ -81,23 +81,23 @@
 	</header>
 
 	<hr class="my-2" />
-	<main class="flex-grow w-full grid grid-cols-1 gap-3 overflow-y-auto pr-3">
+	<main class="grid w-full flex-grow grid-cols-1 gap-3 overflow-y-auto pr-3">
 		{#each scalars as scalar, i}
-			<div class="size-full flex items-center gap-2">
+			<div class="flex size-full items-center gap-2">
 				<p>Scalar</p>
 				<input type="number" class="input" bind:value={scalars[i]} transition:slide />
 			</div>
 		{/each}
 		{#each unitVectors as vector}
 			<div
-				class="bg-surface-100-800-token rounded-container-token w-full h-[4rem] box-content"
+				class="bg-surface-100-800-token box-content h-[4rem] w-full rounded-container-token"
 				transition:slide
 			>
-				<div class="w-full p-1 px-5 flex justify-between items-center">
+				<div class="flex w-full items-center justify-between p-1 px-5">
 					<h3 class="h5">{vector == 0 ? 'Unit Vector' : 'Unit Vector'}</h3>
 					<h3 class="h5">{vector == 0 ? 'i' : 'j'}</h3>
 				</div>
-				<div class="w-full flex items-center justify-around">
+				<div class="flex w-full items-center justify-around">
 					<p>x : {vector == 0 ? '1' : '0'}</p>
 					<p>y : {vector == 1 ? '1' : '0'}</p>
 					<p>y : {vector == 2 ? '1' : '0'}</p>
@@ -106,14 +106,14 @@
 		{/each}
 		{#each vectors as vector}
 			<div
-				class="bg-surface-300-600-token rounded-container-token w-full h-[4.5rem] box-content"
+				class="bg-surface-300-600-token box-content h-[4.5rem] w-full rounded-container-token"
 				transition:slide
 			>
-				<div class="w-full p-1 px-5 flex justify-between items-center">
+				<div class="flex w-full items-center justify-between p-1 px-5">
 					<h3 class="h5">{vector.name}</h3>
 					<div class="size-6 rounded-full" style="background-color: {vector.color};"></div>
 				</div>
-				<div class="w-full flex items-center justify-around">
+				<div class="flex w-full items-center justify-around">
 					<p>x : {vector.x}</p>
 					<p>y : {vector.y}</p>
 					<p>z : {vector.z}</p>
@@ -122,14 +122,14 @@
 		{/each}
 		{#each resultants as resultant}
 			<div
-				class="bg-surface-300-600-token rounded-container-token w-full h-[4.5rem] box-content"
+				class="bg-surface-300-600-token box-content h-[4.5rem] w-full rounded-container-token"
 				transition:slide
 			>
-				<div class="w-full p-1 px-5 flex justify-between items-center">
+				<div class="flex w-full items-center justify-between p-1 px-5">
 					<h3 class="h5">{resultant.name}</h3>
 					<div class="size-6 rounded-full" style="background-color: {resultant.color};"></div>
 				</div>
-				<div class="w-full flex items-center justify-around">
+				<div class="flex w-full items-center justify-around">
 					<p>x : {resultant.x}</p>
 					<p>y : {resultant.y}</p>
 					<p>z : {resultant.z}</p>
@@ -137,7 +137,7 @@
 			</div>
 		{/each}
 		<button
-			class="w-full h-16 btn variant-soft-surface"
+			class="variant-soft-surface btn h-16 w-full"
 			onclick={(e) => showPopup(name, e.pageX, e.pageY)}
 		>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">

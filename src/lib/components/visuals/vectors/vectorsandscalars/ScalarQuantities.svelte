@@ -29,7 +29,6 @@
 	let ball1Radius = $state(50);
 	let ball1Resistance = $state(0.1);
 
-
 	let ball1 = {
 		xi: 0,
 		yi: 0,
@@ -171,16 +170,16 @@
 	});
 </script>
 
-<div class="w-full h-[60rem] lg:h-[40rem] flex flex-col lg:flex-row" id="canvas-parent">
-	<div class="lg:flex-[2_1_0] h-[40rem] border-2 border-primary-500">
+<div class="flex h-[60rem] w-full flex-col lg:h-[40rem] lg:flex-row" id="canvas-parent">
+	<div class="h-[40rem] border-2 border-primary-500 lg:flex-[2_1_0]">
 		<canvas id="main-canvas"></canvas>
 	</div>
 
 	<section
-		class="flex-1 h-full p-10 bg-surface-300-600-token flex lg:flex-col flex-wrap gap-4 lg:gap-0"
+		class="bg-surface-300-600-token flex h-full flex-1 flex-wrap gap-4 p-10 lg:flex-col lg:gap-0"
 	>
 		<div class="w-full flex-1">
-			<h3 class="h3 ml-3 mb-3">Ball 1</h3>
+			<h3 class="h3 mb-3 ml-3">Ball 1</h3>
 			<div class="w-48">
 				<span>Area: </span>
 				<input type="range" bind:value={ball1Radius} min="0" max="100" step={1} />
@@ -189,11 +188,11 @@
 				<span>Mass: </span>
 				<input type="range" bind:value={ball1Resistance} min="0.001" max="0.2" step={0.001} />
 			</div>
-			<button class="btn variant-filled-primary mt-5" onclick={lauchFirstBall}>Launch</button>
+			<button class="variant-filled-primary btn mt-5" onclick={lauchFirstBall}>Launch</button>
 		</div>
 
 		<div class="w-full flex-1">
-			<h3 class="h3 ml-3 mb-3">Ball 2</h3>
+			<h3 class="h3 mb-3 ml-3">Ball 2</h3>
 			<div class="w-48">
 				<span>Area: </span>
 				<input type="range" bind:value={ball2Radius} min="0" max="100" step={1} />
@@ -202,7 +201,7 @@
 				<span>Mass: </span>
 				<input type="range" bind:value={ball2Resistance} min="0.001" max="0.2" step={0.001} />
 			</div>
-			<button class="btn variant-filled-primary mt-5" onclick={launchSecondBall}>Launch</button>
+			<button class="variant-filled-primary btn mt-5" onclick={launchSecondBall}>Launch</button>
 		</div>
 
 		<blockquote class="blockquote mt-4 lg:mt-0">
@@ -211,9 +210,9 @@
 	</section>
 </div>
 {#if showButton}
-	<div class="w-full pb-2 flex justify-end items-center mt-5">
+	<div class="mt-5 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

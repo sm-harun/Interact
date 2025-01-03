@@ -46,7 +46,7 @@
 	}
 </script>
 
-<section class="flex-[2_1_0] border-surface-500 border-l-2 p-8 relative">
+<section class="relative flex-[2_1_0] border-l-2 border-surface-500 p-8">
 	<h1 class="h1">Test Settings</h1>
 	<hr class="my-5 opacity-0" />
 
@@ -54,7 +54,7 @@
 	<hr class="my-5" />
 
 	<h3 class="h3">True or False</h3>
-	<div class="w-full h-16 flex p-3 box-content gap-1">
+	<div class="box-content flex h-16 w-full gap-1 p-3">
 		{#each questionChoices as choice, i}
 			<button
 				class="btn h-12 w-20 {truefalse == choice
@@ -68,7 +68,7 @@
 		{/each}
 	</div>
 	<h3 class="h3 mt-3">Choices</h3>
-	<div class="w-full h-16 flex p-3 box-content gap-1">
+	<div class="box-content flex h-16 w-full gap-1 p-3">
 		{#each questionChoices as choice, i}
 			<button
 				class="btn {choices == choice
@@ -82,7 +82,7 @@
 		{/each}
 	</div>
 	<h3 class="h3 mt-3">Pick Choices</h3>
-	<div class="w-full h-16 flex p-3 box-content gap-1">
+	<div class="box-content flex h-16 w-full gap-1 p-3">
 		{#each questionChoices as choice, i}
 			<button
 				class="btn {pick == choice
@@ -96,9 +96,9 @@
 		{/each}
 	</div>
 
-	<h2 class="h2 flex mt-10">Time in minutes</h2>
+	<h2 class="h2 mt-10 flex">Time in minutes</h2>
 	<hr class="my-5" />
-	<div class="w-full h-16 flex p-3 box-content gap-1">
+	<div class="box-content flex h-16 w-full gap-1 p-3">
 		{#each timeChioces as choice, i}
 			<button
 				class="btn {time == choice
@@ -112,9 +112,9 @@
 		{/each}
 	</div>
 
-	<h2 class="h2 flex mt-10">More Settings</h2>
+	<h2 class="h2 mt-10 flex">More Settings</h2>
 	<hr class="my-5" />
-	<div class="w-full h-16 flex p-3 box-content gap-3">
+	<div class="box-content flex h-16 w-full gap-3 p-3">
 		<button
 			class="btn {showAnswerInstantly ? 'variant-filled-primary' : 'variant-ghost-primary'} h-12"
 			onclick={() => (showAnswerInstantly = !showAnswerInstantly)}>Show Answer Instantly</button
@@ -133,7 +133,7 @@
 		>
 	</div>
 
-	<button class="btn variant-filled-primary absolute bottom-5 right-5" onclick={createTest}
+	<button class="variant-filled-primary btn absolute bottom-5 right-5" onclick={createTest}
 		>Create Test</button
 	>
 </section>

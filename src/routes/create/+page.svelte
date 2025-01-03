@@ -45,9 +45,9 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader title={'Create'} showMainRoutes={false} showBackButton={true} showHomeButton={true} />
-	<main class="flex-grow p-6 overflow-auto flex gap-14 relative flex-wrap">
+	<main class="relative flex flex-grow flex-wrap gap-14 overflow-auto p-6">
 		{#await getCourses()}
 			<ProgressBar
 				meter={'bg-primary-500 h-1'}
@@ -61,7 +61,7 @@
 				</a>
 			{/each}
 			<button
-				class="btn justify-between absolute top-5 right-5 variant-filled-primary"
+				class="variant-filled-primary btn absolute right-5 top-5 justify-between"
 				onclick={addNewCourse}
 			>
 				<span>Add Course</span>

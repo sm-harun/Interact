@@ -57,20 +57,20 @@
 </script>
 
 <div
-	class="w-72 card p-3 rounded-container-token variant-surface-700 z-50 fixed"
+	class="variant-surface-700 card fixed z-50 w-72 p-3 rounded-container-token"
 	style="top: {$dictPopupPosition.y}px; right: {revisedX}px;"
 	bind:this={popupElement}
 	in:fly={{ y: 10, duration: 300 }}
 	out:fly={{ y: 10, duration: 300 }}
 >
 	{#await awaitDict()}
-		<div class="w-full h-full grid place-items-center">
+		<div class="grid h-full w-full place-items-center">
 			<ProgressBar meter={'bg-primary-500 h-1'} track={'bg-surface-500 h-[0.2rem]'} />
 		</div>
 	{:then meanings}
 		{#each meanings as meaning}
 			<h1 class="mt-3">
-				<span class="text-primary-500 text-lg font-bold">{$dictPopupPosition.info} </span>
+				<span class="text-lg font-bold text-primary-500">{$dictPopupPosition.info} </span>
 				<span>/{meaning.partOfSpeech}</span>
 			</h1>
 			{#each meaning.definitions.slice(0, 2) as definition, i}

@@ -65,7 +65,7 @@
 </script>
 
 <div
-	class="w-full xl:aspect-video flex flex-col xl:flex-row relative transition border-2 {explained
+	class="relative flex w-full flex-col border-2 transition xl:aspect-video xl:flex-row {explained
 		? 'border-success-500'
 		: wrongAnswer
 			? 'border-error-500'
@@ -73,22 +73,22 @@
 	in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 >
 	{#if wrongAnswer}
-		<p class="text-xl text-error-500 absolute top-3 right-5" transition:fade>incorrect</p>
+		<p class="absolute right-5 top-3 text-xl text-error-500" transition:fade>incorrect</p>
 	{/if}
 	<section class="h-[30rem] xl:h-auto xl:flex-[2_1_0]">
 		<canvas bind:this={canvas}> </canvas>
 	</section>
 	<section
-		class="flex-1 h-full p-10 bg-surface-300-600-token flex sm:flex-col flex-wrap gap-4 lg:gap-0"
+		class="bg-surface-300-600-token flex h-full flex-1 flex-wrap gap-4 p-10 sm:flex-col lg:gap-0"
 	>
 		<h1 class="h4 pb-10">Play around with the vector and See the effects when it is inversed</h1>
-		<div class="w-full flex-1 flex flex-col justify-center gap-5">
+		<div class="flex w-full flex-1 flex-col justify-center gap-5">
 			{#if inverseVector}
-				<p class="text-3xl font-bold mb-5">V = ({-greenVector.x}, {-greenVector.y})</p>
+				<p class="mb-5 text-3xl font-bold">V = ({-greenVector.x}, {-greenVector.y})</p>
 			{:else}
-				<p class="text-3xl font-bold mb-5">V = ({greenVector.x}, {greenVector.y})</p>
+				<p class="mb-5 text-3xl font-bold">V = ({greenVector.x}, {greenVector.y})</p>
 			{/if}
-			<div class="w-48 flex gap-2">
+			<div class="flex w-48 gap-2">
 				<span>X </span>
 				<input
 					class="flex-shrink-0"
@@ -100,7 +100,7 @@
 				/>
 				<p>{greenVector.x}</p>
 			</div>
-			<div class="w-48 flex gap-2 mt-3">
+			<div class="mt-3 flex w-48 gap-2">
 				<span>Y </span>
 				<input
 					class="flex-shrink-0"
@@ -122,9 +122,9 @@
 	</section>
 </div>
 {#if showButton}
-	<div class="w-full pb-2 flex justify-end items-center mt-9">
+	<div class="mt-9 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

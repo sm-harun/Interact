@@ -143,9 +143,9 @@
 	});
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
+<div class="bg-surface-300-600-token relative w-full p-4 rounded-container-token">
 	<input
-		class="input font-bold text-2xl mb-8"
+		class="input mb-8 text-2xl font-bold"
 		type="text"
 		placeholder="Title"
 		bind:value={sectionTitle}
@@ -154,7 +154,7 @@
 	{#each $sectionEquations as equation, i}
 		<div class="flex gap-3" transition:slide>
 			<input
-				class="input font-bold my-3"
+				class="input my-3 font-bold"
 				type="text"
 				placeholder="Equation {i + 1}"
 				bind:value={$sectionEquations[i]}
@@ -165,7 +165,7 @@
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="currentColor"
-					class="size-6 active:scale-110 transition"
+					class="size-6 transition active:scale-110"
 				>
 					<path
 						stroke-linecap="round"
@@ -176,7 +176,7 @@
 			</button>
 		</div>
 	{/each}
-	<div class="w-full flex justify-between mt-2">
+	<div class="mt-2 flex w-full justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			onclick={resetChanges}
@@ -191,7 +191,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addChoice}>
+		<button class="variant-ringed-primary btn hover:variant-filled-primary" onclick={addChoice}>
 			<span>Add Equation</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -212,7 +212,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		onclick={changeSkip}

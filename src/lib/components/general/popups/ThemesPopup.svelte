@@ -42,20 +42,20 @@
 
 <div
 	id="themes-popup"
-	class="card w-60 lg:w-80 text-lg lg:text-xl p-5 variant-surface-700 z-50 border-1 fixed"
+	class="variant-surface-700 border-1 card fixed z-50 w-60 p-5 text-lg lg:w-80 lg:text-xl"
 	style="top: {$popupPosition.y}px; right: {$popupPosition.x}px;"
 	bind:this={popupElement}
 	in:fly={{ y: 10, duration: 300 }}
 	out:fly={{ y: 10, duration: 300, delay: 200 }}
 >
-	<div class="flex justify-between items-center">
+	<div class="flex items-center justify-between">
 		<p><strong><span class="hidden lg:inline">Dark</span> Mode</strong></p>
-		<div class="flex justify-between items-center gap-2">
+		<div class="flex items-center justify-between gap-2">
 			<LightSwitch />
 			<FullScreenToggler />
 		</div>
 	</div>
-	<hr class="mt-4 mb-4" />
+	<hr class="mb-4 mt-4" />
 	<ListBox>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="crimson">Crimson</ListBoxItem>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="modern">Modern</ListBoxItem>
@@ -70,8 +70,8 @@
 		<ListBoxItem bind:group={currentTheme} name="medium" value="rocket">Rocket</ListBoxItem>
 		<ListBoxItem bind:group={currentTheme} name="medium" value="seafoam">Seafoam</ListBoxItem>
 	</ListBox>
-	<hr class="mt-4 mb-4" />
-	<p class="text-xs text-secondary-700-200-token grid place-items-center">
+	<hr class="mb-4 mt-4" />
+	<p class="text-secondary-700-200-token grid place-items-center text-xs">
 		These themes are powered by <strong>Skeleton UI</strong>
 	</p>
 </div>

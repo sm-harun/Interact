@@ -67,14 +67,14 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader
 		title={`Create / ${data.params.course}`}
 		showMainRoutes={false}
 		showBackButton={true}
 		showHomeButton={true}
 	/>
-	<main class="flex-grow overflow-auto p-6 flex gap-14 relative flex-wrap content-start">
+	<main class="relative flex flex-grow flex-wrap content-start gap-14 overflow-auto p-6">
 		{#await getLessons()}
 			<ProgressBar
 				meter={'bg-primary-500 h-1'}
@@ -88,7 +88,7 @@
 				</a>
 			{/each}
 			<button
-				class="btn justify-between absolute top-5 right-5 variant-filled-primary"
+				class="variant-filled-primary btn absolute right-5 top-5 justify-between"
 				onclick={addNewLesson}
 			>
 				<svg

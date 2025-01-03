@@ -306,20 +306,20 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col overflow-hidden">
+<div class="flex h-screen flex-col overflow-hidden">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
-	<main class="flex-grow flex overflow-hidden">
+	<main class="flex flex-grow overflow-hidden">
 		<!-- This is the Content Selection Section -->
-		<section class="flex-[3_1_0] flex overflow-hidden">
-			<div class="flex-[1_1_0] overflow-hidden relative">
+		<section class="flex flex-[3_1_0] overflow-hidden">
+			<div class="relative flex-[1_1_0] overflow-hidden">
 				<header
-					class="w-full h-20 variant-glass-surface flex items-center px-10 absolute top-0 left-0 z-20"
+					class="variant-glass-surface absolute left-0 top-0 z-20 flex h-20 w-full items-center px-10"
 				>
 					<h2 class="h2">Courses</h2>
 				</header>
 
 				<!-- This will display the courses -->
-				<main class="size-full flex flex-col gap-5 p-5 overflow-y-scroll pt-24">
+				<main class="flex size-full flex-col gap-5 overflow-y-scroll p-5 pt-24">
 					{#each courses as course}
 						<TreeView
 							text={course.title}
@@ -335,15 +335,15 @@
 				</main>
 			</div>
 
-			<div class="flex-[1_1_0] border-surface-500 border-l-2 overflow-hidden relative">
+			<div class="relative flex-[1_1_0] overflow-hidden border-l-2 border-surface-500">
 				<header
-					class="w-full h-20 variant-glass-surface flex items-center px-10 absolute top-0 left-0"
+					class="variant-glass-surface absolute left-0 top-0 flex h-20 w-full items-center px-10"
 				>
 					<h2 class="h2">Notes</h2>
 				</header>
 
 				<!-- This will display the Notes -->
-				<main class="size-full flex flex-col gap-5 p-5 overflow-y-scroll pt-24">
+				<main class="flex size-full flex-col gap-5 overflow-y-scroll p-5 pt-24">
 					<h2 class="h2">Course Notes</h2>
 					{#each couresNotesColls as noteColl}
 						<TreeView

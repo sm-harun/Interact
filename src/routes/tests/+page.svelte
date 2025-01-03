@@ -43,17 +43,17 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader />
 	<main
-		class="flex-grow p-6 overflow-y-auto overflow-x-hidden"
+		class="flex-grow overflow-y-auto overflow-x-hidden p-6"
 		in:fly={{ x: 100, duration: 500, delay: 500 }}
 		out:fly={{ x: -100, duration: 500 }}
 	>
 		<h1 class="h1 mb-3 bg-transparent">All Tests</h1>
-		<div class="p-3 flex gap-4 flex-wrap">
+		<div class="flex flex-wrap gap-4 p-3">
 			<a
-				class="card card-hover variant-ghost-primary size-60 grid place-items-center"
+				class="card variant-ghost-primary card-hover grid size-60 place-items-center"
 				aria-label="Add Test Button"
 				href="/tests/create-test"
 			>
@@ -62,7 +62,7 @@
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="currentColor"
-					class="w-[50%] aspect-square"
+					class="aspect-square w-[50%]"
 				>
 					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 				</svg>

@@ -29,7 +29,7 @@
 </script>
 
 {#if show}
-	<div class="w-full flex justify-start" in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}>
+	<div class="flex w-full justify-start" in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}>
 		<blockquote class="blockquote text-lg">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html renderText(section.title)}
@@ -37,9 +37,9 @@
 	</div>
 {/if}
 {#if showButton && !section.skip}
-	<div class="w-full pb-2 flex justify-end items-center mt-5">
+	<div class="mt-5 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

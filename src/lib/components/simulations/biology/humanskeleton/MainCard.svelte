@@ -1,15 +1,15 @@
 <a
-	class="group card flex-shrink-0 size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token flex items-end p-5 inside-shadow relative transition duration-1000"
+	class="inside-shadow group card border-secondary-500-400-token relative flex size-60 flex-shrink-0 items-end p-5 transition duration-1000 border-token rounded-container-token sm:size-72"
 	href="/simulations/thehumanskeleton"
 >
-	<h3 class="h3 text-surface-200 z-10 transition">The Human Skeleton</h3>
+	<h3 class="h3 z-10 text-surface-200 transition">The Human Skeleton</h3>
 	<div
-		class="absolute size-full bottom-0 left-0 z-0 flex items-center justify-center group-hover:scale-110 transition duration-1000"
+		class="absolute bottom-0 left-0 z-0 flex size-full items-center justify-center transition duration-1000 group-hover:scale-110"
 	>
 		<img
 			src="/assets/human-skull.png"
 			alt="Human Skull"
-			class="scale-95 group-hover:scale-110 transition duration-1000"
+			class="scale-95 transition duration-1000 group-hover:scale-110"
 		/>
 	</div>
 </a>

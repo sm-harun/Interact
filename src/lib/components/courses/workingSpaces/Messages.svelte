@@ -18,7 +18,7 @@
 	}
 </script>
 
-<div class="w-full flex gap-3 mb-5" in:fly={{ y: 50, duration: 600, easing: cubicInOut }}>
+<div class="mb-5 flex w-full gap-3" in:fly={{ y: 50, duration: 600, easing: cubicInOut }}>
 	{#if !side}
 		<div>
 			<Avatar
@@ -32,8 +32,8 @@
 	{/if}
 	<div
 		class="{side
-			? 'ml-auto bg-surface-300-600-token rounded-tl-container-token rounded-br-container-token rounded-bl-container-token'
-			: 'bg-secondary-100-800-token rounded-br-container-token rounded-bl-container-token rounded-tr-container-token'} max-w-4/6 h-auto p-3 px-5 text-xl leading-relaxed"
+			? 'bg-surface-300-600-token ml-auto rounded-tl-container-token rounded-bl-container-token rounded-br-container-token'
+			: 'bg-secondary-100-800-token rounded-tr-container-token rounded-bl-container-token rounded-br-container-token'} max-w-4/6 h-auto p-3 px-5 text-xl leading-relaxed"
 	>
 		{@html renderText(message)}
 	</div>

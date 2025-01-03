@@ -10,12 +10,7 @@
 		dictUpdater: number;
 	}
 
-	let {
-		words,
-		course,
-		lesson,
-		dictUpdater = $bindable()
-	}: Props = $props();
+	let { words, course, lesson, dictUpdater = $bindable() }: Props = $props();
 
 	let toastStore = getToastStore();
 
@@ -37,12 +32,12 @@
 	}
 </script>
 
-<div class="w-full bg-secondary-400-500-token rounded-container-token p-4">
+<div class="bg-secondary-400-500-token w-full p-4 rounded-container-token">
 	<h1 class="text-3xl font-bold">Lesson Dictionary:</h1>
 
-	<ul class="grid grid-cols-5 mt-3">
+	<ul class="mt-3 grid grid-cols-5">
 		{#each words as word}
-			<li class="group font-bold flex gap-9 items-center">
+			<li class="group flex items-center gap-9 font-bold">
 				<span class="text-2xl">‣ {word}</span>
 				<button onclick={() => deleteDictionary(word)}>
 					<svg
@@ -50,7 +45,7 @@
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="size-6 opacity-0 group-hover:opacity-100 transition grid place-items-center"
+						class="grid size-6 place-items-center opacity-0 transition group-hover:opacity-100"
 					>
 						<path
 							stroke-linecap="round"

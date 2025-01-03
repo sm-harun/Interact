@@ -385,16 +385,16 @@
 	});
 </script>
 
-<div class="h-screen flex flex-col overflow-hidden">
+<div class="flex h-screen flex-col overflow-hidden">
 	<MainHeader showBackButton={true} showMainRoutes={false} />
-	<div class="flex-1 h-full overflow-hidden">
-		<main class="flex-grow flex flex-col h-full xl:flex-row overflow-hidden">
-			<div class="flex-1 h-full flex-shrink-0 border-2 border-primary-500 relative">
-				<div bind:this={container} class="flex-1 h-full flex-shrink-0 border-2 border-primary-500">
+	<div class="h-full flex-1 overflow-hidden">
+		<main class="flex h-full flex-grow flex-col overflow-hidden xl:flex-row">
+			<div class="relative h-full flex-1 flex-shrink-0 border-2 border-primary-500">
+				<div bind:this={container} class="h-full flex-1 flex-shrink-0 border-2 border-primary-500">
 					<canvas bind:this={canvas}></canvas>
 				</div>
 				<button
-					class="absolute top-0 left-0 btn-icon"
+					class="btn-icon absolute left-0 top-0"
 					onclick={downlaodCanvasImage}
 					aria-label="download canvas image"
 				>
@@ -414,13 +414,13 @@
 				</button>
 			</div>
 			<section
-				class="flex-1 flex-shrink-0 relative overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 dark:via-surface-800 to-surface-50 dark:to-surface-900"
+				class="relative flex-1 flex-shrink-0 overflow-y-auto bg-gradient-to-tl from-primary-900 via-surface-100 to-surface-50 dark:via-surface-800 dark:to-surface-900"
 			>
 				<!-- This is the vectors section -->
-				<div class="w-full p-8 overflow-hidden">
+				<div class="w-full overflow-hidden p-8">
 					<h1 class="h1 pb-5">Vectors</h1>
 					<div
-						class="w-full inside-shadow border-2 border-primary-500-400-token bg-surface-100-800-token rounded-container-token flex p-3 gap-3 overflow-x-auto"
+						class="inside-shadow bg-surface-100-800-token border-primary-500-400-token flex w-full gap-3 overflow-x-auto border-2 p-3 rounded-container-token"
 					>
 						{#each vectors as vector, i}
 							<VectorsCard
@@ -434,7 +434,7 @@
 						{/each}
 						<button
 							aria-label="Close"
-							class="card-hover size-60 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token grid place-items-center"
+							class="bg-surface-200-700-token card-hover grid size-60 flex-shrink-0 place-items-center rounded-container-token xl:size-72"
 							onclick={addNewVector}
 						>
 							<svg
@@ -454,7 +454,7 @@
 				<div class="w-full p-10">
 					<h1 class="h1 pb-5">Resultants</h1>
 					<div
-						class="w-full border-2 border-primary-500-400-token bg-surface-100-800-token inside-shadow rounded-container-token flex p-3 gap-3 overflow-x-auto"
+						class="inside-shadow bg-surface-100-800-token border-primary-500-400-token flex w-full gap-3 overflow-x-auto border-2 p-3 rounded-container-token"
 					>
 						{#each resultants as resultant}
 							<ResultantsCard
@@ -470,7 +470,7 @@
 						{/each}
 						<button
 							aria-label="show popup"
-							class="card-hover size-60 xl:size-72 flex-shrink-0 rounded-container-token bg-surface-200-700-token grid place-items-center"
+							class="bg-surface-200-700-token card-hover grid size-60 flex-shrink-0 place-items-center rounded-container-token xl:size-72"
 							onclick={addNewResultant}
 						>
 							<svg
@@ -487,18 +487,18 @@
 				</div>
 
 				<!-- This is the planes section -->
-				<div class="w-full h-auto flex-shrink-0 p-6 flex flex-col">
+				<div class="flex h-auto w-full flex-shrink-0 flex-col p-6">
 					<h1 class="h1">Plane</h1>
-					<div class="w-full flex-[3_1_0] p-3 gap-3 flex items-center">
+					<div class="flex w-full flex-[3_1_0] items-center gap-3 p-3">
 						<!-- This will hold buttons in a grid -->
-						<div class="flex-grow pt-3 flex gap-5 items-center">
+						<div class="flex flex-grow items-center gap-5 pt-3">
 							<button
 								class="btn {showGrid ? 'variant-filled-primary' : 'variant-ghost-primary'}"
 								onclick={toggleGrid}>Show Grid</button
 							>
 						</div>
-						<div class="flex-shrink-0 flex flex-col gap-2 items-center">
-							<p class="text-2xl font-heading-token font-bold">Grid Size</p>
+						<div class="flex flex-shrink-0 flex-col items-center gap-2">
+							<p class="text-2xl font-bold font-heading-token">Grid Size</p>
 							<input
 								type="number"
 								name="zoom-input"
@@ -519,41 +519,41 @@
 <!-- This will be used to select which vector to add -->
 {#if vectorPopupState}
 	<div
-		class="absolute w-64 max-h-56 bg-surface-200-700-token grid grid-cols-1 gap-3 p-2 z-50 overflow-y-auto rounded-container-token"
+		class="bg-surface-200-700-token absolute z-50 grid max-h-56 w-64 grid-cols-1 gap-3 overflow-y-auto p-2 rounded-container-token"
 		style="top: {popupPostion.y}px; left: {popupPostion.x}px"
 		transition:slide
 	>
 		<button
-			class="bg-surface-300-600-token w-full h-[4.5rem] box-content rounded-container-token"
+			class="bg-surface-300-600-token box-content h-[4.5rem] w-full rounded-container-token"
 			onclick={addScalarToResultant}>Scaler</button
 		>
 		<div
-			class="bg-surface-200-700-token w-full h-[4.5rem] box-content rounded-container-token grid grid-cols-3 gap-3"
+			class="bg-surface-200-700-token box-content grid h-[4.5rem] w-full grid-cols-3 gap-3 rounded-container-token"
 		>
 			<button
-				class="bg-surface-300-600-token size-full box-content rounded-container-token"
+				class="bg-surface-300-600-token box-content size-full rounded-container-token"
 				onclick={() => addUnitVectorToResultant(0)}>i</button
 			>
 			<button
-				class="bg-surface-300-600-token size-full box-content rounded-container-token"
+				class="bg-surface-300-600-token box-content size-full rounded-container-token"
 				onclick={() => addUnitVectorToResultant(1)}>j</button
 			>
 			<button
-				class="bg-surface-300-600-token size-full box-content rounded-container-token"
+				class="bg-surface-300-600-token box-content size-full rounded-container-token"
 				onclick={() => addUnitVectorToResultant(2)}>k</button
 			>
 		</div>
 		{#each vectors as vector}
 			<button
-				class="bg-surface-300-600-token w-full h-[4.5rem] box-content rounded-container-token"
+				class="bg-surface-300-600-token box-content h-[4.5rem] w-full rounded-container-token"
 				transition:slide
 				onclick={() => addVectorToResultant(vector.name)}
 			>
-				<div class="w-full p-1 px-5 flex justify-between items-center">
+				<div class="flex w-full items-center justify-between p-1 px-5">
 					<h3 class="h5">{vector.name}</h3>
 					<div class="size-6 rounded-full" style="background-color: {vector.color};"></div>
 				</div>
-				<div class="w-full flex items-center justify-around">
+				<div class="flex w-full items-center justify-around">
 					<p>x : {vector.x}</p>
 					<p>y : {vector.y}</p>
 					<p>z : {vector.z}</p>
@@ -564,15 +564,15 @@
 			<!-- This makes sure we don't add a resultant to it's self -->
 			{#if popupResultantId !== resultant.name}
 				<button
-					class="bg-surface-300-600-token w-full h-[4.5rem] box-content rounded-container-token"
+					class="bg-surface-300-600-token box-content h-[4.5rem] w-full rounded-container-token"
 					transition:slide
 					onclick={() => addResultantToResultant(resultant.name)}
 				>
-					<div class="w-full p-1 px-5 flex justify-between items-center">
+					<div class="flex w-full items-center justify-between p-1 px-5">
 						<h3 class="h5">{resultant.name}</h3>
 						<div class="size-6 rounded-full" style="background-color: {resultant.color};"></div>
 					</div>
-					<div class="w-full flex items-center justify-around">
+					<div class="flex w-full items-center justify-around">
 						<p>x : {calcResultantVector(resultant).x}</p>
 						<p>y : {calcResultantVector(resultant).y}</p>
 						<p>z : {calcResultantVector(resultant).z}</p>

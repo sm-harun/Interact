@@ -38,7 +38,6 @@
 		oldSkip = sectionSkip;
 	});
 
-
 	function checkIfChanged(nTitle: string, oTitle: string, nSkip: boolean, oSkip: boolean) {
 		if (nTitle !== oTitle || nSkip !== oSkip) {
 			buttonSynced = false;
@@ -106,12 +105,12 @@
 	});
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4">
+<div class="bg-surface-300-600-token w-full p-4 rounded-container-token">
 	<h1 class="h3">Attention</h1>
 	<blockquote class="blockquote mt-5">
 		<input class="input font-bold" type="text" placeholder="Title" bind:value={sectionTitle} />
 	</blockquote>
-	<div class="w-full flex justify-between mt-5">
+	<div class="mt-5 flex w-full justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			onclick={resetChanges}
@@ -141,7 +140,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		onclick={changeSkip}

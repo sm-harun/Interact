@@ -52,30 +52,30 @@
 {#if show}
 	<div class="relative w-auto self-center">
 		<main
-			class="w-full bg-surface-100-800-token rounded-container-token p-4 transition border-token border-transparent"
+			class="bg-surface-100-800-token w-full border-transparent p-4 transition border-token rounded-container-token"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 		>
-			<h1 class="h3 font-bold w-full px-3 p-2 mb-4 flex items-center gap-3">True or False</h1>
+			<h1 class="h3 mb-4 flex w-full items-center gap-3 p-2 px-3 font-bold">True or False</h1>
 			<hr />
 			{#each section.questions as question, i}
 				<div
-					class="flex flex-col mb-4 p-3 px-3 rounded-container-token transition border-2 {explained
+					class="mb-4 flex flex-col border-2 p-3 px-3 transition rounded-container-token {explained
 						? results[i] === true
 							? 'border-success-500'
 							: 'border-error-500'
 						: 'border-transparent'}"
 				>
-					<p class="p-3 text-xl flex items-center gap-2">
+					<p class="flex items-center gap-2 p-3 text-xl">
 						<span class="font-bold">{i + 1}.</span> <span>{@html renderText(question)}</span>
 					</p>
-					<div class="flex gap-10 justify-between">
+					<div class="flex justify-between gap-10">
 						{#if explained}
-							<p class="text-secondary-500 font-bold text-xl ml-5" in:fly>
+							<p class="ml-5 text-xl font-bold text-secondary-500" in:fly>
 								{section.answers[i] == 1 ? 'True' : 'False'}!
 							</p>
 						{/if}
 						{#if !explained}
-							<p class="text-success-500 font-bold text-xl ml-5 opacity-0" in:fly>
+							<p class="ml-5 text-xl font-bold text-success-500 opacity-0" in:fly>
 								{section.answers[i] == 1 ? 'True' : 'False'}!
 							</p>
 						{/if}
@@ -100,9 +100,9 @@
 	</div>
 {/if}
 {#if showNextButton && !section.skip && explained && showButton}
-	<div class="w-full pb-2 flex justify-end items-center mt-5">
+	<div class="mt-5 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

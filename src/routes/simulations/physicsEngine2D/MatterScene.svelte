@@ -60,4 +60,4 @@
 	});
 </script>
 
-<div class="flex-grow w-full" bind:this={container}></div>
+<div class="w-full flex-grow" bind:this={container}></div>

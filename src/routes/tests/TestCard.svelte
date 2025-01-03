@@ -14,7 +14,7 @@
 	notes.forEach((note) => (notesCount += note.notes.length));
 </script>
 
-<div class="size-60 card-hover card p-5 border-2 border-primary-500 flex flex-col justify-between">
+<div class="card card-hover flex size-60 flex-col justify-between border-2 border-primary-500 p-5">
 	<h3 class="h3">{title}</h3>
 	<div>
 		<p><strong>Lessons:</strong> {lessonsCount}</p>

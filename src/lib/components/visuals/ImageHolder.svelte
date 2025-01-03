@@ -9,12 +9,7 @@
 		showNextSection: () => void;
 	}
 
-	let {
-		src,
-		section,
-		showNextButton,
-		showNextSection
-	}: Props = $props();
+	let { src, section, showNextButton, showNextSection }: Props = $props();
 
 	let showButton = $state(showNextButton);
 
@@ -23,8 +18,8 @@
 	}
 </script>
 
-<div class="w-full xl:h-96 grid place-items-center">
-	<div class="h-full aspect-video">
+<div class="grid w-full place-items-center xl:h-96">
+	<div class="aspect-video h-full">
 		<img
 			{src}
 			alt="Activation Energy Graph"
@@ -33,9 +28,9 @@
 	</div>
 </div>
 {#if showButton && !section.skip}
-	<div class="w-full pb-2 flex justify-end items-center">
+	<div class="flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

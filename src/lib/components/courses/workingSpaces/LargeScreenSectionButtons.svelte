@@ -2,11 +2,11 @@
 	import { sectionsPosition, setSectionsPosition } from '$lib/stores/themes.js';
 </script>
 
-<div class="ml-auto logo-cloud grid-cols-3 gap-1 hidden 2xl:grid">
+<div class="logo-cloud ml-auto hidden grid-cols-3 gap-1 2xl:grid">
 	<button
 		class="flex-1 {$sectionsPosition == 0
 			? 'variant-filled-primary'
-			: 'variant-ghost-primary'} transition rounded-tl-container-token rounded-bl-container-token text-xl p-3 px-3 active:scale-95 flex gap-3 items-center justify-center"
+			: 'variant-ghost-primary'} flex items-center justify-center gap-3 p-3 px-3 text-xl transition rounded-tl-container-token rounded-bl-container-token active:scale-95"
 		onclick={() => setSectionsPosition(0)}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -21,7 +21,7 @@
 	<button
 		class="flex-1 {$sectionsPosition == 100
 			? 'variant-filled-primary'
-			: 'variant-ghost-primary'} transition text-xl p-3 px-3 active:scale-95 flex gap-3 items-center justify-center"
+			: 'variant-ghost-primary'} flex items-center justify-center gap-3 p-3 px-3 text-xl transition active:scale-95"
 		onclick={() => setSectionsPosition(100)}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -36,7 +36,7 @@
 	<button
 		class="flex-1 {$sectionsPosition == 200
 			? 'variant-filled-primary'
-			: 'variant-ghost-primary'} transition rounded-tr-container-token rounded-br-container-token text-xl p-3 px-5 active:scale-95 flex gap-3 items-center justify-center"
+			: 'variant-ghost-primary'} flex items-center justify-center gap-3 p-3 px-5 text-xl transition rounded-tr-container-token rounded-br-container-token active:scale-95"
 		onclick={() => setSectionsPosition(200)}
 	>
 		<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

@@ -21,7 +21,7 @@
 </script>
 
 <div
-	class="w-auto h-auto hover:brightness-125 rounded-full border-2 border-surface-400 active:scale-95 transition"
+	class="h-auto w-auto rounded-full border-2 border-surface-400 transition hover:brightness-125 active:scale-95"
 	bind:this={profileIcon}
 >
 	{#if $user?.photoURL}

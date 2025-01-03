@@ -35,9 +35,9 @@
 	});
 </script>
 
-<div class="h-screen flex flex-col relative">
+<div class="relative flex h-screen flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} showSlidder={true} />
-	<main class="absolute top-0 right-0 w-screen h-screen flex flex-col">
+	<main class="absolute right-0 top-0 flex h-screen w-screen flex-col">
 		<Pane title="" position="fixed">
 			<Button title="Reset" on:click={reset} />
 		</Pane>

@@ -69,23 +69,23 @@
 </script>
 
 <div
-	class="w-full xl:aspect-video flex flex-col xl:flex-row relative transition border-2 {answered
+	class="relative flex w-full flex-col border-2 transition xl:aspect-video xl:flex-row {answered
 		? 'border-success-500'
 		: ''}
   {incorrect ? 'border-error-500' : ''} {!answered && !incorrect ? 'border-transparent' : ''}"
 	in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 >
 	{#if incorrect}
-		<p class="text-xl text-error-500 absolute top-5 right-5" transition:fade>incorrect</p>
+		<p class="absolute right-5 top-5 text-xl text-error-500" transition:fade>incorrect</p>
 	{/if}
 	<section class="h-[30rem] xl:h-auto xl:flex-[2_1_0]">
 		<canvas bind:this={canvas}> </canvas>
 	</section>
-	<section class="xl:flex-[1_1_0] bg-surface-300-600-token p-10 flex flex-col md:flex-row">
-		<div class="flex-1 flex flex-col justify-center gap-10">
+	<section class="bg-surface-300-600-token flex flex-col p-10 md:flex-row xl:flex-[1_1_0]">
+		<div class="flex flex-1 flex-col justify-center gap-10">
 			<h4 class="h4">Draw the vector <strong>v( 7 , 5 )</strong></h4>
 			<div class="flex flex-col gap-10">
-				<div class="w-60 flex items-center gap-3">
+				<div class="flex w-60 items-center gap-3">
 					<span class="text-xl font-bold">X</span>
 					<input
 						class="flex-shrink-0"
@@ -97,7 +97,7 @@
 					/>
 					<span class="text-2xl font-bold">{xCord}</span>
 				</div>
-				<div class="w-60 flex gap-3 items-center">
+				<div class="flex w-60 items-center gap-3">
 					<span class="text-xl font-bold">Y</span>
 					<input
 						class="flex-shrink-0"
@@ -111,15 +111,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex-1 flex justify-end items-end">
-			<button class="btn variant-filled-primary mt-5" onclick={submitAnswer}>Submit</button>
+		<div class="flex flex-1 items-end justify-end">
+			<button class="variant-filled-primary btn mt-5" onclick={submitAnswer}>Submit</button>
 		</div>
 	</section>
 </div>
 {#if showButton}
-	<div class="w-full pb-2 flex justify-end items-center mt-9">
+	<div class="mt-9 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

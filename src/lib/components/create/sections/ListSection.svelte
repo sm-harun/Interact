@@ -143,25 +143,25 @@
 	});
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
+<div class="bg-surface-300-600-token relative w-full p-4 rounded-container-token">
 	<input
-		class="input font-bold text-2xl"
+		class="input text-2xl font-bold"
 		type="text"
 		placeholder="Question"
 		bind:value={sectionTitle}
 	/>
-	<ul class="flex flex-col mt-3 p-3">
+	<ul class="mt-3 flex flex-col p-3">
 		{#each $sectionList as list, i}
-			<li class="text-xlm mt-3 flex gap-2 items-center" transition:slide>
+			<li class="text-xlm mt-3 flex items-center gap-2" transition:slide>
 				<span>{i + 1}. </span>
-				<input class="input font-bold text-xl px-4" type="text" bind:value={$sectionList[i]} />
+				<input class="input px-4 text-xl font-bold" type="text" bind:value={$sectionList[i]} />
 				<button onclick={() => deleteList(i)} aria-label="Close">
 					<svg
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="size-6 mr-2 active:scale-110 transition"
+						class="mr-2 size-6 transition active:scale-110"
 					>
 						<path
 							stroke-linecap="round"
@@ -173,7 +173,7 @@
 			</li>
 		{/each}
 	</ul>
-	<div class="w-full flex items-center justify-between mt-5">
+	<div class="mt-5 flex w-full items-center justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			onclick={resetChanges}
@@ -188,7 +188,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addList}>
+		<button class="variant-ringed-primary btn hover:variant-filled-primary" onclick={addList}>
 			<span>Add List</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -209,7 +209,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		onclick={changeSkip}

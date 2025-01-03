@@ -17,12 +17,12 @@
 </script>
 
 <div
-	class="h-full w-[40rem] variant-glass-surface absolute top-0 right-0 overflow-visible transition ease-in-out duration-1000 {navBarStatus
+	class="variant-glass-surface absolute right-0 top-0 h-full w-[40rem] overflow-visible transition duration-1000 ease-in-out {navBarStatus
 		? ''
 		: 'translate-x-full'}"
 >
 	<button
-		class="absolute right-full top-24 variant-glass-surface px-3 py-7 rounded-l-xl"
+		class="variant-glass-surface absolute right-full top-24 rounded-l-xl px-3 py-7"
 		aria-label="hide navbar"
 		onclick={() => (navBarStatus = !navBarStatus)}
 	>

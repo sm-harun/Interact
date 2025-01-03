@@ -14,12 +14,12 @@
 </script>
 
 <div
-	class="w-full h-16 bg-surface-100-800-token flex justify-end items-center absolute left-0 bottom-0"
+	class="bg-surface-100-800-token absolute bottom-0 left-0 flex h-16 w-full items-center justify-end"
 >
 	<!-- Gravity Controls -->
-	<div class="h-full flex items-center gap-5 border-l-2 border-surface-400 px-5">
+	<div class="flex h-full items-center gap-5 border-l-2 border-surface-400 px-5">
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">Gravity Scale</p>
 				<p>{gravityValue.scale} m/s <sup>2</sup></p>
 			</div>
@@ -29,7 +29,7 @@
 		<span class="divider-vertical h-10 border-surface-400"></span>
 
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">X</p>
 				<p>{gravityValue.x}</p>
 			</div>
@@ -39,7 +39,7 @@
 		<span class="divider-vertical h-10 border-surface-400"></span>
 
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">Y</p>
 				<p>{gravityValue.y}</p>
 			</div>
@@ -49,7 +49,7 @@
 		<span class="divider-vertical h-10 border-surface-400"></span>
 
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">Z</p>
 				<p>{gravityValue.z}</p>
 			</div>
@@ -58,7 +58,7 @@
 	</div>
 
 	<!-- Time Controls -->
-	<div class="h-full flex items-center gap-5 border-l-2 border-surface-400 px-5">
+	<div class="flex h-full items-center gap-5 border-l-2 border-surface-400 px-5">
 		<button aria-label="Pause and Play button" class="btn-icon" onclick={changePlaying}>
 			{#if !playing}
 				<svg

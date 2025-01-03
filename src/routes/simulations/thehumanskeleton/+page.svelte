@@ -114,9 +114,9 @@
 	});
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} showSlidder={true} />
-	<main class="flex-grow flex flex-col xl:flex-row overflow-hidden absolute size-full">
+	<main class="absolute flex size-full flex-grow flex-col overflow-hidden xl:flex-row">
 		<div class="flex-[2_1_0]" bind:this={container}>
 			<canvas bind:this={canvas} id="main-canvas"></canvas>
 		</div>

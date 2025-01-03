@@ -21,12 +21,12 @@
 </script>
 
 <div
-	class="size-60 xl:size-72 flex-shrink-0 card-hover rounded-container-token bg-surface-200-700-token p-3 box-border flex flex-col"
+	class="bg-surface-200-700-token card-hover box-border flex size-60 flex-shrink-0 flex-col p-3 rounded-container-token xl:size-72"
 	transition:slide={{ axis: 'x' }}
 >
-	<header class="px-3 flex flex-col xl:flex-row gap-2 justify-between items-start xl:items-center">
+	<header class="flex flex-col items-start justify-between gap-2 px-3 xl:flex-row xl:items-center">
 		<h3 class="h3">Vector {name}</h3>
-		<div class="flex gap-4 justify-between w-full xl:w-auto items-center">
+		<div class="flex w-full items-center justify-between gap-4 xl:w-auto">
 			<input type="color" bind:value={color} class="input" />
 			<button
 				class="btn-icon bg-primary-500"
@@ -50,18 +50,18 @@
 		</div>
 	</header>
 	<hr class="my-2" />
-	<div class="flex-grow w-full flex flex-col p-2">
-		<div class="flex-1 flex gap-3 items-center">
+	<div class="flex w-full flex-grow flex-col p-2">
+		<div class="flex flex-1 items-center gap-3">
 			<span>X : </span>
-			<input class="input !w-[80%] !h-9" bind:value={x} type="number" />
+			<input class="input !h-9 !w-[80%]" bind:value={x} type="number" />
 		</div>
-		<div class="flex-1 flex gap-3 items-center">
+		<div class="flex flex-1 items-center gap-3">
 			<span>Y : </span>
-			<input class="input !w-[80%] !h-9" bind:value={y} type="number" />
+			<input class="input !h-9 !w-[80%]" bind:value={y} type="number" />
 		</div>
-		<div class="flex-1 flex gap-3 items-center">
+		<div class="flex flex-1 items-center gap-3">
 			<span>Z : </span>
-			<input class="input !w-[80%] !h-9" bind:value={z} type="number" />
+			<input class="input !h-9 !w-[80%]" bind:value={z} type="number" />
 		</div>
 	</div>
 </div>

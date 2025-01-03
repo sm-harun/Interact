@@ -39,8 +39,8 @@
 	});
 </script>
 
-<main class="w-full aspect-video grid place-items-center">
-	<div class="h-full aspect-square">
+<main class="grid aspect-video w-full place-items-center">
+	<div class="aspect-square h-full">
 		<canvas bind:this={canvas}></canvas>
 	</div>
 </main>

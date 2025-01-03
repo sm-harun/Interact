@@ -58,16 +58,16 @@
 </script>
 
 <main
-	class="w-screen h-screen flex flex-col items-center relative"
+	class="relative flex h-screen w-screen flex-col items-center"
 	in:fly={{ x: 100, duration: 1000 }}
 >
-	<div class="absolute top-5 right-5 flex items-center">
+	<div class="absolute right-5 top-5 flex items-center">
 		<HomeButton />
 		<ThemesButton />
 	</div>
-	<h1 class="text-8xl w-full h-72 grid place-items-center text-primary-500 font-bold">Interact</h1>
+	<h1 class="grid h-72 w-full place-items-center text-8xl font-bold text-primary-500">Interact</h1>
 	<section
-		class="w-96 bg-surface-200-700-token p-8 border-token border-primary-500 rounded-container-token"
+		class="bg-surface-200-700-token w-96 border-primary-500 p-8 border-token rounded-container-token"
 	>
 		<h1 class="h2 font-bold text-primary-500">Sign Up</h1>
 		<br />
@@ -84,7 +84,7 @@
 				<span>Username: </span>
 				<input class="input" type="text" placeholder="username" bind:value={username} />
 			</label>
-			<button class="btn variant-filled" onclick={signUpWithEmail}>Sign up</button>
+			<button class="variant-filled btn" onclick={signUpWithEmail}>Sign up</button>
 			<a href="/signin" class="anchor text-sm">I have an account?</a>
 		</div>
 	</section>

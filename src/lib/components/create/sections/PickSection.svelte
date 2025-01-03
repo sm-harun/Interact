@@ -178,17 +178,17 @@
 	}
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
+<div class="bg-surface-300-600-token relative w-full p-4 rounded-container-token">
 	<input
-		class="input font-bold text-2xl"
+		class="input text-2xl font-bold"
 		type="text"
 		placeholder="Question"
 		bind:value={sectionTitle}
 	/>
-	<div class="w-full flex flex-wrap gap-3 mt-5 justify-center">
+	<div class="mt-5 flex w-full flex-wrap justify-center gap-3">
 		{#each $sectionChoices as choice, i}
 			<button
-				class="w-auto p-2 px-5 btn justify-between gap-3 text-xl rounded-container-token {$sectionAnswers.includes(
+				class="btn w-auto justify-between gap-3 p-2 px-5 text-xl rounded-container-token {$sectionAnswers.includes(
 					choice
 				)
 					? 'variant-ghost-success'
@@ -203,7 +203,7 @@
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="size-5 active:scale-110 transition"
+						class="size-5 transition active:scale-110"
 					>
 						<path
 							stroke-linecap="round"
@@ -215,7 +215,7 @@
 			</button>
 		{/each}
 	</div>
-	<div class="w-full flex items-center justify-between mt-5">
+	<div class="mt-5 flex w-full items-center justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			on:click={resetChanges}
@@ -230,7 +230,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" on:click={addChoice}>
+		<button class="variant-ringed-primary btn hover:variant-filled-primary" on:click={addChoice}>
 			<span>Add Choice</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -251,7 +251,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		on:click={changeSkip}

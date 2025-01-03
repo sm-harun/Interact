@@ -47,17 +47,17 @@
 
 {#if show}
 	<main
-		class="w-full bg-surface-100-800-token rounded-container-token p-4 mb-5"
+		class="bg-surface-100-800-token mb-5 w-full p-4 rounded-container-token"
 		in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 	>
-		<h1 class="w-full pl-5 h4">{@html renderText(section.title)}</h1>
-		<hr class="mt-3 mb-3" />
+		<h1 class="h4 w-full pl-5">{@html renderText(section.title)}</h1>
+		<hr class="mb-3 mt-3" />
 		<p class="text-lg">{@html renderText(section.text)}</p>
 	</main>
 	{#if showButton && !section.skip}
-		<div class="w-full pb-2 flex justify-end items-center">
+		<div class="flex w-full items-center justify-end pb-2">
 			<button
-				class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+				class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 				in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 				out:slide
 				onclick={() => {

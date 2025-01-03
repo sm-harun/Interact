@@ -71,7 +71,7 @@
 </script>
 
 <section
-	class="absolute left-0 2xl:relative w-full max-h-full 2xl:w-auto 2xl:flex-[3_1_0] pt-10 p-6 flex flex-col overflow-y-scroll"
+	class="absolute left-0 flex max-h-full w-full flex-col overflow-y-scroll p-6 pt-10 2xl:relative 2xl:w-auto 2xl:flex-[3_1_0]"
 	style="left: {-$mobSectionsPosition}%;"
 	bind:this={sectionElement}
 >

@@ -11,8 +11,8 @@
 	let { children, title, sideText, sideValue = $bindable(undefined) }: Props = $props();
 </script>
 
-<div class="w-auto flex flex-col gap-2 border-2 border-surface-500 rounded-container-token p-5">
-	<div class="size-full flex justify-between items-end">
+<div class="flex w-auto flex-col gap-2 border-2 border-surface-500 p-5 rounded-container-token">
+	<div class="flex size-full items-end justify-between">
 		<h4 class="h4">{title}</h4>
 		<p>
 			{#if sideValue != undefined}

@@ -30,9 +30,9 @@
 
 <div class="w-full">
 	{#if section.title !== ''}
-		<h4 class="h2 w-full grid place-items-center">{section.title}</h4>
+		<h4 class="h2 grid w-full place-items-center">{section.title}</h4>
 	{/if}
-	<div class="mt-6 p-5 flex gap-10 justify-around flex-wrap">
+	<div class="mt-6 flex flex-wrap justify-around gap-10 p-5">
 		{#each section.equations as equation}
 			<div class="text-xl">
 				{@html renderEquation(equation)}
@@ -42,9 +42,9 @@
 </div>
 
 {#if showNextSection && showButton && !section.skip}
-	<div class="w-full pb-2 flex justify-end items-center mt-6">
+	<div class="mt-6 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

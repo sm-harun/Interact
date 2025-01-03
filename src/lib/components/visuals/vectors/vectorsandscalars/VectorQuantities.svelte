@@ -69,26 +69,26 @@
 	});
 </script>
 
-<section class="w-full flex flex-col">
+<section class="flex w-full flex-col">
 	<div class="h-[40rem] border-2 border-primary-500">
 		<canvas bind:this={canvas}></canvas>
 	</div>
-	<section class="h-full p-10 bg-surface-300-600-token flex flex-col">
+	<section class="bg-surface-300-600-token flex h-full flex-col p-10">
 		<div>
 			<h3 class="h3">Magnitude</h3>
 			<div class="w-60 flex-col">
-				<span class="w-full flex justify-end">{magnitude}</span>
+				<span class="flex w-full justify-end">{magnitude}</span>
 				<input type="range" bind:value={magnitude} min="0" max="100" step={1} />
 			</div>
 			<h3 class="h3 mt-5">Direction (in degrees)</h3>
 			<div class="w-60 flex-col">
-				<span class="w-full flex justify-end">{direction}</span>
+				<span class="flex w-full justify-end">{direction}</span>
 				<input type="range" bind:value={direction} min="0" max="360" step={1} />
 			</div>
 		</div>
-		<div class="w-full py-5 flex items-center justify-between gap-10">
-			<button class="btn variant-filled-primary text-xl" onclick={launch}>Launch</button>
-			<button class="btn variant-filled-primary text-xl" onclick={clear}>Clear</button>
+		<div class="flex w-full items-center justify-between gap-10 py-5">
+			<button class="variant-filled-primary btn text-xl" onclick={launch}>Launch</button>
+			<button class="variant-filled-primary btn text-xl" onclick={clear}>Clear</button>
 		</div>
 		<blockquote class="blockquote mt-5">
 			The magnitude and direction combined give the ball the power and direction, in this case they
@@ -97,9 +97,9 @@
 	</section>
 </section>
 {#if showButton}
-	<div class="w-full pb-2 flex justify-end items-center mt-5">
+	<div class="mt-5 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

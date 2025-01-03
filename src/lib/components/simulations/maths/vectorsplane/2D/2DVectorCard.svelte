@@ -27,15 +27,15 @@
 </script>
 
 <div
-	class="flex-shrink-0 size-52 xl:size-72 card-hover rounded-container-token bg-surface-200-700-token p-3 box-border flex flex-col"
+	class="bg-surface-200-700-token card-hover box-border flex size-52 flex-shrink-0 flex-col p-3 rounded-container-token xl:size-72"
 	transition:slide={{ axis: 'x' }}
 >
-	<header class="px-3 flex flex-col xl:flex-row gap-2 justify-between items-start xl:items-center">
+	<header class="flex flex-col items-start justify-between gap-2 px-3 xl:flex-row xl:items-center">
 		<h3 class="h4">Vector {name}</h3>
-		<div class="flex gap-3 justify-between w-full xl:w-auto items-center">
+		<div class="flex w-full items-center justify-between gap-3 xl:w-auto">
 			<input type="color" bind:value={color} class="input !size-10" />
 			<button
-				class="btn-icon size-auto p-1 grid place-items-center"
+				class="btn-icon grid size-auto place-items-center p-1"
 				aria-label="Switch input type"
 				onclick={() => changeInputMode(name)}
 			>
@@ -111,24 +111,24 @@
 		</div>
 	</header>
 	<hr class="my-2" />
-	<div class="flex-grow w-full flex flex-col gap-2 p-2">
+	<div class="flex w-full flex-grow flex-col gap-2 p-2">
 		{#if inputMode === 'XYZ mode'}
-			<div class="flex-1 flex gap-3 items-center">
+			<div class="flex flex-1 items-center gap-3">
 				<span>X : </span>
-				<input class="input !w-[80%] !h-9" bind:value={x} type="number" />
+				<input class="input !h-9 !w-[80%]" bind:value={x} type="number" />
 			</div>
-			<div class="flex-1 flex gap-3 items-center">
+			<div class="flex flex-1 items-center gap-3">
 				<span>Y : </span>
-				<input class="input !w-[80%] !h-9" bind:value={y} type="number" />
+				<input class="input !h-9 !w-[80%]" bind:value={y} type="number" />
 			</div>
 		{:else if inputMode === 'Magnitude mode'}
-			<div class="flex-1 flex flex-col gap-3">
+			<div class="flex flex-1 flex-col gap-3">
 				<span>Magnitude</span>
-				<input class="input !w-[80%] !h-9" bind:value={magnitude} type="number" />
+				<input class="input !h-9 !w-[80%]" bind:value={magnitude} type="number" />
 			</div>
-			<div class="flex-1 flex flex-col gap-3">
+			<div class="flex flex-1 flex-col gap-3">
 				<span>Direction</span>
-				<input class="input !w-[80%] !h-9" bind:value={direction} type="number" />
+				<input class="input !h-9 !w-[80%]" bind:value={direction} type="number" />
 			</div>
 		{/if}
 	</div>

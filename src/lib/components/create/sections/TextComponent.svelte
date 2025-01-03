@@ -43,7 +43,6 @@
 		oldSkip = sectionSkip;
 	});
 
-
 	function checkIfChanged(
 		nTitle: string,
 		oTitle: string,
@@ -122,11 +121,11 @@
 	});
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4">
+<div class="bg-surface-300-600-token w-full p-4 rounded-container-token">
 	<label class="label">
 		<strong>Title: </strong>
 		<input
-			class="input font-bold text-xl"
+			class="input text-xl font-bold"
 			type="text"
 			placeholder="Title"
 			bind:value={sectionTitle}
@@ -134,13 +133,13 @@
 
 		<strong>Info: </strong>
 		<textarea
-			class="textarea font-semibold text-lg"
+			class="textarea text-lg font-semibold"
 			rows="3"
 			placeholder="Explanation to the topic..."
 			bind:value={sectionText}
 		></textarea>
 	</label>
-	<div class="w-full flex justify-between mt-2">
+	<div class="mt-2 flex w-full justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			onclick={resetChanges}
@@ -170,7 +169,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		onclick={changeSkip}

@@ -27,7 +27,7 @@
 				<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 			</svg>
 		</button>
-		<h3 class="h3 ellipsis-text">{text}</h3>
+		<h3 class="ellipsis-text h3">{text}</h3>
 		<button
 			class="ml-3"
 			aria-label="Course Checkbox"
@@ -52,7 +52,7 @@
 		</button>
 	</div>
 	{#if opened}
-		<div class="px-16 flex flex-col gap-3" transition:slide>
+		<div class="flex flex-col gap-3 px-16" transition:slide>
 			{@render children()}
 		</div>
 	{/if}

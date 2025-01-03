@@ -19,7 +19,7 @@
 </script>
 
 <button
-	class="text-xl btn rounded-container-token hover:bg-primary-500/30 justify-center lg:justify-between relative"
+	class="btn relative justify-center text-xl rounded-container-token hover:bg-primary-500/30 lg:justify-between"
 	onclick={goHome}
 >
 	<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

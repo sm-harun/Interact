@@ -220,7 +220,7 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col overflow-hidden">
+<div class="flex h-screen flex-col overflow-hidden">
 	<MainHeader
 		title={`Create / ${data.params.course}`}
 		showMainRoutes={false}
@@ -228,12 +228,12 @@
 	/>
 	<hr />
 	<header
-		class="variant-glass-surface w-screen h-20 sticky top-1 p-9 px-3 flex items-center justify-between z-40"
+		class="variant-glass-surface sticky top-1 z-40 flex h-20 w-screen items-center justify-between p-9 px-3"
 	>
-		<h1 class="h2 font-bold text-primary-800-100-token ml-4">{data.params.lesson}</h1>
+		<h1 class="text-primary-800-100-token h2 ml-4 font-bold">{data.params.lesson}</h1>
 		<ul class="flex items-center justify-between gap-4">
 			<button
-				class="btn variant-ringed-primary hover:variant-filled-primary"
+				class="variant-ringed-primary btn hover:variant-filled-primary"
 				onclick={addDictionary}
 			>
 				<svg
@@ -242,7 +242,7 @@
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="currentColor"
-					class="size-6 ml-2"
+					class="ml-2 size-6"
 				>
 					<path
 						stroke-linecap="round"
@@ -253,7 +253,7 @@
 
 				<span class="hidden lg:flex">Add Dictionary</span></button
 			>
-			<button class="btn variant-ringed-primary hover:variant-filled-primary" bind:this={button}>
+			<button class="variant-ringed-primary btn hover:variant-filled-primary" bind:this={button}>
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"
@@ -268,7 +268,7 @@
 		</ul>
 	</header>
 	<div
-		class="p-5 sm:px-16 lg:px-32 xl:px-72 grid gap-5 relative overflow-y-auto"
+		class="relative grid gap-5 overflow-y-auto p-5 sm:px-16 lg:px-32 xl:px-72"
 		bind:this={container}
 	>
 		{#if JSON.stringify($sections) !== JSON.stringify(emptyArray)}
@@ -307,7 +307,7 @@
 				bind:dictUpdater
 			/>
 			<p
-				class="h4 bg-surface-300-600-token text-surface-500-400-token p-5 grid place-items-center rounded-container-token"
+				class="bg-surface-300-600-token text-surface-500-400-token h4 grid place-items-center p-5 rounded-container-token"
 			>
 				This lesson is empty, Add new sections
 			</p>

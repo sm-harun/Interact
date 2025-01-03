@@ -2,10 +2,10 @@
 	import { setSectionsPosition, setMobSectionsPosition } from '$lib/stores/themes.js';
 </script>
 
-<div class="absolute top-full right-5 grid grid-cols-4 gap-1 2xl:hidden z-30">
+<div class="absolute right-5 top-full z-30 grid grid-cols-4 gap-1 2xl:hidden">
 	<button
 		aria-label="Lessons section"
-		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-bl-container-token"
+		class="bg-secondary-200-700-token p-3 duration-100 rounded-bl-container-token active:scale-95"
 		onclick={() => {
 			setMobSectionsPosition(0);
 			setSectionsPosition(0);
@@ -21,7 +21,7 @@
 	</button>
 	<button
 		aria-label="AI section"
-		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
+		class="bg-secondary-200-700-token p-3 duration-100 active:scale-95"
 		onclick={() => {
 			setSectionsPosition(0);
 			setMobSectionsPosition(100);
@@ -37,7 +37,7 @@
 	</button>
 	<button
 		aria-label="Calculator Section"
-		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100"
+		class="bg-secondary-200-700-token p-3 duration-100 active:scale-95"
 		onclick={() => {
 			setSectionsPosition(100);
 			setMobSectionsPosition(100);
@@ -53,7 +53,7 @@
 	</button>
 	<button
 		aria-label="Calculator Section"
-		class="p-3 bg-secondary-200-700-token active:scale-95 duration-100 rounded-br-container-token"
+		class="bg-secondary-200-700-token p-3 duration-100 rounded-br-container-token active:scale-95"
 		onclick={() => {
 			setSectionsPosition(200);
 			setMobSectionsPosition(100);

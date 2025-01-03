@@ -85,7 +85,7 @@
 </script>
 
 <div
-	class="w-full xl:aspect-video flex flex-col xl:flex-row relative transition border-2 {explained
+	class="relative flex w-full flex-col border-2 transition xl:aspect-video xl:flex-row {explained
 		? 'border-success-500'
 		: wrongAnswer
 			? 'border-error-500'
@@ -93,21 +93,21 @@
 	in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 >
 	{#if wrongAnswer}
-		<p class="text-xl text-error-500 absolute top-3 right-5" transition:fade>incorrect</p>
+		<p class="absolute right-5 top-3 text-xl text-error-500" transition:fade>incorrect</p>
 	{/if}
 	<section class="h-[30rem] xl:h-auto xl:flex-[2_1_0]">
 		<canvas bind:this={canvas}></canvas>
 	</section>
 	<section
-		class="flex-1 h-full p-10 bg-surface-300-600-token flex sm:flex-col flex-wrap gap-4 lg:gap-0"
+		class="bg-surface-300-600-token flex h-full flex-1 flex-wrap gap-4 p-10 sm:flex-col lg:gap-0"
 	>
 		<h1 class="h4 pb-10">
 			Draw the Vector ( 7, 14 ) using only the x-axis from the green vector and y-axis from the red
 			vector!
 		</h1>
-		<div class="w-full flex-1 flex flex-col justify-center">
-			<h3 class="h3 ml-3 mb-3 text-green-500">Green Vector</h3>
-			<div class="w-48 flex gap-2">
+		<div class="flex w-full flex-1 flex-col justify-center">
+			<h3 class="h3 mb-3 ml-3 text-green-500">Green Vector</h3>
+			<div class="flex w-48 gap-2">
 				<span>X </span>
 				<input
 					class="flex-shrink-0"
@@ -120,9 +120,9 @@
 				<p>{greenVector.x}</p>
 			</div>
 		</div>
-		<div class="w-full flex-1 flex flex-col justify-center mt-2">
-			<h3 class="h3 ml-3 mb-3 text-red-500">Red Vector</h3>
-			<div class="w-48 flex gap-2 mt-3">
+		<div class="mt-2 flex w-full flex-1 flex-col justify-center">
+			<h3 class="h3 mb-3 ml-3 text-red-500">Red Vector</h3>
+			<div class="mt-3 flex w-48 gap-2">
 				<span>Y </span>
 				<input
 					class="flex-shrink-0"
@@ -136,13 +136,13 @@
 			</div>
 		</div>
 		<div
-			class="flex-1 flex flex-col lg:flex-row justify-around lg:justify-between items-start lg:items-end gap-2 mt-5"
+			class="mt-5 flex flex-1 flex-col items-start justify-around gap-2 lg:flex-row lg:items-end lg:justify-between"
 		>
 			<button
 				class="btn {showShadow ? 'variant-filled-primary' : 'variant-ghost-primary'}"
 				onclick={() => (showShadow = !showShadow)}>Show Shadow</button
 			>
-			<button class="btn variant-filled-primary self-end" onclick={checkAnswer}>Submit</button>
+			<button class="variant-filled-primary btn self-end" onclick={checkAnswer}>Submit</button>
 		</div>
 	</section>
 </div>

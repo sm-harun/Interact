@@ -35,11 +35,11 @@
 <header
 	class="{showMainRoutes ? 'h-36' : 'h-24'} {slidderPosition && showSlidder
 		? '-translate-y-full'
-		: ''} flex-shrink-0 w-screen bg-surface-100-800-token sticky top-0 flex flex-col header-shadow z-40 transition duration-500"
+		: ''} header-shadow bg-surface-100-800-token sticky top-0 z-40 flex w-screen flex-shrink-0 flex-col transition duration-500"
 >
 	{#if showSlidder}
 		<button
-			class="bg-surface-200-700-token absolute top-full right-64 px-8 py-3 rounded-b-xl"
+			class="bg-surface-200-700-token absolute right-64 top-full rounded-b-xl px-8 py-3"
 			aria-label="slide up the header"
 			onclick={() => (slidderPosition = !slidderPosition)}
 		>
@@ -55,8 +55,8 @@
 		</button>
 	{/if}
 
-	<section class="flex-[2_1_0] p-3 flex items-center justify-between">
-		<div class="flex justify-between items-center gap-4 pl-4">
+	<section class="flex flex-[2_1_0] items-center justify-between p-3">
+		<div class="flex items-center justify-between gap-4 pl-4">
 			{#if showBackButton}
 				<button onclick={goBack} aria-label="Back Button">
 					<svg
@@ -64,7 +64,7 @@
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="size-9 mr-6"
+						class="mr-6 size-9"
 					>
 						<path
 							stroke-linecap="round"
@@ -74,12 +74,12 @@
 					</svg>
 				</button>
 			{/if}
-			<h1 class="text-3xl lg:text-5xl text-primary-800-100-token font-bold flex items-center">
+			<h1 class="text-primary-800-100-token flex items-center text-3xl font-bold lg:text-5xl">
 				{title}
 			</h1>
 		</div>
 		<nav
-			class="h-full list-none text-2xl flex justify-end lg:justify-evenly items-center lg:pr-4 gap-1 lg:gap-2"
+			class="flex h-full list-none items-center justify-end gap-1 text-2xl lg:justify-evenly lg:gap-2 lg:pr-4"
 		>
 			{#if showHomeButton}
 				<li>
@@ -96,17 +96,17 @@
 	</section>
 
 	{#if showMainRoutes}
-		<section class="flex-[2_1_0] px-4 flex items-center overflow-x-auto">
+		<section class="flex flex-[2_1_0] items-center overflow-x-auto px-4">
 			<ol class="flex gap-4">
 				<li class="crumb">
 					<a
 						href="/home"
-						class="text-lg hover:text-secondary-500 transition grid place-items-center relative overflow-visible"
+						class="relative grid place-items-center overflow-visible text-lg transition hover:text-secondary-500"
 					>
 						<span>Home</span>
 						{#if $page.url.pathname === '/home'}
 							<div
-								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -116,11 +116,11 @@
 				<li class="crumb">
 					<a
 						href="/courses"
-						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
 						><span>Courses</span>
 						{#if $page.url.pathname === '/courses'}
 							<div
-								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -130,11 +130,11 @@
 				<li class="crumb">
 					<a
 						href="/notes"
-						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
 						><span>Notes</span>
 						{#if $page.url.pathname === '/notes'}
 							<div
-								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -144,11 +144,11 @@
 				<li class="crumb">
 					<a
 						href="/tests"
-						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
 						><span>Tests</span>
 						{#if $page.url.pathname === '/tests'}
 							<div
-								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -158,11 +158,11 @@
 				<li class="crumb">
 					<a
 						href="/simulations"
-						class="text-lg hover:text-secondary-500 transition grid place-items-center relative"
+						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
 						><span>Simulations</span>
 						{#if $page.url.pathname === '/simulations'}
 							<div
-								class="w-full h-[1px] bg-primary-500-400-token rounded-container-token absolute bottom-0 -z-10"
+								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}

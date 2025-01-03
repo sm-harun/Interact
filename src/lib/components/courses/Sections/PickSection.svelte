@@ -52,17 +52,17 @@
 </script>
 
 <div
-	class="w-full bg-surface-200-700-token rounded-container-token p-4 relative transition border-2 {allAnswered
+	class="bg-surface-200-700-token relative w-full border-2 p-4 transition rounded-container-token {allAnswered
 		? 'border-success-500'
 		: 'border-transparent'}"
 	in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 >
-	<h1 class="h4 w-full flex items-center gap-3">
+	<h1 class="h4 flex w-full items-center gap-3">
 		<span class="font-black italic">Q. </span>
 		{@html renderText(section.title)}
 	</h1>
 
-	<div class="w-full flex flex-wrap gap-3 mt-5 justify-center">
+	<div class="mt-5 flex w-full flex-wrap justify-center gap-3">
 		{#key choicesUpdater}
 			{#each section.choices as choice}
 				<button
@@ -78,9 +78,9 @@
 	</div>
 </div>
 {#if showButton && allAnswered && !section.skip}
-	<div class="w-full pb-2 flex justify-end items-center mt-6">
+	<div class="mt-6 flex w-full items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

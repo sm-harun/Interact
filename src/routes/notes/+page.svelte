@@ -260,16 +260,16 @@
 	}
 </script>
 
-<div class="h-screen flex flex-col">
+<div class="flex h-screen flex-col">
 	<MainHeader />
 	<main
-		class="flex-grow flex overflow-hidden flex-col xl:flex-row"
+		class="flex flex-grow flex-col overflow-hidden xl:flex-row"
 		in:fly={{ x: 100, duration: 500, delay: 500 }}
 		out:fly={{ x: -100, duration: 500 }}
 	>
-		<div class="flex-[1_1_0] xl:flex-1 h-full overflow-hidden relative">
+		<div class="relative h-full flex-[1_1_0] overflow-hidden xl:flex-1">
 			<!-- This is the section that displays all the notes collection -->
-			<div class="size-full p-6 pt-10 absolute overflow-y-auto" style="right: {$right}%;">
+			<div class="absolute size-full overflow-y-auto p-6 pt-10" style="right: {$right}%;">
 				{#if !fetchedCollections}
 					<!-- Course Section Place Holder -->
 					<PlaceHoldersCollection />
@@ -280,12 +280,12 @@
 			</div>
 
 			<!-- This is the section that slides in displays notes on the selected collection -->
-			<div class="size-full flex flex-col overflow-y-auto absolute" style="left: {100 - $right}%">
+			<div class="absolute flex size-full flex-col overflow-y-auto" style="left: {100 - $right}%">
 				<!-- This is the header -->
-				<header class="p-5 px-5 flex-shrink-0 w-full flex items-center gap-6">
+				<header class="flex w-full flex-shrink-0 items-center gap-6 p-5 px-5">
 					<button
 						aria-labelledby="button"
-						class="active:scale-90 transition"
+						class="transition active:scale-90"
 						onclick={transitionPlane}
 					>
 						<svg
@@ -293,7 +293,7 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="size-9 mr-6"
+							class="mr-6 size-9"
 						>
 							<path
 								stroke-linecap="round"
@@ -307,7 +307,7 @@
 				<hr class="mx-5" />
 
 				<!-- These are the notes found inside a collection -->
-				<div class="w-full flex-grow flex flex-wrap content-start gap-6 p-5">
+				<div class="flex w-full flex-grow flex-wrap content-start gap-6 p-5">
 					{#if !fetchedNotes}
 						<NotesCardPlaceHolder />
 						<NotesCardPlaceHolder />
@@ -317,7 +317,7 @@
 							<NotesCard title={note.title} text={note.text} index={note.index} {loadNote} />
 						{/each}
 						<button
-							class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
+							class="card card-hover flex size-60 items-center justify-center gap-5 p-4"
 							onclick={addNewNote}
 							aria-label="Add Notes"
 						>

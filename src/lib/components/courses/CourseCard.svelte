@@ -12,26 +12,26 @@
 </script>
 
 <div
-	class="group card size-60 sm:size-72 rounded-container-token border-token border-secondary-500-400-token bg-cover bg-center hover:scale-110 duration-500 relative"
+	class="group card border-secondary-500-400-token relative size-60 bg-cover bg-center duration-500 border-token rounded-container-token hover:scale-110 sm:size-72"
 	transition:fly={{ x: 100, duration: 300 }}
 >
 	<div
-		class="w-full h-full rounded-container-token bg-gradient-to-tr from-20% from-transparent to-primary-900 to-100% flex flex-col justify-end gap-3 p-3 px-4 relative"
+		class="relative flex h-full w-full flex-col justify-end gap-3 bg-gradient-to-tr from-transparent from-20% to-primary-900 to-100% p-3 px-4 rounded-container-token"
 	>
 		<h1
-			class="text-2xl w-4/5 font-bold decoration-500-400-token text-primary-900-50-token absolute bottom-5 left-5
-      group-hover:text-4xl group-hover:bottom-1/2 group-hover:left-1/2
-      group-hover:-translate-x-1/2 group-hover:translate-y-1/2 duration-500 ellipsis-text"
+			class="decoration-500-400-token ellipsis-text text-primary-900-50-token absolute bottom-5 left-5 w-4/5 text-2xl
+      font-bold duration-500 group-hover:bottom-1/2
+      group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 group-hover:text-4xl"
 		>
 			{title}
 		</h1>
-		<p class="opacity-0 group-hover:opacity-100 duration-1000 delay-200 group-hover:text-2xl">
+		<p class="opacity-0 delay-200 duration-1000 group-hover:text-2xl group-hover:opacity-100">
 			<span class="text-secondary-500-400-token"
-				>Lessons:<span class="text-primary-500 ml-2">{lessons}</span>
+				>Lessons:<span class="ml-2 text-primary-500">{lessons}</span>
 			</span>
 		</p>
 		<p
-			class="opacity-0 text-primary-400-500-token font-bold group-hover:opacity-100 duration-700 delay-300 group-hover:text-base flex justify-end"
+			class="text-primary-400-500-token flex justify-end font-bold opacity-0 delay-300 duration-700 group-hover:text-base group-hover:opacity-100"
 		>
 			{#each subjects as subject}
 				<span class="ml-3"><i>{subject}</i></span>

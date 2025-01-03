@@ -180,10 +180,10 @@
 	});
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
+<div class="bg-surface-300-600-token relative w-full p-4 rounded-container-token">
 	<h1 class="h3 mb-5">True or False</h1>
 	{#each $sectionQuestions as question, i}
-		<div class="flex items-center gap-4 lg:px-5 mb-3" transition:slide>
+		<div class="mb-3 flex items-center gap-4 lg:px-5" transition:slide>
 			<input
 				class="input"
 				type="text"
@@ -192,7 +192,7 @@
 			/>
 			<button
 				aria-label="Close"
-				class="btn-icon border-2 border-success-400-500-token {$sectionAnswers[i] == 1
+				class="border-success-400-500-token btn-icon border-2 {$sectionAnswers[i] == 1
 					? 'bg-success-400-500-token'
 					: ''}"
 				onclick={() => changeAnswer(1, i)}
@@ -209,7 +209,7 @@
 			</button>
 			<button
 				aria-label="Close"
-				class="btn-icon border-2 border-error-400-500-token {$sectionAnswers[i] == 0
+				class="border-error-400-500-token btn-icon border-2 {$sectionAnswers[i] == 0
 					? 'bg-error-400-500-token'
 					: ''}"
 				onclick={() => changeAnswer(0, i)}
@@ -230,7 +230,7 @@
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="currentColor"
-					class="size-8 active:scale-110 transition"
+					class="size-8 transition active:scale-110"
 				>
 					<path
 						stroke-linecap="round"
@@ -241,7 +241,7 @@
 			</button>
 		</div>
 	{/each}
-	<div class="w-full flex items-center justify-between mt-5">
+	<div class="mt-5 flex w-full items-center justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			onclick={resetChanges}
@@ -256,7 +256,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addQuestion}>
+		<button class="variant-ringed-primary btn hover:variant-filled-primary" onclick={addQuestion}>
 			<span>Add Question</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -277,7 +277,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		onclick={changeSkip}

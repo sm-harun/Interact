@@ -20,12 +20,12 @@
 </script>
 
 <nav
-	class="variant-glass absolute top-0 left-0 w-[30rem] h-full transition duration-1000 flex flex-col border-2 border-surface-300-600-token {navBarStatus
+	class="variant-glass border-surface-300-600-token absolute left-0 top-0 flex h-full w-[30rem] flex-col border-2 transition duration-1000 {navBarStatus
 		? ''
 		: '-translate-x-full'}"
 >
 	<button
-		class="absolute left-full top-24 bg-surface-200-700-token px-3 py-7 rounded-r-xl"
+		class="bg-surface-200-700-token absolute left-full top-24 rounded-r-xl px-3 py-7"
 		aria-label="hide navbar"
 		onclick={() => (navBarStatus = !navBarStatus)}
 	>
@@ -39,9 +39,9 @@
 			<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 		</svg>
 	</button>
-	<header class="flex-shrink-0 h-24 w-full grid grid-cols-3 z-30 relative">
+	<header class="relative z-30 grid h-24 w-full flex-shrink-0 grid-cols-3">
 		<button
-			class="border-r-2 border-b-2 border-surface-300-600-token grid place-items-center"
+			class="border-surface-300-600-token grid place-items-center border-b-2 border-r-2"
 			aria-label="Record Objects"
 			onclick={() => {
 				navSectionsStatus.set(0);
@@ -62,7 +62,7 @@
 			</svg>
 		</button>
 		<button
-			class="border-r-2 border-b-2 border-surface-300-600-token grid place-items-center"
+			class="border-surface-300-600-token grid place-items-center border-b-2 border-r-2"
 			aria-label="Record Objects"
 			onclick={() => {
 				navSectionsStatus.set(100);
@@ -84,7 +84,7 @@
 			</svg>
 		</button>
 		<button
-			class="border-b-2 border-surface-300-600-token grid place-items-center"
+			class="border-surface-300-600-token grid place-items-center border-b-2"
 			aria-label="Record Objects"
 			onclick={() => {
 				navSectionsStatus.set(200);
@@ -108,11 +108,11 @@
 			>
 		</button>
 		<div
-			class="absolute top-0 w-1/3 h-full bg-primary-500/30 -z-20"
+			class="absolute top-0 -z-20 h-full w-1/3 bg-primary-500/30"
 			style="left: {$headerSectionIndicator}%"
 		></div>
 	</header>
-	<section class="flex-grow w-full relative overflow-hidden">
+	<section class="relative w-full flex-grow overflow-hidden">
 		<ObjectsSection {navSectionsStatus} />
 		<RecordingsSection {navSectionsStatus} />
 		<StatesSection {navSectionsStatus} />

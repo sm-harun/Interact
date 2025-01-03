@@ -21,14 +21,14 @@
 </script>
 
 <div
-	class="flex flex-col gap-2 mt-2"
+	class="mt-2 flex flex-col gap-2"
 	use:popup={{
 		event: 'hover',
 		target: 'popupHover: ' + description,
 		placement: 'top'
 	}}
 >
-	<div class="size-full flex justify-between items-end">
+	<div class="flex size-full items-end justify-between">
 		<h4 class="h4">{text}</h4>
 		<p>{value}</p>
 	</div>
@@ -40,11 +40,11 @@
 {#if description}
 	<div
 		data-popup={'popupHover: ' + description}
-		class="card bg-surface-200-700-token p-3 px-6 border-2 max-w-80 border-surface-300-600-token"
+		class="card bg-surface-200-700-token border-surface-300-600-token max-w-80 border-2 p-3 px-6"
 	>
 		<p>{description}</p>
 		<div
-			class="arrow bg-surface-200-700-token border-b-2 border-r-2 border-surface-400-500-token"
+			class="bg-surface-200-700-token border-surface-400-500-token arrow border-b-2 border-r-2"
 		></div>
 	</div>
 {/if}

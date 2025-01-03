@@ -97,9 +97,9 @@
 	}
 </script>
 
-<div class="flex-shrink-0 w-full variant-ghost-secondary p-6 card-hover" transition:slide>
+<div class="variant-ghost-secondary card-hover w-full flex-shrink-0 p-6" transition:slide>
 	<!-- Title and Color -->
-	<div class="flex justify-between items-center">
+	<div class="flex items-center justify-between">
 		<h3 class="h3 pb-3">{body.name}</h3>
 		<input type="color" class="input" value={body.fillStyle} oninput={colorChange} />
 	</div>
@@ -108,8 +108,8 @@
 
 	<!-- The Position Section -->
 	<div class="flex items-center gap-2">
-		<div class="flex items-center gap-4 max-w-40">
-			<p class="flex-shrink-0 text-secondary-700-200-token">X</p>
+		<div class="flex max-w-40 items-center gap-4">
+			<p class="text-secondary-700-200-token flex-shrink-0">X</p>
 			<input
 				class="input"
 				type="number"
@@ -121,8 +121,8 @@
 				disabled={engineSettings.timeState}
 			/>
 		</div>
-		<div class="flex items-center gap-4 max-w-40 ml-5">
-			<p class="flex-shrink-0 text-secondary-700-200-token">Y</p>
+		<div class="ml-5 flex max-w-40 items-center gap-4">
+			<p class="text-secondary-700-200-token flex-shrink-0">Y</p>
 			<input
 				class="input"
 				type="number"
@@ -139,9 +139,9 @@
 	<hr class="my-3" />
 
 	<!-- The Delete Button -->
-	<div class="w-full flex justify-between items-center mt-5">
+	<div class="mt-5 flex w-full items-center justify-between">
 		<button
-			class="group btn variant-glass-primary"
+			class="group variant-glass-primary btn"
 			bind:this={deleteButton}
 			onclick={() => removeObject(body.id)}
 		>
@@ -166,7 +166,7 @@
 
 		<!-- Edit Button -->
 		<button
-			class="group btn variant-glass-primary"
+			class="group variant-glass-primary btn"
 			bind:this={editButton}
 			onclick={editBody}
 			disabled={engineSettings.timeState}

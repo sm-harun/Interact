@@ -72,22 +72,22 @@
 {#if show}
 	<div class="relative w-auto self-center">
 		<main
-			class="w-full bg-surface-200-700-token rounded-container-token p-4 transition border-token relative {explained
+			class="bg-surface-200-700-token relative w-full p-4 transition border-token rounded-container-token {explained
 				? 'border-success-500'
 				: 'border-primary-500'}"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 		>
-			<h1 class="h4 w-full flex items-center gap-3">
+			<h1 class="h4 flex w-full items-center gap-3">
 				<span class="font-black italic">Q. </span>
 				{@html renderText(section.title)}
 			</h1>
 
 			<!-- Checking if there is atleast one choice -->
 			{#if section.choices.length != 0}
-				<hr class="mt-3 mb-3" />
+				<hr class="mb-3 mt-3" />
 			{/if}
 
-			<div class="px-5 flex flex-col">
+			<div class="flex flex-col px-5">
 				{#key choiceUpdater}
 					{#each section.choices as choice, i}
 						<button
@@ -97,11 +97,11 @@
 								? 'bg-success-500/50'
 								: 'hover:bg-primary-500/30'} {!explained && wrongSelections == i + 1
 								? 'bg-primary-500/30'
-								: ''} w-full mt-2 p-3 rounded-container-token active:scale-[98%] transition flex items-center justify-start"
+								: ''} mt-2 flex w-full items-center justify-start p-3 transition rounded-container-token active:scale-[98%]"
 							onclick={() => answered(i + 1)}
 						>
 							<span class="font-bold">{letter(i + 1)}. </span>
-							<span class="text-lg ml-2">{@html renderText(choice)}</span>
+							<span class="ml-2 text-lg">{@html renderText(choice)}</span>
 						</button>
 					{/each}
 				{/key}
@@ -110,7 +110,7 @@
 			<!-- This indicates an error when a user chooses wrong choice -->
 			{#if showIcon && !explained}
 				<p
-					class="text-error-500 absolute top-full right-0 mt-5 text-2xl font-bold flex gap-2 items-center"
+					class="absolute right-0 top-full mt-5 flex items-center gap-2 text-2xl font-bold text-error-500"
 					transition:fade
 				>
 					<span>Error</span>
@@ -137,7 +137,7 @@
 			<!-- This only appears if there is no answer in the choices, or there are not choices -->
 			{#if section.answer === 0 && !explained}
 				<button
-					class="btn variant-filled-primary z-10 absolute top-full right-0 mt-5"
+					class="variant-filled-primary btn absolute right-0 top-full z-10 mt-5"
 					onclick={() => answered(0)}
 					transition:slide>Show Answer!</button
 				>
@@ -147,7 +147,7 @@
 		<!-- This is the explanation -->
 		{#if explained}
 			<div
-				class="w-full bg-surface-200-700-token rounded-container-token p-4 mb-5 transition -z-10"
+				class="bg-surface-200-700-token -z-10 mb-5 w-full p-4 transition rounded-container-token"
 				transition:fly={{ y: -20 }}
 			>
 				<h3 class="h5 font-bold">Explanation:</h3>
@@ -157,7 +157,7 @@
 
 		<!-- This is a place-holder, it keeps the size of the container the same shape when the explanation is revealed -->
 		{#if !explained}
-			<div class="w-full p-4 mb-5 transition -z-10 opacity-0">
+			<div class="-z-10 mb-5 w-full p-4 opacity-0 transition">
 				<h3 class="h5 font-bold">Explanation:</h3>
 				<p>{@html renderText(section.explanation)}</p>
 			</div>
@@ -165,9 +165,9 @@
 		<!-- This is a place-holder, it keeps the size of the container the same shape when the explanation is revealed -->
 
 		{#if showButton && !section.skip}
-			<div class="w-full pb-2 flex justify-end items-center">
+			<div class="flex w-full items-center justify-end pb-2">
 				<button
-					class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+					class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 					in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 					out:slide
 					onclick={() => {

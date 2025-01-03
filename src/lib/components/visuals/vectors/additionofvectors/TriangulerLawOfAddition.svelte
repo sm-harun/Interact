@@ -57,16 +57,16 @@
 	}
 </script>
 
-<main class="w-2/3 aspect-video grid place-items-center mx-auto">
-	<div class="h-full aspect-square">
+<main class="mx-auto grid aspect-video w-2/3 place-items-center">
+	<div class="aspect-square h-full">
 		<canvas bind:this={canvas}></canvas>
 	</div>
 </main>
 
 {#if showButton}
-	<div class="w-2/3 pb-2 flex justify-end items-center mt-9">
+	<div class="mt-9 flex w-2/3 items-center justify-end pb-2">
 		<button
-			class="btn variant-filled-primary mr-6 animate-bounce scale-110 shadow-lg shadow-primary-500"
+			class="variant-filled-primary btn mr-6 scale-110 animate-bounce shadow-lg shadow-primary-500"
 			in:fly={{ y: 200, duration: 1000, easing: cubicInOut }}
 			out:slide
 			onclick={() => {

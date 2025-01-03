@@ -6,11 +6,11 @@
 	}
 </script>
 
-<div class="w-full h-16 bg-surface-100-800-token flex justify-end items-center">
+<div class="bg-surface-100-800-token flex h-16 w-full items-center justify-end">
 	<!-- Gravity Controls -->
-	<div class="h-full flex items-center gap-5 border-l-2 border-surface-400 px-5">
+	<div class="flex h-full items-center gap-5 border-l-2 border-surface-400 px-5">
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">Gravity Scale</p>
 				<p>{convertToEarthGravity(engineSettings.gravityScale)} m/s<sup>2</sup></p>
 			</div>
@@ -27,7 +27,7 @@
 		<span class="divider-vertical h-10 border-surface-400"></span>
 
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">X</p>
 				<p>{engineSettings.gravityX}</p>
 			</div>
@@ -44,7 +44,7 @@
 		<span class="divider-vertical h-10 border-surface-400"></span>
 
 		<div>
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">Y</p>
 				<p>{engineSettings.gravityY}</p>
 			</div>
@@ -60,7 +60,7 @@
 	</div>
 
 	<!-- Time Controls -->
-	<div class="h-full flex items-center gap-5 border-l-2 border-surface-400 px-5">
+	<div class="flex h-full items-center gap-5 border-l-2 border-surface-400 px-5">
 		<button
 			aria-label="Pause and Play button"
 			class="btn-icon"
@@ -97,7 +97,7 @@
 			{/if}
 		</button>
 		<div class="flex flex-col items-center">
-			<div class="flex justify-around w-full">
+			<div class="flex w-full justify-around">
 				<p class="font-bold">Time Scale</p>
 				<p>{engineSettings.timeScale} s/s</p>
 			</div>

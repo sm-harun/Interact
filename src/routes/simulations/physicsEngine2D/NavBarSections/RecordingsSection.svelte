@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="w-full h-full absolute top-0 border-2 grid place-items-center"
+	class="absolute top-0 grid h-full w-full place-items-center border-2"
 	style="right: {$navSectionsStatus - 100}%"
 >
 	This is the Recordings Section

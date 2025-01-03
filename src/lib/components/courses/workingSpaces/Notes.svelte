@@ -177,7 +177,7 @@
 
 <main>
 	<div
-		class="size-full absolute top-0 flex gap-5 flex-wrap p-5 content-start overflow-y-auto"
+		class="absolute top-0 flex size-full flex-wrap content-start gap-5 overflow-y-auto p-5"
 		style="right: {$right}%"
 	>
 		{#key notesUpdater}
@@ -186,7 +186,7 @@
 					<NoteCard title={note.title} text={note.text} index={note.index} loadNote={viewNote} />
 				{/each}
 				<button
-					class="card card-hover size-60 flex justify-center items-center gap-5 p-4"
+					class="card card-hover flex size-60 items-center justify-center gap-5 p-4"
 					onclick={addNewNote}
 					aria-label="Add a new note"
 				>
@@ -213,15 +213,15 @@
 			{/if}
 		{/key}
 	</div>
-	<div class="size-full absolute top-0 flex flex-col" style="left: {100 - $right}%">
-		<header class="flex-shrink-0 h-16 w-full flex items-center px-5">
-			<button class="active:scale-90 transition" onclick={goBack} aria-label="Go Back">
+	<div class="absolute top-0 flex size-full flex-col" style="left: {100 - $right}%">
+		<header class="flex h-16 w-full flex-shrink-0 items-center px-5">
+			<button class="transition active:scale-90" onclick={goBack} aria-label="Go Back">
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="currentColor"
-					class="size-9 mr-6"
+					class="mr-6 size-9"
 				>
 					<path
 						stroke-linecap="round"
@@ -233,14 +233,14 @@
 		</header>
 
 		<!-- This displays the editable notes -->
-		<div class="flex-grow w-full flex flex-col">
+		<div class="flex w-full flex-grow flex-col">
 			<input
-				class="input rounded-none border-none !bg-transparent px-10 h-40 h1 flex-shrink-0"
+				class="input h1 h-40 flex-shrink-0 rounded-none border-none !bg-transparent px-10"
 				bind:value={inputTitle}
 			/>
 			<hr class="mx-4 mb-8" />
 			<textarea
-				class="textarea border-none p-5 px-5 !bg-transparent flex-grow text-xl"
+				class="textarea flex-grow border-none !bg-transparent p-5 px-5 text-xl"
 				bind:value={textArea}
 			></textarea>
 
@@ -248,13 +248,13 @@
 				<button
 					class="{oldTextArea == textArea && oldTitle == inputTitle
 						? 'variant-ghost-primary'
-						: 'variant-filled-primary'} btn text-xl px-6"
+						: 'variant-filled-primary'} btn px-6 text-xl"
 					onclick={resetNote}>Reset</button
 				>
 				<button
 					class="{oldTextArea == textArea && oldTitle == inputTitle
 						? 'variant-ghost-primary'
-						: 'variant-filled-primary'} btn text-xl px-6"
+						: 'variant-filled-primary'} btn px-6 text-xl"
 					onclick={saveNote}>Save</button
 				>
 			</div>

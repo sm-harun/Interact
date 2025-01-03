@@ -4,14 +4,14 @@
 </script>
 
 <nav
-	class="w-20 sm:w-24 flex-shrink-0 bg-surface-100-800-token overflow-y-auto"
+	class="bg-surface-100-800-token w-20 flex-shrink-0 overflow-y-auto sm:w-24"
 	in:fly={{ x: -50, duration: 500, delay: 500 }}
 	out:fly={{ x: -50, duration: 500 }}
 >
 	<button
 		class="{$subject === 'All'
 			? 'bg-primary-500/70'
-			: ''} w-full aspect-square flex flex-col items-center justify-center gap-2 text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
+			: ''} box-content flex aspect-square w-full flex-col items-center justify-center gap-2 py-3 text-sm font-bold hover:bg-primary-500/50 sm:py-6"
 		onclick={() => setSubject('All')}
 	>
 		<svg viewBox="0 0 64 64" class="size-14">
@@ -46,10 +46,10 @@
 	<button
 		class="{$subject === 'Math'
 			? 'bg-primary-500/70'
-			: ''} w-full aspect-square flex flex-col gap-1 justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
+			: ''} box-content flex aspect-square w-full flex-col items-center justify-center gap-1 py-3 text-sm font-bold hover:bg-primary-500/50 sm:py-6"
 		onclick={() => setSubject('Math')}
 	>
-		<svg viewBox="0 0 512.001 512.001" class="size-12 rotate-[200deg] translate-y-2">
+		<svg viewBox="0 0 512.001 512.001" class="size-12 translate-y-2 rotate-[200deg]">
 			<g>
 				<path
 					style="fill:#F7B239;"
@@ -78,7 +78,7 @@
 	<button
 		class="{$subject === 'Chemistry'
 			? 'bg-primary-500/70'
-			: ''} w-full aspect-square flex flex-col justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
+			: ''} box-content flex aspect-square w-full flex-col items-center justify-center py-3 text-sm font-bold hover:bg-primary-500/50 sm:py-6"
 		onclick={() => setSubject('Chemistry')}
 	>
 		<svg viewBox="0 0 479.6 479.6" class="size-12">
@@ -161,7 +161,7 @@
 	<button
 		class="{$subject === 'Physics'
 			? 'bg-primary-500/70'
-			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
+			: ''} box-content flex aspect-square w-full flex-col items-center justify-center gap-2 py-3 text-sm font-bold hover:bg-primary-500/50 sm:py-6"
 		onclick={() => setSubject('Physics')}
 	>
 		<svg viewBox="0 0 512 512" class="size-10">
@@ -201,7 +201,7 @@
 	<button
 		class="{$subject === 'Biology'
 			? 'bg-primary-500/70'
-			: ''} w-full aspect-square flex flex-col gap-2 justify-center items-center text-sm font-bold hover:bg-primary-500/50 box-content py-3 sm:py-6"
+			: ''} box-content flex aspect-square w-full flex-col items-center justify-center gap-2 py-3 text-sm font-bold hover:bg-primary-500/50 sm:py-6"
 		onclick={() => setSubject('Biology')}
 	>
 		<svg class="size-12" viewBox="0 0 496.246 496.246" xml:space="preserve" fill="#000000"

@@ -191,14 +191,14 @@
 	});
 </script>
 
-<div class="w-full bg-surface-300-600-token rounded-container-token p-4 relative">
+<div class="bg-surface-300-600-token relative w-full p-4 rounded-container-token">
 	<label class="label">
 		<strong>Question: </strong>
 		<input class="input font-bold" type="text" placeholder="Question" bind:value={sectionTitle} />
 
-		<div class="flex flex-col ml-7">
+		<div class="ml-7 flex flex-col">
 			{#each $sectionChoices as choice, i}
-				<div class="flex items-center mt-3 gap-4" transition:slide>
+				<div class="mt-3 flex items-center gap-4" transition:slide>
 					<strong>Choice {i + 1}: </strong>
 					<button
 						aria-label="Close"
@@ -225,7 +225,7 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="size-8 active:scale-110 transition"
+							class="size-8 transition active:scale-110"
 						>
 							<path
 								stroke-linecap="round"
@@ -245,7 +245,7 @@
 			bind:value={sectionExplanation}
 		/>
 	</label>
-	<div class="w-full flex items-center justify-between mt-5">
+	<div class="mt-5 flex w-full items-center justify-between">
 		<button
 			class="{buttonSynced ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 			onclick={resetChanges}
@@ -260,7 +260,7 @@
 
 			<span class="hidden lg:flex">Reset</span>
 		</button>
-		<button class="btn variant-ringed-primary hover:variant-filled-primary" onclick={addChoice}>
+		<button class="variant-ringed-primary btn hover:variant-filled-primary" onclick={addChoice}>
 			<span>Add Choice</span>
 			<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -281,7 +281,7 @@
 		</button>
 	</div>
 </div>
-<div class="w-full flex justify-end">
+<div class="flex w-full justify-end">
 	<button
 		class="{!sectionSkip ? 'variant-ringed-primary' : 'variant-filled-primary'} btn"
 		onclick={changeSkip}
