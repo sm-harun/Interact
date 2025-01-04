@@ -4,13 +4,7 @@
 	import HumanSkeletonModel from './HumanSkeletonModel.svelte';
 </script>
 
-<T.PerspectiveCamera
-	makeDefault
-	position={[0, 0, 2]}
-	on:create={({ ref }) => {
-		ref.lookAt(0, 0, 0);
-	}}
->
+<T.PerspectiveCamera makeDefault position={[0, 0, 3]}>
 	<OrbitControls target={[0, 0, 0]} maxDistance={10} minDistance={0.3} />
 </T.PerspectiveCamera>
 

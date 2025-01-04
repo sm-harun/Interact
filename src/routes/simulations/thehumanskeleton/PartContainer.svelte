@@ -4,9 +4,10 @@
 	interface Props {
 		children?: Snippet;
 		title: string;
+		type: string;
 	}
 
-	let { children, title }: Props = $props();
+	let { children, title, type }: Props = $props();
 
 	let flashing = $state(false);
 </script>
@@ -63,4 +64,10 @@
 	<hr class="my-3" />
 
 	{@render children?.()}
+
+	<hr class="my-3" />
+
+	<div class="flex items-center">
+		<p>Type: <strong class="mx-2">{type}</strong></p>
+	</div>
 </div>

@@ -4,7 +4,11 @@
 	import PartContainer from './PartContainer.svelte';
 
 	// Status of the navbar whether it is opened or closed
-	let navBarStatus = $state(false);
+	let navBarStatus = $state(true);
+
+	async function fetchSkeletonData() {
+		return fetch('/assets/HumanSkeletonData.json').then((response) => response.json());
+	}
 </script>
 
 <div
@@ -31,164 +35,15 @@
 	<div class="size-full overflow-y-auto p-4 rounded-container-token">
 		<h1 class="h1 grid w-full place-items-center p-5 py-10">The Human Skeleton</h1>
 		<div class="flex flex-col gap-10 rounded-container-token">
-			<ClassContainer title="The Skull">
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-			</ClassContainer>
-			<ClassContainer title="The Thorax">
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-				<PartContainer title="Sternum">
-					<p>
-						This bony structure protects the brain and supports the facial structure. It consists of
-						several bones fused together, including the frontal, parietal, occipital, and temporal
-						bones.
-					</p>
-				</PartContainer>
-			</ClassContainer>
+			{#await fetchSkeletonData() then data}
+				{#each data.data as part}
+					<ClassContainer title={part.region}>
+						{#each part.bones as bone}
+							<PartContainer title={bone.name} type={bone.bone_type}>{bone.function}</PartContainer>
+						{/each}
+					</ClassContainer>
+				{/each}
+			{/await}
 		</div>
 	</div>
 	<CardShadow heightPercent={10} />

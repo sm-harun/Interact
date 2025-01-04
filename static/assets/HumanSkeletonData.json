@@ -1,0 +1,197 @@
+{
+ "data": [
+    {
+      "region": "The Skull",
+      "bones": [
+        {
+          "name": "Frontal Bone",
+          "classification": "Cranial",
+          "function": "The frontal bone is located at the front of the skull, forming the forehead, the roof of the eye sockets, and part of the nasal cavity. It protects the brain, specifically the frontal lobes, and supports the facial structures, including the eyes and nose. The frontal bone also plays a crucial role in the attachment of muscles involved in facial expressions and movement of the forehead.",
+          "bone_type": "Flat Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Parietal Bone",
+          "classification": "Cranial",
+          "function": "The parietal bones form the upper sides and roof of the skull. They protect the brain and help form the structure of the cranium. These bones also provide attachment points for muscles that control head movement and assist in facial expressions.",
+          "bone_type": "Flat Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Occipital Bone",
+          "classification": "Cranial",
+          "function": "The occipital bone is located at the back of the skull and forms the base of the cranium. It protects the cerebellum and the brainstem, which are responsible for vital functions such as breathing and heart rate. The occipital bone also provides attachment points for muscles that control head and neck movement.",
+          "bone_type": "Flat Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Temporal Bone",
+          "classification": "Cranial",
+          "function": "The temporal bones are located on either side of the skull and protect the inner ear and the brain’s temporal lobes. They are involved in hearing and balance, as they house the structures of the ear. These bones also provide attachment points for muscles that control jaw and head movements.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Sphenoid Bone",
+          "classification": "Cranial",
+          "function": "The sphenoid bone is located at the base of the skull and forms part of the eye socket and the nasal cavity. It helps stabilize the skull and supports the brain by forming part of the cranial floor. The sphenoid bone also connects the frontal, temporal, and occipital bones, contributing to the overall structure of the skull.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Ethmoid Bone",
+          "classification": "Cranial",
+          "function": "The ethmoid bone is located between the eyes and forms part of the nasal cavity and the eye sockets. It helps filter and humidify the air we breathe, plays a role in the sense of smell, and contributes to the formation of the nasal septum. The ethmoid bone also serves as an anchor for the olfactory bulb, which processes smell signals.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        }
+      ]
+    },
+    {
+      "region": "The Thorax",
+      "bones": [
+        {
+          "name": "Sternum",
+          "classification": "Thoracic",
+          "function": "The sternum, or breastbone, is located in the center of the chest and serves as the attachment point for the ribs and the clavicles. It protects vital organs such as the heart and lungs and plays a role in breathing by assisting with the movement of the rib cage during respiration. The sternum also helps stabilize the upper chest and allows for efficient movement of the thoracic cavity.",
+          "bone_type": "Flat Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Ribs",
+          "classification": "Thoracic",
+          "function": "The ribs form a protective cage around the heart, lungs, and other vital organs in the chest. There are 12 pairs of ribs, each connected to the spine and the sternum (in the case of the true ribs). Ribs provide structural support, assist with breathing by expanding and contracting the chest, and protect the organs within the thoracic cavity.",
+          "bone_type": "Flat Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Clavicle",
+          "classification": "Thoracic",
+          "function": "The clavicle, or collarbone, connects the arm to the body and acts as a strut to stabilize the shoulder. It provides structural support to the upper chest and helps transmit force from the arms to the torso. The clavicle also protects the nerves and blood vessels that pass from the neck into the arm.",
+          "bone_type": "Long Bone",
+          "weight": null,
+          "position": null
+        }
+      ]
+    },
+    {
+      "region": "The Vertebral Column",
+      "bones": [
+        {
+          "name": "Cervical Vertebrae",
+          "classification": "Vertebral",
+          "function": "The cervical vertebrae are the seven vertebrae in the neck. These bones support the skull, allow for head movement, and protect the spinal cord. They are smaller and more flexible than the other vertebrae, allowing for a wide range of motion in the neck, including rotation, flexion, and extension.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Thoracic Vertebrae",
+          "classification": "Vertebral",
+          "function": "The thoracic vertebrae are located in the upper and mid-back, forming the region of the spine that attaches to the ribs. These vertebrae are larger than cervical vertebrae and provide attachment points for muscles and ligaments of the back. They help support the rib cage and protect vital organs such as the heart and lungs.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Lumbar Vertebrae",
+          "classification": "Vertebral",
+          "function": "The lumbar vertebrae are the five vertebrae in the lower back. These bones bear much of the body's weight and are the largest and strongest of the vertebrae. They are responsible for providing flexibility and stability to the lower back while protecting the spinal cord and supporting the upper body during movement.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Sacrum",
+          "classification": "Vertebral",
+          "function": "The sacrum is a large, triangular bone at the base of the spine that connects the spine to the hip bones. It provides support for the weight of the body during sitting and standing and serves as the foundation for the pelvis. The sacrum also forms part of the pelvic cavity and helps transmit weight from the upper body to the lower limbs.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Coccyx",
+          "classification": "Vertebral",
+          "function": "The coccyx, or tailbone, is a small, triangular bone at the end of the vertebral column. Although it does not serve a major functional role, the coccyx provides support when sitting and serves as an attachment point for muscles and ligaments of the pelvic floor.",
+          "bone_type": "Irregular Bone",
+          "weight": null,
+          "position": null
+        }
+      ]
+    },
+    {
+      "region": "The Upper Limbs",
+      "bones": [
+        {
+          "name": "Scapula",
+          "classification": "Upper Limb",
+          "function": "The scapula, or shoulder blade, is a flat bone located in the upper back. It provides attachment points for muscles that move the shoulder and arms. The scapula plays a critical role in stabilizing the shoulder joint and allowing for a wide range of motion in the arms.",
+          "bone_type": "Flat Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Clavicle",
+          "classification": "Upper Limb",
+          "function": "The clavicle, or collarbone, connects the arm to the torso. It serves as a strut to stabilize the shoulder and aids in the transmission of force between the upper limb and the trunk. It also protects the neurovascular structures that pass from the neck into the arm.",
+          "bone_type": "Long Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Humerus",
+          "classification": "Upper Limb",
+          "function": "The humerus is the long bone of the upper arm, extending from the shoulder to the elbow. It supports the muscles that control arm movements and provides structure to the upper limb. The humerus is involved in a wide range of upper limb activities, including lifting, pushing, and pulling.",
+          "bone_type": "Long Bone",
+          "weight": null,
+          "position": null
+        }
+      ]
+    },
+    {
+      "region": "The Lower Limbs",
+      "bones": [
+        {
+          "name": "Femur",
+          "classification": "Lower Limb",
+          "function": "The femur is the longest and strongest bone in the human body, located in the thigh. It supports the weight of the body during standing, walking, running, and jumping. The femur connects the hip to the knee and provides structure and strength to the lower limb, allowing for powerful movements.",
+          "bone_type": "Long Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Patella",
+          "classification": "Lower Limb",
+          "function": "The patella, or knee cap, is a small, triangular bone that protects the knee joint. It acts as a shield for the knee, providing cushioning for the joint and enhancing the leverage of the quadriceps muscle during movement. The patella helps improve the efficiency of leg movements.",
+          "bone_type": "Sesamoid Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Tibia",
+          "classification": "Lower Limb",
+          "function": "The tibia is the larger of the two bones in the lower leg and is responsible for bearing much of the body's weight. It supports the lower leg during standing, walking, and running and connects to the femur at the knee and to the fibula and ankle at the foot.",
+          "bone_type": "Long Bone",
+          "weight": null,
+          "position": null
+        },
+        {
+          "name": "Fibula",
+          "classification": "Lower Limb",
+          "function": "The fibula is the smaller bone of the lower leg, running parallel to the tibia. Although it does not bear significant weight, it provides structural support to the lower leg and serves as an attachment point for muscles that control foot and ankle movements.",
+          "bone_type": "Long Bone",
+          "weight": null,
+          "position": null
+        }
+      ]
+    }
+  ]
+}
