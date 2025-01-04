@@ -3,21 +3,8 @@
 	import ClassContainer from './ClassContainer.svelte';
 	import PartContainer from './PartContainer.svelte';
 
-	interface Props {
-		camPos: (
-			xPos: number,
-			yPos: number,
-			zPos: number,
-			xCam: number,
-			yCam: number,
-			zCam: number
-		) => void;
-	}
-
-	let { camPos }: Props = $props();
-
 	// Status of the navbar whether it is opened or closed
-	let navBarStatus = $state(true);
+	let navBarStatus = $state(false);
 </script>
 
 <div
