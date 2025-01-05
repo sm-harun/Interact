@@ -3,23 +3,31 @@
 
 	interface Props {
 		children: Snippet;
+		customSideText?: Snippet;
 		title: string;
 		sideText?: string;
 		sideValue?: number | undefined;
 	}
 
-	let { children, title, sideText, sideValue = $bindable(undefined) }: Props = $props();
+	let {
+		children,
+		customSideText = undefined,
+		title,
+		sideText,
+		sideValue = $bindable(undefined)
+	}: Props = $props();
 </script>
 
 <div class="flex w-auto flex-col gap-2 border-2 border-surface-500 p-5 rounded-container-token">
 	<div class="flex size-full items-end justify-between">
 		<h4 class="h4">{title}</h4>
 		<p>
-			{#if sideValue != undefined}
+			{#if sideValue != undefined || sideText != undefined}
 				<span>{sideText}</span>
 				<span>{sideValue}</span>
 			{/if}
 		</p>
+		{@render customSideText?.()}
 	</div>
 
 	<hr class="my-3" />

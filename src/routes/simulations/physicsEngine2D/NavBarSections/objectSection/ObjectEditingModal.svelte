@@ -2,7 +2,7 @@
 	import { popup } from '@skeletonlabs/skeleton';
 
 	import { shapes } from '../../states.svelte';
-	import { engineSettings } from '../../states.svelte';
+	import { engineSettings, isStaticChange } from '../../states.svelte';
 	import Matter from 'matter-js';
 	import { fly } from 'svelte/transition';
 	import { getModalStore } from '@skeletonlabs/skeleton';
@@ -12,6 +12,8 @@
 	import FancyMultipleInputContainer from '$lib/components/general/customInputs/FancyMultipleInputContainer.svelte';
 	import FancyMultipleInput from '$lib/components/general/customInputs/FancyMultipleInput.svelte';
 	import FancySlider from '$lib/components/general/customInputs/FancySlider.svelte';
+
+	import { getPartsBeforeAndAfterLetter } from '$lib/utils';
 
 	interface Props {
 		bodyID: number;
@@ -27,7 +29,6 @@
 	let options: Matter.IChamferableBodyDefinition = $state({
 		plugin: { name: body?.plugin.name },
 		label: body.label,
-		mass: body.isStatic ? 50 : body.mass,
 		angle: Math.round(body.angle),
 		friction: body.friction,
 		frictionAir: body.frictionAir,
@@ -54,8 +55,19 @@
 
 	let radius = $state(body.circleRadius);
 
+	let massCoefficent = $state(
+		body.isStatic
+			? 5
+			: parseInt(getPartsBeforeAndAfterLetter(body.mass.toExponential(1), 'e').before)
+	);
+	let massExponent = $state(
+		body.isStatic
+			? 1
+			: parseInt(getPartsBeforeAndAfterLetter(body.mass.toExponential(1), 'e').after)
+	);
+
 	let density = $derived.by(() => {
-		let mass = options.mass as number;
+		let mass = massCoefficent * Math.pow(10, massExponent);
 
 		return options.label == 'Rectangle Body'
 			? mass / (dimenstions.width * dimenstions.height)
@@ -81,13 +93,15 @@
 			updateCircleVerticies(shapes[index]);
 		}
 
-		// Changes mass when an object turns from static to dynamic
 		if (options.isStatic) {
+			// Changes mass when an object turns from static to dynamic
 			Matter.Body.setStatic(shapes[index], options.isStatic);
 		} else {
 			Matter.Body.setStatic(shapes[index], options.isStatic as boolean);
-			Matter.Body.setMass(shapes[index], options.mass as number);
+			Matter.Body.setMass(shapes[index], massCoefficent * Math.pow(10, massExponent));
 		}
+
+		isStaticChange.update((value: number) => value + 1);
 
 		// Friction
 		shapes[index].friction = options.friction as number;
@@ -102,10 +116,12 @@
 		shapes[index].render.opacity = options.render?.opacity;
 
 		updateFunc(
+			shapes[index].id,
 			shapes[index].plugin.name,
 			shapes[index].position.x,
 			shapes[index].position.y,
-			shapes[index].render.fillStyle
+			shapes[index].render.fillStyle,
+			shapes[index].isStatic
 		);
 		modalStore.close();
 	}
@@ -220,45 +236,33 @@
 		{/if}
 
 		<!-- Mass and Density -->
-		<MultipleInputsContainer
-			title={'Mass and Density'}
-			sideText="Density: "
-			sideValue={density.toExponential(2)}
-		>
-			<FancyInput bind:value={options.mass} description="The mass of the body">Mass</FancyInput>
-		</MultipleInputsContainer>
+		<MultipleInputsContainer title={'Mass and Density'}>
+			{#snippet customSideText()}
+				<p>Mass: {massCoefficent} × 10<sup>{massExponent}</sup></p>
+				<p>
+					Density: {getPartsBeforeAndAfterLetter(density.toExponential(1), 'e').before} × 10<sup
+						>{getPartsBeforeAndAfterLetter(density.toExponential(1), 'e').after}</sup
+					>
+				</p>
+			{/snippet}
 
-		<!-- Friction and Restitution -->
-		<MultipleInputsContainer title={'Friction and Restitution'}>
 			<FancySlider
-				text="Friction"
-				bind:value={options.friction}
+				text="Mass Coefficent"
+				bind:value={massCoefficent}
 				min="0"
-				step="0.01"
-				max="1"
-				description="A number from 0 to 1 measuring how far the object will slide without stopping"
+				step="0.1"
+				max="10"
+				disabled={options.isStatic}
+				description="Coefficent of the Scientfic notation for the mass of the body"
 			/>
 			<FancySlider
-				text="Air Resisitance"
-				bind:value={options.frictionAir}
-				min="0"
-				step="0.01"
-				max="1"
-				description="A number from 0 to 1 describing the magnitude of air resistance to the body"
-			/>
-			<FancySlider
-				text="Restitution"
-				bind:value={options.restitution}
-				min="0"
-				step="0.01"
-				max="1"
-				description="A number from 0 to 1 measuring how much energy the body will keep after collision (bounciness)"
-			/>
-			<FancySlider
-				text="Static Friction"
-				bind:value={options.frictionStatic}
-				min="0"
-				description="Measures how hard it is to start moving the object (Inertia)"
+				text="Mass Exponent"
+				bind:value={massExponent}
+				min="-5"
+				step="1"
+				max="5"
+				disabled={options.isStatic}
+				description="Exponent of the Scientfic notation for the mass of the body"
 			/>
 		</MultipleInputsContainer>
 

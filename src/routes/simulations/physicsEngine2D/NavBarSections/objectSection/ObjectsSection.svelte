@@ -3,7 +3,7 @@
 	import ObjectCreationModal from './ObjectCreationModal.svelte';
 	import { getModalStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
 
-	import { shapeStats } from '../../states.svelte';
+	import { shapeStats, isStaticChange } from '../../states.svelte';
 	import ObjectsCard from './ObjectsCard.svelte';
 
 	interface Props {
@@ -59,11 +59,13 @@
 			No Dynamic Bodies
 		</div>
 	{:else}
-		{#each shapeStats as body, i}
-			{#if body.type == 'Dynamic'}
-				<ObjectsCard body={shapeStats[i]} />
-			{/if}
-		{/each}
+		{#key $isStaticChange}
+			{#each shapeStats as body, i}
+				{#if body.type == 'Dynamic'}
+					<ObjectsCard body={shapeStats[i]} />
+				{/if}
+			{/each}
+		{/key}
 	{/if}
 
 	<h2 class="h3">Static Bodies</h2>
@@ -73,10 +75,12 @@
 			No Static Bodies
 		</div>
 	{:else}
-		{#each shapeStats as body, i}
-			{#if body.type == 'Static'}
-				<ObjectsCard body={shapeStats[i]} />
-			{/if}
-		{/each}
+		{#key $isStaticChange}
+			{#each shapeStats as body, i}
+				{#if body.type == 'Static'}
+					<ObjectsCard body={shapeStats[i]} />
+				{/if}
+			{/each}
+		{/key}
 	{/if}
 </section>

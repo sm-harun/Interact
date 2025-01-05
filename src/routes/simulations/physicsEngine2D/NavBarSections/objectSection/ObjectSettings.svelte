@@ -10,6 +10,9 @@
 	import FancySlider from '$lib/components/general/customInputs/FancySlider.svelte';
 
 	import { popup } from '@skeletonlabs/skeleton';
+	import { derived } from 'svelte/store';
+
+	import { getPartsBeforeAndAfterLetter } from '$lib/utils';
 
 	type ModalView = 'ObjectSelection' | 'ObjectSettings';
 
@@ -23,15 +26,15 @@
 
 	let position: { x: number; y: number } = $state({ x: 100, y: 100 });
 	let dimenstions: { width: number; height: number } = $state({ width: 50, height: 50 });
-	let radius: number = $state(pickRandom([20, 30, 40, 50, 60, 80, 100]));
+	let radius: number = $state(pickRandom<number>([20, 30, 40, 50, 60, 80, 100]));
 
-	function pickRandom(choices: any[]) {
+	function pickRandom<T>(choices: T[]) {
 		return Matter.Common.choose(choices);
 	}
 
 	let options: Matter.IChamferableBodyDefinition = $state({
 		plugin: {
-			name: pickRandom([
+			name: pickRandom<string>([
 				'Moving Object',
 				'The Rocket',
 				'Normal Object',
@@ -41,7 +44,9 @@
 				'Arcane',
 				'Yimrahane',
 				'Widget'
-			])
+			]),
+			charge: 0,
+			showCharge: false
 		},
 		angle: 0,
 		label: 'Circle Body',
@@ -54,20 +59,29 @@
 		render: {
 			opacity: 1,
 			lineWidth: 0,
-			fillStyle: pickRandom(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']),
-			strokeStyle: pickRandom(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1'])
+			fillStyle: pickRandom<string>(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']),
+			strokeStyle: pickRandom<string>(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1'])
 		}
 	});
 
+	let massCoefficent = $state(2.5);
+	let massExponent = $state(1);
+
 	let density = $derived.by(() => {
-		let mass = options.mass as number;
+		let mass = massCoefficent * Math.pow(10, massExponent);
 
 		return options.label == 'Rectangle Body'
 			? mass / (dimenstions.width * dimenstions.height)
 			: mass / (radius * radius * Math.PI);
 	});
 
+	let chargeCoefficent = $state(0);
+	let chargeExponent = $state(1);
+
 	function createObject() {
+		options.plugin.charge = chargeCoefficent * Math.pow(10, chargeExponent);
+		options.mass = massCoefficent * Math.pow(10, massExponent);
+
 		if (options.label == 'Circle Body') {
 			addNewObject([
 				Matter.Bodies.circle(Math.round(position.x), Math.round(position.y), radius, options)
@@ -187,12 +201,34 @@
 	{/if}
 
 	<!-- Mass and Density -->
-	<MultipleInputsContainer
-		title={'Mass and Density'}
-		sideText="Density: "
-		sideValue={density.toExponential(2)}
-	>
-		<FancyInput bind:value={options.mass} description="The mass of the body">Mass</FancyInput>
+	<MultipleInputsContainer title={'Mass and Density'}>
+		{#snippet customSideText()}
+			<p>Mass: {massCoefficent} × 10<sup>{massExponent}</sup></p>
+			<p>
+				Density: {getPartsBeforeAndAfterLetter(density.toExponential(1), 'e').before} × 10<sup
+					>{getPartsBeforeAndAfterLetter(density.toExponential(1), 'e').after}</sup
+				>
+			</p>
+		{/snippet}
+
+		<FancySlider
+			text="Mass Coefficent"
+			bind:value={massCoefficent}
+			min="0"
+			step="0.1"
+			max="10"
+			disabled={options.isStatic}
+			description="Coefficent of the Scientfic notation for the mass of the body"
+		/>
+		<FancySlider
+			text="Mass Exponent"
+			bind:value={massExponent}
+			min="-5"
+			step="1"
+			max="5"
+			disabled={options.isStatic}
+			description="Exponent of the Scientfic notation for the mass of the body"
+		/>
 	</MultipleInputsContainer>
 
 	<!-- Friction and Restitution -->
@@ -278,6 +314,31 @@
 				></div>
 			</div>
 		</div>
+	</MultipleInputsContainer>
+
+	<!-- Charge Propeties -->
+	<MultipleInputsContainer title="Charge">
+		{#snippet customSideText()}
+			<p>{chargeCoefficent} × 10<sup>{chargeExponent}</sup></p>
+		{/snippet}
+
+		<FancySlider
+			text="Charge Coefficent"
+			bind:value={chargeCoefficent}
+			min="-9.9"
+			max="9.9"
+			step="0.1"
+			description="The Coefficent of the charge in Scientific notation"
+		/>
+
+		<FancySlider
+			text="Charge Exponent"
+			bind:value={chargeExponent}
+			min="-15"
+			max="15"
+			step="1"
+			description="The Exponent of the charge in Scientific notation"
+		/>
 	</MultipleInputsContainer>
 
 	<!-- Render Properties -->

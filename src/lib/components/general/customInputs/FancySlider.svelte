@@ -8,6 +8,7 @@
 		min?: string;
 		max?: string;
 		step?: string;
+		disabled?: boolean;
 	}
 
 	let {
@@ -16,7 +17,8 @@
 		description = undefined,
 		min = undefined,
 		max = undefined,
-		step = undefined
+		step = undefined,
+		disabled = $bindable(false)
 	}: Props = $props();
 </script>
 
@@ -33,7 +35,7 @@
 		<p>{value}</p>
 	</div>
 	<div class="size-full">
-		<input class="input" type="range" {min} {max} {step} bind:value />
+		<input class="input" type="range" {min} {max} {step} bind:value {disabled} />
 	</div>
 </div>
 

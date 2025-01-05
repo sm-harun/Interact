@@ -40,7 +40,7 @@
 				</svg>
 			</button>
 			<button
-				class="btn-icon {flashing ? 'variant-filled' : ''}"
+				class="btn-icon {flashing ? 'variant-filled animate-pulse' : ''}"
 				onclick={() => (flashing = !flashing)}
 				aria-label="Flash Position"
 			>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import { shapes, engineSettings, removeObject } from '../../states.svelte';
+	import { shapes, engineSettings, removeObject, updateShapeStats } from '../../states.svelte';
 	import { type ModalComponent, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
 	import Matter from 'matter-js';
 	import ObjectEditingModal from './ObjectEditingModal.svelte';
@@ -73,11 +73,22 @@
 		});
 	}
 
-	function updateCardAfterEdit(name: string, x: number, y: number, fillStyle: string) {
+	function updateCardAfterEdit(
+		id: number,
+		name: string,
+		x: number,
+		y: number,
+		fillStyle: string,
+		isStatic: boolean
+	) {
 		body.name = name;
 		body.x = x;
 		body.y = y;
 		body.fillStyle = fillStyle;
+
+		let newType: 'Static' | 'Dynamic' = isStatic ? 'Static' : 'Dynamic';
+
+		updateShapeStats({ id, x, y, name, fillStyle, type: newType });
 	}
 
 	let modalStore = getModalStore();
