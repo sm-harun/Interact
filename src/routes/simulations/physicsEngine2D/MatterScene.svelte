@@ -19,7 +19,6 @@
 
 		seconds[2] += 0.01;
 		if (seconds[2] > 5) seconds[2] = 1;
-		console.log(`Counter: ${seconds}`);
 	}, 10);
 
 	// Affects the time
@@ -62,12 +61,11 @@
 		ctx.beginPath();
 
 		shapes.forEach((shape) => {
-			let xo = shape.position.x;
-			let yo = shape.position.y;
+			if (shape.label == 'Circle Body' && shape.plugin.showCharge) {
+				let xo = shape.position.x;
+				let yo = shape.position.y;
 
-			let lineColor = 'grey';
-
-			if (shape.label == 'Circle Body') {
+				let lineColor = 'grey';
 				let sign = Math.sign(shape.plugin.charge);
 
 				// The power of the charge
@@ -76,8 +74,6 @@
 				);
 				let lineCount = shape.plugin.charge == 0 ? 0 : power + 6;
 				let division = (Math.PI * 2) / lineCount;
-
-				console.log(sign);
 
 				// Defines how big one unit of vector is
 				let unit = shape.circleRadius as number;
@@ -88,24 +84,28 @@
 					let edgeX = unit * Math.cos(division * i);
 					let edgeY = unit * Math.sin(division * i);
 
-					drawALine(
-						ctx,
-						{ x: xo + edgeX, y: yo - edgeY },
-						{ x: xo + edgeX * magnitude, y: yo - edgeY * magnitude },
-						lineColor,
-						1
-					);
+					for (let l = 1; l <= magnitude; l++) {
+						// Draws multiple lines that eventually fade out
+						drawALine(
+							ctx,
+							{ x: xo + edgeX * l, y: yo - edgeY * l },
+							{ x: xo + edgeX * (l + 1), y: yo - edgeY * (l + 1) },
+							`rgba(128, 128, 128, ${1 - (2 * l) / 10})`,
+							1
+						);
+					}
 
 					for (let k = 0; k < 3; k++) {
 						let sec = sign > 0 ? seconds[k] : 6 - seconds[k];
 
 						let triangleVerticies = getTriangleVerticies(
-							sec * 1.8,
+							sec * 2.5,
 							{ x: xo + edgeX * sec, y: yo - edgeY * sec },
 							Math.atan2(edgeY * sign, edgeX * sign)
 						);
 
-						drawTriangle(ctx, triangleVerticies, lineColor);
+						// The triangles get smaller and less visible
+						drawTriangle(ctx, triangleVerticies, `rgba(128, 128, 128, ${1 - (2 * sec) / 10}`);
 					}
 				}
 			}

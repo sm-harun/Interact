@@ -11,6 +11,8 @@
 
 	let { body }: Props = $props();
 
+	let realBody = shapes.find((shape) => shape.id == body.id);
+
 	let xPosInput: HTMLInputElement;
 	let yPosInput: HTMLInputElement;
 
@@ -106,13 +108,45 @@
 
 		modalStore.trigger(editingModalSettings);
 	}
+
+	let flashing = $state(realBody?.plugin.showCharge);
+
+	$effect(() => {
+		shapes.forEach((shape: Matter.Body) => {
+			if (shape.id == body.id) {
+				shape.plugin.showCharge = flashing;
+			}
+		});
+	});
 </script>
 
 <div class="variant-ghost-secondary card-hover w-full flex-shrink-0 p-6" transition:slide>
 	<!-- Title and Color -->
 	<div class="flex items-center justify-between">
 		<h3 class="h3 pb-3">{body.name}</h3>
-		<input type="color" class="input" value={body.fillStyle} oninput={colorChange} />
+		<div class="flex items-center gap-5">
+			<button
+				class="btn-icon {flashing ? 'variant-filled animate-pulse' : ''}"
+				onclick={() => (flashing = !flashing)}
+				aria-label="Flash Position"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+					/>
+				</svg>
+			</button>
+			<input type="color" class="input" value={body.fillStyle} oninput={colorChange} />
+		</div>
 	</div>
 
 	<hr class="my-3" />

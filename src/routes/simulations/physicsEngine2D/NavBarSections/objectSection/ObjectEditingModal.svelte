@@ -27,7 +27,9 @@
 	let body = shapes.find((value) => value.id == bodyID) as Matter.Body;
 
 	let options: Matter.IChamferableBodyDefinition = $state({
-		plugin: { name: body?.plugin.name },
+		plugin: {
+			name: body?.plugin.name
+		},
 		label: body.label,
 		angle: Math.round(body.angle),
 		friction: body.friction,
@@ -66,6 +68,13 @@
 			: parseInt(getPartsBeforeAndAfterLetter(body.mass.toExponential(1), 'e').after)
 	);
 
+	let chargeCoefficent = $state(
+		parseInt(getPartsBeforeAndAfterLetter(body.plugin.charge.toExponential(1), 'e').before)
+	);
+	let chargeExponent = $state(
+		parseInt(getPartsBeforeAndAfterLetter(body.plugin.charge.toExponential(1), 'e').after)
+	);
+
 	let density = $derived.by(() => {
 		let mass = massCoefficent * Math.pow(10, massExponent);
 
@@ -80,6 +89,7 @@
 		let index = shapes.findIndex((value) => value.id == bodyID);
 
 		shapes[index].plugin.name = options.plugin.name;
+		shapes[index].plugin.charge = chargeCoefficent * Math.pow(10, chargeExponent);
 
 		Matter.Body.setPosition(shapes[index], { x: position.x, y: position.y });
 		Matter.Body.setAngle(shapes[index], options.angle as number);
@@ -313,6 +323,31 @@
 					></div>
 				</div>
 			</div>
+		</MultipleInputsContainer>
+
+		<!-- Charge Propeties -->
+		<MultipleInputsContainer title="Charge">
+			{#snippet customSideText()}
+				<p>{chargeCoefficent} × 10<sup>{chargeExponent}</sup></p>
+			{/snippet}
+
+			<FancySlider
+				text="Charge Coefficent"
+				bind:value={chargeCoefficent}
+				min="-9.9"
+				max="9.9"
+				step="0.1"
+				description="The Coefficent of the charge in Scientific notation"
+			/>
+
+			<FancySlider
+				text="Charge Exponent"
+				bind:value={chargeExponent}
+				min="-15"
+				max="15"
+				step="1"
+				description="The Exponent of the charge in Scientific notation"
+			/>
 		</MultipleInputsContainer>
 
 		<!-- Render Properties -->
