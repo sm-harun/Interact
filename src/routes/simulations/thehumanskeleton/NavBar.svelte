@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="variant-glass-surface absolute right-0 top-1/2 h-[90%] w-[45rem] -translate-y-1/2 overflow-visible rounded-bl-3xl rounded-tl-3xl transition duration-1000 ease-in-out {navBarStatus
+	class="variant-glass-surface absolute right-0 top-1/2 h-[90%] w-[20rem] -translate-y-1/2 overflow-visible rounded-bl-3xl rounded-tl-3xl transition duration-1000 ease-in-out sm:w-[30rem] xl:w-[45rem] {navBarStatus
 		? ''
 		: 'translate-x-full'}"
 >

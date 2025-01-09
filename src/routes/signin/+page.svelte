@@ -74,7 +74,7 @@
 			</label>
 			<label class="label">
 				<span>Password: </span>
-				<input class="input" type="text" placeholder="password" bind:value={password} />
+				<input class="input" type="password" placeholder="password" bind:value={password} />
 			</label>
 			<button class="variant-filled btn" onclick={signInWithEmail}>Sign In</button>
 			<a href="/signup" class="anchor text-sm">I don't have an account?</a>

@@ -78,7 +78,7 @@
 			</label>
 			<label class="label">
 				<span>Password: </span>
-				<input class="input" type="text" placeholder="password" bind:value={password} />
+				<input class="input" type="password" placeholder="password" bind:value={password} />
 			</label>
 			<label class="label">
 				<span>Username: </span>

@@ -81,7 +81,9 @@
 			</svg>
 		</button>
 		{#if data.params.lesson !== undefined}
-			<h1 class="text-primary-800-100-token px-5 text-3xl font-bold">{data.params.lesson}</h1>
+			<h1 class="text-primary-800-100-token truncate px-5 text-3xl font-bold">
+				{data.params.lesson}
+			</h1>
 
 			<SmallScreenSectionButtons />
 			<LargeScreenSectionButtons />
@@ -107,10 +109,8 @@
 				{:else}
 					<!-- This will show up as a welcome screen to every course -->
 					<main class="h1 mx-auto flex size-[80%] flex-col self-center overflow-hidden">
-						<h1 class="flex flex-1 flex-shrink-0 items-center justify-center">
-							Welcome to the <span class="mx-3 font-bold text-primary-500"
-								>{data.params.course}</span
-							> Course
+						<h1 class="flex flex-1 flex-shrink-0 items-center text-5xl font-bold text-primary-500">
+							{data.params.course}
 						</h1>
 						<h3 class="h2 flex-shrink-0 py-5">Lessons in this course:</h3>
 						<ul
