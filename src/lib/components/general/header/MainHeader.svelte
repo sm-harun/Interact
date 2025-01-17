@@ -32,18 +32,16 @@
 	let slidderPosition = $state(false);
 
 	let routeState = $state($page.url.pathname);
-
-	$effect(() => {
-		// routeState = $page.url.pathname;
-	});
 </script>
 
 <header
-	class="{showMainRoutes ? '36 h-24' : 'h-24'} {slidderPosition && showSlidder
+	class="{showMainRoutes ? 'h-36 xl:h-24' : 'h-24'} {slidderPosition && showSlidder
 		? '-translate-y-full'
 		: ''} header-shadow sticky top-0 z-40 flex w-screen flex-shrink-0 flex-col transition duration-500"
 >
-	<section class="bg-surface-100-800-token flex flex-[2_1_0] items-center justify-between p-3 px-5">
+	<section
+		class="bg-surface-100-800-token flex flex-[2_1_0] items-center justify-between p-3 lg:px-2 xl:px-5"
+	>
 		<div class="flex items-center justify-between gap-4 pl-4">
 			{#if showBackButton}
 				<button onclick={goBack} aria-label="Back Button">
@@ -62,7 +60,9 @@
 					</svg>
 				</button>
 			{/if}
-			<h1 class="text-primary-800-100-token flex items-center text-3xl font-bold lg:text-5xl">
+			<h1
+				class="text-primary-800-100-token flex items-center text-3xl font-bold sm:text-4xl xl:text-5xl"
+			>
 				{title}
 			</h1>
 		</div>
@@ -86,8 +86,8 @@
 	<!-- Main Routes -->
 	{#if showMainRoutes}
 		<section
-			class="header-shadow bg-surface-100-800-token absolute left-1/2 top-full -z-10 flex flex-[2_1_0] -translate-x-1/2 items-center justify-around
-      overflow-x-auto p-4 px-10 text-xl rounded-bl-container-token rounded-br-container-token"
+			class="header-shadow bg-surface-100-800-token -z-10 flex flex-[2_1_0] items-center justify-around overflow-x-auto px-5 text-xl xl:absolute
+      xl:left-1/2 xl:top-full xl:-translate-x-1/2 xl:p-4 xl:px-10 xl:rounded-bl-container-token xl:rounded-br-container-token"
 		>
 			<ol class="flex gap-4">
 				<li class="crumb">

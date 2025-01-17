@@ -19,11 +19,11 @@
 </script>
 
 <div
-	class="relative flex h-full flex-[2_1_0] flex-col border-t-2 border-primary-500 xl:flex-1 xl:border-l-2 xl:border-t-0"
+	class="relative flex h-full flex-[2_1_0] flex-col border-t-2 border-surface-300 xl:flex-1 xl:border-l-2 xl:border-t-0 dark:border-surface-600"
 >
 	{#if inputTitle !== null}
 		<input
-			class="input h1 h-24 flex-shrink-0 rounded-none border-none !bg-transparent px-10 md:h-40"
+			class="input h1 h-24 flex-shrink-0 rounded-none border-none !bg-transparent px-10 md:h-40 xl:mt-8"
 			bind:value={inputTitle}
 		/>
 		<hr class="mx-4 mb-8" />
