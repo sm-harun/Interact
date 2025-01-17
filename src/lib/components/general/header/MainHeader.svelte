@@ -30,32 +30,20 @@
 	}
 
 	let slidderPosition = $state(false);
+
+	let routeState = $state($page.url.pathname);
+
+	$effect(() => {
+		// routeState = $page.url.pathname;
+	});
 </script>
 
 <header
-	class="{showMainRoutes ? 'h-36' : 'h-24'} {slidderPosition && showSlidder
+	class="{showMainRoutes ? '36 h-24' : 'h-24'} {slidderPosition && showSlidder
 		? '-translate-y-full'
-		: ''} header-shadow bg-surface-100-800-token sticky top-0 z-40 flex w-screen flex-shrink-0 flex-col transition duration-500"
+		: ''} header-shadow sticky top-0 z-40 flex w-screen flex-shrink-0 flex-col transition duration-500"
 >
-	{#if showSlidder}
-		<button
-			class="bg-surface-200-700-token absolute right-64 top-full rounded-b-xl px-8 py-3"
-			aria-label="slide up the header"
-			onclick={() => (slidderPosition = !slidderPosition)}
-		>
-			<svg
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-				class="size-6 {slidderPosition ? '' : 'rotate-180'} transition"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-			</svg>
-		</button>
-	{/if}
-
-	<section class="flex flex-[2_1_0] items-center justify-between p-3">
+	<section class="bg-surface-100-800-token flex flex-[2_1_0] items-center justify-between p-3 px-5">
 		<div class="flex items-center justify-between gap-4 pl-4">
 			{#if showBackButton}
 				<button onclick={goBack} aria-label="Back Button">
@@ -95,18 +83,22 @@
 		</nav>
 	</section>
 
+	<!-- Main Routes -->
 	{#if showMainRoutes}
-		<section class="flex flex-[2_1_0] items-center overflow-x-auto px-4">
+		<section
+			class="header-shadow bg-surface-100-800-token absolute left-1/2 top-full -z-10 flex flex-[2_1_0] -translate-x-1/2 items-center justify-around
+      overflow-x-auto p-4 px-10 text-xl rounded-bl-container-token rounded-br-container-token"
+		>
 			<ol class="flex gap-4">
 				<li class="crumb">
 					<a
 						href="/home"
-						class="relative grid place-items-center overflow-visible text-lg transition hover:text-secondary-500"
+						class="relative grid place-items-center overflow-visible transition hover:text-secondary-500"
 					>
 						<span>Home</span>
-						{#if $page.url.pathname === '/home'}
+						{#if routeState === '/home'}
 							<div
-								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
+								class="bg-primary-500-400-token absolute top-full -z-10 h-[3px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -116,11 +108,11 @@
 				<li class="crumb">
 					<a
 						href="/courses"
-						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
+						class="relative grid place-items-center transition hover:text-secondary-500"
 						><span>Courses</span>
-						{#if $page.url.pathname === '/courses'}
+						{#if routeState === '/courses'}
 							<div
-								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
+								class="bg-primary-500-400-token absolute top-full -z-10 h-[3px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -130,11 +122,11 @@
 				<li class="crumb">
 					<a
 						href="/notes"
-						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
+						class="relative grid place-items-center transition hover:text-secondary-500"
 						><span>Notes</span>
-						{#if $page.url.pathname === '/notes'}
+						{#if routeState === '/notes'}
 							<div
-								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
+								class="bg-primary-500-400-token absolute top-full -z-10 h-[3px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -144,11 +136,11 @@
 				<li class="crumb">
 					<a
 						href="/tests"
-						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
+						class="relative grid place-items-center transition hover:text-secondary-500"
 						><span>Tests</span>
-						{#if $page.url.pathname === '/tests'}
+						{#if routeState === '/tests'}
 							<div
-								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
+								class="bg-primary-500-400-token absolute top-full -z-10 h-[3px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -158,11 +150,11 @@
 				<li class="crumb">
 					<a
 						href="/simulations"
-						class="relative grid place-items-center text-lg transition hover:text-secondary-500"
+						class="relative grid place-items-center transition hover:text-secondary-500"
 						><span>Simulations</span>
-						{#if $page.url.pathname === '/simulations'}
+						{#if routeState === '/simulations'}
 							<div
-								class="bg-primary-500-400-token absolute bottom-0 -z-10 h-[1px] w-full rounded-container-token"
+								class="bg-primary-500-400-token absolute top-full -z-10 h-[3px] w-full rounded-container-token"
 								transition:slide
 							></div>
 						{/if}
@@ -170,6 +162,25 @@
 				</li>
 			</ol>
 		</section>
+	{/if}
+
+	<!-- Slidder Button -->
+	{#if showSlidder}
+		<button
+			class="bg-surface-200-700-token absolute right-64 top-full rounded-b-xl px-8 py-3"
+			aria-label="slide up the header"
+			onclick={() => (slidderPosition = !slidderPosition)}
+		>
+			<svg
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="size-6 {slidderPosition ? '' : 'rotate-180'} transition"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+			</svg>
+		</button>
 	{/if}
 </header>
 
