@@ -25,9 +25,15 @@
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-	import { initializeStores, Modal, Toast } from '@skeletonlabs/skeleton';
+	import {
+		initializeStores,
+		Modal,
+		Toast,
+		modeCurrent,
+		setModeCurrent
+	} from '@skeletonlabs/skeleton';
 
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { setTheme } from '$lib/stores/themes';
 	import AddSectionPrompt from '$lib/components/create/popups/AddSectionPrompt.svelte';
 	import DictionaryPopup from '$lib/components/courses/Sections/DictionaryPopup.svelte';
@@ -36,6 +42,10 @@
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
+
+	onMount(() => {
+		setModeCurrent($modeCurrent);
+	});
 
 	let { children }: Props = $props();
 

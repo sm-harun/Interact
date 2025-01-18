@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { ListBox, ListBoxItem, LightSwitch } from '@skeletonlabs/skeleton';
 
 	import { fly } from 'svelte/transition';
@@ -16,8 +14,7 @@
 	let currentTheme: Theme = $state($theme);
 	let popupElement: HTMLDivElement = $state();
 
-	// Updates the theme store.
-	run(() => {
+	$effect(() => {
 		if (getAuth().currentUser) {
 			updateTheme(currentTheme);
 		} else {
