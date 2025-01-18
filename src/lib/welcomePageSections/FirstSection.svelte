@@ -83,18 +83,20 @@
 <section class="flex flex-1">
 	<div class="flex h-full w-full flex-col py-[15%] xl:w-1/2">
 		<!-- Title -->
-		<h1 class="intro-title observe h1 text-6xl font-bold xl:text-7xl 2xl:text-9xl">Insight</h1>
+		<h1 class="intro-title observe h1 text-4xl font-bold text-primary-500 sm:text-5xl lg:text-7xl">
+			Insight
+		</h1>
 
 		<!-- Quotes -->
 		<h2
-			class="intro-title observe h2 mt-3 text-xl font-bold text-primary-500 xl:text-3xl 2xl:text-5xl"
+			class="intro-title observe h2 text-xl font-bold text-secondary-500 sm:text-2xl lg:mt-3 lg:text-3xl"
 		>
 			Interact, Innovate, Inspire!
 		</h2>
 
 		<!-- Description -->
 		<p
-			class="intro-text observe text-surface-600-300-token my-10 max-w-[90%] text-base xl:text-lg 2xl:text-2xl"
+			class="intro-text observe text-surface-600-300-token my-10 max-w-[100%] text-sm xl:text-base 2xl:text-xl"
 		>
 			"An interactive platform designed to support your learning and development. Explore a wide
 			range of resources to deepen your knowledge, discover new topics, and advance your skills at
@@ -104,7 +106,7 @@
 		<!-- Sign up button -->
 		<div class="intro-button observe">
 			<button
-				class="variant-filled-surface btn rounded-full text-base xl:px-5 xl:py-2 xl:text-lg 2xl:px-10 2xl:py-5 2xl:text-xl"
+				class="variant-filled-surface btn rounded-full text-base 2xl:text-lg"
 				onclick={goToCourses}>Go To Courses</button
 			>
 		</div>
