@@ -14,6 +14,8 @@
 		showMainRoutes?: boolean;
 		showBackButton?: boolean;
 		showHomeButton?: boolean;
+		showIcon?: boolean;
+		showFlagIcon?: boolean;
 		showSlidder?: boolean;
 	}
 
@@ -22,6 +24,8 @@
 		showMainRoutes = true,
 		showBackButton = false,
 		showHomeButton = false,
+		showIcon = false,
+		showFlagIcon = false,
 		showSlidder = false
 	}: Props = $props();
 
@@ -59,6 +63,33 @@
 						/>
 					</svg>
 				</button>
+			{/if}
+			{#if showIcon}
+				<div>
+					<svg viewBox="0 0 100 100" fill="none" class="size-12" xmlns="http://www.w3.org/2000/svg">
+						<circle
+							cx="50"
+							cy="50"
+							r="25"
+							stroke-width="5"
+							stroke={showFlagIcon ? 'red' : 'currentColor'}
+						/>
+						<circle
+							cx="50"
+							cy="50"
+							r="35"
+							stroke-width="5"
+							stroke={showFlagIcon ? 'yellow' : 'currentColor'}
+						/>
+						<circle
+							cx="50"
+							cy="50"
+							r="45"
+							stroke-width="5"
+							stroke={showFlagIcon ? 'green' : 'currentColor'}
+						/>
+					</svg>
+				</div>
 			{/if}
 			<h1
 				class="text-primary-800-100-token flex items-center text-3xl font-bold sm:text-4xl xl:text-5xl"

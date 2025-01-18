@@ -4,7 +4,7 @@
 </script>
 
 <div class="flex h-screen w-screen flex-col">
-	<MainHeader showMainRoutes={false} title={'Insight'} />
+	<MainHeader showMainRoutes={false} title={'Insight'} showIcon={true} />
 	<main class="flex flex-grow px-[10%]">
 		<FirstSection />
 	</main>

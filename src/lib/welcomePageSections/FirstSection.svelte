@@ -83,7 +83,9 @@
 <section class="flex flex-1">
 	<div class="flex h-full w-full flex-col py-[15%] xl:w-1/2">
 		<!-- Title -->
-		<h1 class="intro-title observe h1 text-4xl font-bold text-primary-500 sm:text-5xl lg:text-7xl">
+		<h1
+			class="intro-title observe h1 flex items-center gap-4 text-4xl font-bold text-primary-500 sm:text-5xl lg:text-7xl"
+		>
 			Insight
 		</h1>
 
