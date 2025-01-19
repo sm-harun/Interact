@@ -7,16 +7,27 @@
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 
 	let loaded = $state(false);
+
+	let settings: HumanSkeleonSettings = $state({
+		cameraPosition: [0, 0, 2.5],
+		watchTarget: [0, 0, 0],
+		directionLightPosition: [3, -10, 0],
+		directionLightIntensity: 1,
+		ambientLightIntensity: 0.2,
+		lightColorSettings: true,
+		directionLightColor: '#FFFFFF',
+		ambientLightColor: '#FFFFFF'
+	});
 </script>
 
 <div class="flex h-screen flex-col">
 	<MainHeader showBackButton={true} showMainRoutes={false} showSlidder={true} />
 	<main class="absolute size-full flex-grow">
 		<Canvas>
-			<Scene bind:loaded />
+			<Scene bind:loaded bind:settings />
 		</Canvas>
 
-		<NavBar />
+		<NavBar bind:settings />
 
 		{#if !loaded}
 			<div

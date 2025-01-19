@@ -20,8 +20,6 @@
 			object.castShadow = true;
 			object.receiveShadow = true;
 
-			console.log(object);
-
 			scene.add(object);
 
 			loaded = true;
