@@ -15,7 +15,7 @@
 	class="flex w-auto flex-col gap-2 border-[0.1rem] border-surface-500 bg-surface-200/50 p-5 rounded-container-token dark:bg-surface-700/50"
 >
 	<div class="flex items-center justify-between">
-		<h2 class="h2 ml-5">{title}</h2>
+		<h3 class="h3 ml-5">{title}</h3>
 		<div>
 			<button class="btn-icon" aria-label="Adjust Camera">
 				<svg
@@ -39,7 +39,7 @@
 				</svg>
 			</button>
 			<button
-				class="btn-icon {flashing ? 'variant-filled' : ''}"
+				class="btn-icon {flashing ? 'variant-filled animate-pulse' : ''}"
 				onclick={() => (flashing = !flashing)}
 				aria-label="Flash Position"
 			>

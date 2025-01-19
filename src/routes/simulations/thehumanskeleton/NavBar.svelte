@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="variant-glass-surface absolute right-0 top-1/2 h-[90%] w-[20rem] -translate-y-1/2 overflow-visible rounded-bl-3xl rounded-tl-3xl transition duration-1000 ease-in-out sm:w-[30rem] xl:w-[45rem] {navBarStatus
+	class="variant-glass-surface absolute right-0 top-1/2 h-[90%] w-[25rem] -translate-y-1/2 overflow-visible rounded-bl-3xl rounded-tl-3xl transition duration-1000 ease-in-out sm:w-[30rem] md:w-[35rem] {navBarStatus
 		? ''
 		: 'translate-x-full'}"
 >
@@ -33,7 +33,7 @@
 	</button>
 
 	<div class="size-full overflow-y-auto p-4 rounded-container-token">
-		<h1 class="h1 grid w-full place-items-center p-5 py-10">The Human Skeleton</h1>
+		<h2 class="h2 grid w-full place-items-center p-5 py-5">The Human Skeleton</h2>
 		<div class="flex flex-col gap-10 rounded-container-token">
 			{#await fetchSkeletonData() then data}
 				{#each data.data as part}

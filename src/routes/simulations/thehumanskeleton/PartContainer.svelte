@@ -16,7 +16,7 @@
 	class="bg-surface-100-800-token flex w-auto flex-col gap-2 border-2 border-surface-500 p-5 rounded-container-token"
 >
 	<div class="flex items-center justify-between">
-		<h4 class="h3 ml-5">{title}</h4>
+		<h4 class="h4 ml-5">{title}</h4>
 		<div>
 			<button class="btn-icon" aria-label="Adjust Camera">
 				<svg
@@ -63,7 +63,9 @@
 	</div>
 	<hr class="my-3" />
 
-	{@render children?.()}
+	<p class="text-sm">
+		{@render children?.()}
+	</p>
 
 	<hr class="my-3" />
 
