@@ -65,7 +65,7 @@
 	intensity={settings.directionLightIntensity}
 />
 
-<!-- <HumanSkeletonModel position={[0, -1, 0]} /> -->
-{#if startLoading}
-	<HumanSkeletonModel2 bind:loaded />
-{/if}
+<HumanSkeletonModel position={[0, -1, 0]} />
+<!-- {#if startLoading} -->
+<!-- 	<HumanSkeletonModel2 bind:loaded /> -->
+<!-- {/if} -->
