@@ -90,7 +90,7 @@
 		<div class="relative size-full overflow-hidden">
 			<!-- Information Section -->
 			<div
-				class="absolute right-0 top-0 flex size-full flex-col gap-10 overflow-y-auto rounded-container-token"
+				class="absolute right-0 top-0 flex size-full flex-col gap-10 overflow-y-auto pb-20 rounded-container-token"
 				style={`right: ${$leftPadding}%`}
 			>
 				{#await fetchSkeletonData() then data}
