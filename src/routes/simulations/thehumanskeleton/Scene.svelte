@@ -5,7 +5,7 @@
 	import { theme } from '$lib/stores/themes';
 	import { getCurrentThemeColor } from '$lib/utils';
 	import { modeUserPrefers } from '@skeletonlabs/skeleton';
-	import HumanSkeletonModel2 from './HumanSkeletonModel2.svelte';
+	// import HumanSkeletonModel2 from './HumanSkeletonModel2.svelte';
 	import { onMount } from 'svelte';
 	import { AmbientLight } from 'three';
 
@@ -65,7 +65,7 @@
 	intensity={settings.directionLightIntensity}
 />
 
-<!-- <HumanSkeletonModel position={[0, -1, 0]} /> -->
-{#if startLoading}
-	<HumanSkeletonModel2 bind:loaded />
-{/if}
+<HumanSkeletonModel position={[0, -1, 0]} />
+<!-- {#if startLoading} -->
+<!-- 	<HumanSkeletonModel2 bind:loaded /> -->
+<!-- {/if} -->

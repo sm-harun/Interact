@@ -6,7 +6,7 @@
 	import Scene from './Scene.svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 
-	let loaded = $state(false);
+	let loaded = $state(true);
 
 	let settings: HumanSkeleonSettings = $state({
 		cameraPosition: [0, 0, 2.5],
