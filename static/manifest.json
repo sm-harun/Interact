@@ -1,0 +1,16 @@
+{
+  "name": "Insight Learning",
+  "short_name": "Insight",
+  "description": "An interactive platform for learning that includes every thing a student needs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "icons": [
+    {
+      "src": "./icons/page-icon-249x249.png",
+      "sizes": "249x249",
+      "type": "image/png"
+    }
+  ]
+}
