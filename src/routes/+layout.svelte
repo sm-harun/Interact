@@ -17,7 +17,7 @@
 	import { app } from '$lib/firebase';
 	import { setUser } from '$lib/stores/credentials';
 
-	import { doc, getDoc } from 'firebase/firestore';
+	import { doc, getDoc, disableNetwork, enableNetwork } from 'firebase/firestore';
 	import { DataBase } from '$lib/firebase';
 
 	// Floating UI for Popups
@@ -67,6 +67,14 @@
 		} else {
 			setUser(null);
 		}
+	});
+
+	window.addEventListener('online', async () => {
+		await enableNetwork(DataBase);
+	});
+
+	window.addEventListener('offline', async () => {
+		await disableNetwork(DataBase);
 	});
 
 	onDestroy(() => {
