@@ -66,28 +66,86 @@
 			{/if}
 			{#if showIcon}
 				<div>
-					<svg viewBox="0 0 100 100" fill="none" class="size-12" xmlns="http://www.w3.org/2000/svg">
+					<svg viewBox="0 0 295 295" class="size-16" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="147" cy="143" r="101" stroke="url(#paint0_linear_0_1)" stroke-width="10" />
 						<circle
-							cx="50"
-							cy="50"
-							r="25"
-							stroke-width="5"
-							stroke={showFlagIcon ? 'red' : 'currentColor'}
+							cx="147.5"
+							cy="143.5"
+							r="74.5"
+							transform="rotate(-180 147.5 143.5)"
+							stroke="url(#paint1_linear_0_1)"
+							stroke-width="10"
 						/>
 						<circle
-							cx="50"
-							cy="50"
-							r="35"
-							stroke-width="5"
-							stroke={showFlagIcon ? 'yellow' : 'currentColor'}
+							cx="147.5"
+							cy="143.5"
+							r="48.5"
+							stroke="url(#paint2_linear_0_1)"
+							stroke-width="10"
 						/>
-						<circle
-							cx="50"
-							cy="50"
-							r="45"
-							stroke-width="5"
-							stroke={showFlagIcon ? 'green' : 'currentColor'}
-						/>
+						<defs>
+							<filter
+								id="filter0_d_0_1"
+								x="0"
+								y="0"
+								width="295"
+								height="295"
+								filterUnits="userSpaceOnUse"
+								color-interpolation-filters="sRGB"
+							>
+								<feFlood flood-opacity="0" result="BackgroundImageFix" />
+								<feColorMatrix
+									in="SourceAlpha"
+									type="matrix"
+									values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+									result="hardAlpha"
+								/>
+								<feOffset dy="4" />
+								<feGaussianBlur stdDeviation="2" />
+								<feComposite in2="hardAlpha" operator="out" />
+								<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+								<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1" />
+								<feBlend
+									mode="normal"
+									in="SourceGraphic"
+									in2="effect1_dropShadow_0_1"
+									result="shape"
+								/>
+							</filter>
+							<linearGradient
+								id="paint0_linear_0_1"
+								x1="147"
+								y1="37"
+								x2="147"
+								y2="249"
+								gradientUnits="userSpaceOnUse"
+							>
+								<stop style="stop-color: rgb(var(--color-primary-500));" />
+								<stop offset="1" style="stop-color: rgb(var(--color-surface-800));" />
+							</linearGradient>
+							<linearGradient
+								id="paint1_linear_0_1"
+								x1="147.5"
+								y1="64"
+								x2="147.5"
+								y2="223"
+								gradientUnits="userSpaceOnUse"
+							>
+								<stop style="stop-color: rgb(var(--color-primary-500));" />
+								<stop offset="1" style="stop-color: rgb(var(--color-surface-800));" />
+							</linearGradient>
+							<linearGradient
+								id="paint2_linear_0_1"
+								x1="147.5"
+								y1="90"
+								x2="147.5"
+								y2="197"
+								gradientUnits="userSpaceOnUse"
+							>
+								<stop style="stop-color: rgb(var(--color-primary-500));" />
+								<stop offset="1" style="stop-color: rgb(var(--color-surface-800));" />
+							</linearGradient>
+						</defs>
 					</svg>
 				</div>
 			{/if}
