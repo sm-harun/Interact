@@ -3,9 +3,9 @@
 	import FirstSection from '$lib/welcomePageSections/FirstSection.svelte';
 </script>
 
-<div class="flex h-screen w-screen flex-col">
+<div class="flex h-screen w-screen flex-col overflow-hidden">
 	<MainHeader showMainRoutes={false} title={'Insight'} showIcon={true} />
-	<main class="flex flex-grow px-[10%]">
+	<main class="flex flex-grow overflow-hidden px-[10%]">
 		<FirstSection />
 	</main>
 </div>

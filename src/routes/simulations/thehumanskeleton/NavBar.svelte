@@ -56,7 +56,7 @@
 	</button>
 
 	<div class="size-full overflow-hidden p-4 rounded-container-token">
-		<div class="flex justify-around">
+		<div class="flex items-center justify-around">
 			<h2 class="h2 grid w-full place-items-center p-5 py-5">The Human Skeleton</h2>
 			<div class="grid place-items-center">
 				<button
@@ -82,6 +82,24 @@
 							stroke-linejoin="round"
 							d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
 						/>
+					</svg>
+				</button>
+			</div>
+
+			<div>
+				<button
+					class="btn-icon"
+					aria-label="hide navbar"
+					onclick={() => (navBarStatus = !navBarStatus)}
+				>
+					<svg
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="size-6 transition {navBarStatus ? 'rotate-180' : ''}"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 					</svg>
 				</button>
 			</div>
