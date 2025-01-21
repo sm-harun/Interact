@@ -8,6 +8,7 @@
 	import ThemeToggler from './ThemesButton.svelte';
 	import TopIcon from './TopIcon.svelte';
 	import HomeButton from './HomeButton.svelte';
+	import { modeUserPrefers } from '@skeletonlabs/skeleton';
 
 	interface Props {
 		title?: any;
@@ -121,7 +122,10 @@
 								gradientUnits="userSpaceOnUse"
 							>
 								<stop style="stop-color: rgb(var(--color-primary-500));" />
-								<stop offset="1" style="stop-color: rgb(var(--color-surface-800));" />
+								<stop
+									offset="1"
+									class={$modeUserPrefers ? 'stop-color-offset-light' : 'stop-color-offset-dark'}
+								/>
 							</linearGradient>
 							<linearGradient
 								id="paint1_linear_0_1"
@@ -132,7 +136,10 @@
 								gradientUnits="userSpaceOnUse"
 							>
 								<stop style="stop-color: rgb(var(--color-primary-500));" />
-								<stop offset="1" style="stop-color: rgb(var(--color-surface-800));" />
+								<stop
+									offset="1"
+									class={$modeUserPrefers ? 'stop-color-offset-light' : 'stop-color-offset-dark'}
+								/>
 							</linearGradient>
 							<linearGradient
 								id="paint2_linear_0_1"
@@ -143,7 +150,10 @@
 								gradientUnits="userSpaceOnUse"
 							>
 								<stop style="stop-color: rgb(var(--color-primary-500));" />
-								<stop offset="1" style="stop-color: rgb(var(--color-surface-800));" />
+								<stop
+									offset="1"
+									class={$modeUserPrefers ? 'stop-color-offset-light' : 'stop-color-offset-dark'}
+								/>
 							</linearGradient>
 						</defs>
 					</svg>
@@ -276,5 +286,13 @@
 <style>
 	.header-shadow {
 		box-shadow: 0 -0.5rem 2rem 0.1rem black;
+	}
+
+	.stop-color-offset-light {
+		stop-color: rgb(var(--color-surface-100));
+	}
+
+	.stop-color-offset-dark {
+		stop-color: rgb(var(--color-surface-800));
 	}
 </style>

@@ -34,11 +34,12 @@
 	} from '@skeletonlabs/skeleton';
 
 	import { onDestroy, onMount } from 'svelte';
-	import { setTheme } from '$lib/stores/themes';
+	import { setTheme, theme } from '$lib/stores/themes';
 	import AddSectionPrompt from '$lib/components/create/popups/AddSectionPrompt.svelte';
 	import DictionaryPopup from '$lib/components/courses/Sections/DictionaryPopup.svelte';
 
 	import 'katex/dist/katex.min.css';
+	import { getCurrentThemeColor } from '$lib/utils';
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
@@ -75,6 +76,19 @@
 
 	window.addEventListener('offline', async () => {
 		await disableNetwork(DataBase);
+	});
+
+	// This will change the meta tag based on the theme and dark mode for updating top and bottom bar for PWA users
+	$effect(() => {
+		$theme;
+
+		const tone = $modeCurrent ? '200' : '700';
+		const color = getComputedStyle(document.body).getPropertyValue(`--color-surface-${tone}`);
+
+		const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
+		if (themeColorMetaTag) {
+			themeColorMetaTag.setAttribute('content', `rgb(${color})`);
+		}
 	});
 
 	onDestroy(() => {

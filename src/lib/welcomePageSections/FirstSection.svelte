@@ -71,10 +71,6 @@
 
 	const interval = setInterval(toogleOpacity, 5000);
 
-	$effect(() => {
-		console.log($modeUserPrefers);
-	});
-
 	onDestroy(() => {
 		clearInterval(interval);
 	});
