@@ -12,7 +12,7 @@
 </script>
 
 <button
-	class="btn relative text-xl rounded-container-token hover:bg-primary-500/30"
+	class="flex items-center gap-2 rounded-full p-3 sm:btn hover:bg-primary-500/30 active:scale-90"
 	bind:this={button}
 >
 	<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

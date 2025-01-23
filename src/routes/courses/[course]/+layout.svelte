@@ -50,15 +50,10 @@
 </Drawer>
 
 <main class="flex h-screen w-screen flex-col">
-	<MainHeader
-		title={data.params.course}
-		showMainRoutes={false}
-		showBackButton={true}
-		showHomeButton={true}
-	/>
+	<MainHeader showMainRoutes={false} showBackButton={true} />
 	<hr />
 	<header
-		class="header-shadow bg-surface-100-800-token sticky top-1 z-30 flex h-20 w-screen flex-shrink-0 items-center justify-start gap-2 p-9 px-3 pr-5"
+		class="header-shadow bg-surface-100-800-token sticky top-1 z-30 flex w-screen flex-shrink-0 items-center justify-start gap-1 p-2 lg:py-4 2xl:py-2"
 	>
 		<button
 			class="btn-icon block lg:hidden"
@@ -71,7 +66,7 @@
 				viewBox="0 0 24 24"
 				stroke-width="1.5"
 				stroke="currentColor"
-				class="size-7"
+				class="size-6"
 			>
 				<path
 					stroke-linecap="round"
@@ -81,7 +76,9 @@
 			</svg>
 		</button>
 		{#if data.params.lesson !== undefined}
-			<h1 class="text-primary-800-100-token truncate px-5 text-3xl font-bold">
+			<h1
+				class="text-primary-800-100-token truncate text-xl font-bold sm:text-2xl lg:px-5 lg:text-3xl"
+			>
 				{data.params.lesson}
 			</h1>
 

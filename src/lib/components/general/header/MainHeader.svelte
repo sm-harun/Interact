@@ -16,7 +16,6 @@
 		showBackButton?: boolean;
 		showHomeButton?: boolean;
 		showIcon?: boolean;
-		showFlagIcon?: boolean;
 		showSlidder?: boolean;
 	}
 
@@ -26,7 +25,6 @@
 		showBackButton = false,
 		showHomeButton = false,
 		showIcon = false,
-		showFlagIcon = false,
 		showSlidder = false
 	}: Props = $props();
 
@@ -40,14 +38,14 @@
 </script>
 
 <header
-	class="{showMainRoutes ? 'h-36 xl:h-24' : 'h-24'} {slidderPosition && showSlidder
+	class="{showMainRoutes ? 'h-32 xl:h-24' : 'h-20 lg:h-24'} {slidderPosition && showSlidder
 		? '-translate-y-full'
 		: ''} header-shadow sticky top-0 z-40 flex w-screen flex-shrink-0 flex-col transition duration-500"
 >
 	<section
-		class="bg-surface-100-800-token flex flex-[2_1_0] items-center justify-between p-3 lg:px-2 xl:px-5"
+		class="bg-surface-100-800-token flex flex-[2_1_0] items-center justify-between px-2 xl:px-5"
 	>
-		<div class="flex items-center justify-between gap-4 pl-4">
+		<div class="flex items-center justify-between gap-2">
 			{#if showBackButton}
 				<button onclick={goBack} aria-label="Back Button">
 					<svg
@@ -55,7 +53,7 @@
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="mr-6 size-9"
+						class="mx-2 size-7 xl:size-9"
 					>
 						<path
 							stroke-linecap="round"
@@ -160,25 +158,20 @@
 				</div>
 			{/if}
 			<h1
-				class="text-primary-800-100-token flex items-center text-3xl font-bold sm:text-4xl xl:text-5xl"
+				class="text-primary-800-100-token flex items-center text-3xl font-bold sm:text-4xl xl:text-5xl {showBackButton ||
+				showIcon
+					? ''
+					: 'px-4'}"
 			>
 				{title}
 			</h1>
 		</div>
-		<nav
-			class="flex h-full list-none items-center justify-end gap-1 text-2xl lg:justify-evenly lg:gap-2 lg:pr-4"
-		>
+		<nav class="flex list-none items-center justify-end lg:justify-evenly lg:gap-2">
 			{#if showHomeButton}
-				<li>
-					<HomeButton />
-				</li>
+				<HomeButton />
 			{/if}
-			<li>
-				<ThemeToggler />
-			</li>
-			<li>
-				<TopIcon />
-			</li>
+			<ThemeToggler />
+			<TopIcon />
 		</nav>
 	</section>
 

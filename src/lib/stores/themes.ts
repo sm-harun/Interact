@@ -20,7 +20,7 @@ export type Theme =
   | 'crimson';
 
 // Since the name of the website has not been decided it can easily be changed later.
-export const webTitle = readable<string>('Interact');
+export const webTitle = readable<string>('Insight');
 
 export const theme = writable<Theme>('crimson');
 
