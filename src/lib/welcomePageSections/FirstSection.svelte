@@ -5,8 +5,7 @@
 	import { onMount } from 'svelte';
 	import { getCurrentThemeColor } from '$lib/utils';
 	import * as THREE from 'three';
-	import { tweened } from 'svelte/motion';
-	import { elasticInOut } from 'svelte/easing';
+	import { spring } from 'svelte/motion';
 	import { onDestroy } from 'svelte';
 	import { modeUserPrefers } from '@skeletonlabs/skeleton';
 
@@ -55,9 +54,14 @@
 		goto('/courses');
 	}
 
-	const opacityValue = tweened(100, {
-		duration: 5000,
-		easing: elasticInOut
+	// const opacityValue = tweened(100, {
+	// 	duration: 5000,
+	// 	easing: elasticInOut
+	// });
+
+	const opacityValue = spring(100, {
+		stiffness: 0.4,
+		damping: 0.1
 	});
 
 	let toggle = true;
@@ -69,19 +73,19 @@
 
 	toogleOpacity();
 
-	const interval = setInterval(toogleOpacity, 5000);
+	const interval = setInterval(toogleOpacity, 8000);
 
 	onDestroy(() => {
 		clearInterval(interval);
 	});
 </script>
 
-<section class="flex flex-1 overflow-hidden">
-	<div class="flex h-full w-full flex-col overflow-hidden py-[15%] xl:w-1/2">
+<section class="flex flex-1">
+	<div
+		class="flex h-full w-full flex-col gap-5 py-[15%] text-center md:gap-1 lg:text-left xl:w-1/2"
+	>
 		<!-- Title -->
-		<h1
-			class="intro-title observe h1 flex items-center gap-4 text-4xl font-bold text-primary-500 sm:text-5xl lg:text-7xl"
-		>
+		<h1 class="intro-title observe h1 text-5xl font-bold text-primary-500 sm:text-5xl lg:text-7xl">
 			Insight
 		</h1>
 
@@ -94,7 +98,7 @@
 
 		<!-- Description -->
 		<p
-			class="intro-text observe text-surface-600-300-token my-10 max-w-[100%] text-sm xl:text-base 2xl:text-xl"
+			class="intro-text observe variant-glass text-surface-600-300-token my-10 max-w-[100%] rounded-xl p-3 text-sm xl:text-base 2xl:text-xl"
 		>
 			"An interactive platform designed to support your learning and development. Explore a wide
 			range of resources to deepen your knowledge, discover new topics, and advance your skills at
@@ -122,6 +126,7 @@
 			<T.AmbientLight position={[0, 10, 10]} intensity={$modeUserPrefers ? 2 : 0.2} />
 			<T.DirectionalLight position={[0, 10, 70]} intensity={2} />
 
+			<!-- The wireframe only mode -->
 			<T.Group>
 				<T.Mesh {rotation} castShadow receiveShadow>
 					<T.TorusKnotGeometry args={knotOptions} />
@@ -132,18 +137,9 @@
 						opacity={(100 - $opacityValue) / 100}
 					/>
 				</T.Mesh>
-
-				<T.Mesh {rotation} castShadow receiveShadow>
-					<T.TorusKnotGeometry args={knotOptions} />
-					<T.MeshStandardMaterial
-						{color}
-						side={THREE.DoubleSide}
-						transparent
-						opacity={(100 - $opacityValue) / 100}
-					/>
-				</T.Mesh>
 			</T.Group>
 
+			<!-- Standard wireframe with standard mateial mode -->
 			<T.Group>
 				<T.Mesh {rotation} castShadow receiveShadow>
 					<T.TorusKnotGeometry args={knotOptions} />
@@ -153,6 +149,15 @@
 						transparent
 						opacity={$opacityValue / 100}
 						side={THREE.DoubleSide}
+					/>
+				</T.Mesh>
+				<T.Mesh {rotation} castShadow receiveShadow>
+					<T.TorusKnotGeometry args={knotOptions} />
+					<T.MeshStandardMaterial
+						{color}
+						side={THREE.DoubleSide}
+						transparent
+						opacity={(100 - $opacityValue) / 100}
 					/>
 				</T.Mesh>
 			</T.Group>
