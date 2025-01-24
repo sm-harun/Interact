@@ -157,7 +157,7 @@ function drawLeftWall() {
 
 function drawRightWall() {
   addNewObject([
-    Bodies.rectangle(0, canvasHeight / 2, 60, canvasWidth, {
+    Bodies.rectangle(0, canvasHeight / 2, 60, canvasHeight, {
       isStatic: true,
       plugin: { name: 'Right Wall' }
     })
