@@ -276,6 +276,40 @@
 			/>
 		</MultipleInputsContainer>
 
+		<!-- Friction and Restitution -->
+		<MultipleInputsContainer title={'Friction and Restitution'}>
+			<FancySlider
+				text="Friction"
+				bind:value={options.friction}
+				min="0"
+				step="0.01"
+				max="1"
+				description="A number from 0 to 1 measuring how far the object will slide without stopping"
+			/>
+			<FancySlider
+				text="Air Resisitance"
+				bind:value={options.frictionAir}
+				min="0"
+				step="0.01"
+				max="1"
+				description="A number from 0 to 1 describing the magnitude of air resistance to the body"
+			/>
+			<FancySlider
+				text="Restitution"
+				bind:value={options.restitution}
+				min="0"
+				step="0.01"
+				max="1"
+				description="A number from 0 to 1 measuring how much energy the body will keep after collision (bounciness)"
+			/>
+			<FancySlider
+				text="Static Friction"
+				bind:value={options.frictionStatic}
+				min="0"
+				description="Measures how hard it is to start moving the object (Inertia)"
+			/>
+		</MultipleInputsContainer>
+
 		<!-- Static or Dynamic -->
 		<MultipleInputsContainer title={'Static or Dynamic'}>
 			<div class="flex">

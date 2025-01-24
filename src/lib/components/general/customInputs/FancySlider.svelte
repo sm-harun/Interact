@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { popup } from '@skeletonlabs/skeleton';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		value: number | undefined;
@@ -9,6 +10,7 @@
 		max?: string;
 		step?: string;
 		disabled?: boolean;
+		customValue?: Snippet;
 	}
 
 	let {
@@ -18,12 +20,13 @@
 		min = undefined,
 		max = undefined,
 		step = undefined,
+		customValue,
 		disabled = $bindable(false)
 	}: Props = $props();
 </script>
 
 <div
-	class="mt-2 flex flex-col gap-2"
+	class="mt-2 flex flex-1 flex-col gap-2"
 	use:popup={{
 		event: 'hover',
 		target: 'popupHover: ' + description,
@@ -32,7 +35,11 @@
 >
 	<div class="flex size-full items-end justify-between">
 		<h4 class="h4">{text}</h4>
-		<p>{value}</p>
+		{#if customValue}
+			{@render customValue()}
+		{:else}
+			<p>{value}</p>
+		{/if}
 	</div>
 	<div class="size-full">
 		<input class="input" type="range" {min} {max} {step} bind:value {disabled} />

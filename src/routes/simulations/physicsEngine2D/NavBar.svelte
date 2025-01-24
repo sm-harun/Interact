@@ -6,8 +6,11 @@
 	import StatesSection from './NavBarSections/StatesSection.svelte';
 	import WorldSettings from './NavBarSections/WorldSettings.svelte';
 
-	// Status of the navbar whether it is opened or closed
-	let navBarStatus = $state(true);
+	interface Props {
+		navBarStatus: boolean;
+	}
+
+	let { navBarStatus = $bindable() }: Props = $props();
 
 	let navSectionsStatus = tweened<number>(0, {
 		duration: 1000,
@@ -21,7 +24,7 @@
 </script>
 
 <nav
-	class="variant-glass border-surface-300-600-token absolute left-0 top-0 flex h-full w-[20rem] flex-col border-2 transition duration-1000 min-[470px]:w-[25rem] sm:w-[30rem] {navBarStatus
+	class="variant-glass border-surface-300-600-token absolute bottom-0 left-0 flex h-[90%] w-[20rem] flex-col border-2 transition duration-1000 min-[470px]:w-[25rem] sm:w-[30rem] {navBarStatus
 		? ''
 		: '-translate-x-full'}"
 >
