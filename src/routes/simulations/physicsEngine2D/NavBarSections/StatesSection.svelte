@@ -9,8 +9,8 @@
 </script>
 
 <div
-	class="absolute top-0 grid h-full w-full place-items-center border-2"
+	class="absolute top-0 grid h-full w-full place-items-center"
 	style="right: {$navSectionsStatus - 200}%"
 >
-	This is the States Section
+	States funcitons! Under Development
 </div>

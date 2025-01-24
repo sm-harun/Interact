@@ -12,7 +12,7 @@
 
 {#if $modalStore[0]}
 	<div
-		class="bg-surface-100-800-token h-[50rem] w-[40rem] overflow-y-auto p-8 rounded-container-token"
+		class="bg-surface-100-800-token h-[40rem] overflow-y-auto p-8 rounded-container-token sm:h-[50rem] sm:w-[40rem]"
 	>
 		{#if modalView == 'ObjectSelection'}
 			<div class="h-full w-full" transition:fly={{ x: -200 }}>

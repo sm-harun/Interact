@@ -102,7 +102,7 @@
 	}
 </script>
 
-<div transition:fly={{ x: 200, delay: 300 }} class="flex flex-col gap-5">
+<div transition:fly={{ x: 200, delay: 300 }} class="flex flex-col gap-5 overflow-y-scroll">
 	<div class="flex items-center justify-between">
 		<button
 			class="btn-icon"
