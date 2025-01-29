@@ -51,6 +51,7 @@
 		"@threlte/rapier": "3.0.0-next.19",
 		"dotenv": "^16.4.5",
 		"firebase": "^10.13.0",
+		"flubber": "^0.4.2",
 		"gsap": "^3.12.5",
 		"katex": "^0.16.11",
 		"marked": "^14.1.2",

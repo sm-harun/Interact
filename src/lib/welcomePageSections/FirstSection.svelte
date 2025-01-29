@@ -80,9 +80,9 @@
 	});
 </script>
 
-<section class="flex flex-1">
+<section class="sticky top-0 z-30 flex h-full w-full overflow-hidden px-[10%]">
 	<div
-		class="flex h-full w-full flex-col gap-5 py-[15%] text-center md:gap-1 lg:text-left xl:w-1/2"
+		class="z-10 flex h-full w-full flex-col gap-5 py-[15%] text-center md:gap-1 lg:text-left xl:w-1/2"
 	>
 		<!-- Title -->
 		<h1 class="intro-title observe h1 text-5xl font-bold text-primary-500 sm:text-5xl lg:text-7xl">
@@ -117,9 +117,7 @@
 	</div>
 
 	<!-- Canvas -->
-	<div
-		class="canvas-section observe absolute right-0 top-0 -z-40 size-full overflow-hidden xl:block"
-	>
+	<div class="canvas-section observe absolute right-0 top-0 size-full overflow-hidden xl:block">
 		<Canvas>
 			<T.PerspectiveCamera makeDefault position={[-70, 60, 350]} />
 

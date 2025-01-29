@@ -19,3 +19,15 @@ export function getCurrentThemeColor(
 
   return color;
 }
+
+export function easeInOut(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+export function loopEase(t) {
+  return (1 - Math.cos(t * Math.PI)) / 2;
+}
+
+export function infiniteLoopEase(t) {
+  return (Math.sin(t * Math.PI * 2) + 1) / 2;
+}
