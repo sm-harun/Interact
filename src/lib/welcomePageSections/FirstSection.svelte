@@ -54,11 +54,6 @@
 		goto('/courses');
 	}
 
-	// const opacityValue = tweened(100, {
-	// 	duration: 5000,
-	// 	easing: elasticInOut
-	// });
-
 	const opacityValue = spring(100, {
 		stiffness: 0.4,
 		damping: 0.1
@@ -80,7 +75,7 @@
 	});
 </script>
 
-<section class="sticky top-0 z-30 flex h-full w-full overflow-hidden px-[10%]">
+<section class="sticky top-0 flex h-full w-full overflow-hidden px-[10%]">
 	<div
 		class="z-10 flex h-full w-full flex-col gap-5 py-[15%] text-center md:gap-1 lg:text-left xl:w-1/2"
 	>

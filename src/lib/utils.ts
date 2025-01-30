@@ -10,14 +10,10 @@ export function getCurrentThemeColor(
   type: 'primary' | 'secondary' | 'teritiary' | 'surface' | 'success' | 'error' = 'primary',
   tone: '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' = '500'
 ) {
-  const newElement = document.createElement('span');
-  newElement.classList.add(`bg-${type}-${tone}`);
-  document.body.append(newElement);
+  let style = getComputedStyle(document.body).getPropertyValue(`--color-${type}-${tone}`);
+  style = "rgb(" + style.split(" ").join(", ") + ")";
 
-  const color = getComputedStyle(newElement).backgroundColor;
-  newElement.remove();
-
-  return color;
+  return style;
 }
 
 export function easeInOut(t: number): number {
