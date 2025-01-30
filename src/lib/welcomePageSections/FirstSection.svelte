@@ -75,7 +75,7 @@
 	});
 </script>
 
-<section class="sticky top-0 flex h-full w-full overflow-hidden px-[10%]">
+<section class="text-container flex h-full w-full overflow-hidden px-[10%]">
 	<div
 		class="z-10 flex h-full w-full flex-col gap-5 py-[15%] text-center md:gap-1 lg:text-left xl:w-1/2"
 	>
@@ -110,56 +110,57 @@
 
 		<span class="final-state sr-only">test</span>
 	</div>
-
-	<!-- Canvas -->
-	<div class="canvas-section observe absolute right-0 top-0 size-full overflow-hidden xl:block">
-		<Canvas>
-			<T.PerspectiveCamera makeDefault position={[-70, 60, 350]} />
-
-			<T.AmbientLight position={[0, 10, 10]} intensity={$modeUserPrefers ? 2 : 0.2} />
-			<T.DirectionalLight position={[0, 10, 70]} intensity={2} />
-
-			<!-- The wireframe only mode -->
-			<T.Group>
-				<T.Mesh {rotation} castShadow receiveShadow>
-					<T.TorusKnotGeometry args={knotOptions} />
-					<T.MeshBasicMaterial
-						{color}
-						wireframe={true}
-						transparent
-						opacity={(100 - $opacityValue) / 100}
-					/>
-				</T.Mesh>
-			</T.Group>
-
-			<!-- Standard wireframe with standard mateial mode -->
-			<T.Group>
-				<T.Mesh {rotation} castShadow receiveShadow>
-					<T.TorusKnotGeometry args={knotOptions} />
-					<T.MeshStandardMaterial
-						{color}
-						wireframe={true}
-						transparent
-						opacity={$opacityValue / 100}
-						side={THREE.DoubleSide}
-					/>
-				</T.Mesh>
-				<T.Mesh {rotation} castShadow receiveShadow>
-					<T.TorusKnotGeometry args={knotOptions} />
-					<T.MeshStandardMaterial
-						{color}
-						side={THREE.DoubleSide}
-						transparent
-						opacity={(100 - $opacityValue) / 100}
-					/>
-				</T.Mesh>
-			</T.Group>
-		</Canvas>
-	</div>
 </section>
+
+<!-- Canvas -->
+<div class="canvas-section observe absolute right-0 top-0 -z-10 size-full overflow-hidden xl:block">
+	<Canvas>
+		<T.PerspectiveCamera makeDefault position={[-70, 60, 350]} />
+
+		<T.AmbientLight position={[0, 10, 10]} intensity={$modeUserPrefers ? 2 : 0.2} />
+		<T.DirectionalLight position={[0, 10, 70]} intensity={2} />
+
+		<!-- The wireframe only mode -->
+		<T.Group>
+			<T.Mesh {rotation} castShadow receiveShadow>
+				<T.TorusKnotGeometry args={knotOptions} />
+				<T.MeshBasicMaterial
+					{color}
+					wireframe={true}
+					transparent
+					opacity={(100 - $opacityValue) / 100}
+				/>
+			</T.Mesh>
+		</T.Group>
+
+		<!-- Standard wireframe with standard mateial mode -->
+		<T.Group>
+			<T.Mesh {rotation} castShadow receiveShadow>
+				<T.TorusKnotGeometry args={knotOptions} />
+				<T.MeshStandardMaterial
+					{color}
+					wireframe={true}
+					transparent
+					opacity={$opacityValue / 100}
+					side={THREE.DoubleSide}
+				/>
+			</T.Mesh>
+			<T.Mesh {rotation} castShadow receiveShadow>
+				<T.TorusKnotGeometry args={knotOptions} />
+				<T.MeshStandardMaterial
+					{color}
+					side={THREE.DoubleSide}
+					transparent
+					opacity={(100 - $opacityValue) / 100}
+				/>
+			</T.Mesh>
+		</T.Group>
+	</Canvas>
+</div>
 
 <style>
 	.intro-title {
+		--parallax-scroll: 600px;
 		transform: translateX(-100px);
 		opacity: 0;
 
@@ -190,5 +191,17 @@
 	.final-state {
 		opacity: 1;
 		transform: translateX(0);
+	}
+
+	.text-container {
+		--parallax-scroll: 600px;
+		animation: parallax linear;
+		animation-timeline: scroll();
+	}
+
+	@keyframes parallax {
+		to {
+			transform: translateY(var(--parallax-scroll));
+		}
 	}
 </style>
