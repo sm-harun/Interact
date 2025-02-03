@@ -2,11 +2,11 @@
 	import WaveAnimation from './animations/WaveAnimation.svelte';
 
 	import PhysicsEngineCard from '../../routes/simulations/physicsEngine2D/MainCard.svelte';
-	import PhysicsEngineCard3D from '../../routes/simulations/physicsEngine3D/MainCard.svelte';
 
 	import HumanSkeletonCard from '$lib/components/simulations/biology/humanskeleton/MainCard.svelte';
-	import VectorsPlane2DCard from '$lib/components/simulations/maths/vectorsplane/2D/MainCard.svelte';
 	import AiChat from '$lib/components/courses/workingSpaces/AIChat.svelte';
+
+	import AddingTwoVectors from '$lib/welcomePageSections/sections/AddingTwoVectors.svelte';
 </script>
 
 <div
@@ -24,10 +24,15 @@
 			</p>
 		</div>
 	</div>
-	<div class="relative flex flex-col items-center justify-start">
+	<div class="relative box-border flex flex-col items-center justify-start">
 		<!-- First view (Visual Section) -->
-		<div class="flex h-screen items-center p-14 pt-20 lg:pt-24">
-			<img src="/welcomePageAssets/scalar-example.png" alt="Scalar Example image" class="" />
+		<div class="flex h-screen w-full items-center justify-center p-14 pt-20 lg:pt-24">
+			<!-- <img src="/welcomePageAssets/scalar-example.png" alt="Scalar Example image" class="" /> -->
+			<div
+				class="bg-surface-300-600-token box-border aspect-square w-full p-2 rounded-container-token sm:w-[80%] lg:p-10"
+			>
+				<AddingTwoVectors />
+			</div>
 		</div>
 
 		<!-- Second View (Simulation Cards) -->

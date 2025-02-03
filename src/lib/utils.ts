@@ -8,10 +8,15 @@ export function getPartsBeforeAndAfterLetter(input: string, letter: string) {
 
 export function getCurrentThemeColor(
   type: 'primary' | 'secondary' | 'teritiary' | 'surface' | 'success' | 'error' = 'primary',
-  tone: '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' = '500'
+  tone: '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' = '500',
+  opacity: string
 ) {
   let style = getComputedStyle(document.body).getPropertyValue(`--color-${type}-${tone}`);
-  style = "rgb(" + style.split(" ").join(", ") + ")";
+  if (opacity) {
+    style = "rgba(" + style.split(" ").join(", ") + ", " + opacity + ")";
+  } else {
+    style = "rgb(" + style.split(" ").join(", ") + ")";
+  }
 
   return style;
 }

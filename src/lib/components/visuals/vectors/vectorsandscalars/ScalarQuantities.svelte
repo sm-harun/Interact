@@ -5,9 +5,9 @@
 	import { fly, slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 
-	let { section, showNextSection } = $props();
+	let { section, showNextSection = true } = $props();
 
-	let showButton = $state(true);
+	let showButton = $state(showNextSection);
 	function hideButton() {
 		showButton = false;
 	}

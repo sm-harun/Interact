@@ -6,7 +6,7 @@
 
 	import { type Vector2d, type Resultant2d } from '$lib/types';
 
-	import { Plane } from '$lib/components/simulations/maths/vectorsplane/2D/VectorsPlane2D';
+	import Plane from '$lib/components/simulations/maths/vectorsplane/2D/VectorsPlane2D';
 
 	import { onDestroy, onMount } from 'svelte';
 	import { scale, slide } from 'svelte/transition';
