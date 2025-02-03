@@ -10,13 +10,13 @@
 </script>
 
 <div
-	class="bg-surface-200-700-token relative grid h-[400vh] w-full grid-cols-1 grid-rows-1 overflow-y-visible xl:grid-cols-2"
+	class="bg-surface-200-700-token relative grid h-[500vh] w-full grid-cols-1 grid-rows-1 overflow-y-visible xl:grid-cols-2"
 >
 	<WaveAnimation position="bottom" />
 
 	<div class="absolute top-0 grid h-full w-full items-start justify-center xl:static">
 		<div
-			class="sticky top-20 z-30 my-14 flex flex-col items-center xl:sticky xl:top-1/2 xl:my-80 xl:items-start"
+			class="sticky top-1/2 z-30 my-14 flex -translate-y-1/2 flex-col items-center xl:sticky xl:top-1/2 xl:my-80 xl:items-start"
 		>
 			<h1 class="h1 font-bold">Start learning</h1>
 			<p class="text-surface-500-400-token w-[90%] text-center xl:text-start">
@@ -24,27 +24,35 @@
 			</p>
 		</div>
 	</div>
-	<div class="relative mt-24 flex flex-col items-center gap-48 overflow-hidden py-24 xl:mt-0">
-		<div class="w-[80%]">
-			<img src="/welcomePageAssets/scalar-example.png" alt="Scalar Example image" />
+	<div class="relative flex flex-col items-center justify-start">
+		<!-- First view (Visual Section) -->
+		<div class="flex h-screen items-center p-14 pt-20 lg:pt-24">
+			<img src="/welcomePageAssets/scalar-example.png" alt="Scalar Example image" class="" />
 		</div>
-		<div class="grid w-[80%] grid-cols-2 grid-rows-2 place-items-center gap-10 px-20">
+
+		<!-- Second View (Simulation Cards) -->
+		<div class="flex h-screen w-full flex-col items-center gap-10 p-14 pt-20 lg:pt-24">
 			<HumanSkeletonCard />
 			<div class="z-10">
 				<PhysicsEngineCard />
 			</div>
-			<PhysicsEngineCard3D />
-			<div class="z-10">
-				<VectorsPlane2DCard />
+		</div>
+
+		<!-- Third View (AI Chat) -->
+		<div class="flex h-screen w-full flex-col items-center gap-10 px-14 py-36">
+			<div class="border-surface-300-600-token size-full border-2">
+				<AiChat />
 			</div>
 		</div>
-		<div class="border-surface-300-600-token h-[40rem] w-[80%] border-2">
-			<AiChat />
-		</div>
-		<div class="w-[80%]">
+
+		<!-- Forth View (Notes) -->
+		<div class="flex h-screen w-full flex-col justify-center gap-10 p-14 pt-20 lg:pt-24">
 			<img src="/welcomePageAssets/notes-photo.png" alt="Notes Example image" />
 		</div>
-		<div class="grid w-[80%] grid-cols-2 grid-rows-2 gap-5">
+
+		<!-- Fifth View (Tests) -->
+		<!-- <div class="grid w-[80%] grid-cols-2 grid-rows-2 gap-5"> -->
+		<div class="grid h-screen w-full grid-cols-2 grid-rows-2 gap-5 p-14 pt-20 lg:pt-24">
 			<img
 				src="/welcomePageAssets/tests-image-1.png"
 				class="col-span-1 row-span-2"
