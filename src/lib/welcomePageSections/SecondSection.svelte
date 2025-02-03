@@ -16,7 +16,7 @@
 
 	<div class="absolute top-0 grid h-full w-full items-start justify-center xl:static">
 		<div
-			class="sticky top-1/2 z-30 my-14 flex -translate-y-1/2 flex-col items-center xl:sticky xl:top-1/2 xl:my-80 xl:items-start"
+			class="sticky top-20 z-30 my-14 flex -translate-y-1/2 flex-col items-center xl:sticky xl:top-1/2 xl:my-80 xl:items-start"
 		>
 			<h1 class="h1 font-bold">Start learning</h1>
 			<p class="text-surface-500-400-token w-[90%] text-center xl:text-start">
