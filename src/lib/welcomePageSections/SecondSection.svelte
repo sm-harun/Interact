@@ -66,36 +66,44 @@
 		</ViewContainer>
 
 		<!-- Third View (AI Chat) -->
-		<div class="flex h-screen w-full flex-col items-center gap-10 px-14 py-36">
-			<div class="border-surface-300-600-token size-full border-2">
-				<AiChat />
-			</div>
-		</div>
+		<!-- <div class="flex h-screen w-full flex-col items-center gap-10 px-14 py-36"> -->
+		<!-- 	<div class="border-surface-300-600-token size-full border-2"> -->
+		<ViewContainer>
+			<AiChat />
+		</ViewContainer>
+		<!-- </div> -->
+		<!-- </div> -->
 
 		<!-- Forth View (Notes) -->
-		<div class="flex h-screen w-full flex-col justify-center gap-10 p-14 pt-20 lg:pt-24">
-			<img src="/welcomePageAssets/notes-photo.png" alt="Notes Example image" />
-		</div>
+		<ViewContainer>
+			<img
+				src="/welcomePageAssets/notes-photo.png"
+				alt="Notes Example image"
+				class="size-full object-contain"
+			/>
+		</ViewContainer>
 
 		<!-- Fifth View (Tests) -->
 		<!-- <div class="grid w-[80%] grid-cols-2 grid-rows-2 gap-5"> -->
-		<div class="grid h-screen w-full grid-cols-2 grid-rows-2 gap-5 p-14 pt-20 lg:pt-24">
-			<img
-				src="/welcomePageAssets/tests-image-1.png"
-				class="col-span-1 row-span-2"
-				alt="Tests Example 1 image"
-			/>
-			<img
-				src="/welcomePageAssets/tests-image-2.png"
-				class="col-span-1 row-span-1"
-				alt="Tests Example 1 image"
-			/>
-			<img
-				src="/welcomePageAssets/tests-image-3.png"
-				class="col-span-1 row-span-1"
-				alt="Tests Example 1 image"
-			/>
-		</div>
+		<ViewContainer>
+			<div class="grid size-full grid-cols-2 grid-rows-2 gap-5 p-14 pt-20 lg:pt-24">
+				<img
+					src="/welcomePageAssets/tests-image-1.png"
+					class="col-span-1 row-span-2"
+					alt="Tests Example 1 image"
+				/>
+				<img
+					src="/welcomePageAssets/tests-image-2.png"
+					class="col-span-1 row-span-1"
+					alt="Tests Example 1 image"
+				/>
+				<img
+					src="/welcomePageAssets/tests-image-3.png"
+					class="col-span-1 row-span-1"
+					alt="Tests Example 1 image"
+				/>
+			</div>
+		</ViewContainer>
 	</div>
 
 	<WaveAnimation position="top" />
