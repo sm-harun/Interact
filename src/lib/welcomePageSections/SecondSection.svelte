@@ -8,6 +8,16 @@
 
 	import AddingTwoVectors from '$lib/welcomePageSections/sections/AddingTwoVectors.svelte';
 	import ViewContainer from './sections/ViewContainer.svelte';
+	import { setTheme, theme } from '$lib/stores/themes';
+
+	let viewThemes = [
+		{ name: 'Crimson', theme: 'crimson', icon: '⭕' },
+		{ name: 'Skeleton', theme: 'skeleton', icon: '💀' },
+		{ name: 'Vintage', theme: 'vintage', icon: '🚀' },
+		{ name: 'Modern', theme: 'modern', icon: '🤖' },
+		{ name: 'Hamlindigo', theme: 'hamlindigo', icon: '👔' },
+		{ name: 'Rocket', theme: 'rocket', icon: '🚀' }
+	];
 </script>
 
 <div
@@ -30,13 +40,30 @@
 			<AddingTwoVectors />
 		</ViewContainer>
 
-		<!-- Second View (Simulation Cards) -->
-		<div class="flex h-screen w-full flex-col items-center gap-10 p-14 pt-20 lg:pt-24">
-			<HumanSkeletonCard />
-			<div class="z-10">
-				<PhysicsEngineCard />
+		<ViewContainer>
+			<div
+				class="absolute left-0 top-0 flex size-full flex-col items-stretch gap-2 p-2 rounded-container-token lg:p-4"
+				data-theme={$theme}
+			>
+				{#each viewThemes as currentTheme}
+					<button
+						class="variant-glass-primary btn flex h-20 w-full flex-1 items-center justify-between rounded-xl px-10"
+						onclick={() => setTheme(currentTheme.theme)}
+						data-theme={currentTheme.theme}
+					>
+						<div class="flex items-center gap-4">
+							<span>{currentTheme.icon}</span>
+							<h3 class="h3">{currentTheme.name}</h3>
+						</div>
+						<div class="flex">
+							<div class="size-4 rounded-full bg-primary-500 sm:size-8"></div>
+							<div class="size-4 -translate-x-[30%] rounded-full bg-secondary-500 sm:size-8"></div>
+							<div class="size-4 -translate-x-[60%] rounded-full bg-tertiary-500 sm:size-8"></div>
+						</div>
+					</button>
+				{/each}
 			</div>
-		</div>
+		</ViewContainer>
 
 		<!-- Third View (AI Chat) -->
 		<div class="flex h-screen w-full flex-col items-center gap-10 px-14 py-36">
