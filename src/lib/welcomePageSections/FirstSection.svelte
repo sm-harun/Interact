@@ -194,7 +194,7 @@
 	}
 
 	.text-container {
-		--parallax-scroll: 1800px;
+		--parallax-scroll: 3000px;
 		animation: parallax linear;
 		animation-timeline: scroll();
 	}

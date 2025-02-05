@@ -7,6 +7,7 @@
 	import AiChat from '$lib/components/courses/workingSpaces/AIChat.svelte';
 
 	import AddingTwoVectors from '$lib/welcomePageSections/sections/AddingTwoVectors.svelte';
+	import ViewContainer from './sections/ViewContainer.svelte';
 </script>
 
 <div
@@ -25,15 +26,9 @@
 		</div>
 	</div>
 	<div class="relative box-border flex flex-col items-center justify-start">
-		<!-- First view (Visual Section) -->
-		<div class="flex h-screen w-full items-center justify-center p-14 pt-20 lg:pt-24">
-			<!-- <img src="/welcomePageAssets/scalar-example.png" alt="Scalar Example image" class="" /> -->
-			<div
-				class="bg-surface-300-600-token box-border aspect-square w-full p-2 rounded-container-token sm:w-[80%] lg:p-10"
-			>
-				<AddingTwoVectors />
-			</div>
-		</div>
+		<ViewContainer>
+			<AddingTwoVectors />
+		</ViewContainer>
 
 		<!-- Second View (Simulation Cards) -->
 		<div class="flex h-screen w-full flex-col items-center gap-10 p-14 pt-20 lg:pt-24">

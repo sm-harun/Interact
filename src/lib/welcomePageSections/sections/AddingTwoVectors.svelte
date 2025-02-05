@@ -12,8 +12,8 @@
 
 	let plane: Plane;
 
-	let firstVector = $state({ x: 0, y: 0, color: 'red' });
-	let secVector = $state({ x: 0, y: 0, color: 'green' });
+	let firstVector = $state({ x: 10, y: 4, color: 'red' });
+	let secVector = $state({ x: 2, y: 8, color: 'green' });
 	let resVectorColor = $state('grey');
 
 	// A variable to check shadow state for resultant vector
