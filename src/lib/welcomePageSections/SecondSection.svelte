@@ -9,6 +9,7 @@
 	import AddingTwoVectors from '$lib/welcomePageSections/sections/AddingTwoVectors.svelte';
 	import ViewContainer from './sections/ViewContainer.svelte';
 	import { setTheme, theme } from '$lib/stores/themes';
+	import { onMount } from 'svelte';
 
 	let viewThemes = [
 		{ name: 'Crimson', theme: 'crimson', icon: '⭕' },
@@ -18,6 +19,19 @@
 		{ name: 'Hamlindigo', theme: 'hamlindigo', icon: '👔' },
 		{ name: 'Rocket', theme: 'rocket', icon: '🚀' }
 	];
+
+	onMount(() => {
+		let observer2 = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('show');
+				}
+			});
+		});
+
+		let elements = document.querySelectorAll('.sec-observed');
+		elements.forEach((element) => observer2.observe(element));
+	});
 </script>
 
 <div
@@ -27,10 +41,12 @@
 
 	<div class="absolute top-0 grid h-full w-full items-start justify-center xl:static">
 		<div
-			class="sticky top-20 z-30 my-14 flex -translate-y-1/2 flex-col items-center xl:sticky xl:top-1/2 xl:my-80 xl:items-start"
+			class="sticky top-20 z-30 my-14 flex -translate-y-1/2 flex-col items-center xl:sticky xl:top-1/2 xl:my-96 xl:items-start"
 		>
-			<h1 class="h1 font-bold">Start learning</h1>
-			<p class="text-surface-500-400-token w-[90%] text-center xl:text-start">
+			<h1 class="main-opener sec-observed h1 font-bold opacity-0">Start learning</h1>
+			<p
+				class="description sec-observed text-surface-500-400-token w-[90%] text-center opacity-0 xl:text-start"
+			>
 				Take courses with a lot of interactive examples to boost your creativity
 			</p>
 		</div>
@@ -42,7 +58,7 @@
 
 		<ViewContainer>
 			<div
-				class="absolute left-0 top-0 flex size-full flex-col items-stretch gap-2 p-2 rounded-container-token lg:p-4"
+				class="sec-observed absolute left-0 top-0 flex size-full flex-col items-stretch gap-2 p-2 rounded-container-token lg:p-4"
 				data-theme={$theme}
 			>
 				{#each viewThemes as currentTheme}
@@ -105,6 +121,33 @@
 			</div>
 		</ViewContainer>
 	</div>
+	<div class="show hidden"></div>
 
 	<WaveAnimation position="top" />
 </div>
+
+<style>
+	.show {
+		animation: fadeIn var(--fade-time) ease-in-out forwards;
+	}
+
+	.main-opener {
+		--fade-time: 0.7s;
+	}
+
+	.description {
+		--fade-time: 1s;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(100px);
+		}
+
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+</style>
