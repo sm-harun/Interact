@@ -35,7 +35,7 @@
 </script>
 
 <div
-	class="bg-surface-200-700-token relative grid h-[500vh] w-full grid-cols-1 grid-rows-1 overflow-y-visible xl:grid-cols-2"
+	class="relative grid h-[500vh] w-full grid-cols-1 grid-rows-1 overflow-y-visible bg-gradient-to-b from-surface-200 from-10% via-surface-100 via-80% to-surface-200 xl:grid-cols-2 dark:from-surface-700 dark:via-surface-800 dark:to-surface-700"
 >
 	<WaveAnimation position="bottom" />
 
