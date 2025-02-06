@@ -56,14 +56,14 @@
 			<AddingTwoVectors />
 		</ViewContainer>
 
-		<ViewContainer>
+		<ViewContainer animateBorder={true}>
 			<div
-				class="sec-observed absolute left-0 top-0 flex size-full flex-col items-stretch gap-2 p-2 rounded-container-token lg:p-4"
+				class="sec-observed absolute left-0 top-0 flex size-full flex-col items-stretch p-2 rounded-container-token lg:p-4"
 				data-theme={$theme}
 			>
 				{#each viewThemes as currentTheme}
 					<button
-						class="variant-glass-primary btn flex h-20 w-full flex-1 items-center justify-between rounded-xl px-10"
+						class="variant-glass-primary btn flex h-20 w-full flex-1 items-center justify-between rounded-none px-10"
 						onclick={() => setTheme(currentTheme.theme)}
 						data-theme={currentTheme.theme}
 					>
