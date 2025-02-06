@@ -1,5 +1,7 @@
 <script lang="ts">
 	import WaveAnimation from './animations/WaveAnimation.svelte';
+	import { fly } from 'svelte/transition';
+	import { easeInOut } from '$lib/utils';
 
 	import PhysicsEngineCard from '../../routes/simulations/physicsEngine2D/MainCard.svelte';
 
@@ -10,6 +12,7 @@
 	import ViewContainer from './sections/ViewContainer.svelte';
 	import { setTheme, theme } from '$lib/stores/themes';
 	import { onMount } from 'svelte';
+	import Space from './sections/space.svelte';
 
 	let viewThemes = [
 		{ name: 'Crimson', theme: 'crimson', icon: '⭕' },
@@ -20,8 +23,12 @@
 		{ name: 'Rocket', theme: 'rocket', icon: '🚀' }
 	];
 
+	let views: HTMLDivElement[] = [];
+
+	let currentView = $state(0);
+
 	onMount(() => {
-		let observer2 = new IntersectionObserver((entries) => {
+		let titlesObserver = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
 					entry.target.classList.add('show');
@@ -30,33 +37,105 @@
 		});
 
 		let elements = document.querySelectorAll('.sec-observed');
-		elements.forEach((element) => observer2.observe(element));
+		elements.forEach((element) => titlesObserver.observe(element));
+
+		let viewsObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						currentView = parseInt(entry.target.dataset.index);
+					}
+				});
+			},
+			{
+				threshold: 1
+			}
+		);
+
+		views.forEach((view) => {
+			viewsObserver.observe(view);
+		});
 	});
+
+	const features = [
+		{
+			index: 2,
+			title: 'Theme Customization',
+			text: 'Personalize your learning environment with customizable themes to match your preferences and improve focus.'
+		},
+		{
+			index: 3,
+			title: 'AI Chatting',
+			text: 'Get instant assistance and answers with an AI-powered chat system designed to enhance learning efficiency.'
+		},
+		{
+			index: 4,
+			title: 'Creating Courses',
+			text: 'Easily design and structure courses and lessons with intuitive tools that cater to different learning styles.'
+		},
+		{
+			index: 5,
+			title: 'Notes and AI Curated Tests',
+			text: 'Organize notes efficiently and generate AI-powered tests tailored to your learning progress for better retention.'
+		}
+	];
 </script>
 
 <div
-	class="relative grid h-[500vh] w-full grid-cols-1 grid-rows-1 overflow-y-visible bg-gradient-to-b from-surface-200 from-10% via-surface-100 via-80% to-surface-200 xl:grid-cols-2 dark:from-surface-700 dark:via-surface-800 dark:to-surface-700"
+	class="relative grid h-[700vh] w-full grid-cols-1 grid-rows-1 overflow-y-visible bg-gradient-to-b from-surface-200 from-10% via-surface-100 via-80% to-surface-200 xl:grid-cols-2 dark:from-surface-700 dark:via-surface-800 dark:to-surface-700"
 >
 	<WaveAnimation position="bottom" />
 
-	<div class="absolute top-0 grid h-full w-full items-start justify-center xl:static">
+	<div class="absolute top-0 grid h-full w-full items-start xl:static xl:px-24">
 		<div
-			class="sticky top-20 z-30 my-14 flex -translate-y-1/2 flex-col items-center xl:sticky xl:top-1/2 xl:my-96 xl:items-start"
+			class="sticky top-20 z-30 my-14 grid w-full grid-cols-1 grid-rows-2 xl:sticky xl:top-1/2 xl:my-96"
 		>
-			<h1 class="main-opener sec-observed h1 font-bold opacity-0">Start learning</h1>
-			<p
-				class="description sec-observed text-surface-500-400-token w-[90%] text-center opacity-0 xl:text-start"
-			>
-				Take courses with a lot of interactive examples to boost your creativity
-			</p>
+			{#if currentView < 2}
+				<h1
+					class="sec-observed h1 text-center font-bold xl:text-start"
+					out:fly={{ y: -50, duration: 500, easing: easeInOut }}
+				>
+					Interactive Learning
+				</h1>
+				<p
+					class="description sec-observed text-surface-500-400-token mx-auto h-10 w-[90%] text-center xl:mx-0 xl:text-start"
+					out:fly={{ y: -50, duration: 500, easing: easeInOut }}
+				>
+					Engage with dynamic and hands-on educational experiences that enhance understanding
+					through interactivity.
+				</p>
+			{/if}
+			{#each features as feature}
+				{#if currentView == feature.index}
+					{console.log(feature.title)}
+					<h1
+						class="sec-observed h1 text-center font-bold xl:text-start"
+						in:fly={{ y: 50, duration: 500, delay: 600, easing: easeInOut }}
+						out:fly={{ y: -50, duration: 500, easing: easeInOut }}
+					>
+						{feature.title}
+					</h1>
+					<p
+						class="description sec-observed text-surface-500-400-token mx-auto h-10 w-[90%] text-center xl:mx-0 xl:text-start"
+						in:fly={{ y: 50, duration: 500, delay: 600, easing: easeInOut }}
+						out:fly={{ y: -50, duration: 500, easing: easeInOut }}
+					>
+						{feature.text}
+					</p>
+				{/if}
+			{/each}
 		</div>
 	</div>
 	<div class="relative box-border flex flex-col items-center justify-start">
-		<ViewContainer>
+		<!-- First View (Visual) -->
+		<ViewContainer bind:card={views[0]} index={1}>
 			<AddingTwoVectors />
 		</ViewContainer>
 
-		<ViewContainer animateBorder={true}>
+		<Space />
+
+		<!-- Second View (themes) -->
+		<ViewContainer animateBorder={true} bind:card={views[1]} index={2}>
 			<div
 				class="sec-observed absolute left-0 top-0 flex size-full flex-col items-stretch p-2 rounded-container-token lg:p-4"
 				data-theme={$theme}
@@ -81,17 +160,17 @@
 			</div>
 		</ViewContainer>
 
+		<Space />
+
 		<!-- Third View (AI Chat) -->
-		<!-- <div class="flex h-screen w-full flex-col items-center gap-10 px-14 py-36"> -->
-		<!-- 	<div class="border-surface-300-600-token size-full border-2"> -->
-		<ViewContainer>
+		<ViewContainer bind:card={views[2]} index={3}>
 			<AiChat />
 		</ViewContainer>
-		<!-- </div> -->
-		<!-- </div> -->
+
+		<Space />
 
 		<!-- Forth View (Notes) -->
-		<ViewContainer>
+		<ViewContainer bind:card={views[3]} index={4}>
 			<img
 				src="/welcomePageAssets/notes-photo.png"
 				alt="Notes Example image"
@@ -99,9 +178,10 @@
 			/>
 		</ViewContainer>
 
+		<Space />
+
 		<!-- Fifth View (Tests) -->
-		<!-- <div class="grid w-[80%] grid-cols-2 grid-rows-2 gap-5"> -->
-		<ViewContainer>
+		<ViewContainer bind:card={views[4]} index={5}>
 			<div class="grid size-full grid-cols-2 grid-rows-2 gap-5 p-14 pt-20 lg:pt-24">
 				<img
 					src="/welcomePageAssets/tests-image-1.png"
@@ -121,14 +201,13 @@
 			</div>
 		</ViewContainer>
 	</div>
-	<div class="show hidden"></div>
-
+	<div class="show absolute hidden"></div>
 	<WaveAnimation position="top" />
 </div>
 
 <style>
 	.show {
-		animation: fadeIn var(--fade-time) ease-in-out forwards;
+		animation: fadeIn 1s ease-in-out both;
 	}
 
 	.main-opener {

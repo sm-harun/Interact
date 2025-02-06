@@ -1,5 +1,5 @@
 <script>
-	let { children, animateBorder = false } = $props();
+	let { children, animateBorder = false, card = $bindable(), index } = $props();
 </script>
 
 <div class="sticky top-0 flex h-screen w-full items-center justify-center">
@@ -8,7 +8,11 @@
 			? 'animate-border'
 			: ''} relative z-20 box-border aspect-square w-[80%] rounded-container-token sm:w-[60%] lg:w-[50%] xl:w-[80%] 2xl:w-[60%]"
 	>
-		<div class="bg-surface-300-600-token size-full p-2 rounded-container-token lg:p-5">
+		<div
+			class="bg-surface-300-600-token size-full p-2 rounded-container-token lg:p-5"
+			bind:this={card}
+			data-index={index}
+		>
 			{@render children()}
 		</div>
 	</div>
