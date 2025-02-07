@@ -13,6 +13,8 @@
 	import { setTheme, theme } from '$lib/stores/themes';
 	import { onMount } from 'svelte';
 	import Space from './sections/space.svelte';
+	import QuestionComponent from '$lib/components/create/sections/QuestionComponent.svelte';
+	import QuestionSection from '$lib/components/courses/Sections/QuestionSection.svelte';
 
 	let viewThemes = [
 		{ name: 'Crimson', theme: 'crimson', icon: '⭕' },
@@ -66,7 +68,7 @@
 		{
 			index: 3,
 			title: 'AI Chatting',
-			text: 'Get instant assistance and answers with an AI-powered chat system designed to enhance learning efficiency.'
+			text: 'Get instant assistance with a variety of languages and answers with an AI-powered chat system designed to enhance learning efficiency.'
 		},
 		{
 			index: 4,
@@ -79,6 +81,16 @@
 			text: 'Organize notes efficiently and generate AI-powered tests tailored to your learning progress for better retention.'
 		}
 	];
+
+	const questionSection = {
+		type: 'Question',
+		choices: ['190', '206', '150'],
+		index: 1,
+		answer: 2,
+		explanation: 'There are 206 bones in the human body',
+		skip: false,
+		title: 'How many bones does a grown human has?'
+	};
 </script>
 
 <div
@@ -109,7 +121,6 @@
 			{/if}
 			{#each features as feature}
 				{#if currentView == feature.index}
-					{console.log(feature.title)}
 					<h1
 						class="sec-observed h1 text-center font-bold xl:text-start"
 						in:fly={{ y: 50, duration: 500, delay: 600, easing: easeInOut }}
@@ -171,35 +182,17 @@
 
 		<Space />
 
-		<!-- Forth View (Notes) -->
+		<!-- Forth View (Coruse create) -->
 		<ViewContainer bind:card={views[3]} index={4}>
-			<img
-				src="/welcomePageAssets/notes-photo.png"
-				alt="Notes Example image"
-				class="size-full object-contain"
-			/>
+			<QuestionComponent section={questionSection} course={'Enzyme'} lesson={'Intro'} />
 		</ViewContainer>
 
 		<Space />
 
 		<!-- Fifth View (Tests) -->
 		<ViewContainer bind:card={views[4]} index={5}>
-			<div class="grid size-full grid-cols-2 grid-rows-2 gap-5 p-14 pt-20 lg:pt-24">
-				<img
-					src="/welcomePageAssets/tests-image-1.png"
-					class="col-span-1 row-span-2"
-					alt="Tests Example 1 image"
-				/>
-				<img
-					src="/welcomePageAssets/tests-image-2.png"
-					class="col-span-1 row-span-1"
-					alt="Tests Example 1 image"
-				/>
-				<img
-					src="/welcomePageAssets/tests-image-3.png"
-					class="col-span-1 row-span-1"
-					alt="Tests Example 1 image"
-				/>
+			<div class="m-auto size-auto p-10">
+				<QuestionSection section={questionSection} />
 			</div>
 		</ViewContainer>
 	</div>

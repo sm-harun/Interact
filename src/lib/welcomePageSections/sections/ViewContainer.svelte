@@ -9,7 +9,7 @@
 			: ''} relative z-20 box-border aspect-square w-[80%] rounded-container-token sm:w-[60%] lg:w-[50%] xl:w-[80%] 2xl:w-[60%]"
 	>
 		<div
-			class="bg-surface-300-600-token size-full p-2 rounded-container-token lg:p-5"
+			class="bg-surface-300-600-token size-full overflow-y-auto p-2 rounded-container-token lg:p-5"
 			bind:this={card}
 			data-index={index}
 		>
