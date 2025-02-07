@@ -3,6 +3,8 @@
 	import { onMount } from 'svelte';
 	import Matter from 'matter-js';
 
+	let container: HTMLDivElement;
+
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D;
 
@@ -10,6 +12,15 @@
 
 	let mouseX = 0;
 	let mouseY = 0;
+
+	let bodies: Matter.Body[] = [];
+
+	let { Engine, Bodies, Runner, Composite } = Matter;
+
+	const engine = Engine.create();
+	const runner = Runner.create();
+
+	Runner.run(runner, engine);
 
 	window.addEventListener('mousemove', (event) => {
 		mouseX = event.clientX;
@@ -46,6 +57,26 @@
 		window.addEventListener('mouseup', setClickingFalse);
 
 		requestAnimationFrame(loop);
+
+		let physicals = document.querySelectorAll('.physical');
+
+		physicals.forEach((element) => {
+			let parentProps = container.getBoundingClientRect();
+			let props = element.getBoundingClientRect();
+
+			let body = Bodies.rectangle(
+				props.x + props.width / 2,
+				Math.abs(parentProps.y - props.y) + props.height / 2,
+				props.width,
+				props.height,
+				{
+					isStatic: true
+				}
+			);
+
+			// bodies.push(body);
+			Composite.add(engine.world, [body]);
+		});
 	});
 
 	let setClickingFalse = () => {
@@ -55,24 +86,47 @@
 		clicking = true;
 	};
 
-	function drawCircles() {
+	function addBody() {
+		let body = Bodies.circle(mouseX, mouseY, 10);
+		Composite.add(engine.world, [body]);
+		bodies.push(body);
+	}
+
+	function drawShape(x: number, y: number, radius: number) {
 		ctx.beginPath();
 		ctx.fillStyle = getCurrentThemeColor();
-		ctx.arc(mouseX, mouseY, 10, 0, Math.PI * 2, false);
+		ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+		ctx.fill();
+	}
+
+	function drawRect(body: Matter.Body) {
+		ctx.beginPath();
+		ctx.fillStyle = getCurrentThemeColor();
+		ctx.arc(body.position.x, body.position.y, 80, 0, Math.PI * 2, false);
 		ctx.fill();
 	}
 
 	function loop() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		if (clicking) {
-			drawCircles();
+			addBody();
 		}
+
+		bodies.forEach((body) => {
+			if (body.label == 'Rectangle Body') {
+				drawRect(body);
+				return;
+			}
+			drawShape(body.position.x, body.position.y, body.circleRadius);
+		});
 
 		requestAnimationFrame(loop);
 	}
 </script>
 
-<div class="main-container relative -z-30 w-full">
-	<canvas class="absolute left-0 top-0 size-full border-2" bind:this={canvas}></canvas>
+<div class="main-container relative -z-30 w-full" bind:this={container}>
+	<canvas class="absolute left-0 top-0 size-full" bind:this={canvas}></canvas>
 	<div class="flex size-full flex-col">
 		<div class="relative w-full flex-1">
 			<svg
@@ -104,9 +158,15 @@
 			</svg>
 		</div>
 		<div class="flex w-full flex-1 flex-wrap items-center justify-around gap-16 px-28 py-12">
-			<div class="size-96 rounded-3xl border-2"></div>
-			<div class="size-96 rounded-3xl border-2"></div>
-			<div class="size-96 rounded-3xl border-2"></div>
+			<div class="physical bg-surface-100-800-token flex size-96 items-center justify-center">
+				<p class="h2">Skeleton</p>
+			</div>
+			<div class="physical bg-surface-100-800-token flex size-96 items-center justify-center">
+				<p class="h2">Physics</p>
+			</div>
+			<div class="physical bg-surface-100-800-token flex size-96 items-center justify-center">
+				<p class="h2">Vectors</p>
+			</div>
 		</div>
 		<div class="show-text show-blur absolute hidden"></div>
 	</div>
