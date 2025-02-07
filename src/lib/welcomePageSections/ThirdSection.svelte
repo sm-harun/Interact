@@ -2,6 +2,7 @@
 	import { getCurrentThemeColor } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import Matter from 'matter-js';
+	import SimCard from './sections/SimCard.svelte';
 
 	let container: HTMLDivElement;
 
@@ -87,7 +88,7 @@
 	};
 
 	function addBody() {
-		let body = Bodies.circle(mouseX, mouseY, 10);
+		let body = Bodies.circle(mouseX, mouseY, 10, { restitution: 1 });
 		Composite.add(engine.world, [body]);
 		bodies.push(body);
 	}
@@ -126,8 +127,7 @@
 </script>
 
 <div class="main-container relative -z-30 w-full" bind:this={container}>
-	<canvas class="absolute left-0 top-0 size-full" bind:this={canvas}></canvas>
-	<div class="flex size-full flex-col">
+	<div class="z-10 flex size-full flex-col">
 		<div class="relative w-full flex-1">
 			<svg
 				data-type="blur-svg"
@@ -158,18 +158,19 @@
 			</svg>
 		</div>
 		<div class="flex w-full flex-1 flex-wrap items-center justify-around gap-16 px-28 py-12">
-			<div class="physical bg-surface-100-800-token flex size-96 items-center justify-center">
+			<SimCard>
 				<p class="h2">Skeleton</p>
-			</div>
-			<div class="physical bg-surface-100-800-token flex size-96 items-center justify-center">
-				<p class="h2">Physics</p>
-			</div>
-			<div class="physical bg-surface-100-800-token flex size-96 items-center justify-center">
+			</SimCard>
+			<SimCard>
 				<p class="h2">Vectors</p>
-			</div>
+			</SimCard>
+			<SimCard>
+				<p class="h2">Physics</p>
+			</SimCard>
 		</div>
 		<div class="show-text show-blur absolute hidden"></div>
 	</div>
+	<canvas class="absolute left-0 top-0 -z-10 size-full" bind:this={canvas}></canvas>
 </div>
 
 <style>

@@ -33,7 +33,6 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: red;
 		z-index: -1;
 		border-radius: var(--theme-rounded-container);
 		background-image: conic-gradient(
@@ -44,7 +43,7 @@
 			rgb(var(--color-primary-500))
 		);
 		transform: scale(1.01);
-		animation: animateBorder 4s ease-in-out infinite;
+		animation: animateBorder 4s linear infinite;
 	}
 
 	.animate-border::after {
