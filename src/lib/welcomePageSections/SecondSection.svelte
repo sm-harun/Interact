@@ -93,13 +93,15 @@
 			{#if currentView < 2}
 				<h1
 					class="sec-observed h1 text-center font-bold xl:text-start"
+					in:fly={{ y: 50, duration: 500, delay: 600, easing: easeInOut }}
 					out:fly={{ y: -50, duration: 500, easing: easeInOut }}
 				>
 					Interactive Learning
 				</h1>
 				<p
 					class="description sec-observed text-surface-500-400-token mx-auto h-10 w-[90%] text-center xl:mx-0 xl:text-start"
-					out:fly={{ y: -50, duration: 500, easing: easeInOut }}
+					in:fly={{ y: 50, duration: 500, delay: 600, easing: easeInOut }}
+					out:fly={{ y: 50, duration: 500, easing: easeInOut }}
 				>
 					Engage with dynamic and hands-on educational experiences that enhance understanding
 					through interactivity.
@@ -118,7 +120,7 @@
 					<p
 						class="description sec-observed text-surface-500-400-token mx-auto h-10 w-[90%] text-center xl:mx-0 xl:text-start"
 						in:fly={{ y: 50, duration: 500, delay: 600, easing: easeInOut }}
-						out:fly={{ y: -50, duration: 500, easing: easeInOut }}
+						out:fly={{ y: 50, duration: 500, easing: easeInOut }}
 					>
 						{feature.text}
 					</p>
