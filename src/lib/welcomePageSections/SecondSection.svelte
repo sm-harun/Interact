@@ -195,6 +195,9 @@
 				<QuestionSection section={questionSection} />
 			</div>
 		</ViewContainer>
+
+		<!-- Final additional space -->
+		<div class="sticky top-0 flex h-screen w-full items-center justify-center"></div>
 	</div>
 	<div class="show absolute hidden"></div>
 	<WaveAnimation position="top" />

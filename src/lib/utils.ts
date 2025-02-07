@@ -9,7 +9,7 @@ export function getPartsBeforeAndAfterLetter(input: string, letter: string) {
 export function getCurrentThemeColor(
   type: 'primary' | 'secondary' | 'teritiary' | 'surface' | 'success' | 'error' = 'primary',
   tone: '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' = '500',
-  opacity: string
+  opacity: string = '1'
 ) {
   let style = getComputedStyle(document.body).getPropertyValue(`--color-${type}-${tone}`);
   if (opacity) {
