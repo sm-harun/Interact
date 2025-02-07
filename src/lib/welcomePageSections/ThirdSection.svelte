@@ -3,6 +3,10 @@
 	import { onMount } from 'svelte';
 	import Matter from 'matter-js';
 	import SimCard from './sections/SimCard.svelte';
+	import Twitter from './icons/Twitter.svelte';
+	import Telegram from './icons/Telegram.svelte';
+	import GitHub from './icons/GitHub.svelte';
+	import Email from './icons/Email.svelte';
 
 	let container: HTMLDivElement;
 
@@ -114,7 +118,9 @@
 	});
 
 	let setClickingFalse = () => (clicking = false);
-	let setClickingTrue = () => (clicking = true);
+	let setClickingTrue = (e) => {
+		clicking = true;
+	};
 
 	function addBody() {
 		let body = Bodies.circle(mousePos.x, mousePos.y, 10, { restitution: 1 });
@@ -144,7 +150,7 @@
 	}
 </script>
 
-<div class="relative -z-30 min-h-screen w-full pt-24" bind:this={container}>
+<div class="relative z-0 min-h-screen w-full pt-24" bind:this={container}>
 	<div class="z-10 size-full">
 		<div class="relative block w-full py-16 lg:py-32 xl:py-44">
 			<svg
@@ -188,6 +194,36 @@
 		</div>
 		<div class="show-text show-blur absolute hidden"></div>
 	</div>
+	<div class="flex min-h-[50vh] w-full flex-col items-center">
+		<h1 class="text-surface-500-400-token h1 w-full flex-shrink-0 py-5 text-center">Created By</h1>
+		<div
+			class="animate-border physical bg-surface-100-800-token relative flex h-[20rem] w-[80%] rounded-container-token sm:w-[40rem] lg:w-[45rem]"
+		>
+			<div class="flex flex-1 flex-col justify-center gap-3 px-10">
+				<div>
+					<h2 class="h2">Harun Yussuf</h2>
+					<p class="text-surface-500-400-token">Owner, Developer, Designer and producer</p>
+				</div>
+				<div class="flex items-center gap-2">
+					<Telegram />
+					<GitHub />
+					<Twitter />
+					<Email />
+				</div>
+			</div>
+
+			<div class="flex w-full flex-1 flex-col items-center justify-center gap-3">
+				<div class="aspect-square w-[50%]">
+					<img
+						src="/assets/telegram-profile.jpg"
+						class="size-full rounded-full"
+						alt="Harun's telegram profile"
+					/>
+				</div>
+				<p>SM | Harun</p>
+			</div>
+		</div>
+	</div>
 	<canvas class="absolute left-0 top-0 -z-10 size-full" bind:this={canvas}></canvas>
 </div>
 
@@ -197,7 +233,7 @@
 	}
 
 	.show-blur {
-		transition: all 0.2s linear 4s;
+		transition: all 0.2s linear 4.8s;
 		opacity: 1;
 	}
 
@@ -215,14 +251,54 @@
 			fill: transparent;
 		}
 
-		80% {
-			stroke-dashoffset: 0;
+		95% {
+			stroke-dashoffset: 10;
 			fill: transparent;
 		}
 
 		to {
 			stroke-dashoffset: 0;
 			fill: rgb(var(--color-primary-500));
+		}
+	}
+
+	@property --angle {
+		syntax: '<angle>';
+		initial-value: 360deg;
+		inherits: false;
+	}
+
+	.animate-border::after,
+	.animate-border::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: var(--theme-rounded-container);
+		z-index: -1;
+		background-image: conic-gradient(
+			from var(--angle),
+			rgb(var(--color-secondary-500)) 20%,
+			transparent,
+			transparent
+		);
+		transform: scale(1.01);
+		animation: animateBorder 10s linear infinite;
+	}
+
+	.animate-border::after {
+		filter: blur(2rem);
+	}
+
+	@keyframes animateBorder {
+		from {
+			--angle: 360deg;
+		}
+
+		to {
+			--angle: 0deg;
 		}
 	}
 </style>

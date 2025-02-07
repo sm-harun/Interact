@@ -120,7 +120,7 @@
 <div
 	class="absolute w-full {position == 'bottom' ? 'bottom-full' : ''} {position == 'top'
 		? 'top-full rotate-180'
-		: ''} overflow-hidden"
+		: ''} z-10 overflow-hidden"
 	bind:this={canvasContainer}
 >
 	<canvas bind:this={canvas}></canvas>

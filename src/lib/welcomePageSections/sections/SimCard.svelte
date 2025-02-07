@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="physical animate-border bg-surface-100-800-token relative flex size-96 items-center justify-center hover:bg-red-100"
+	class="physical animate-border bg-surface-100-800-token relative flex size-96 items-center justify-center"
 >
 	{@render children()}
 </div>
