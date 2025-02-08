@@ -197,12 +197,14 @@
 	<div class="flex min-h-[50vh] w-full flex-col items-center">
 		<h1 class="text-surface-500-400-token h1 w-full flex-shrink-0 py-5 text-center">Created By</h1>
 		<div
-			class="animate-border physical bg-surface-100-800-token relative flex h-[20rem] w-[80%] rounded-container-token sm:w-[40rem] lg:w-[45rem]"
+			class="animate-border physical bg-surface-100-800-token relative flex h-auto w-[80%] flex-col gap-5 py-12 rounded-container-token sm:w-[40rem] sm:flex-row sm:gap-0 lg:w-[45rem]"
 		>
-			<div class="flex flex-1 flex-col justify-center gap-3 px-10">
+			<div class="flex flex-1 flex-col items-center justify-center gap-3 px-10 sm:items-start">
 				<div>
-					<h2 class="h2">Harun Yussuf</h2>
-					<p class="text-surface-500-400-token">Owner, Developer, Designer and producer</p>
+					<h2 class="h2 text-center sm:text-start">Harun Yussuf</h2>
+					<p class="text-surface-500-400-token text-center sm:text-start">
+						Owner, Developer, Designer and producer
+					</p>
 				</div>
 				<div class="flex items-center gap-2">
 					<Telegram />
