@@ -158,13 +158,12 @@ export class Plane {
     this.context.stroke();
     this.context.closePath();
 
-    this.drawCircle(
-      this.xOrigin + x * this.divisions,
-      this.yOrigin - y * this.divisions,
-      8,
-      true,
-      'green'
-    );
+    const startingCord = { x: this.xOrigin + x * this.divisions, y: this.yOrigin - y * this.divisions };
+    const angle = Math.atan2(y, x);
+    const verticies = this.getTriangleVerticies(10, startingCord, angle);
+
+    if (x != 0 || y != 0)
+      this.drawTriangle(verticies, 'green')
 
     if (showText) {
       this.context.fillStyle = 'green';
@@ -217,13 +216,13 @@ export class Plane {
     this.context.stroke();
     this.context.closePath();
 
-    this.drawCircle(
-      this.xOrigin + x * this.divisions,
-      this.yOrigin - y * this.divisions,
-      8,
-      true,
-      'red'
-    );
+    // Draw triangle tip
+    const startingCord = { x: this.xOrigin + x * this.divisions, y: this.yOrigin - y * this.divisions };
+    const angle = Math.atan2(y, x);
+    const verticies = this.getTriangleVerticies(10, startingCord, angle);
+
+    if (x != 0 || y != 0)
+      this.drawTriangle(verticies, 'red')
 
     if (showText) {
       this.context.fillStyle = 'red';
@@ -305,13 +304,13 @@ export class Plane {
       this.context.closePath();
     }
 
-    this.drawCircle(
-      this.xOrigin + (x1 + x2) * this.divisions,
-      this.yOrigin - (y1 + y2) * this.divisions,
-      8,
-      true,
-      color
-    );
+    // Draw triangle tip
+    const startingCord = { x: this.xOrigin + (x1 + x2) * this.divisions, y: this.yOrigin - (y1 + y2) * this.divisions };
+    const angle = Math.atan2(y2 + y1, x2 + x1);
+    const verticies = this.getTriangleVerticies(10, startingCord, angle);
+
+    if (x1 + x2 != 0 || y1 + y2 != 0)
+      this.drawTriangle(verticies, color)
   }
 
   drawFloatingVector(
@@ -335,22 +334,21 @@ export class Plane {
     this.context.closePath();
 
     // Draw the tips for the vector
-    if (showDots.head)
-      this.drawCircle(
-        this.xOrigin + x1 * this.divisions,
-        this.yOrigin - y1 * this.divisions,
-        8,
-        true,
-        color
-      );
-    if (showDots.tail)
-      this.drawCircle(
-        this.xOrigin + x2 * this.divisions,
-        this.yOrigin - y2 * this.divisions,
-        8,
-        true,
-        color
-      );
+    if (showDots.head) {
+      const startingCord = { x: this.xOrigin + x1 * this.divisions, y: this.yOrigin - y1 * this.divisions };
+      const angle = Math.atan2(y1 - y2, x1 - x2);
+      const verticies = this.getTriangleVerticies(10, startingCord, angle);
+
+      this.drawTriangle(verticies, color)
+    }
+
+    if (showDots.tail) {
+      const startingCord = { x: this.xOrigin + x2 * this.divisions, y: this.yOrigin - y2 * this.divisions };
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+
+      const verticies = this.getTriangleVerticies(10, startingCord, angle);
+      this.drawTriangle(verticies, color)
+    }
 
     // Draw the coordinates at the tip of the vector
     if (showText) {
@@ -392,5 +390,38 @@ export class Plane {
       this.xOrigin + x * this.divisions,
       this.yOrigin - y * this.divisions
     );
+  }
+
+  getTriangleVerticies(r: number, startingCord: { x: number; y: number }, angle: number) {
+    const firstAngle = angle;
+    const secAngle = angle + (3 * Math.PI) / 4;
+    const thirdAngle = angle + (5 * Math.PI) / 4;
+
+    return [
+      {
+        x: startingCord.x + r * Math.cos(firstAngle),
+        y: startingCord.y - r * Math.sin(firstAngle)
+      },
+      {
+        x: startingCord.x + r * Math.cos(secAngle),
+        y: startingCord.y - r * Math.sin(secAngle)
+      },
+      {
+        x: startingCord.x + r * Math.cos(thirdAngle),
+        y: startingCord.y - r * Math.sin(thirdAngle)
+      }
+    ];
+  }
+
+  drawTriangle(verticies: { x: number; y: number }[], color: string) {
+    this.context.beginPath();
+
+    this.context.moveTo(verticies[0].x, verticies[0].y);
+    this.context.lineTo(verticies[1].x, verticies[1].y);
+    this.context.lineTo(verticies[2].x, verticies[2].y);
+    this.context.lineTo(verticies[0].x, verticies[0].y);
+
+    this.context.fillStyle = color;
+    this.context.fill();
   }
 }
