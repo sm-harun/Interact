@@ -50,7 +50,7 @@
 	>
 		<div class="flex h-full w-full max-w-[80rem] flex-col items-center gap-10 p-5">
 			{#await fetchRecentCourse()}
-				<ProgressRadial width="w-20" />
+				<div class="card card-hover h-[45rem] w-full animate-pulse xl:h-96"></div>
 			{:then { course, progress }}
 				<a
 					class="group card card-hover flex h-[45rem] w-full flex-col xl:h-96 xl:flex-row"

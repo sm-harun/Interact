@@ -50,8 +50,8 @@
 		color = getCurrentThemeColor('primary');
 	});
 
-	function goToCourses() {
-		goto('/courses');
+	function goToSignUp() {
+		goto('/signup');
 	}
 
 	const opacityValue = spring(100, {
@@ -104,7 +104,7 @@
 		<div class="intro-button observe">
 			<button
 				class="variant-filled-surface btn rounded-full text-base 2xl:text-lg"
-				onclick={goToCourses}>Go To Courses</button
+				onclick={goToSignUp}>Get Started</button
 			>
 		</div>
 
