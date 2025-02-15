@@ -16,6 +16,9 @@
 	import LockedCourses from '$lib/components/courses/LockedCourses.svelte';
 	import { writable } from 'svelte/store';
 
+	import { doc, updateDoc } from 'firebase/firestore';
+	import { DataBase } from '$lib/firebase';
+
 	let courses = writable<any[]>([]);
 	// This will be used for conparison to check wether filteredCourses is empty
 	let emptyArray: any = [];
@@ -50,6 +53,12 @@
 
 		return fetchedLessons.size;
 	}
+
+	function updateLastOpenedCourse(title: string) {
+		updateDoc(doc(DataBase, 'users', $user?.uid), {
+			lastOpenedCourse: title
+		});
+	}
 </script>
 
 <div class="flex h-screen flex-col overflow-hidden">
@@ -74,7 +83,10 @@
 				<section class="flex flex-wrap gap-10">
 					{#each $courses.filter((course) => course.subjects.includes($subject) || $subject == 'All') as course}
 						{#if $user}
-							<a href="/courses/{course.title}/">
+							<a
+								href="/courses/{course.title}/"
+								onclick={() => updateLastOpenedCourse(course.title)}
+							>
 								<CourseCard
 									title={course.title}
 									subjects={course.subjects}
