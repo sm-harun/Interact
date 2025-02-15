@@ -1,5 +1,11 @@
+<script>
+	let { size = 'rigid' } = $props();
+</script>
+
 <a
-	class="inside-shadow group card border-secondary-500-400-token relative flex size-60 flex-shrink-0 items-end p-5 transition duration-1000 border-token rounded-container-token sm:size-72"
+	class="inside-shadow group card border-secondary-500-400-token relative flex {size == 'rigid'
+		? 'size-60 sm:size-72'
+		: size} flex-shrink-0 items-end p-5 transition duration-1000 border-token rounded-container-token"
 	href="/simulations/vectorsPlane3D"
 	><h3 class="text-primary-300-600-token h3 z-10 transition">
 		Vectors Plane <span class="text-4xl font-bold text-secondary-500">3D</span>
