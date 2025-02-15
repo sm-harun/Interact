@@ -101,7 +101,7 @@
 				<!-- Main lesson -->
 				{#if data.params.lesson !== undefined}
 					{#key $lessonsUpdater}
-						<LessonsArea course={data.params.course} lesson={data.params.lesson} />
+						<LessonsArea course={data.params.course} lesson={data.params.lesson} {lessons} />
 					{/key}
 				{:else}
 					<!-- This will show up as a welcome screen to every course -->

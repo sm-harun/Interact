@@ -10,9 +10,10 @@
 	import AttentionSection from '$lib/components/courses/Sections/AttentionSection.svelte';
 	import EquationSection from '$lib/components/courses/Sections/EquationSection.svelte';
 
-	import { getSectionsColl } from '$lib/docRefs';
+	import { getSectionsColl, getUserCoursesDoc } from '$lib/docRefs';
+	import { setDoc } from 'firebase/firestore';
 
-	import { type Section } from '$lib/stores/courses';
+	import { type Lesson, type Section } from '$lib/stores/courses';
 
 	import { mobSectionsPosition } from '$lib/stores/themes';
 
@@ -25,21 +26,36 @@
 	} from 'firebase/firestore';
 
 	import { onMount } from 'svelte';
+	import { user } from '$lib/stores/credentials';
 
 	interface Props {
 		course: string;
 		lesson: string;
+		lessons: Lesson[];
 	}
 
-	let { course, lesson }: Props = $props();
+	let { course, lesson, lessons }: Props = $props();
 
 	let sections: Section[] = [];
 	let visibleSectionsCount = $state(1);
 
 	let sectionElement: HTMLElement = $state();
 
+	function getIndexFromArray(): number {
+		let index = 0;
+		lessons.forEach((lessonFromArr, i) => {
+			if (lessonFromArr.title == lesson) {
+				index = i;
+			}
+		});
+
+		return index + 1;
+	}
+
 	function showNextSection() {
 		visibleSectionsCount++;
+
+		setProgress();
 
 		// This will wait just a bit for the lesson to fetched and created first
 		setTimeout(() => {
@@ -48,6 +64,16 @@
 				behavior: 'smooth'
 			});
 		}, 300);
+	}
+
+	function setProgress() {
+		if (sections.length == visibleSectionsCount) {
+			let userCourseProgress = {
+				progress: getIndexFromArray() / lessons.length
+			};
+
+			setDoc(getUserCoursesDoc($user?.uid, course), userCourseProgress);
+		}
 	}
 
 	// To know if we have fetched the data yet.
@@ -60,6 +86,8 @@
 			});
 		});
 		setTimeout(() => (fetched = true), 500);
+
+		setProgress();
 	});
 
 	async function fetchSections() {
