@@ -183,13 +183,100 @@
 		</div>
 		<div class="flex w-full flex-1 flex-wrap items-center justify-around gap-16 px-28 py-12">
 			<SimCard>
-				<p class="h2">Skeleton</p>
+				<div class="h-full w-full">
+					<div
+						class="group relative flex h-full w-full transform flex-col justify-between overflow-hidden p-6 text-white shadow-2xl transition-transform duration-300"
+					>
+						<div
+							class="pointer-events-none absolute -inset-0.5 bg-gradient-to-r from-secondary-500 to-surface-500 opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-40"
+						></div>
+
+						<div>
+							<h2
+								class="h1 mb-2 text-5xl font-bold text-primary-500 drop-shadow-[0_0_6px_rgba(255,0,255,0.5)]"
+							>
+								Skeleton
+							</h2>
+							<p class="text-base text-zinc-300">
+								A 3D skeleton model of a human being, move around and explore the different bones
+								and their positions with descriptions, and guides.
+							</p>
+						</div>
+
+						<a
+							href="/simulations/thehumanskeleton"
+							class="btn relative z-10 mt-6 overflow-hidden rounded-xl bg-primary-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-300
+                    before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-400 before:to-blue-500 before:opacity-0 before:transition-opacity before:duration-500
+                    hover:-skew-x-1 hover:before:opacity-20"
+						>
+							<span class="relative z-10">Launch Simulation →</span>
+						</a>
+					</div>
+				</div>
 			</SimCard>
 			<SimCard>
-				<p class="h2">Vectors</p>
+				<div class="h-full w-full">
+					<div
+						class="group relative flex h-full w-full transform flex-col justify-between overflow-hidden p-6 text-white shadow-2xl transition-transform duration-300"
+					>
+						<div
+							class="pointer-events-none absolute -inset-0.5 bg-gradient-to-r from-secondary-500 to-surface-500 opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-40"
+						></div>
+
+						<div>
+							<h2
+								class="h1 mb-2 text-5xl font-bold text-primary-500 drop-shadow-[0_0_6px_rgba(255,0,255,0.5)]"
+							>
+								Vectors
+							</h2>
+							<p class="text-base text-zinc-300">
+								A simulations to plot vectors an a plane, and see real time changes in their
+								resultants and other relationships.
+							</p>
+						</div>
+
+						<a
+							href="/simulations/vectorsPlane2D"
+							class="btn relative z-10 mt-6 overflow-hidden rounded-xl bg-primary-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-300
+                    before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-400 before:to-blue-500 before:opacity-0 before:transition-opacity before:duration-500
+                    hover:-skew-x-1 hover:before:opacity-20"
+						>
+							<span class="relative z-10">Launch Simulation →</span>
+						</a>
+					</div>
+				</div>
 			</SimCard>
 			<SimCard>
-				<p class="h2">Physics</p>
+				<div class="h-full w-full">
+					<div
+						class="group relative flex h-full w-full transform flex-col justify-between overflow-hidden p-6 text-white shadow-2xl transition-transform duration-300"
+					>
+						<div
+							class="pointer-events-none absolute -inset-0.5 bg-gradient-to-r from-secondary-500 to-surface-500 opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-40"
+						></div>
+
+						<div>
+							<h2
+								class="h1 mb-2 text-5xl font-bold text-primary-500 drop-shadow-[0_0_6px_rgba(255,0,255,0.5)]"
+							>
+								2D Physics
+							</h2>
+							<p class="text-base text-zinc-300">
+								A 2D physics engine full of various settings to play around with objects and see how
+								they interact with each other and gravity.
+							</p>
+						</div>
+
+						<a
+							href="/simulations/physicsEngine2D"
+							class="btn relative z-10 mt-6 overflow-hidden rounded-xl bg-primary-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-300
+                    before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-400 before:to-blue-500 before:opacity-0 before:transition-opacity before:duration-500
+                    hover:-skew-x-1 hover:before:opacity-20"
+						>
+							<span class="relative z-10">Launch Simulation →</span>
+						</a>
+					</div>
+				</div>
 			</SimCard>
 		</div>
 		<div class="show-text show-blur absolute hidden"></div>
@@ -302,5 +389,19 @@
 		to {
 			--angle: 0deg;
 		}
+	}
+
+	@keyframes glimmer {
+		0% {
+			background-position: -200% 0;
+		}
+		100% {
+			background-position: 200% 0;
+		}
+	}
+
+	.animate-glimmer {
+		background-size: 200% 100%;
+		animation: glimmer 3s linear infinite;
 	}
 </style>

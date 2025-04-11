@@ -11,7 +11,11 @@ export default {
     join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
   ],
   theme: {
-    extend: {}
+    extend: {
+      boxShadow: {
+        neon: '0 0 15px rgba(255, 0, 128, 0.8), 0 0 30px rgba(255, 0, 128, 0.6)',
+      },
+    }
   },
   plugins: [
     forms,
